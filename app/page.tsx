@@ -1,5 +1,5 @@
-import { PresentationPage } from "@/components/presentation/PresentationPage";
+import { redirect } from 'next/navigation'
 
 export default function Home() {
-  return <PresentationPage />;
+  redirect('/p/demo')
 }

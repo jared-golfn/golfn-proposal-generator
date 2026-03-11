@@ -1,21 +1,21 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-gn-bg: #0F0F10;
-  --color-gn-card: #161618;
-  --color-gn-grid: #2A2A2C;
-  --color-gn-muted: #4A4A4C;
-  --color-gn-green-dark: #17A455;
-  --color-gn-green-light: #8DC54A;
-  --color-gn-green-web: #68C072;
-  --color-gn-gold: #BFC951;
-  --color-gn-white: #FFFFFF;
-  --color-gn-white-dim: #C8C8C8;
-  --color-gn-white-faint: #8C8C8C;
+  --color-golfn-bg: #0F0F10;
+  --color-golfn-card: #161618;
+  --color-golfn-grid: #2A2A2C;
+  --color-golfn-muted: #4A4A4C;
+  --color-golfn-green-dark: #17A455;
+  --color-golfn-green-light: #8DC54A;
+  --color-golfn-green-web: #68C072;
+  --color-golfn-gold: #BFC951;
+  --color-golfn-white: #FFFFFF;
+  --color-golfn-white-dim: #C8C8C8;
+  --color-golfn-white-faint: #8C8C8C;
 
-  --font-display: "Sora", system-ui, sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 @layer base {
@@ -26,70 +26,83 @@
   }
 
   body {
-    background-color: var(--color-gn-bg);
-    color: var(--color-gn-white);
+    background-color: var(--color-golfn-bg);
+    color: var(--color-golfn-white);
     font-family: var(--font-body);
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--color-gn-green-dark) 40%, transparent);
-    color: var(--color-gn-white);
+    background: color-mix(in srgb, var(--color-golfn-green-dark) 40%, transparent);
+    color: var(--color-golfn-white);
   }
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-gn-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-gn-grid);
-  border-radius: 3px;
 }
 
 /* Gradient text utility */
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-gn-green-dark), var(--color-gn-green-light));
+  background: linear-gradient(135deg, var(--color-golfn-green-dark), var(--color-golfn-green-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Gradient border accent */
-.gradient-accent-top {
-  position: relative;
-}
-.gradient-accent-top::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-gn-green-dark), var(--color-gn-green-light));
-}
-
 /* Subtle grid background */
 .bg-grid {
   background-image:
-    linear-gradient(var(--color-gn-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-gn-grid) 1px, transparent 1px);
+    linear-gradient(var(--color-golfn-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-golfn-grid) 1px, transparent 1px);
   background-size: 72px 72px;
 }
 
-/* Glow effects */
+/* Gradient accent line */
+.accent-line {
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-golfn-green-dark), var(--color-golfn-green-light), var(--color-golfn-gold));
+}
+
+/* Glow effect */
 .glow-green {
-  box-shadow: 0 0 60px -12px color-mix(in srgb, var(--color-gn-green-dark) 30%, transparent);
+  box-shadow: 0 0 60px color-mix(in srgb, var(--color-golfn-green-dark) 15%, transparent),
+              0 0 120px color-mix(in srgb, var(--color-golfn-green-dark) 8%, transparent);
 }
 
-.glow-green-soft {
-  box-shadow: 0 0 120px -20px color-mix(in srgb, var(--color-gn-green-dark) 15%, transparent);
+/* Card style */
+.card {
+  background: var(--color-golfn-card);
+  border: 1px solid var(--color-golfn-grid);
+  border-radius: 12px;
 }
 
-/* Section spacing */
-.section-spacing {
-  padding-top: clamp(4rem, 8vh, 8rem);
-  padding-bottom: clamp(4rem, 8vh, 8rem);
+/* Section padding */
+.section-padding {
+  padding: 6rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 8rem 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-padding {
+    padding: 10rem 6rem;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-golfn-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-golfn-grid);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-golfn-muted);
 }
