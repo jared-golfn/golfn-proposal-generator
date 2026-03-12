@@ -1,15 +1,13 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-golfn-bg: #09090B;
-  --color-golfn-surface: #111113;
-  --color-golfn-card: #151517;
-  --color-golfn-border: #1F1F23;
-  --color-golfn-border-light: #2A2A2F;
+  --color-golfn-bg: #0F0F10;
+  --color-golfn-card: #161618;
+  --color-golfn-border: #2A2A2C;
   --color-golfn-muted: #52525B;
-  --color-golfn-green: #22C55E;
-  --color-golfn-green-light: #86EFAC;
-  --color-golfn-gold: #EAB308;
+  --color-golfn-green: #17A455;
+  --color-golfn-green-light: #8DC54A;
+  --color-golfn-gold: #BFC951;
   --color-golfn-white: #FAFAFA;
   --color-golfn-dim: #A1A1AA;
   --color-golfn-faint: #71717A;
@@ -27,20 +25,20 @@
   }
 
   body {
-    background: var(--color-golfn-bg);
-    color: var(--color-golfn-white);
+    background: #0F0F10;
+    color: #FAFAFA;
     font-family: var(--font-body);
     font-size: 17px;
     line-height: 1.7;
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-golfn-green) 30%, transparent);
+    background: color-mix(in srgb, #17A455 30%, transparent);
   }
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-golfn-green), var(--color-golfn-green-light));
+  background: linear-gradient(135deg, #17A455, #8DC54A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -48,9 +46,9 @@
 
 .accent-line {
   height: 2px;
-  background: linear-gradient(90deg, var(--color-golfn-green), var(--color-golfn-green-light));
+  background: linear-gradient(90deg, #17A455, #8DC54A);
 }
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-golfn-border); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #2A2A2C; border-radius: 2px; }

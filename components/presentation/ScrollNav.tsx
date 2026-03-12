@@ -30,33 +30,14 @@ export function ScrollNav({ sections, partnerColor }: { sections: Section[]; par
     <motion.nav
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
-      className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-4"
+      className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5"
     >
       {sections.map((section) => {
         const isActive = active === section.id
         return (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className="group flex items-center gap-4 justify-end"
-          >
-            <span
-              className={`text-sm font-medium transition-all duration-300 whitespace-nowrap ${
-                isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3 group-hover:opacity-60 group-hover:translate-x-0'
-              }`}
-              style={{ color: isActive ? partnerColor : 'var(--color-golfn-dim)' }}
-            >
-              {section.label}
-            </span>
-            <span
-              className="block rounded-full transition-all duration-300 shrink-0"
-              style={{
-                width: isActive ? 14 : 8,
-                height: isActive ? 14 : 8,
-                backgroundColor: isActive ? partnerColor : 'var(--color-golfn-muted)',
-                boxShadow: isActive ? `0 0 16px ${partnerColor}50` : 'none',
-              }}
-            />
+          <a key={section.id} href={`#${section.id}`} className="group flex items-center gap-4 justify-end">
+            <span className={`text-sm font-medium transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3 group-hover:opacity-50 group-hover:translate-x-0'}`} style={{ color: isActive ? partnerColor : '#A1A1AA' }}>{section.label}</span>
+            <span className="block rounded-full transition-all duration-300 shrink-0" style={{ width: isActive ? 12 : 6, height: isActive ? 12 : 6, backgroundColor: isActive ? partnerColor : '#52525B', boxShadow: isActive ? `0 0 14px ${partnerColor}50` : 'none' }} />
           </a>
         )
       })}

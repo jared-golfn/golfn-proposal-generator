@@ -2,6 +2,7 @@
 
 import { type PartnerConfig } from '@/lib/presentation-data'
 import { HeroSection } from '@/components/presentation/HeroSection'
+import { BudgetPositioning } from '@/components/presentation/BudgetPositioning'
 import { CommercialModel } from '@/components/presentation/CommercialModel'
 import { ProgressionFramework } from '@/components/presentation/ProgressionFramework'
 import { PartnerArchetypes } from '@/components/presentation/PartnerArchetypes'
@@ -9,16 +10,25 @@ import { DailyGrindEvolution } from '@/components/presentation/DailyGrindEvoluti
 import { ManagementFee } from '@/components/presentation/ManagementFee'
 import { ScrollNav } from '@/components/presentation/ScrollNav'
 import { Thresholds } from '@/components/presentation/Thresholds'
+import { StrategicClose } from '@/components/presentation/StrategicClose'
 
 const sections = [
   { id: 'hero', label: 'Overview' },
+  { id: 'budget', label: 'Budget Fit' },
   { id: 'commercial', label: 'Commercial Model' },
   { id: 'management', label: 'Management' },
   { id: 'progression', label: 'Progression' },
   { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'archetypes', label: 'Archetypes' },
   { id: 'thresholds', label: 'Thresholds' },
+  { id: 'close', label: 'Summary' },
 ]
+
+const Divider = () => (
+  <div className="max-w-[960px] mx-auto px-6 md:px-12">
+    <div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, #2A2A2C, transparent)' }} />
+  </div>
+)
 
 export function PresentationClient({ partner }: { partner: PartnerConfig }) {
   return (
@@ -27,34 +37,26 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
       <ScrollNav sections={sections} partnerColor={partner.primaryColor} />
 
       <div id="hero"><HeroSection partner={partner} /></div>
-
-      {/* Divider */}
-      <div className="max-w-5xl mx-auto px-6 md:px-12"><div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--color-golfn-border), transparent)' }} /></div>
-
+      <Divider />
+      <div id="budget"><BudgetPositioning partner={partner} /></div>
+      <Divider />
       <div id="commercial"><CommercialModel partner={partner} /></div>
-
-      <div className="max-w-5xl mx-auto px-6 md:px-12"><div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--color-golfn-border), transparent)' }} /></div>
-
+      <Divider />
       <div id="management"><ManagementFee partner={partner} /></div>
-
-      <div className="max-w-5xl mx-auto px-6 md:px-12"><div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--color-golfn-border), transparent)' }} /></div>
-
+      <Divider />
       <div id="progression"><ProgressionFramework partner={partner} /></div>
-
-      <div className="max-w-5xl mx-auto px-6 md:px-12"><div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--color-golfn-border), transparent)' }} /></div>
-
+      <Divider />
       <div id="daily-grind"><DailyGrindEvolution partner={partner} /></div>
-
-      <div className="max-w-5xl mx-auto px-6 md:px-12"><div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--color-golfn-border), transparent)' }} /></div>
-
+      <Divider />
       <div id="archetypes"><PartnerArchetypes partner={partner} /></div>
-
-      <div className="max-w-5xl mx-auto px-6 md:px-12"><div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--color-golfn-border), transparent)' }} /></div>
-
+      <Divider />
       <div id="thresholds"><Thresholds partner={partner} /></div>
+      <Divider />
+      <div id="close"><StrategicClose partner={partner} /></div>
 
-      <footer className="max-w-5xl mx-auto px-6 md:px-12 py-16 text-center border-t border-golfn-border">
-        <p className="text-golfn-faint text-sm">Confidential — Prepared for {partner.partnerName} by GolfN · March 2026</p>
+      <footer className="max-w-[960px] mx-auto px-6 md:px-12 py-16 text-center border-t border-[#2A2A2C]">
+        <p className="text-[#71717A] text-sm">Confidential \u2014 Prepared for {partner.partnerName} by GolfN</p>
+        <p className="text-[#52525B] text-xs mt-1 font-mono">Verified Golfers \u00b7 Measurable Progression \u00b7 Aligned Incentives</p>
       </footer>
     </main>
   )
