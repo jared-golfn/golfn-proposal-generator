@@ -32,25 +32,25 @@
 
   @media (min-width: 1440px) {
     :root {
-      --content-width: min(1080px, 75vw);
-      --content-wide: min(1280px, 82vw);
-      --content-wider: min(1400px, 88vw);
+      --content-width: min(1100px, 76vw);
+      --content-wide: min(1320px, 84vw);
+      --content-wider: min(1440px, 90vw);
     }
   }
 
   @media (min-width: 1920px) {
     :root {
-      --content-width: min(1200px, 65vw);
-      --content-wide: min(1400px, 72vw);
-      --content-wider: min(1520px, 80vw);
+      --content-width: min(1280px, 67vw);
+      --content-wide: min(1480px, 77vw);
+      --content-wider: min(1600px, 83vw);
     }
   }
 
   @media (min-width: 2560px) {
     :root {
-      --content-width: min(1320px, 52vw);
-      --content-wide: min(1520px, 60vw);
-      --content-wider: min(1680px, 66vw);
+      --content-width: min(1400px, 55vw);
+      --content-wide: min(1600px, 63vw);
+      --content-wider: min(1760px, 69vw);
     }
   }
 
@@ -66,8 +66,16 @@
     body { font-size: 18px; }
   }
 
-  @media (min-width: 1920px) {
+  @media (min-width: 1440px) {
     body { font-size: 19px; }
+  }
+
+  @media (min-width: 1920px) {
+    body { font-size: 20px; }
+  }
+
+  @media (min-width: 2560px) {
+    body { font-size: 21px; }
   }
 
   ::selection {
@@ -81,9 +89,7 @@
 .w-content-wider { max-width: var(--content-wider); margin-left: auto; margin-right: auto; }
 
 /*
- * BULLETPROOF: Override hardcoded Tailwind max-widths on large screens
- * using attribute selectors that match the class STRING in the HTML.
- * This works regardless of how Tailwind v4 JIT compiles class names.
+ * Override hardcoded Tailwind max-widths on large screens
  */
 @media (min-width: 1440px) {
   [class*="max-w-[960px]"]  { max-width: var(--content-width) !important; }
