@@ -8,4 +8,15 @@ export const images = {
   srixonAd1: 'https://cdn.sanity.io/images/e3wja34v/production/b7595e6209bca636cccf5ece0d615cc6331bc151-526x1058.png',
   srixonAd2: 'https://cdn.sanity.io/images/e3wja34v/production/37500f67f5ed6154a60f0859d289dbf49ae53942-526x1058.png',
   pointExchange: 'https://cdn.sanity.io/images/e3wja34v/production/50e76b526bb2c7ba2808fc22ec9c532cf9cabfc8-750x3802.png',
+  marketplace: 'https://cdn.sanity.io/images/e3wja34v/production/e604b64cd4ce527750267b9c795f44363ed9d816-2364x5120.png',
+  // Points Exchange partner cards
+  labPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/7bf965f5c6ddd349ae2218d198771e824daf07c8-6034x2754.png',
+  miuraPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/5d6a476b28ef3a092bf2f7a8cfb625acfeb5bd67-6000x2720.png',
+  bettinardiPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/b11a8f9b191b42a94d639cdeb773cbae91f40082-6000x2720.png',
+  cobraPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/a9cd8b09f3ef0406c9c49fb4a68fba3fab495911-6000x2720.png',
+  // Sweepstakes cards
+  cobraSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/144c9c147afe0f7b4123c22bac1f3f33cdb6c581-2064x2736.png',
+  cobraOptmDriver: 'https://cdn.sanity.io/images/e3wja34v/production/2b335ca3ecbbbef6505dbec2342492026b0f68d2-2064x2736.png',
+  miuraWedgeSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/6f59070d4a72006c3cea009b97a6757f43914e3d-2064x2736.png',
+  wekopaSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/224336ee977d9a47804e28f23d3cbd6323505761-2064x2736.png',
 } as const
