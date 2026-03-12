@@ -32,7 +32,7 @@ const sections = [
 ]
 
 const Divider = () => (
-  <div className="max-w-[960px] mx-auto px-6 md:px-12">
+  <div className="max-w-[960px] mx-auto px-5 md:px-12">
     <div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, #2A2A2C, transparent)' }} />
   </div>
 )
@@ -40,7 +40,7 @@ const Divider = () => (
 export function PresentationClient({ partner }: { partner: PartnerConfig }) {
   return (
     <PartnershipProvider>
-      <main className="relative">
+      <main className="relative pb-20 xl:pb-0">
         <div className="accent-line fixed top-0 left-0 right-0 z-50" />
         <ScrollNav sections={sections} partnerColor={partner.primaryColor} />
         <StickySummary partner={partner} />
@@ -67,10 +67,10 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
         <Divider />
         <div id="close"><StrategicClose partner={partner} /></div>
 
-        <footer className="max-w-[960px] mx-auto px-6 md:px-12 py-16 text-center border-t border-[#2A2A2C]">
-          <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-40" />
-          <p className="text-[#71717A] text-sm">Confidential — Prepared for {partner.partnerName} by GolfN</p>
-          <p className="text-[#52525B] text-xs mt-1 font-mono">Verified Golfers · Measurable Progression · Aligned Incentives</p>
+        <footer className="max-w-[960px] mx-auto px-5 md:px-12 py-12 md:py-16 text-center border-t border-[#2A2A2C]">
+          <img src={images.logo} alt="GolfN" className="h-7 md:h-10 w-auto mx-auto mb-4 opacity-40" />
+          <p className="text-[#71717A] text-xs md:text-sm">Confidential — Prepared for {partner.partnerName} by GolfN</p>
+          <p className="text-[#52525B] text-[10px] md:text-xs mt-1 font-mono">Verified Golfers · Measurable Progression · Aligned Incentives</p>
         </footer>
       </main>
     </PartnershipProvider>
