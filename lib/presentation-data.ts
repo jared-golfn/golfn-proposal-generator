@@ -1,4 +1,5 @@
 // GolfN Partnership Structure — v9 FINAL content + v8.1 expanded copy
+// Platform stats updated Mar 11, 2026
 
 export interface PartnerConfig {
   slug: string
@@ -50,9 +51,10 @@ export const platformStats = {
   registeredUsers: '100,000+',
   monthlyGrowth: '~6,000/mo',
   cac: 'Sub-$2',
-  engagedUsers: '4,766',
-  engagedLabel: 'A+B+C Tiers, Feb 2026',
-  peakMAU: '12,405',
+  powerUsers: '7,315',
+  powerUsersLabel: 'Mar 11, 2026',
+  peakMAU: '28,060',
+  engagedShare: '65.8%',
   under34: '56%',
   avgMonthlyLogins: '30+',
   adEligibleViews: '336/user/mo',

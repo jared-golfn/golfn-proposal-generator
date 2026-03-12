@@ -6,10 +6,10 @@ import { images } from '@/lib/images'
 
 const stats = [
   { value: platformStats.registeredUsers, label: 'Registered Users', sub: platformStats.monthlyGrowth + ' growth', highlight: true },
-  { value: platformStats.engagedUsers, label: 'Engaged Users', sub: platformStats.engagedLabel },
+  { value: platformStats.powerUsers, label: 'Power Users', sub: platformStats.powerUsersLabel },
+  { value: platformStats.peakMAU, label: 'Peak MAU', sub: 'Monthly active users' },
   { value: platformStats.under34, label: 'Under 34', sub: 'Core demographic' },
   { value: platformStats.avgMonthlyLogins, label: 'Avg. Logins/Mo', sub: 'Per user' },
-  { value: platformStats.adEligibleViews, label: 'Ad Views/User/Mo', sub: 'Per engaged user' },
   { value: platformStats.countries, label: 'Countries', sub: 'Global reach' },
 ]
 
@@ -65,7 +65,7 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
         {/* Partner line */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="mt-16 flex items-center gap-4">
           <div className="h-px w-16" style={{ background: partner.primaryColor }} />
-          <span className="text-base text-[#71717A]">{partner.productCategory} \u2014 {partner.productNames.join(' \u00b7 ')}</span>
+          <span className="text-base text-[#71717A]">{partner.productCategory} {"\u2014"} {partner.productNames.join(' \u00b7 ')}</span>
         </motion.div>
       </div>
 
