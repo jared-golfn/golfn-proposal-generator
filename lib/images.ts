@@ -33,4 +33,8 @@ export const images = {
   // Social proof
   socialProof1: 'https://cdn.sanity.io/images/e3wja34v/production/dad0d094bfd4086f2537b3202feac3690bf8d9ec-6400x3600.png',
   socialProof2: 'https://cdn.sanity.io/images/e3wja34v/production/32613af5fe166425577aebdb9e167a2c26fe4fd2-4096x7280.png',
+  // Email campaigns
+  emailIntentFollowUp: 'https://cdn.sanity.io/images/e3wja34v/production/51d6a3937f93961fe3d32bab6b0dc74e690d5abf-2400x9616.png',
+  emailNewProductDrop: 'https://cdn.sanity.io/images/e3wja34v/production/8e3d7aecea24038b9f1efef33533b3d4047cdbe3-1500x9188.png',
+  emailSweepsAnnouncement: 'https://cdn.sanity.io/images/e3wja34v/production/f2a2102a0e40297c5ec48fc9164b0d94da8b78f5-2400x15600.png',
 } as const
