@@ -9,6 +9,7 @@ import { FindYourFit } from '@/components/presentation/FindYourFit'
 import { CommercialModel } from '@/components/presentation/CommercialModel'
 import { ProgressionFramework } from '@/components/presentation/ProgressionFramework'
 import { PartnerArchetypes } from '@/components/presentation/PartnerArchetypes'
+import { Extensions } from '@/components/presentation/Extensions'
 import { DailyGrindEvolution } from '@/components/presentation/DailyGrindEvolution'
 import { ScrollNav } from '@/components/presentation/ScrollNav'
 import { Thresholds } from '@/components/presentation/Thresholds'
@@ -20,13 +21,14 @@ const sections = [
   { id: 'hero', label: 'Overview' },
   { id: 'budget', label: 'Budget Fit' },
   { id: 'best-fit', label: 'Best Fit' },
-  { id: 'commercial', label: 'Commercial Model' },
+  { id: 'commercial', label: 'Pricing' },
   { id: 'progression', label: 'Progression' },
   { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'paths', label: 'Paths' },
+  { id: 'extensions', label: 'Extensions' },
   { id: 'thresholds', label: 'Requirements' },
-  { id: 'testimonials', label: 'Testimonials' },
-  { id: 'close', label: 'Summary' },
+  { id: 'testimonials', label: 'Proof' },
+  { id: 'close', label: 'Next Step' },
 ]
 
 const Divider = () => (
@@ -56,6 +58,8 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
         <div id="daily-grind"><DailyGrindEvolution partner={partner} /></div>
         <Divider />
         <div id="paths"><PartnerArchetypes partner={partner} /></div>
+        <Divider />
+        <div id="extensions"><Extensions partner={partner} /></div>
         <Divider />
         <div id="thresholds"><Thresholds partner={partner} /></div>
         <Divider />
