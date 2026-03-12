@@ -8,7 +8,6 @@ import { CommercialModel } from '@/components/presentation/CommercialModel'
 import { ProgressionFramework } from '@/components/presentation/ProgressionFramework'
 import { PartnerArchetypes } from '@/components/presentation/PartnerArchetypes'
 import { DailyGrindEvolution } from '@/components/presentation/DailyGrindEvolution'
-import { ManagementFee } from '@/components/presentation/ManagementFee'
 import { ScrollNav } from '@/components/presentation/ScrollNav'
 import { Thresholds } from '@/components/presentation/Thresholds'
 import { StrategicClose } from '@/components/presentation/StrategicClose'
@@ -17,7 +16,6 @@ const sections = [
   { id: 'hero', label: 'Overview' },
   { id: 'budget', label: 'Budget Fit' },
   { id: 'commercial', label: 'Commercial Model' },
-  { id: 'management', label: 'Management' },
   { id: 'progression', label: 'Progression' },
   { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'archetypes', label: 'Archetypes' },
@@ -42,8 +40,6 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
       <div id="budget"><BudgetPositioning partner={partner} /></div>
       <Divider />
       <div id="commercial"><CommercialModel partner={partner} /></div>
-      <Divider />
-      <div id="management"><ManagementFee partner={partner} /></div>
       <Divider />
       <div id="progression"><ProgressionFramework partner={partner} /></div>
       <Divider />
