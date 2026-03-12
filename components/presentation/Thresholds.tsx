@@ -41,6 +41,13 @@ export function Thresholds({ partner }: { partner: PartnerConfig }) {
           </Fade>
         ))}
       </div>
+
+      {/* P6: Setup fee reinforcement */}
+      <Fade delay={0.4}>
+        <div className="mt-8 md:mt-10 bg-[#161618] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 border-l-[3px]" style={{ borderLeftColor: partner.primaryColor }}>
+          <p className="text-base md:text-lg text-[#D4D4D8] leading-[1.7] font-medium"><span className="font-bold text-white">Why setup is required upfront:</span> Every GolfN program requires upfront strategy, offer design, audience definition, tracking logic, and campaign implementation before launch. This is real work that produces the infrastructure the program runs on.</p>
+        </div>
+      </Fade>
     </section>
   )
 }
