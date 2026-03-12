@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { images } from '@/lib/images'
 
 interface Section { id: string; label: string }
 
@@ -36,8 +37,28 @@ export function ScrollNav({ sections, partnerColor }: { sections: Section[]; par
         const isActive = active === section.id
         return (
           <a key={section.id} href={`#${section.id}`} className="group flex items-center gap-4 justify-end">
-            <span className={`text-sm font-medium transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3 group-hover:opacity-50 group-hover:translate-x-0'}`} style={{ color: isActive ? partnerColor : '#A1A1AA' }}>{section.label}</span>
-            <span className="block rounded-full transition-all duration-300 shrink-0" style={{ width: isActive ? 12 : 6, height: isActive ? 12 : 6, backgroundColor: isActive ? partnerColor : '#52525B', boxShadow: isActive ? `0 0 14px ${partnerColor}50` : 'none' }} />
+            <span
+              className={`text-sm font-medium transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3 group-hover:opacity-50 group-hover:translate-x-0'}`}
+              style={{ color: isActive ? partnerColor : '#A1A1AA' }}
+            >
+              {section.label}
+            </span>
+            {isActive ? (
+              <motion.img
+                src={images.logo}
+                alt=""
+                className="shrink-0"
+                style={{ width: 20, height: 20, filter: `drop-shadow(0 0 8px ${partnerColor}60)` }}
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.25 }}
+              />
+            ) : (
+              <span
+                className="block rounded-full transition-all duration-300 shrink-0 group-hover:bg-[#71717A]"
+                style={{ width: 6, height: 6, backgroundColor: '#52525B' }}
+              />
+            )}
           </a>
         )
       })}
