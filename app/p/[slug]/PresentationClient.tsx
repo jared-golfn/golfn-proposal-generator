@@ -14,6 +14,7 @@ import { ScrollNav } from '@/components/presentation/ScrollNav'
 import { Thresholds } from '@/components/presentation/Thresholds'
 import { Testimonials } from '@/components/presentation/Testimonials'
 import { StrategicClose } from '@/components/presentation/StrategicClose'
+import { StickySummary } from '@/components/presentation/StickySummary'
 
 const sections = [
   { id: 'hero', label: 'Overview' },
@@ -40,6 +41,7 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
       <main className="relative">
         <div className="accent-line fixed top-0 left-0 right-0 z-50" />
         <ScrollNav sections={sections} partnerColor={partner.primaryColor} />
+        <StickySummary partner={partner} />
 
         <div id="hero"><HeroSection partner={partner} /></div>
         <Divider />
