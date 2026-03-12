@@ -15,12 +15,14 @@ interface ImageGroup {
   label: string
   images: string[]
   cols: number
+  type?: 'grid' | 'email'
 }
 
 const stageImageGroups: Record<number, ImageGroup[]> = {
   1: [
     { label: 'Sweepstakes & Campaigns', images: [images.cobraSweeps, images.miuraWedgeSweeps, images.wekopaSweeps, images.cobraOptmDriver], cols: 4 },
     { label: 'In-App Messages', images: [images.inAppMsg1, images.inAppMsg2, images.inAppMsg3, images.inAppMsg4], cols: 4 },
+    { label: 'Email Campaigns', images: [images.emailSweepsAnnouncement, images.emailNewProductDrop], cols: 2, type: 'email' },
   ],
   4: [
     { label: 'Affiliate Banners — Post-Sweepstakes Intent Conversion', images: [images.affiliateBanner1, images.affiliateBanner2, images.affiliateBanner3], cols: 3 },
@@ -28,13 +30,13 @@ const stageImageGroups: Record<number, ImageGroup[]> = {
   ],
   5: [
     { label: 'Points Exchange Marketplace', images: [images.labPointsExchange, images.miuraPointsExchange, images.bettinardiPointsExchange, images.cobraPointsExchange], cols: 2 },
+    { label: 'User Intent Follow-Up Campaign for Conversion', images: [images.emailIntentFollowUp], cols: 1, type: 'email' },
   ],
   7: [
     { label: 'OAuth-Verified Social Proof', images: [images.socialProof1, images.socialProof2], cols: 2 },
   ],
 }
 
-// Funnel widths — each stage gets narrower
 const funnelWidths = [100, 93, 86, 79, 72, 65, 58, 51]
 
 export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
@@ -62,7 +64,6 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
         </div>
       </div>
 
-      {/* Funnel — breaks out to 1100px */}
       <div className="max-w-[1100px] mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center gap-2">
           {progressionStages.map((stage, i) => {
@@ -70,7 +71,6 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
             const groups = stageImageGroups[stage.number]
             const widthPct = funnelWidths[i]
             const opacity = 0.4 + (i / 7) * 0.6
-            const gradientPos = (i / 7) * 100
 
             return (
               <Fade key={stage.number} delay={0.04 * i}>
@@ -80,11 +80,7 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                     onClick={() => setExpanded(isOpen ? null : i)}
                     style={isOpen ? { boxShadow: `0 0 40px ${partner.primaryColor}10` } : {}}
                   >
-                    {/* Gradient accent at top */}
-                    <div className="h-[3px]" style={{
-                      background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})`,
-                      opacity,
-                    }} />
+                    <div className="h-[3px]" style={{ background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})`, opacity }} />
 
                     <div className="p-5 md:p-6">
                       <div className="flex items-center justify-between">
@@ -127,7 +123,23 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                                   {groups.map((group, gi) => (
                                     <div key={gi}>
                                       <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">{group.label}</p>
-                                      {group.cols === 1 ? (
+
+                                      {/* Email type — scrollable container with fade */}
+                                      {group.type === 'email' ? (
+                                        <div className={`grid gap-4 ${group.cols === 1 ? 'max-w-sm' : `grid-cols-${group.cols}`}`} style={group.cols > 1 ? { gridTemplateColumns: `repeat(${group.cols}, minmax(0, 1fr))` } : {}}>
+                                          {group.images.map((img, idx) => (
+                                            <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                              <div className="max-h-[500px] overflow-y-auto scrollbar-hide">
+                                                <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+                                              </div>
+                                              <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style={{ background: 'linear-gradient(to top, #0F0F10, transparent)' }} />
+                                              <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
+                                                <span className="text-[10px] font-mono text-[#52525B] tracking-wider">SCROLL TO VIEW</span>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      ) : group.cols === 1 ? (
                                         <div className="max-w-xs">
                                           <div className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
                                             <img src={group.images[0]} alt="" className="w-full h-auto max-h-[480px] object-cover object-top" loading="lazy" />
@@ -158,7 +170,6 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
           })}
         </div>
 
-        {/* Funnel endpoint */}
         <Fade delay={0.4}>
           <div className="flex flex-col items-center mt-6">
             <div className="w-px h-8" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}60, transparent)` }} />
