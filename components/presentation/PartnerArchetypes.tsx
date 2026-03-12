@@ -35,19 +35,19 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
 
   return (
     <section className="py-20 md:py-32">
-      <div className="max-w-[960px] mx-auto px-5 md:px-12">
+      <div className="w-content px-5 md:px-12">
         <Fade>
           <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Partnership Models</span>
           <h2 className="font-display text-3xl md:text-5xl mt-3 mb-4 leading-[0.95]">Choose Your<br /><span className="text-gradient">Partnership Path</span></h2>
-          <p className="text-base md:text-[17px] text-[#B0B0B4] max-w-xl mb-3 leading-[1.75]">Choose the path that best matches your goals, timeline, and level of complexity.</p>
-          <p className="text-sm text-[#52525B] mb-8 md:mb-12">You do not need to configure this yourself. We scope the right structure based on your goals.</p>
+          <p className="text-base md:text-lg text-[#B0B0B4] max-w-xl mb-3 leading-[1.75]">Choose the path that best matches your goals, timeline, and level of complexity.</p>
+          <p className="text-sm md:text-base text-[#52525B] mb-8 md:mb-12">You do not need to configure this yourself. We scope the right structure based on your goals.</p>
         </Fade>
       </div>
 
-      <div className="max-w-[1100px] mx-auto px-4 md:px-6">
-        {/* Tab bar — horizontal scroll on mobile */}
+      <div className="w-content-wide px-4 md:px-6">
+        {/* Tab bar */}
         <Fade delay={0.1}>
-          <div className="flex gap-2 mb-6 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
+          <div className="flex gap-3 mb-8 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
             {pathOrder.map((pathId) => {
               const p = partnershipPaths[pathId]
               const isActive = activeTab === pathId
@@ -56,14 +56,14 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
                 <button
                   key={pathId}
                   onClick={() => handleTabClick(pathId)}
-                  className={`relative flex-1 min-w-[110px] px-4 py-3 md:px-5 md:py-4 rounded-2xl text-left transition-all duration-300 border ${isActive ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] bg-[#131315] hover:border-[#3A3A3F]'}`}
-                  style={isActive ? { boxShadow: `0 0 30px ${partner.primaryColor}10` } : {}}
+                  className={`relative flex-1 min-w-[140px] px-5 py-4 md:px-8 md:py-6 rounded-2xl text-left transition-all duration-300 border ${isActive ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] bg-[#131315] hover:border-[#3A3A3F]'}`}
+                  style={isActive ? { boxShadow: `0 0 40px ${partner.primaryColor}12` } : {}}
                 >
                   {isRec && (
-                    <span className="absolute -top-2.5 left-3 md:left-5 text-[9px] md:text-[10px] font-mono tracking-wider px-2 py-0.5 rounded-full" style={{ background: partner.primaryColor, color: '#0F0F10' }}>REC</span>
+                    <span className="absolute -top-2.5 left-4 md:left-6 text-[10px] md:text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full" style={{ background: partner.primaryColor, color: '#0F0F10' }}>REC</span>
                   )}
-                  <span className={`text-base md:text-lg font-semibold block ${isActive ? 'text-white' : 'text-[#A1A1AA]'}`}>{p.name}</span>
-                  <span className="text-xs md:text-sm text-[#71717A] mt-0.5 block">{p.tagline}</span>
+                  <span className={`text-lg md:text-xl font-bold block ${isActive ? 'text-white' : 'text-[#A1A1AA]'}`}>{p.name}</span>
+                  <span className="text-sm md:text-base text-[#71717A] mt-1 block">{p.tagline}</span>
                 </button>
               )
             })}
@@ -82,81 +82,83 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
               className="bg-[#131315] border border-[#2A2A2C] rounded-2xl md:rounded-3xl overflow-hidden"
               style={{ boxShadow: `0 0 60px ${partner.primaryColor}06` }}
             >
-              {/* Header */}
-              <div className="p-6 md:p-10 border-b border-[#2A2A2C]">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+              {/* Header — bigger, more breathing room */}
+              <div className="p-8 md:p-12 border-b border-[#2A2A2C]">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
-                    <h3 className="text-2xl md:text-3xl font-display mb-2">{path.name}</h3>
-                    <p className="text-sm md:text-base text-[#B0B0B4]">{path.bestFor}</p>
+                    <h3 className="text-3xl md:text-4xl font-display mb-2">{path.name}</h3>
+                    <p className="text-base md:text-lg text-[#B0B0B4]">{path.bestFor}</p>
                   </div>
-                  <span className="text-sm font-mono px-3 py-1.5 rounded-lg shrink-0 self-start" style={{ background: `${partner.primaryColor}12`, color: partner.primaryColor }}>
-                    Stages {path.includedStages[0]}–{path.includedStages[path.includedStages.length - 1]}
+                  <span className="text-sm md:text-base font-mono px-4 py-2 rounded-xl shrink-0 self-start" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor, border: `1px solid ${partner.primaryColor}30` }}>
+                    Stages {path.includedStages[0]}&ndash;{path.includedStages[path.includedStages.length - 1]}
                   </span>
                 </div>
               </div>
 
-              {/* Content — stacks on mobile */}
+              {/* Two-column content */}
               <div className="grid grid-cols-1 lg:grid-cols-2 border-b border-[#2A2A2C]">
-                <div className="p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-[#2A2A2C]">
-                  <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">Includes</p>
-                  <div className="flex flex-wrap gap-2 mb-8">
+                {/* Left: Includes + Extensions */}
+                <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#2A2A2C]">
+                  <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-5">Includes</p>
+                  <div className="flex flex-wrap gap-2.5 mb-10">
                     {path.includes.map((item) => (
-                      <span key={item} className="text-xs md:text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-[#1A1A1D] border border-[#2A2A2C] text-[#D4D4D8]">{item}</span>
+                      <span key={item} className="text-sm md:text-base px-4 py-2 md:px-5 md:py-2.5 rounded-xl bg-[#1A1A1D] border border-[#2A2A2C] text-[#D4D4D8] font-medium">{item}</span>
                     ))}
                   </div>
-                  <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">Recommended Extensions</p>
-                  <div className="space-y-2">
+                  <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-5">Recommended Extensions</p>
+                  <div className="space-y-4">
                     {recommendedExtensions.map((ext) => (
-                      <div key={ext.id} className="py-2">
-                        <span className="text-sm font-medium text-[#D4D4D8]">{ext.name}</span>
-                        <p className="text-xs text-[#71717A] mt-0.5">{ext.description}</p>
+                      <div key={ext.id} className="py-2 border-b border-[#2A2A2C]/40 last:border-0">
+                        <span className="text-base md:text-lg font-semibold text-[#D4D4D8]">{ext.name}</span>
+                        <p className="text-sm md:text-base text-[#71717A] mt-1">{ext.description}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="p-6 md:p-10">
-                  <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-5">Typical Pricing Frame</p>
-                  <div className="space-y-4 md:space-y-5">
+                {/* Right: Pricing frame */}
+                <div className="p-8 md:p-12">
+                  <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-6">Typical Pricing Frame</p>
+                  <div className="space-y-0">
                     {[
                       { label: 'Setup', value: path.setup.range },
                       { label: 'Monthly', value: path.monthly.starting },
                       { label: 'Duration', value: path.duration.recommended },
                       { label: 'Management', value: path.managementTier },
-                      { label: 'Impressions', value: path.impressionRecommendation.join(' – ') },
+                      { label: 'Impressions', value: path.impressionRecommendation.join(' \u2013 ') },
                       { label: 'Real-World', value: path.realWorldActivation },
                     ].map((row) => (
-                      <div key={row.label} className="flex items-start justify-between gap-3 pb-3 md:pb-4 border-b border-[#2A2A2C]/50">
-                        <span className="text-xs md:text-sm text-[#71717A]">{row.label}</span>
-                        <span className="text-xs md:text-sm font-mono font-semibold text-right" style={{ color: partner.primaryColor }}>{row.value}</span>
+                      <div key={row.label} className="flex items-center justify-between gap-4 py-4 md:py-5 border-b border-[#2A2A2C]/50 last:border-0">
+                        <span className="text-base md:text-lg text-[#A1A1AA]">{row.label}</span>
+                        <span className="text-base md:text-lg font-mono font-bold text-right" style={{ color: partner.primaryColor }}>{row.value}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Best fit + Example — stacked, tighter padding mobile */}
-              <div className="p-6 md:p-10 border-b border-[#2A2A2C]">
-                <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-3">Best Fit Use Case</p>
-                <p className="text-sm md:text-base text-[#D4D4D8]">{path.bestFitUseCase}</p>
+              {/* Best fit + Example — bigger type */}
+              <div className="p-8 md:p-12 border-b border-[#2A2A2C]">
+                <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-3">Best Fit Use Case</p>
+                <p className="text-base md:text-xl text-[#D4D4D8] font-medium">{path.bestFitUseCase}</p>
               </div>
 
-              <div className="p-6 md:p-10 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}04` }}>
-                <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-3">Example Scenario</p>
-                <h4 className="text-base md:text-lg font-semibold mb-2">{path.exampleScenario.title}</h4>
-                <p className="text-sm md:text-base text-[#B0B0B4]">{path.exampleScenario.description}</p>
+              <div className="p-8 md:p-12 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}04` }}>
+                <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-3">Example Scenario</p>
+                <h4 className="text-lg md:text-xl font-bold mb-2">{path.exampleScenario.title}</h4>
+                <p className="text-base md:text-lg text-[#B0B0B4]">{path.exampleScenario.description}</p>
               </div>
 
-              {/* CTA */}
-              <div className="p-6 md:p-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-4">
+              {/* CTA — bigger button */}
+              <div className="p-8 md:p-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <a
                   href={`mailto:jared@golfn.com?subject=Partnership%20Discussion%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}%20(${path.name}%20Path)`}
-                  className="inline-flex items-center gap-2 px-6 py-3 md:px-7 md:py-3.5 rounded-xl font-semibold text-sm md:text-base transition-all hover:scale-[1.02] w-full sm:w-auto justify-center"
+                  className="inline-flex items-center gap-2 px-8 py-4 md:px-10 md:py-4.5 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.02] w-full sm:w-auto justify-center"
                   style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}
                 >
                   Scope a {path.name} Program
                 </a>
-                <span className="text-sm text-[#52525B] hidden sm:block">or explore the other paths above</span>
+                <span className="text-base text-[#52525B] hidden sm:block">or explore the other paths above</span>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -164,8 +166,8 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
 
         {/* Multi-brand note */}
         <Fade delay={0.25}>
-          <div className="mt-6 md:mt-8 bg-[#131315] border border-[#2A2A2C] rounded-2xl p-5 md:p-7 border-l-[3px]" style={{ borderLeftColor: partner.secondaryColor }}>
-            <p className="text-sm md:text-[17px] text-[#B0B0B4]"><span className="text-white font-semibold">Multi-Brand Pricing:</span> When an agency activates multiple brands through GolfN, consolidated pricing applies. Efficiencies increase when campaign architecture, audience intelligence, and infrastructure are shared.</p>
+          <div className="mt-8 md:mt-10 bg-[#131315] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 border-l-[3px]" style={{ borderLeftColor: partner.secondaryColor }}>
+            <p className="text-base md:text-lg text-[#B0B0B4]"><span className="text-white font-semibold">Multi-Brand Pricing:</span> When an agency activates multiple brands through GolfN, consolidated pricing applies. Efficiencies increase when campaign architecture, audience intelligence, and infrastructure are shared.</p>
           </div>
         </Fade>
       </div>
