@@ -9,32 +9,33 @@ export const images = {
   srixonAd2: 'https://cdn.sanity.io/images/e3wja34v/production/37500f67f5ed6154a60f0859d289dbf49ae53942-526x1058.png',
   pointExchange: 'https://cdn.sanity.io/images/e3wja34v/production/50e76b526bb2c7ba2808fc22ec9c532cf9cabfc8-750x3802.png',
   marketplace: 'https://cdn.sanity.io/images/e3wja34v/production/e604b64cd4ce527750267b9c795f44363ed9d816-2364x5120.png',
-  // Points Exchange partner cards
   labPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/7bf965f5c6ddd349ae2218d198771e824daf07c8-6034x2754.png',
   miuraPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/5d6a476b28ef3a092bf2f7a8cfb625acfeb5bd67-6000x2720.png',
   bettinardiPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/b11a8f9b191b42a94d639cdeb773cbae91f40082-6000x2720.png',
   cobraPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/a9cd8b09f3ef0406c9c49fb4a68fba3fab495911-6000x2720.png',
-  // Sweepstakes cards
   cobraSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/144c9c147afe0f7b4123c22bac1f3f33cdb6c581-2064x2736.png',
   cobraOptmDriver: 'https://cdn.sanity.io/images/e3wja34v/production/2b335ca3ecbbbef6505dbec2342492026b0f68d2-2064x2736.png',
   miuraWedgeSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/6f59070d4a72006c3cea009b97a6757f43914e3d-2064x2736.png',
   wekopaSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/224336ee977d9a47804e28f23d3cbd6323505761-2064x2736.png',
-  // In-app messages
   inAppMsg1: 'https://cdn.sanity.io/images/e3wja34v/production/70e9eb2eb28c428a2c23b054fc08ccc547209a28-1500x2724.png',
   inAppMsg2: 'https://cdn.sanity.io/images/e3wja34v/production/75cc7f2d88ac8055e681f510641a87d90227e16d-1500x2376.png',
   inAppMsg3: 'https://cdn.sanity.io/images/e3wja34v/production/746dd0e86a286b4bed7ce4795a4544a87f631a3f-1500x2380.png',
   inAppMsg4: 'https://cdn.sanity.io/images/e3wja34v/production/3a32a80032045aa0bb4415457e9c74fce9ba07a8-1500x2700.png',
-  // Affiliate banners (post-sweepstakes intent conversion)
   affiliateBanner1: 'https://cdn.sanity.io/images/e3wja34v/production/87544612c15483d6efbf59d5b26f678e5c28622f-1071x396.png',
   affiliateBanner2: 'https://cdn.sanity.io/images/e3wja34v/production/03df2652606f3463874dea80418d6097195b0d42-1428x528.png',
   affiliateBanner3: 'https://cdn.sanity.io/images/e3wja34v/production/d260922f0fe64a2224f65eebfe007abdfa145879-1071x396.png',
-  // Targeted banner (intent-identified user)
   cobraOptmTargeted: 'https://cdn.sanity.io/images/e3wja34v/production/f5dc22cfdf19455b88c9f2bc61df8c7df337adc9-1500x3248.png',
-  // Social proof
   socialProof1: 'https://cdn.sanity.io/images/e3wja34v/production/dad0d094bfd4086f2537b3202feac3690bf8d9ec-6400x3600.png',
   socialProof2: 'https://cdn.sanity.io/images/e3wja34v/production/32613af5fe166425577aebdb9e167a2c26fe4fd2-4096x7280.png',
-  // Email campaigns
+  socialProof3: 'https://cdn.sanity.io/images/e3wja34v/production/2cf4f4b3a52d254435dcdabde9e4c109e24969f0-786x922.png',
+  socialProof4: 'https://cdn.sanity.io/images/e3wja34v/production/6cfb1ea1d9ebb830f74f6419cf133dfb5a081d5b-898x850.png',
+  socialProof5: 'https://cdn.sanity.io/images/e3wja34v/production/d6acc7b8da7e55f9989e5ad1b3927ede4a96ec0f-946x770.png',
   emailIntentFollowUp: 'https://cdn.sanity.io/images/e3wja34v/production/51d6a3937f93961fe3d32bab6b0dc74e690d5abf-2400x9616.png',
   emailNewProductDrop: 'https://cdn.sanity.io/images/e3wja34v/production/8e3d7aecea24038b9f1efef33533b3d4047cdbe3-1500x9188.png',
   emailSweepsAnnouncement: 'https://cdn.sanity.io/images/e3wja34v/production/f2a2102a0e40297c5ec48fc9164b0d94da8b78f5-2400x15600.png',
+  // Testimonials
+  testimonial1: 'https://cdn.sanity.io/images/e3wja34v/production/f93539e153ab24c1d284dfa7266882769657ce03-1024x1280.png',
+  testimonial2: 'https://cdn.sanity.io/images/e3wja34v/production/e8923e3ed5079a1b7decc6152201dd56b6d7bd35-1024x1280.png',
+  testimonial3: 'https://cdn.sanity.io/images/e3wja34v/production/8291715a9b95c451dd74a772a3db4d3412bdaae2-1024x1280.png',
+  testimonial4: 'https://cdn.sanity.io/images/e3wja34v/production/ee51b33d5db1e85811ad6232722c5018722a75b3-1024x1280.png',
 } as const
