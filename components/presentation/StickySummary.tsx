@@ -3,8 +3,18 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { usePartnership } from '@/lib/partnership-context'
-import { partnershipPaths } from '@/lib/partnership-paths'
+import { partnershipPaths, extensions as allExtensions } from '@/lib/partnership-paths'
 import type { PartnerConfig } from '@/lib/presentation-data'
+
+const goalLabels: Record<string, string> = {
+  awareness: 'Awareness', education: 'Education', activation: 'Activation',
+  conversion: 'Conversion', adoption: 'Adoption', advocacy: 'Advocacy',
+}
+
+function getExtensionName(id: string): string {
+  const ext = allExtensions.find(e => e.id === id)
+  return ext ? ext.name : id
+}
 
 export function StickySummary({ partner }: { partner: PartnerConfig }) {
   const { state, resetAll } = usePartnership()
@@ -20,7 +30,6 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Show after user scrolls past the selector section
   useEffect(() => {
     const handleScroll = () => {
       const bestFit = document.getElementById('best-fit')
@@ -37,11 +46,6 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
 
   const path = partnershipPaths[selectedPath]
 
-  const goalLabels: Record<string, string> = {
-    awareness: 'Awareness', education: 'Education', activation: 'Activation',
-    conversion: 'Conversion', adoption: 'Adoption', advocacy: 'Advocacy',
-  }
-
   // Mobile: bottom drawer
   if (isMobile) {
     return (
@@ -52,16 +56,10 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-0 left-0 right-0 z-40"
         >
-          <div className="bg-[#131315] border-t border-[#2A2A2C]" style={{ boxShadow: `0 -8px 40px rgba(0,0,0,0.5)` }}>
-            {/* Expanded content */}
+          <div className="bg-[#131315] border-t border-[#2A2A2C]" style={{ boxShadow: '0 -8px 40px rgba(0,0,0,0.5)' }}>
             <AnimatePresence>
               {isExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden border-b border-[#2A2A2C]"
-                >
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden border-b border-[#2A2A2C]">
                   <div className="px-5 py-4 space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
@@ -85,9 +83,15 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
                       <div>
                         <span className="text-[10px] font-mono text-[#52525B]">GOALS</span>
                         <div className="flex flex-wrap gap-1.5 mt-1">
-                          {selectedGoals.map(g => (
-                            <span key={g} className="text-[11px] px-2 py-0.5 rounded bg-[#1A1A1D] text-[#A1A1AA]">{goalLabels[g]}</span>
-                          ))}
+                          {selectedGoals.map(g => <span key={g} className="text-[11px] px-2 py-0.5 rounded bg-[#1A1A1D] text-[#A1A1AA]">{goalLabels[g]}</span>)}
+                        </div>
+                      </div>
+                    )}
+                    {selectedExtensions.length > 0 && (
+                      <div>
+                        <span className="text-[10px] font-mono text-[#52525B]">EXTENSIONS</span>
+                        <div className="flex flex-wrap gap-1.5 mt-1">
+                          {selectedExtensions.map(e => <span key={e} className="text-[11px] px-2 py-0.5 rounded bg-[#1A1A1D] text-[#A1A1AA]">{getExtensionName(e)}</span>)}
                         </div>
                       </div>
                     )}
@@ -96,14 +100,13 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
                 </motion.div>
               )}
             </AnimatePresence>
-
-            {/* Compact bar */}
             <div className="px-5 py-3 flex items-center justify-between" onClick={() => setIsExpanded(!isExpanded)}>
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full" style={{ background: partner.primaryColor }} />
                 <div>
                   <span className="text-sm font-semibold">{path.name} Path</span>
                   {isRecommended && <span className="text-[10px] font-mono ml-2" style={{ color: partner.primaryColor }}>REC</span>}
+                  {selectedExtensions.length > 0 && <span className="text-[10px] text-[#52525B] ml-2">+{selectedExtensions.length} ext</span>}
                 </div>
               </div>
               <a
@@ -134,7 +137,6 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
           className="bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden"
           style={{ boxShadow: `0 8px 40px rgba(0,0,0,0.4), 0 0 60px ${partner.primaryColor}08` }}
         >
-          {/* Header */}
           <div className="px-5 py-4 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}08` }}>
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
@@ -148,7 +150,6 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
             <p className="text-xs text-[#71717A]">{path.tagline}</p>
           </div>
 
-          {/* Pricing summary */}
           <div className="px-5 py-4 space-y-3 border-b border-[#2A2A2C]">
             {[
               { label: 'Setup', value: path.setup.range },
@@ -162,31 +163,24 @@ export function StickySummary({ partner }: { partner: PartnerConfig }) {
             ))}
           </div>
 
-          {/* Goals */}
           {selectedGoals.length > 0 && (
             <div className="px-5 py-3 border-b border-[#2A2A2C]">
               <span className="text-[10px] font-mono text-[#52525B] tracking-wider">GOALS</span>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
-                {selectedGoals.map(g => (
-                  <span key={g} className="text-[11px] px-2 py-0.5 rounded bg-[#1A1A1D] border border-[#2A2A2C] text-[#A1A1AA]">{goalLabels[g]}</span>
-                ))}
+                {selectedGoals.map(g => <span key={g} className="text-[11px] px-2 py-0.5 rounded bg-[#1A1A1D] border border-[#2A2A2C] text-[#A1A1AA]">{goalLabels[g]}</span>)}
               </div>
             </div>
           )}
 
-          {/* Extensions */}
           {selectedExtensions.length > 0 && (
             <div className="px-5 py-3 border-b border-[#2A2A2C]">
               <span className="text-[10px] font-mono text-[#52525B] tracking-wider">EXTENSIONS</span>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
-                {selectedExtensions.map(e => (
-                  <span key={e} className="text-[11px] px-2 py-0.5 rounded bg-[#1A1A1D] border border-[#2A2A2C] text-[#A1A1AA]">{e}</span>
-                ))}
+                {selectedExtensions.map(e => <span key={e} className="text-[11px] px-2 py-0.5 rounded bg-[#1A1A1D] border border-[#2A2A2C] text-[#A1A1AA]">{getExtensionName(e)}</span>)}
               </div>
             </div>
           )}
 
-          {/* Actions */}
           <div className="px-5 py-4 space-y-2">
             <a
               href={`mailto:jared@golfn.com?subject=Partnership%20Discussion%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}%20(${path.name}%20Path)`}
