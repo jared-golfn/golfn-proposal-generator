@@ -54,7 +54,7 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03]" style={{ background: `radial-gradient(ellipse 70% 50% at 20% 40%, ${partner.primaryColor}, transparent)` }} />
 
-      <div className="relative z-10 max-w-[960px] mx-auto w-full px-5 md:px-12 py-16 md:py-20">
+      <div className="relative z-10 w-content w-full px-5 md:px-12 py-16 md:py-20">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="flex items-center justify-between mb-16 md:mb-28">
           <img src={images.logo} alt="GolfN" className="h-8 md:h-12 w-auto" />
           <span className="text-[#8C8C8C] text-sm md:text-lg">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
