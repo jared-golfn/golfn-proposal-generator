@@ -19,15 +19,13 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
       <div className="absolute inset-0 opacity-[0.03]" style={{ background: `radial-gradient(ellipse 70% 50% at 20% 40%, ${partner.primaryColor}, transparent)` }} />
 
       <div className="relative z-10 max-w-[960px] mx-auto w-full px-6 md:px-12 py-20">
-        {/* Header with full wordmark logo */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="flex items-center justify-between mb-28">
           <img src={images.logo} alt="GolfN" className="h-10 md:h-12 w-auto" />
           <span className="text-[#8C8C8C] text-base">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
         </motion.div>
 
-        {/* Title + image */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center mb-12">
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.15 }} className="lg:col-span-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
+          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.15 }}>
             <h1 className="font-display text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] leading-[0.88] tracking-tight mb-8">
               Partnership<br /><span className="text-gradient">Structure</span>
             </h1>
@@ -36,22 +34,20 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
             </p>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 30, rotate: 0 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ duration: 1, delay: 0.4 }} className="lg:col-span-2 flex justify-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ duration: 1, delay: 0.4 }} className="flex justify-center">
             <div className="relative">
-              <div className="absolute inset-0 blur-[60px] opacity-[0.1] rounded-full" style={{ background: partner.primaryColor }} />
-              <img src={images.srixonAd1} alt="GolfN app" className="relative w-48 md:w-56 rounded-[24px]" style={{ filter: 'drop-shadow(0 32px 64px rgba(0,0,0,0.6))' }} />
+              <div className="absolute -inset-8 blur-[80px] opacity-[0.12] rounded-full" style={{ background: partner.primaryColor }} />
+              <img src={images.srixonAd1} alt="GolfN app" className="relative w-64 md:w-72 rounded-[28px]" style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }} />
             </div>
           </motion.div>
         </div>
 
-        {/* Not statements */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="flex flex-wrap gap-3 mb-24">
           {['Not a sponsorship', 'Not a sweepstakes company', 'Not a CPM product', 'Not a passive affiliate channel'].map((t) => (
             <span key={t} className="text-sm font-mono text-[#71717A] border border-[#2A2A2C] rounded-full px-5 py-2">{t}</span>
           ))}
         </motion.div>
 
-        {/* Stats */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {stats.map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + i * 0.06 }} className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-6 md:p-7">
@@ -62,10 +58,9 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
           ))}
         </motion.div>
 
-        {/* Partner line */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="mt-16 flex items-center gap-4">
           <div className="h-px w-16" style={{ background: partner.primaryColor }} />
-          <span className="text-base text-[#71717A]">{partner.productCategory} {"\u2014"} {partner.productNames.join(' \u00b7 ')}</span>
+          <span className="text-base text-[#71717A]">{partner.productCategory} \u2014 {partner.productNames.join(' \u00b7 ')}</span>
         </motion.div>
       </div>
 

@@ -20,7 +20,6 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
         <p className="text-[17px] text-[#B0B0B4] max-w-2xl mb-16 leading-[1.75]">GolfN\u2019s compensation is structured in three layers. Each reflects a distinct category of value. Together, they create aligned incentives: GolfN is compensated for strategic and operational work, then participates in the upside when measurable downstream results occur.</p>
       </Fade>
 
-      {/* Money Map */}
       <Fade delay={0.1}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-24">
           {[
@@ -39,7 +38,6 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
         </div>
       </Fade>
 
-      {/* Setup */}
       <Fade delay={0.15}>
         <h3 className="font-display text-3xl mb-2">{commercialModel.setup.title}</h3>
         <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.setup.description}</p>
@@ -54,7 +52,6 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
         </div>
       </Fade>
 
-      {/* Extensions */}
       <Fade delay={0.2}>
         <p className="text-base font-semibold text-[#A1A1AA] mb-4">Premium Content Extensions</p>
         <div className="flex flex-wrap gap-3 mb-20">
@@ -67,10 +64,9 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
         </div>
       </Fade>
 
-      {/* Impressions with image */}
       <Fade delay={0.25}>
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start mb-20">
-          <div className="lg:col-span-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-20">
+          <div>
             <h3 className="font-display text-3xl mb-2">{commercialModel.media.title}</h3>
             <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75]">{commercialModel.media.description}</p>
             <div className="bg-[#161618] border border-[#2A2A2C] rounded-2xl overflow-hidden">
@@ -90,16 +86,15 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
               </table>
             </div>
           </div>
-          <div className="lg:col-span-2 flex justify-center">
+          <div className="flex justify-center items-center">
             <div className="relative">
-              <div className="absolute inset-0 blur-[60px] opacity-[0.06] rounded-full" style={{ background: partner.primaryColor }} />
-              <img src={images.srixonAd2} alt="GolfN ad placement" className="relative w-44 md:w-52 rounded-[20px]" style={{ filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.5))', transform: 'rotate(-2deg)' }} />
+              <div className="absolute -inset-8 blur-[80px] opacity-[0.08] rounded-full" style={{ background: partner.primaryColor }} />
+              <img src={images.srixonAd2} alt="GolfN ad placement" className="relative w-56 md:w-64 rounded-[24px]" style={{ filter: 'drop-shadow(0 32px 64px rgba(0,0,0,0.6))', transform: 'rotate(-2deg)' }} />
             </div>
           </div>
         </div>
       </Fade>
 
-      {/* Performance */}
       <Fade delay={0.3}>
         <h3 className="font-display text-3xl mb-2">{commercialModel.performance.title}</h3>
         <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.performance.description}</p>
@@ -107,7 +102,7 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
           <div className="inline-block text-xs font-mono px-3 py-1 rounded-full mb-4" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>PREFERRED</div>
           <h4 className="text-xl font-semibold mb-3">{commercialModel.performance.preferred.name}</h4>
           <div className="text-5xl md:text-6xl font-bold font-mono mb-4" style={{ color: partner.primaryColor }}>{commercialModel.performance.preferred.range}</div>
-          <p className="text-lg text-[#A1A1AA] mb-4">Preferred: {commercialModel.performance.preferred.preferredRange} · Floor: {commercialModel.performance.preferred.floor}</p>
+          <p className="text-lg text-[#A1A1AA] mb-4">{"Preferred: " + commercialModel.performance.preferred.preferredRange + " \u00b7 Floor: " + commercialModel.performance.preferred.floor}</p>
           <p className="text-[17px] text-[#8C8C8C] leading-[1.75] max-w-2xl mb-4">{commercialModel.performance.preferred.description}</p>
           <p className="text-[15px] text-[#71717A] leading-[1.75] border-l-2 pl-5 mt-6" style={{ borderColor: `${partner.primaryColor}40` }}>{commercialModel.performance.preferred.whyNotAffiliate}</p>
         </div>
@@ -121,7 +116,6 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
         </div>
       </Fade>
 
-      {/* Separation note */}
       <Fade delay={0.35}>
         <div className="mt-16 bg-[#161618] border border-[#2A2A2C] rounded-2xl p-8 border-l-[3px]" style={{ borderLeftColor: partner.primaryColor }}>
           <p className="text-[17px] text-[#B0B0B4] leading-[1.75]"><span className="text-white font-semibold">Different fees fund different layers of value. They are separate by design.</span> The setup fee builds infrastructure. The monthly management fee runs and optimizes it. Impression spend pays for delivery volume. Performance economics are realized only when qualifying downstream actions occur. Each layer is independent.</p>

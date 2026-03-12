@@ -16,8 +16,8 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
 
   return (
     <section className="max-w-[960px] mx-auto px-6 md:px-12 py-32">
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start mb-16">
-        <div className="lg:col-span-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+        <div>
           <Fade>
             <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Eight Stages</span>
             <h2 className="font-display text-4xl md:text-6xl mt-3 mb-6 leading-[0.95]">Golfer<br /><span className="text-gradient">Progression</span></h2>
@@ -25,10 +25,10 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
           </Fade>
         </div>
         <Fade delay={0.3}>
-          <div className="lg:col-span-2 flex justify-center">
+          <div className="flex justify-center">
             <div className="relative">
-              <div className="absolute inset-0 blur-[60px] opacity-[0.07] rounded-full" style={{ background: partner.primaryColor }} />
-              <img src={images.offCourse} alt="GolfN app" className="relative w-44 md:w-48 rounded-[24px]" style={{ filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.5))', transform: 'rotate(2deg)' }} />
+              <div className="absolute -inset-8 blur-[80px] opacity-[0.08] rounded-full" style={{ background: partner.primaryColor }} />
+              <img src={images.offCourse} alt="GolfN app" className="relative w-56 md:w-64 rounded-[28px]" style={{ filter: 'drop-shadow(0 32px 64px rgba(0,0,0,0.6))', transform: 'rotate(2deg)' }} />
             </div>
           </div>
         </Fade>
@@ -54,7 +54,7 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                         {!isOpen && <p className="text-sm text-[#71717A] mt-0.5 hidden md:block">{stage.short}</p>}
                       </div>
                     </div>
-                    <motion.span animate={{ rotate: isOpen ? 180 : 0 }} className="text-[#52525B] text-lg">\u25be</motion.span>
+                    <motion.span animate={{ rotate: isOpen ? 180 : 0 }} className="text-[#52525B] text-xl">{"\u25BE"}</motion.span>
                   </div>
                   {isOpen && (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5 pt-5 border-t border-[#2A2A2C]">
@@ -74,7 +74,7 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
       </div>
 
       <Fade delay={0.4}>
-        <p className="text-center text-sm text-[#71717A] font-mono mt-12 tracking-wide">Fuller-funnel attribution \u00b7 Measurable progression \u00b7 Across the golfer journey</p>
+        <p className="text-center text-sm text-[#71717A] font-mono mt-12 tracking-wide">{"Fuller-funnel attribution \u00b7 Measurable progression \u00b7 Across the golfer journey"}</p>
       </Fade>
     </section>
   )
