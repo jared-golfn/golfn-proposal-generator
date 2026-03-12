@@ -19,4 +19,9 @@ export const images = {
   cobraOptmDriver: 'https://cdn.sanity.io/images/e3wja34v/production/2b335ca3ecbbbef6505dbec2342492026b0f68d2-2064x2736.png',
   miuraWedgeSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/6f59070d4a72006c3cea009b97a6757f43914e3d-2064x2736.png',
   wekopaSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/224336ee977d9a47804e28f23d3cbd6323505761-2064x2736.png',
+  // In-app messages
+  inAppMsg1: 'https://cdn.sanity.io/images/e3wja34v/production/70e9eb2eb28c428a2c23b054fc08ccc547209a28-1500x2724.png',
+  inAppMsg2: 'https://cdn.sanity.io/images/e3wja34v/production/75cc7f2d88ac8055e681f510641a87d90227e16d-1500x2376.png',
+  inAppMsg3: 'https://cdn.sanity.io/images/e3wja34v/production/746dd0e86a286b4bed7ce4795a4544a87f631a3f-1500x2380.png',
+  inAppMsg4: 'https://cdn.sanity.io/images/e3wja34v/production/3a32a80032045aa0bb4415457e9c74fce9ba07a8-1500x2700.png',
 } as const
