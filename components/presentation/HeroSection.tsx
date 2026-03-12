@@ -7,8 +7,8 @@ import { images } from '@/lib/images'
 
 const stats = [
   { value: platformStats.registeredUsers, label: 'Registered Users', sub: platformStats.monthlyGrowth + ' growth', highlight: true },
-  { value: platformStats.powerUsers, label: 'Power Users', sub: platformStats.powerUsersLabel },
-  { value: platformStats.peakMAU, label: 'Peak MAU', sub: 'Monthly active users' },
+  { value: platformStats.powerUsers, label: 'High-Value Users', sub: '30+ logins/mo avg', tooltip: 'Golfers who log in 30+ times per month and actively engage with partner content, offers, and progression.' },
+  { value: platformStats.peakMAU, label: 'Monthly Active Users', sub: 'Peak monthly active' },
   { value: platformStats.under34, label: 'Under 34', sub: 'Core demographic' },
   { value: platformStats.avgMonthlyLogins, label: 'Avg. Logins/Mo', sub: 'Per user' },
   { value: platformStats.countries, label: 'Countries', sub: 'Global reach' },
@@ -46,6 +46,45 @@ function TooltipChip({ label, tooltip, color }: { label: string; tooltip: string
         </motion.div>
       )}
     </div>
+  )
+}
+
+function StatCard({ stat, index, partner }: { stat: typeof stats[0]; index: number; partner: PartnerConfig }) {
+  const [showTip, setShowTip] = useState(false)
+  const hasTip = 'tooltip' in stat && stat.tooltip
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.8 + index * 0.06 }}
+      className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-8 relative"
+      onMouseEnter={() => hasTip && setShowTip(true)}
+      onMouseLeave={() => hasTip && setShowTip(false)}
+    >
+      <div className="text-2xl md:text-4xl font-bold font-mono tracking-tight mb-1" style={{ color: stat.highlight ? partner.primaryColor : '#FAFAFA' }}>{stat.value}</div>
+      <div className="text-sm md:text-base font-semibold text-[#A1A1AA] flex items-center gap-1.5">
+        {stat.label}
+        {hasTip && (
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="text-[#52525B] shrink-0">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M8 7v4M8 5.5v0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        )}
+      </div>
+      <div className="text-xs md:text-sm text-[#71717A] mt-0.5">{stat.sub}</div>
+      {hasTip && showTip && (
+        <motion.div
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute left-0 top-full mt-2 z-20 w-72 md:w-80"
+        >
+          <div className="bg-[#1A1A1D] border border-[#2A2A2C] rounded-xl p-4 shadow-xl" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+            <p className="text-sm text-[#D4D4D8] leading-relaxed">{stat.tooltip}</p>
+          </div>
+        </motion.div>
+      )}
+    </motion.div>
   )
 }
 
@@ -102,11 +141,7 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
           {stats.map((s, i) => (
-            <motion.div key={s.label} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + i * 0.06 }} className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-8">
-              <div className="text-2xl md:text-4xl font-bold font-mono tracking-tight mb-1" style={{ color: s.highlight ? partner.primaryColor : '#FAFAFA' }}>{s.value}</div>
-              <div className="text-sm md:text-base font-semibold text-[#A1A1AA]">{s.label}</div>
-              <div className="text-xs md:text-sm text-[#71717A] mt-0.5">{s.sub}</div>
-            </motion.div>
+            <StatCard key={s.label} stat={s} index={i} partner={partner} />
           ))}
         </motion.div>
 
