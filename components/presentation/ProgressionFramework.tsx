@@ -34,6 +34,7 @@ const stageImageGroups: Record<number, ImageGroup[]> = {
   ],
   7: [
     { label: 'OAuth-Verified Social Proof', images: [images.socialProof1, images.socialProof2], cols: 2 },
+    { label: 'User-Generated Social Proof', images: [images.socialProof3, images.socialProof4, images.socialProof5], cols: 3 },
   ],
 }
 
@@ -102,7 +103,6 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
 
       {/* Funnel with SVG background shape */}
       <div className="relative max-w-[1100px] mx-auto px-4 md:px-6">
-        {/* SVG funnel fill — much more visible */}
         <svg className="absolute pointer-events-none" style={{ top: '-40px', left: '-60px', right: '-60px', bottom: '-40px', width: 'calc(100% + 120px)', height: 'calc(100% + 80px)' }} preserveAspectRatio="none" viewBox="0 0 1200 100">
           <defs>
             <linearGradient id="funnelGrad" x1="0" y1="0" x2="0" y2="1">
@@ -113,7 +113,6 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
           <polygon points="0,0 1200,0 900,100 300,100" fill="url(#funnelGrad)" />
         </svg>
 
-        {/* Funnel edge lines — bolder */}
         <svg className="absolute pointer-events-none" style={{ top: '-40px', left: '-60px', right: '-60px', bottom: '-40px', width: 'calc(100% + 120px)', height: 'calc(100% + 80px)' }} preserveAspectRatio="none" viewBox="0 0 1200 100">
           <line x1="20" y1="0" x2="310" y2="100" stroke={partner.primaryColor} strokeWidth="0.3" strokeOpacity="0.25" />
           <line x1="1180" y1="0" x2="890" y2="100" stroke={partner.primaryColor} strokeWidth="0.3" strokeOpacity="0.25" />
@@ -192,7 +191,6 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
         </div>
       </div>
 
-      {/* Funnel endpoint */}
       <Fade delay={0.4}>
         <div className="flex flex-col items-center mt-8">
           <div className="w-px h-10" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}60, transparent)` }} />
