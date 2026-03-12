@@ -24,4 +24,13 @@ export const images = {
   inAppMsg2: 'https://cdn.sanity.io/images/e3wja34v/production/75cc7f2d88ac8055e681f510641a87d90227e16d-1500x2376.png',
   inAppMsg3: 'https://cdn.sanity.io/images/e3wja34v/production/746dd0e86a286b4bed7ce4795a4544a87f631a3f-1500x2380.png',
   inAppMsg4: 'https://cdn.sanity.io/images/e3wja34v/production/3a32a80032045aa0bb4415457e9c74fce9ba07a8-1500x2700.png',
+  // Affiliate banners (post-sweepstakes intent conversion)
+  affiliateBanner1: 'https://cdn.sanity.io/images/e3wja34v/production/87544612c15483d6efbf59d5b26f678e5c28622f-1071x396.png',
+  affiliateBanner2: 'https://cdn.sanity.io/images/e3wja34v/production/03df2652606f3463874dea80418d6097195b0d42-1428x528.png',
+  affiliateBanner3: 'https://cdn.sanity.io/images/e3wja34v/production/d260922f0fe64a2224f65eebfe007abdfa145879-1071x396.png',
+  // Targeted banner (intent-identified user)
+  cobraOptmTargeted: 'https://cdn.sanity.io/images/e3wja34v/production/f5dc22cfdf19455b88c9f2bc61df8c7df337adc9-1500x3248.png',
+  // Social proof
+  socialProof1: 'https://cdn.sanity.io/images/e3wja34v/production/dad0d094bfd4086f2537b3202feac3690bf8d9ec-6400x3600.png',
+  socialProof2: 'https://cdn.sanity.io/images/e3wja34v/production/32613af5fe166425577aebdb9e167a2c26fe4fd2-4096x7280.png',
 } as const
