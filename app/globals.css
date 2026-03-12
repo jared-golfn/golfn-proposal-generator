@@ -81,15 +81,15 @@
 .w-content-wider { max-width: var(--content-wider); margin-left: auto; margin-right: auto; }
 
 /*
- * Override hardcoded Tailwind max-width classes on large screens.
- * This catches any component still using max-w-[960px] etc.
- * and makes them scale fluidly with the viewport.
+ * BULLETPROOF: Override hardcoded Tailwind max-widths on large screens
+ * using attribute selectors that match the class STRING in the HTML.
+ * This works regardless of how Tailwind v4 JIT compiles class names.
  */
 @media (min-width: 1440px) {
-  .max-w-\[960px\]  { max-width: var(--content-width) !important; }
-  .max-w-\[1100px\] { max-width: var(--content-wide) !important; }
-  .max-w-\[1200px\] { max-width: var(--content-wider) !important; }
-  .max-w-\[1280px\] { max-width: var(--content-wider) !important; }
+  [class*="max-w-[960px]"]  { max-width: var(--content-width) !important; }
+  [class*="max-w-[1100px]"] { max-width: var(--content-wide) !important; }
+  [class*="max-w-[1200px]"] { max-width: var(--content-wider) !important; }
+  [class*="max-w-[1280px]"] { max-width: var(--content-wider) !important; }
 }
 
 .text-gradient {
