@@ -37,9 +37,43 @@ const stageImageGroups: Record<number, ImageGroup[]> = {
   ],
 }
 
-// Funnel: starts wide (1280px) and narrows to content width (960px)
-// Using pixel max-widths for clean control
-const funnelMaxWidths = [1280, 1234, 1188, 1142, 1096, 1050, 1004, 960]
+function ImageGroupRenderer({ group }: { group: ImageGroup }) {
+  if (group.type === 'email') {
+    return (
+      <div className={`grid gap-4 ${group.cols === 1 ? 'max-w-sm' : ''}`} style={group.cols > 1 ? { gridTemplateColumns: `repeat(${group.cols}, minmax(0, 1fr))` } : {}}>
+        {group.images.map((img, idx) => (
+          <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+            <div className="max-h-[500px] overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
+              <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style={{ background: 'linear-gradient(to top, #0F0F10, transparent)' }} />
+            <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
+              <span className="text-[10px] font-mono text-[#52525B] tracking-wider">SCROLL TO VIEW</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  if (group.cols === 1) {
+    return (
+      <div className="max-w-xs">
+        <div className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+          <img src={group.images[0]} alt="" className="w-full h-auto max-h-[480px] object-cover object-top" loading="lazy" />
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${Math.min(group.cols, 4)}, minmax(0, 1fr))` }}>
+      {group.images.map((img, idx) => (
+        <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+          <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
   const [expanded, setExpanded] = useState<number | null>(null)
@@ -66,17 +100,29 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
         </div>
       </div>
 
-      {/* Funnel stages */}
-      <div className="flex flex-col items-center gap-2 px-4 md:px-6">
-        {progressionStages.map((stage, i) => {
-          const isOpen = expanded === i
-          const groups = stageImageGroups[stage.number]
-          const maxW = funnelMaxWidths[i]
-          const opacity = 0.35 + (i / 7) * 0.65
+      {/* Funnel with SVG background shape */}
+      <div className="relative max-w-[1100px] mx-auto px-4 md:px-6">
+        {/* SVG funnel shape behind the cards */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" viewBox="0 0 1100 100" style={{ opacity: 0.04 }}>
+          <polygon points="0,0 1100,0 850,100 250,100" fill={partner.primaryColor} />
+        </svg>
 
-          return (
-            <Fade key={stage.number} delay={0.04 * i}>
-              <div style={{ maxWidth: `${maxW}px`, width: '100%' }}>
+        {/* Left and right funnel edge lines */}
+        <div className="absolute top-0 bottom-0 left-0 right-0 pointer-events-none overflow-hidden">
+          <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <line x1="2" y1="0" x2="20" y2="100" stroke={partner.primaryColor} strokeWidth="0.15" strokeOpacity="0.2" />
+            <line x1="98" y1="0" x2="80" y2="100" stroke={partner.primaryColor} strokeWidth="0.15" strokeOpacity="0.2" />
+          </svg>
+        </div>
+
+        <div className="relative space-y-3">
+          {progressionStages.map((stage, i) => {
+            const isOpen = expanded === i
+            const groups = stageImageGroups[stage.number]
+            const opacity = 0.35 + (i / 7) * 0.65
+
+            return (
+              <Fade key={stage.number} delay={0.04 * i}>
                 <div
                   className={`relative border rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${isOpen ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] hover:border-[#3A3A3F] bg-[#131315]'}`}
                   onClick={() => setExpanded(isOpen ? null : i)}
@@ -125,36 +171,7 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                                 {groups.map((group, gi) => (
                                   <div key={gi}>
                                     <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">{group.label}</p>
-
-                                    {group.type === 'email' ? (
-                                      <div className={`grid gap-4 ${group.cols === 1 ? 'max-w-sm' : ''}`} style={group.cols > 1 ? { gridTemplateColumns: `repeat(${group.cols}, minmax(0, 1fr))` } : {}}>
-                                        {group.images.map((img, idx) => (
-                                          <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
-                                            <div className="max-h-[500px] overflow-y-auto scrollbar-hide">
-                                              <img src={img} alt="" className="w-full h-auto" loading="lazy" />
-                                            </div>
-                                            <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style={{ background: 'linear-gradient(to top, #0F0F10, transparent)' }} />
-                                            <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
-                                              <span className="text-[10px] font-mono text-[#52525B] tracking-wider">SCROLL TO VIEW</span>
-                                            </div>
-                                          </div>
-                                        ))}
-                                      </div>
-                                    ) : group.cols === 1 ? (
-                                      <div className="max-w-xs">
-                                        <div className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
-                                          <img src={group.images[0]} alt="" className="w-full h-auto max-h-[480px] object-cover object-top" loading="lazy" />
-                                        </div>
-                                      </div>
-                                    ) : (
-                                      <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${Math.min(group.cols, 4)}, minmax(0, 1fr))` }}>
-                                        {group.images.map((img, idx) => (
-                                          <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
-                                            <img src={img} alt="" className="w-full h-auto" loading="lazy" />
-                                          </div>
-                                        ))}
-                                      </div>
-                                    )}
+                                    <ImageGroupRenderer group={group} />
                                   </div>
                                 ))}
                               </div>
@@ -165,16 +182,16 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                     </AnimatePresence>
                   </div>
                 </div>
-              </div>
-            </Fade>
-          )
-        })}
+              </Fade>
+            )
+          })}
+        </div>
       </div>
 
       {/* Funnel endpoint */}
       <Fade delay={0.4}>
-        <div className="flex flex-col items-center mt-6">
-          <div className="w-px h-8" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}60, transparent)` }} />
+        <div className="flex flex-col items-center mt-8">
+          <div className="w-px h-10" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}60, transparent)` }} />
           <div className="mt-2 px-6 py-3 rounded-full border border-[#2A2A2C] bg-[#131315]">
             <span className="text-sm font-mono text-[#71717A] tracking-wide">Fuller-funnel attribution · Measurable progression · Across the golfer journey</span>
           </div>
