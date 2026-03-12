@@ -1,33 +1,23 @@
 'use client'
 
-import { createContext, useContext, useReducer, type ReactNode } from 'react'
+import { createContext, useContext, useReducer, useMemo, type ReactNode } from 'react'
 import type { PathId, GoalId, ExtensionId, NeedId, ComplexityId, ActivationImportance, ViewMode } from './partnership-paths'
+import { partnershipPaths } from './partnership-paths'
 import { recommendPath, type SelectorAnswers, type RecommendationResult } from './recommendation-engine'
 
 // --- State Shape ---
 
 export interface PartnershipState {
-  // Path selection
   selectedPath: PathId | null
-  isRecommended: boolean // true if path was set by the recommendation engine
-
-  // Selector answers
+  isRecommended: boolean
   selectedNeed: NeedId | null
   selectedGoals: GoalId[]
   selectedComplexity: ComplexityId | null
   selectedActivation: ActivationImportance | null
-
-  // Extensions
   selectedExtensions: ExtensionId[]
-
-  // View mode
   viewMode: ViewMode
-
-  // Recommendation result
   recommendation: RecommendationResult | null
-
-  // Selector completion state
-  selectorStep: number // 0 = not started, 1-4 = in progress, 5 = complete
+  selectorStep: number
 }
 
 const initialState: PartnershipState = {
@@ -62,19 +52,10 @@ type Action =
 function reducer(state: PartnershipState, action: Action): PartnershipState {
   switch (action.type) {
     case 'SET_PATH':
-      return {
-        ...state,
-        selectedPath: action.path,
-        isRecommended: action.fromRecommendation ?? false,
-      }
+      return { ...state, selectedPath: action.path, isRecommended: action.fromRecommendation ?? false }
 
     case 'CLEAR_PATH':
-      return {
-        ...state,
-        selectedPath: null,
-        isRecommended: false,
-        recommendation: null,
-      }
+      return { ...state, selectedPath: null, isRecommended: false, recommendation: null }
 
     case 'SET_NEED':
       return { ...state, selectedNeed: action.need }
@@ -113,13 +94,7 @@ function reducer(state: PartnershipState, action: Action): PartnershipState {
         activation: state.selectedActivation ?? undefined,
       }
       const result = recommendPath(answers)
-      return {
-        ...state,
-        recommendation: result,
-        selectedPath: result.recommended,
-        isRecommended: true,
-        selectorStep: 5,
-      }
+      return { ...state, recommendation: result, selectedPath: result.recommended, isRecommended: true, selectorStep: 5 }
     }
 
     case 'SET_SELECTOR_STEP':
@@ -138,8 +113,6 @@ function reducer(state: PartnershipState, action: Action): PartnershipState {
 interface PartnershipContextValue {
   state: PartnershipState
   dispatch: React.Dispatch<Action>
-
-  // Convenience helpers
   setPath: (path: PathId) => void
   clearPath: () => void
   toggleGoal: (goal: GoalId) => void
@@ -148,6 +121,7 @@ interface PartnershipContextValue {
   resetAll: () => void
   isStageIncluded: (stageNumber: number) => boolean
   isExtensionRecommended: (extensionId: ExtensionId) => boolean
+  getSelectedPath: () => typeof partnershipPaths[PathId] | null
 }
 
 const PartnershipContext = createContext<PartnershipContextValue | null>(null)
@@ -157,7 +131,7 @@ const PartnershipContext = createContext<PartnershipContextValue | null>(null)
 export function PartnershipProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const value: PartnershipContextValue = {
+  const value = useMemo<PartnershipContextValue>(() => ({
     state,
     dispatch,
 
@@ -169,19 +143,20 @@ export function PartnershipProvider({ children }: { children: ReactNode }) {
     resetAll: () => dispatch({ type: 'RESET_ALL' }),
 
     isStageIncluded: (stageNumber) => {
-      if (!state.selectedPath) return true // no path = all stages shown
-      const { partnershipPaths } = require('./partnership-paths')
-      const path = partnershipPaths[state.selectedPath]
-      return path.includedStages.includes(stageNumber)
+      if (!state.selectedPath) return true
+      return partnershipPaths[state.selectedPath].includedStages.includes(stageNumber)
     },
 
     isExtensionRecommended: (extensionId) => {
       if (!state.selectedPath) return false
-      const { partnershipPaths } = require('./partnership-paths')
-      const path = partnershipPaths[state.selectedPath]
-      return path.recommendedExtensions.includes(extensionId)
+      return partnershipPaths[state.selectedPath].recommendedExtensions.includes(extensionId)
     },
-  }
+
+    getSelectedPath: () => {
+      if (!state.selectedPath) return null
+      return partnershipPaths[state.selectedPath]
+    },
+  }), [state])
 
   return (
     <PartnershipContext.Provider value={value}>
