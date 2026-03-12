@@ -12,6 +12,7 @@ import { PartnerArchetypes } from '@/components/presentation/PartnerArchetypes'
 import { Extensions } from '@/components/presentation/Extensions'
 import { DailyGrindEvolution } from '@/components/presentation/DailyGrindEvolution'
 import { AttentionToGrowth } from '@/components/presentation/AttentionToGrowth'
+import { ReportingExpectations } from '@/components/presentation/ReportingExpectations'
 import { ScrollNav } from '@/components/presentation/ScrollNav'
 import { Thresholds } from '@/components/presentation/Thresholds'
 import { Testimonials } from '@/components/presentation/Testimonials'
@@ -27,6 +28,7 @@ const sections = [
   { id: 'extensions', label: 'Extensions' },
   { id: 'thresholds', label: 'Requirements' },
   { id: 'growth-engine', label: 'Growth Engine' },
+  { id: 'reporting', label: 'Reporting' },
   { id: 'progression', label: 'Progression' },
   { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'testimonials', label: 'Proof' },
@@ -62,6 +64,8 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
         <div id="thresholds"><Thresholds partner={partner} /></div>
         <Divider />
         <div id="growth-engine"><AttentionToGrowth partner={partner} /></div>
+        <Divider />
+        <div id="reporting"><ReportingExpectations partner={partner} /></div>
         <Divider />
         <div id="progression"><ProgressionFramework partner={partner} /></div>
         <Divider />
