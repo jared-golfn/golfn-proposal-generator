@@ -102,18 +102,22 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
 
       {/* Funnel with SVG background shape */}
       <div className="relative max-w-[1100px] mx-auto px-4 md:px-6">
-        {/* SVG funnel shape behind the cards */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" viewBox="0 0 1100 100" style={{ opacity: 0.04 }}>
-          <polygon points="0,0 1100,0 850,100 250,100" fill={partner.primaryColor} />
+        {/* SVG funnel fill — much more visible */}
+        <svg className="absolute pointer-events-none" style={{ top: '-40px', left: '-60px', right: '-60px', bottom: '-40px', width: 'calc(100% + 120px)', height: 'calc(100% + 80px)' }} preserveAspectRatio="none" viewBox="0 0 1200 100">
+          <defs>
+            <linearGradient id="funnelGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={partner.primaryColor} stopOpacity="0.07" />
+              <stop offset="100%" stopColor={partner.primaryColor} stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+          <polygon points="0,0 1200,0 900,100 300,100" fill="url(#funnelGrad)" />
         </svg>
 
-        {/* Left and right funnel edge lines */}
-        <div className="absolute top-0 bottom-0 left-0 right-0 pointer-events-none overflow-hidden">
-          <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-            <line x1="2" y1="0" x2="20" y2="100" stroke={partner.primaryColor} strokeWidth="0.15" strokeOpacity="0.2" />
-            <line x1="98" y1="0" x2="80" y2="100" stroke={partner.primaryColor} strokeWidth="0.15" strokeOpacity="0.2" />
-          </svg>
-        </div>
+        {/* Funnel edge lines — bolder */}
+        <svg className="absolute pointer-events-none" style={{ top: '-40px', left: '-60px', right: '-60px', bottom: '-40px', width: 'calc(100% + 120px)', height: 'calc(100% + 80px)' }} preserveAspectRatio="none" viewBox="0 0 1200 100">
+          <line x1="20" y1="0" x2="310" y2="100" stroke={partner.primaryColor} strokeWidth="0.3" strokeOpacity="0.25" />
+          <line x1="1180" y1="0" x2="890" y2="100" stroke={partner.primaryColor} strokeWidth="0.3" strokeOpacity="0.25" />
+        </svg>
 
         <div className="relative space-y-3">
           {progressionStages.map((stage, i) => {
@@ -130,20 +134,20 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                 >
                   <div className="h-[3px]" style={{ background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})`, opacity }} />
 
-                  <div className="p-5 md:p-7">
+                  <div className="px-6 py-7 md:px-8 md:py-9">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-5">
-                        <span className="font-mono text-2xl md:text-3xl font-bold" style={{ color: partner.primaryColor, opacity }}>{String(stage.number).padStart(2, '0')}</span>
+                      <div className="flex items-center gap-6">
+                        <span className="font-mono text-3xl md:text-4xl font-bold" style={{ color: partner.primaryColor, opacity }}>{String(stage.number).padStart(2, '0')}</span>
                         <div>
-                          <h3 className="text-lg md:text-xl font-semibold">{stage.name}</h3>
-                          {!isOpen && <p className="text-sm text-[#71717A] mt-0.5 hidden md:block">{stage.short}</p>}
+                          <h3 className="text-xl md:text-2xl font-semibold">{stage.name}</h3>
+                          {!isOpen && <p className="text-base text-[#71717A] mt-1 hidden md:block">{stage.short}</p>}
                         </div>
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
                         {groups && !isOpen && (
                           <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded bg-[#2A2A2C] text-[#8C8C8C] hidden md:block">EXAMPLES</span>
                         )}
-                        <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="20" height="20" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
+                        <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="22" height="22" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
                           <path d="M5 8l5 5 5-5" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" />
                         </motion.svg>
                       </div>
@@ -158,7 +162,7 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                           transition={{ duration: 0.3 }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-5 pt-5 border-t border-[#2A2A2C]">
+                          <div className="mt-6 pt-6 border-t border-[#2A2A2C]">
                             <p className="text-[17px] text-[#B0B0B4] leading-[1.75] mb-5">{stage.detail}</p>
                             <div className="flex flex-wrap gap-2">
                               {stage.channels.map((ch) => (
