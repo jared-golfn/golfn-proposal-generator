@@ -24,6 +24,37 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  :root {
+    /* Fluid content widths that scale with viewport */
+    --content-width: min(960px, 90vw);
+    --content-wide: min(1100px, 92vw);
+    --content-wider: min(1280px, 94vw);
+  }
+
+  @media (min-width: 1440px) {
+    :root {
+      --content-width: min(1080px, 75vw);
+      --content-wide: min(1280px, 82vw);
+      --content-wider: min(1400px, 88vw);
+    }
+  }
+
+  @media (min-width: 1920px) {
+    :root {
+      --content-width: min(1200px, 65vw);
+      --content-wide: min(1400px, 72vw);
+      --content-wider: min(1520px, 80vw);
+    }
+  }
+
+  @media (min-width: 2560px) {
+    :root {
+      --content-width: min(1320px, 52vw);
+      --content-wide: min(1520px, 60vw);
+      --content-wider: min(1680px, 66vw);
+    }
+  }
+
   body {
     background: #0F0F10;
     color: #FAFAFA;
@@ -32,10 +63,15 @@
     line-height: 1.7;
   }
 
-  /* Bump base font on larger screens for readability */
   @media (min-width: 768px) {
     body {
       font-size: 18px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    body {
+      font-size: 19px;
     }
   }
 
@@ -43,6 +79,11 @@
     background: color-mix(in srgb, #17A455 30%, transparent);
   }
 }
+
+/* Utility classes for fluid content widths */
+.w-content { max-width: var(--content-width); margin-left: auto; margin-right: auto; }
+.w-content-wide { max-width: var(--content-wide); margin-left: auto; margin-right: auto; }
+.w-content-wider { max-width: var(--content-wider); margin-left: auto; margin-right: auto; }
 
 .text-gradient {
   background: linear-gradient(135deg, #17A455, #8DC54A);
