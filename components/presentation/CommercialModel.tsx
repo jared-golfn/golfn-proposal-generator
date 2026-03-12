@@ -17,16 +17,16 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
       <Fade>
         <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Three-Layer Model</span>
         <h2 className="font-display text-4xl md:text-6xl mt-3 mb-6 leading-[0.95]">Commercial<br /><span className="text-gradient">Architecture</span></h2>
-        <p className="text-[17px] text-[#B0B0B4] max-w-2xl mb-16 leading-[1.75]">GolfN\u2019s compensation is structured in three layers. Each reflects a distinct category of value. Together, they create aligned incentives: GolfN is compensated for strategic and operational work, then participates in the upside when measurable downstream results occur.</p>
+        <p className="text-[17px] text-[#B0B0B4] max-w-2xl mb-16 leading-[1.75]">GolfN's compensation is structured in three layers. Each reflects a distinct category of value. Together, they create aligned incentives: GolfN is compensated for strategic and operational work, then participates in the upside when measurable downstream results occur.</p>
       </Fade>
 
       <Fade delay={0.1}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-24">
           {[
-            { label: 'SETUP', sub: 'One-Time', range: '$7.5K\u2013$35K+' },
-            { label: 'MANAGEMENT', sub: 'Monthly', range: '$2.5K\u2013$6.5K/mo' },
-            { label: 'MEDIA', sub: 'Impressions', range: '$3.5K\u2013$30K+' },
-            { label: 'PERFORMANCE', sub: 'Variable', range: '20\u201340%' },
+            { label: 'SETUP', sub: 'One-Time', range: '$7.5K–$35K+' },
+            { label: 'MANAGEMENT', sub: 'Monthly', range: '$2.5K–$6.5K/mo' },
+            { label: 'MEDIA', sub: 'Impressions', range: '$3.5K–$30K+' },
+            { label: 'PERFORMANCE', sub: 'Variable', range: '20–40%' },
           ].map((c, i) => (
             <div key={c.label} className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-6 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: i < 2 ? partner.primaryColor : partner.secondaryColor }} />
@@ -102,7 +102,7 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
           <div className="inline-block text-xs font-mono px-3 py-1 rounded-full mb-4" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>PREFERRED</div>
           <h4 className="text-xl font-semibold mb-3">{commercialModel.performance.preferred.name}</h4>
           <div className="text-5xl md:text-6xl font-bold font-mono mb-4" style={{ color: partner.primaryColor }}>{commercialModel.performance.preferred.range}</div>
-          <p className="text-lg text-[#A1A1AA] mb-4">{"Preferred: " + commercialModel.performance.preferred.preferredRange + " \u00b7 Floor: " + commercialModel.performance.preferred.floor}</p>
+          <p className="text-lg text-[#A1A1AA] mb-4">Preferred: {commercialModel.performance.preferred.preferredRange} · Floor: {commercialModel.performance.preferred.floor}</p>
           <p className="text-[17px] text-[#8C8C8C] leading-[1.75] max-w-2xl mb-4">{commercialModel.performance.preferred.description}</p>
           <p className="text-[15px] text-[#71717A] leading-[1.75] border-l-2 pl-5 mt-6" style={{ borderColor: `${partner.primaryColor}40` }}>{commercialModel.performance.preferred.whyNotAffiliate}</p>
         </div>
