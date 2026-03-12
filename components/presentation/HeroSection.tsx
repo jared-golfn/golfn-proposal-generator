@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { type PartnerConfig, platformStats } from '@/lib/presentation-data'
 import { images } from '@/lib/images'
 
@@ -12,6 +13,41 @@ const stats = [
   { value: platformStats.avgMonthlyLogins, label: 'Avg. Logins/Mo', sub: 'Per user' },
   { value: platformStats.countries, label: 'Countries', sub: 'Global reach' },
 ]
+
+const differentiators = [
+  { label: 'Not a sponsorship', tooltip: 'GolfN is built for measurable progression, not passive logo placement.' },
+  { label: 'Not a sweepstakes company', tooltip: 'Sweepstakes are one activation tool inside a larger system, not the product itself.' },
+  { label: 'Not a CPM product', tooltip: 'GolfN is not just media inventory. Impressions fund delivery, but the value is in progression.' },
+  { label: 'Not a passive affiliate channel', tooltip: 'GolfN activates behavior, not just traffic. Standard affiliate economics do not apply.' },
+]
+
+function TooltipChip({ label, tooltip, color }: { label: string; tooltip: string; color: string }) {
+  const [show, setShow] = useState(false)
+
+  return (
+    <div className="relative">
+      <button
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        onClick={() => setShow(!show)}
+        className="text-xs md:text-sm font-mono text-[#71717A] border border-[#2A2A2C] rounded-full px-3 py-1.5 md:px-5 md:py-2 transition-all hover:border-[#3A3A3F] hover:text-[#A1A1AA] cursor-default"
+      >
+        {label}
+      </button>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute left-0 top-full mt-2 z-20 w-64 md:w-72"
+        >
+          <div className="bg-[#1A1A1D] border border-[#2A2A2C] rounded-xl p-4 shadow-xl" style={{ boxShadow: `0 8px 32px rgba(0,0,0,0.5), 0 0 20px ${color}08` }}>
+            <p className="text-sm text-[#D4D4D8] leading-relaxed">{tooltip}</p>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  )
+}
 
 export function HeroSection({ partner }: { partner: PartnerConfig }) {
   return (
@@ -30,10 +66,9 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
               Partnership<br /><span className="text-gradient">Structure</span>
             </h1>
             <p className="text-lg md:text-xl text-[#B0B0B4] max-w-lg leading-relaxed font-light">
-              A premium golf-specific demand generation, activation, and customer progression platform built around verified golfers, first-party intent signals, and measurable downstream action.
+              Golf-specific demand generation, activation, and customer progression built around verified golfers and measurable downstream action.
             </p>
 
-            {/* Mobile + Desktop CTAs */}
             <div className="flex flex-wrap gap-3 mt-8">
               <a
                 href="#best-fit"
@@ -59,9 +94,10 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
           </motion.div>
         </div>
 
+        {/* Interactive tooltip chips */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="flex flex-wrap gap-2 md:gap-3 mb-16 md:mb-24">
-          {['Not a sponsorship', 'Not a sweepstakes company', 'Not a CPM product', 'Not a passive affiliate channel'].map((t) => (
-            <span key={t} className="text-xs md:text-sm font-mono text-[#71717A] border border-[#2A2A2C] rounded-full px-3 py-1.5 md:px-5 md:py-2">{t}</span>
+          {differentiators.map((d) => (
+            <TooltipChip key={d.label} label={d.label} tooltip={d.tooltip} color={partner.primaryColor} />
           ))}
         </motion.div>
 
