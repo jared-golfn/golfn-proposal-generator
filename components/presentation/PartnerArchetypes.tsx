@@ -18,20 +18,13 @@ const pathOrder: PathId[] = ['pilot', 'growth', 'strategic']
 export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
   const { state, setPath } = usePartnership()
   const { selectedPath, isRecommended } = state
-
   const [activeTab, setActiveTab] = useState<PathId>(selectedPath || 'growth')
 
-  useEffect(() => {
-    if (selectedPath) setActiveTab(selectedPath)
-  }, [selectedPath])
+  useEffect(() => { if (selectedPath) setActiveTab(selectedPath) }, [selectedPath])
 
   const path = partnershipPaths[activeTab]
   const recommendedExtensions = allExtensions.filter(e => path.recommendedExtensions.includes(e.id))
-
-  const handleTabClick = (pathId: PathId) => {
-    setActiveTab(pathId)
-    setPath(pathId)
-  }
+  const handleTabClick = (pathId: PathId) => { setActiveTab(pathId); setPath(pathId) }
 
   return (
     <section className="py-20 md:py-32">
@@ -45,7 +38,6 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
       </div>
 
       <div className="w-content-wide px-4 md:px-6">
-        {/* Tab bar */}
         <Fade delay={0.1}>
           <div className="flex gap-3 mb-8 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
             {pathOrder.map((pathId) => {
@@ -53,15 +45,8 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
               const isActive = activeTab === pathId
               const isRec = isRecommended && selectedPath === pathId
               return (
-                <button
-                  key={pathId}
-                  onClick={() => handleTabClick(pathId)}
-                  className={`relative flex-1 min-w-[140px] px-5 py-4 md:px-8 md:py-6 rounded-2xl text-left transition-all duration-300 border ${isActive ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] bg-[#131315] hover:border-[#3A3A3F]'}`}
-                  style={isActive ? { boxShadow: `0 0 40px ${partner.primaryColor}12` } : {}}
-                >
-                  {isRec && (
-                    <span className="absolute -top-2.5 left-4 md:left-6 text-[10px] md:text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full" style={{ background: partner.primaryColor, color: '#0F0F10' }}>REC</span>
-                  )}
+                <button key={pathId} onClick={() => handleTabClick(pathId)} className={`relative flex-1 min-w-[140px] px-5 py-4 md:px-8 md:py-6 rounded-2xl text-left transition-all duration-300 border ${isActive ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] bg-[#131315] hover:border-[#3A3A3F]'}`} style={isActive ? { boxShadow: `0 0 40px ${partner.primaryColor}12` } : {}}>
+                  {isRec && (<span className="absolute -top-2.5 left-4 md:left-6 text-[10px] md:text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full" style={{ background: partner.primaryColor, color: '#0F0F10' }}>REC</span>)}
                   <span className={`text-lg md:text-xl font-bold block ${isActive ? 'text-white' : 'text-[#A1A1AA]'}`}>{p.name}</span>
                   <span className="text-sm md:text-base text-[#71717A] mt-1 block">{p.tagline}</span>
                 </button>
@@ -70,74 +55,32 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
           </div>
         </Fade>
 
-        {/* Detail panel */}
         <Fade delay={0.15}>
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25 }}
-              className="bg-[#131315] border border-[#2A2A2C] rounded-2xl md:rounded-3xl overflow-hidden"
-              style={{ boxShadow: `0 0 60px ${partner.primaryColor}06` }}
-            >
-              {/* Header — bigger, more breathing room */}
+            <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }} className="bg-[#131315] border border-[#2A2A2C] rounded-2xl md:rounded-3xl overflow-hidden" style={{ boxShadow: `0 0 60px ${partner.primaryColor}06` }}>
               <div className="p-8 md:p-12 border-b border-[#2A2A2C]">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
                     <h3 className="text-3xl md:text-4xl font-display mb-2">{path.name}</h3>
                     <p className="text-base md:text-lg text-[#B0B0B4]">{path.bestFor}</p>
                   </div>
-                  <span className="text-sm md:text-base font-mono px-4 py-2 rounded-xl shrink-0 self-start" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor, border: `1px solid ${partner.primaryColor}30` }}>
-                    Stages {path.includedStages[0]}&ndash;{path.includedStages[path.includedStages.length - 1]}
-                  </span>
+                  <span className="text-sm md:text-base font-mono px-4 py-2 rounded-xl shrink-0 self-start" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor, border: `1px solid ${partner.primaryColor}30` }}>Stages {path.includedStages[0]}&ndash;{path.includedStages[path.includedStages.length - 1]}</span>
                 </div>
               </div>
 
-              {/* Two-column content */}
               <div className="grid grid-cols-1 lg:grid-cols-2 border-b border-[#2A2A2C]">
-                {/* Left: Includes + Extensions */}
                 <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#2A2A2C]">
                   <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-5">Includes</p>
-                  <div className="flex flex-wrap gap-2.5 mb-10">
-                    {path.includes.map((item) => (
-                      <span key={item} className="text-sm md:text-base px-4 py-2 md:px-5 md:py-2.5 rounded-xl bg-[#1A1A1D] border border-[#2A2A2C] text-[#D4D4D8] font-medium">{item}</span>
-                    ))}
-                  </div>
+                  <div className="flex flex-wrap gap-2.5 mb-10">{path.includes.map((item) => (<span key={item} className="text-sm md:text-base px-4 py-2 md:px-5 md:py-2.5 rounded-xl bg-[#1A1A1D] border border-[#2A2A2C] text-[#D4D4D8] font-medium">{item}</span>))}</div>
                   <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-5">Recommended Extensions</p>
-                  <div className="space-y-4">
-                    {recommendedExtensions.map((ext) => (
-                      <div key={ext.id} className="py-2 border-b border-[#2A2A2C]/40 last:border-0">
-                        <span className="text-base md:text-lg font-semibold text-[#D4D4D8]">{ext.name}</span>
-                        <p className="text-sm md:text-base text-[#71717A] mt-1">{ext.description}</p>
-                      </div>
-                    ))}
-                  </div>
+                  <div className="space-y-4">{recommendedExtensions.map((ext) => (<div key={ext.id} className="py-2 border-b border-[#2A2A2C]/40 last:border-0"><span className="text-base md:text-lg font-semibold text-[#D4D4D8]">{ext.name}</span><p className="text-sm md:text-base text-[#71717A] mt-1">{ext.description}</p></div>))}</div>
                 </div>
-
-                {/* Right: Pricing frame */}
                 <div className="p-8 md:p-12">
                   <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-6">Typical Pricing Frame</p>
-                  <div className="space-y-0">
-                    {[
-                      { label: 'Setup', value: path.setup.range },
-                      { label: 'Monthly', value: path.monthly.starting },
-                      { label: 'Duration', value: path.duration.recommended },
-                      { label: 'Management', value: path.managementTier },
-                      { label: 'Impressions', value: path.impressionRecommendation.join(' \u2013 ') },
-                      { label: 'Real-World', value: path.realWorldActivation },
-                    ].map((row) => (
-                      <div key={row.label} className="flex items-center justify-between gap-4 py-4 md:py-5 border-b border-[#2A2A2C]/50 last:border-0">
-                        <span className="text-base md:text-lg text-[#A1A1AA]">{row.label}</span>
-                        <span className="text-base md:text-lg font-mono font-bold text-right" style={{ color: partner.primaryColor }}>{row.value}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <div className="space-y-0">{[{ label: 'Setup', value: path.setup.range }, { label: 'Monthly', value: path.monthly.starting }, { label: 'Duration', value: path.duration.recommended }, { label: 'Management', value: path.managementTier }, { label: 'Impressions', value: path.impressionRecommendation.join(' \u2013 ') }, { label: 'Real-World', value: path.realWorldActivation }].map((row) => (<div key={row.label} className="flex items-center justify-between gap-4 py-4 md:py-5 border-b border-[#2A2A2C]/50 last:border-0"><span className="text-base md:text-lg text-[#A1A1AA]">{row.label}</span><span className="text-base md:text-lg font-mono font-bold text-right" style={{ color: partner.primaryColor }}>{row.value}</span></div>))}</div>
                 </div>
               </div>
 
-              {/* Best fit + Example — bigger type */}
               <div className="p-8 md:p-12 border-b border-[#2A2A2C]">
                 <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-3">Best Fit Use Case</p>
                 <p className="text-base md:text-xl text-[#D4D4D8] font-medium">{path.bestFitUseCase}</p>
@@ -149,22 +92,34 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
                 <p className="text-base md:text-lg text-[#B0B0B4]">{path.exampleScenario.description}</p>
               </div>
 
-              {/* CTA — bigger button */}
+              {/* 90-Day Pilot Launch — only in Pilot tab */}
+              {activeTab === 'pilot' && (
+                <div className="p-8 md:p-12 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}06` }}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-xs md:text-sm font-mono tracking-wider px-3 py-1.5 rounded-lg" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor, border: `1px solid ${partner.primaryColor}25` }}>90-DAY PILOT LAUNCH</span>
+                  </div>
+                  <h4 className="text-lg md:text-xl font-bold text-white mb-2">Contained first-step for qualified partners</h4>
+                  <p className="text-base md:text-lg text-[#C4C4C8] leading-relaxed mb-4">A contained 90-day launch structure is available for qualified first-time partners who want to validate response before expanding into a broader program.</p>
+                  <div className="space-y-2 mb-4">
+                    {['Focused scope with a single priority activation', 'Full setup required including strategy, offer design, audience definition, and tracking', 'Designed to validate response and prove the model before scaling'].map(item => (
+                      <div key={item} className="flex items-start gap-2.5">
+                        <div className="w-2 h-2 rounded-full mt-[8px] shrink-0" style={{ background: partner.primaryColor }} />
+                        <span className="text-sm md:text-base text-[#D4D4D8] font-medium">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-sm text-[#71717A] leading-relaxed">Setup is required for every program because it covers the real strategic, creative, and operational work needed to launch a campaign that performs.</p>
+                </div>
+              )}
+
               <div className="p-8 md:p-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <a
-                  href={`mailto:jared@golfn.com?subject=Partnership%20Discussion%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}%20(${path.name}%20Path)`}
-                  className="inline-flex items-center gap-2 px-8 py-4 md:px-10 md:py-4.5 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.02] w-full sm:w-auto justify-center"
-                  style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}
-                >
-                  Scope a {path.name} Program
-                </a>
+                <a href={`mailto:jared@golfn.com?subject=Partnership%20Discussion%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}%20(${path.name}%20Path)`} className="inline-flex items-center gap-2 px-8 py-4 md:px-10 md:py-4.5 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.02] w-full sm:w-auto justify-center" style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}>Scope a {path.name} Program</a>
                 <span className="text-base text-[#52525B] hidden sm:block">or explore the other paths above</span>
               </div>
             </motion.div>
           </AnimatePresence>
         </Fade>
 
-        {/* Multi-brand note */}
         <Fade delay={0.25}>
           <div className="mt-8 md:mt-10 bg-[#131315] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 border-l-[3px]" style={{ borderLeftColor: partner.secondaryColor }}>
             <p className="text-base md:text-lg text-[#B0B0B4]"><span className="text-white font-semibold">Multi-Brand Pricing:</span> When an agency activates multiple brands through GolfN, consolidated pricing applies. Efficiencies increase when campaign architecture, audience intelligence, and infrastructure are shared.</p>
