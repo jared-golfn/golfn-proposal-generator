@@ -32,6 +32,13 @@
     line-height: 1.7;
   }
 
+  /* Bump base font on larger screens for readability */
+  @media (min-width: 768px) {
+    body {
+      font-size: 18px;
+    }
+  }
+
   ::selection {
     background: color-mix(in srgb, #17A455 30%, transparent);
   }
