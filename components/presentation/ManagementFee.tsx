@@ -55,9 +55,9 @@ export function ManagementFee({ partner }: { partner: PartnerConfig }) {
               <div
                 key={tier.name}
                 className={`card p-6 flex-1 ${
-                  i === 1 ? 'glow-green ring-1' : ''
+                  i === 1 ? 'glow-green' : ''
                 }`}
-                style={i === 1 ? { ringColor: `${partner.primaryColor}30` } : {}}
+                style={i === 1 ? { outline: `1px solid ${partner.primaryColor}30` } : {}}
               >
                 {i === 1 && (
                   <span className="text-[10px] font-mono tracking-widest mb-3 block" style={{ color: partner.primaryColor }}>POPULAR</span>
