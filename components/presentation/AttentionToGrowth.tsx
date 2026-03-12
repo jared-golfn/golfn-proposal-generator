@@ -15,9 +15,9 @@ const phases = [
     number: '01',
     label: 'Launch & Attention',
     headline: 'The sweepstakes creates the first wave of signal',
-    body: 'Immediate awareness gives golfers a reason to engage. Every view, entry, and interaction generates verified behavioral data GolfN can act on.',
-    bullets: ['Creates awareness and engagement', 'Captures verified interest signals', 'Establishes the first audience data'],
-    why: 'This is the attention engine that tells GolfN which users are actually responding.',
+    body: 'The launch sweepstakes creates awareness and gives golfers a reason to engage. It also generates the first verified signals from users who view, engage with, and enter the experience.',
+    bullets: ['Creates awareness', 'Captures verified interest', 'Establishes first audience signals'],
+    why: 'This is the attention engine that shows GolfN which users are actually responding.',
     icon: 'launch',
     isIgnition: true,
   },
@@ -25,18 +25,18 @@ const phases = [
     number: '02',
     label: 'Audience Qualification',
     headline: 'Signal becomes a qualified cohort',
-    body: 'GolfN isolates the users showing the strongest campaign-relevant interest and builds a partner-specific audience cohort from real behavior.',
-    bullets: ['Isolates high-interest users', 'Builds a campaign-specific cohort', 'Filters signal from noise'],
-    why: 'Instead of treating all traffic the same, GolfN learns which golfers are most likely to care.',
+    body: 'As golfers interact with the campaign, GolfN identifies the users showing the strongest partner-relevant interest. That creates a campaign-specific cohort based on real behavior, not assumptions.',
+    bullets: ['Isolates high-interest users', 'Defines a campaign-specific cohort', 'Filters signal from noise'],
+    why: 'Instead of treating all traffic the same, GolfN starts learning which golfers are most likely to care.',
     icon: 'filter',
   },
   {
     number: '03',
     label: 'Cohort Expansion',
     headline: 'The audience keeps growing after launch',
-    body: 'GolfN continues identifying new users who exhibit similar interest patterns as they enter the ecosystem, extending campaign value well beyond the launch window.',
-    bullets: ['Expands the audience over time', 'Improves targeting efficiency', 'Extends value beyond launch'],
-    why: 'The campaign does not end when the sweepstakes ends. The cohort keeps compounding.',
+    body: 'Once the initial cohort is established, GolfN continues identifying new users who show similar patterns of interest over time.',
+    bullets: ['Expands the audience over time', 'Brings in more qualified users', 'Extends campaign value beyond launch'],
+    why: 'The campaign does not end when the sweepstakes ends. The initial attention engine keeps helping GolfN identify additional potential customers long after launch.',
     icon: 'expand',
   },
   {
@@ -44,13 +44,13 @@ const phases = [
     label: 'Progression & Conversion',
     headline: 'Qualified users move toward measurable action',
     body: 'With a qualified audience in place, GolfN moves users through education, activation, incentives, and conversion-oriented experiences.',
-    bullets: ['Nurtures qualified users', 'Drives measurable conversion', 'Creates downstream action'],
-    why: 'GolfN uses attention to build a smarter audience, then moves that audience toward outcomes.',
+    bullets: ['Nurtures qualified users', 'Increases conversion likelihood', 'Creates measurable downstream action'],
+    why: 'GolfN is not just generating attention. It is turning that attention into outcomes that matter.',
     icon: 'convert',
   },
 ]
 
-function PhaseIcon({ type, color, size = 8 }: { type: string; color: string; size?: number }) {
+function PhaseIcon({ type, color }: { type: string; color: string }) {
   const cls = "w-full h-full"
   switch (type) {
     case 'launch':
@@ -66,17 +66,6 @@ function PhaseIcon({ type, color, size = 8 }: { type: string; color: string; siz
   }
 }
 
-function MobileConnector({ color }: { color: string }) {
-  return (
-    <div className="flex lg:hidden justify-center py-1">
-      <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
-        <path d="M12 0v24" stroke={color} strokeWidth="2" strokeOpacity="0.25" />
-        <path d="M7 20l5 5 5-5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.4" />
-      </svg>
-    </div>
-  )
-}
-
 const transformSteps = ['Attention', 'Qualification', 'Expansion', 'Action']
 
 const buyerBenefits = [
@@ -86,160 +75,116 @@ const buyerBenefits = [
   'Measurable downstream progression',
 ]
 
+function PhaseCard({ phase, index, partner, isMobile }: { phase: typeof phases[0]; index: number; partner: PartnerConfig; isMobile?: boolean }) {
+  const p = isMobile ? 'p-6' : 'p-7 xl:p-9'
+  return (
+    <div
+      className={`bg-[#131315] border rounded-2xl ${p} flex flex-col transition-all hover:border-[#3A3A3F] ${phase.isIgnition ? 'border-[#3A3A3F]' : 'border-[#2A2A2C]'}`}
+      style={{ boxShadow: phase.isIgnition ? `0 0 50px ${partner.primaryColor}12, 0 0 100px ${partner.primaryColor}06` : `0 0 30px ${partner.primaryColor}04` }}
+    >
+      {/* Node dot — desktop only */}
+      {!isMobile && (
+        <div className="flex justify-center -mt-12 mb-4">
+          <div className="w-5 h-5 rounded-full border-2" style={{ background: index === 0 ? partner.primaryColor : '#131315', borderColor: partner.primaryColor }} />
+        </div>
+      )}
+
+      {/* Icon + Phase label */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className={`shrink-0 rounded-xl flex items-center justify-center ${phase.isIgnition ? (isMobile ? 'w-12 h-12' : 'w-14 h-14') : (isMobile ? 'w-11 h-11' : 'w-12 h-12')}`} style={{ background: `${partner.primaryColor}${phase.isIgnition ? '18' : '10'}`, border: `1px solid ${partner.primaryColor}${phase.isIgnition ? '35' : '20'}` }}>
+          <div className={phase.isIgnition ? (isMobile ? 'w-7 h-7' : 'w-8 h-8') : (isMobile ? 'w-6 h-6' : 'w-7 h-7')}><PhaseIcon type={phase.icon} color={partner.primaryColor} /></div>
+        </div>
+        <div>
+          <span className={`font-mono font-bold block ${isMobile ? 'text-lg' : 'text-xl'}`} style={{ color: partner.primaryColor, opacity: 0.4 }}>{phase.number}</span>
+          <span className="text-xs font-mono text-[#71717A] tracking-wider uppercase">{phase.label}</span>
+        </div>
+        {phase.isIgnition && isMobile && <span className="text-[9px] font-mono tracking-wider px-2 py-0.5 rounded ml-auto" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>ATTENTION ENGINE</span>}
+      </div>
+
+      {/* Ignition tag — desktop */}
+      {phase.isIgnition && !isMobile && (
+        <div className="mb-2">
+          <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded-md" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor, border: `1px solid ${partner.primaryColor}25` }}>ATTENTION ENGINE</span>
+        </div>
+      )}
+
+      {/* Headline */}
+      <h3 className={`font-bold text-white mb-2 leading-snug ${isMobile ? 'text-base' : 'text-lg xl:text-xl'}`}>{phase.headline}</h3>
+
+      {/* Body */}
+      <p className={`text-[#A1A1AA] leading-relaxed mb-3 ${isMobile ? 'text-sm' : 'text-sm xl:text-base'}`}>{phase.body}</p>
+
+      {/* 3 Bullets */}
+      <div className="space-y-1.5 mb-4">
+        {phase.bullets.map((b) => (
+          <div key={b} className="flex items-start gap-2">
+            <div className="w-1.5 h-1.5 rounded-full mt-[7px] shrink-0" style={{ background: partner.primaryColor }} />
+            <span className="text-sm text-[#D4D4D8] font-medium">{b}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Why it matters — stronger treatment */}
+      <div className="mt-auto pt-4 border-t-2 border-[#2A2A2C]" style={{ borderTopColor: `${partner.primaryColor}20` }}>
+        <p className="text-sm leading-relaxed"><span className="font-bold text-white">Why it matters: </span><span className="text-[#B0B0B4]">{phase.why}</span></p>
+      </div>
+    </div>
+  )
+}
+
 export function AttentionToGrowth({ partner }: { partner: PartnerConfig }) {
   return (
     <section className="py-20 md:py-32">
-      {/* Header */}
+      {/* Header — tightened */}
       <div className="w-content px-5 md:px-12 mb-10 md:mb-14">
         <Fade>
           <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">The Growth Engine</span>
-          <h2 className="font-display text-3xl md:text-5xl mt-3 mb-5 leading-[0.95]">How GolfN Turns Attention<br /><span className="text-gradient">Into Qualified Growth</span></h2>
-          <p className="text-base md:text-lg text-[#B0B0B4] max-w-2xl leading-[1.75] mb-6">The launch experience does more than create awareness. It gives GolfN the verified behavioral signal needed to identify responsive users, build a qualified audience cohort, and continue expanding that audience over time.</p>
+          <h2 className="font-display text-3xl md:text-5xl mt-3 mb-4 leading-[0.95]">How GolfN Turns Attention<br /><span className="text-gradient">Into Qualified Growth</span></h2>
+          <p className="text-base md:text-lg text-[#B0B0B4] max-w-2xl leading-[1.75] mb-5">GolfN uses the launch experience to capture verified behavioral signal, build a qualified audience cohort, and continue expanding that audience over time.</p>
         </Fade>
 
         <Fade delay={0.1}>
-          <div className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 border-l-[3px] max-w-3xl" style={{ borderLeftColor: partner.primaryColor }}>
-            <p className="text-base md:text-lg text-[#D4D4D8] leading-[1.75]"><span className="font-bold text-white">The launch sweepstakes is not just a promotional moment.</span> It is the attention engine that helps GolfN identify who is responding, what type of user is most engaged, and where the campaign can scale from there.</p>
+          <div className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-7 border-l-[3px] max-w-3xl" style={{ borderLeftColor: partner.primaryColor }}>
+            <p className="text-base md:text-lg text-[#D4D4D8] leading-[1.7]"><span className="font-bold text-white">The sweepstakes is not just a promotional moment.</span> It is the attention engine that identifies who is responding, what type of user engages most, and where the campaign can scale.</p>
           </div>
         </Fade>
       </div>
 
       <div className="w-content-wider px-4 md:px-6">
-        {/* Transformation strip — desktop only */}
+        {/* Transformation strip */}
         <Fade delay={0.15}>
-          <div className="hidden lg:flex items-center justify-center gap-0 mb-8">
-            <div className="flex items-center bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden">
-              {transformSteps.map((step, i) => (
-                <div key={step} className="flex items-center">
-                  {i > 0 && (
-                    <svg width="28" height="20" viewBox="0 0 28 20" fill="none" className="shrink-0 -mx-px">
-                      <path d="M0 10h20" stroke={partner.primaryColor} strokeWidth="1.5" strokeOpacity="0.3" />
-                      <path d="M18 5l5 5-5 5" stroke={partner.primaryColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.5" />
-                    </svg>
-                  )}
-                  <div className={`px-6 py-3.5 ${i === 0 ? 'pl-8' : ''} ${i === transformSteps.length - 1 ? 'pr-8' : ''}`}>
-                    <span className="text-sm md:text-base font-bold tracking-wide" style={{ color: i === 0 ? partner.primaryColor : i === transformSteps.length - 1 ? '#FAFAFA' : '#A1A1AA' }}>{step}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="flex items-center justify-center gap-1 mb-6 lg:mb-8 flex-wrap">
+            {transformSteps.map((step, i) => (
+              <div key={step} className="flex items-center gap-1">
+                <span className="text-xs md:text-base font-bold tracking-wide px-3 py-1.5 md:px-5 md:py-2.5 rounded-lg md:rounded-xl bg-[#131315] border border-[#2A2A2C]" style={{ color: i === 0 ? partner.primaryColor : i === transformSteps.length - 1 ? '#FAFAFA' : '#A1A1AA' }}>{step}</span>
+                {i < transformSteps.length - 1 && (
+                  <svg width="20" height="12" viewBox="0 0 20 12" fill="none" className="shrink-0 mx-0.5">
+                    <path d="M0 6h14" stroke={partner.primaryColor} strokeWidth="1.5" strokeOpacity="0.3" />
+                    <path d="M12 2l4 4-4 4" stroke={partner.primaryColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.5" />
+                  </svg>
+                )}
+              </div>
+            ))}
           </div>
         </Fade>
 
         {/* Desktop: connected 4-phase engine */}
         <Fade delay={0.2}>
           <div className="hidden lg:block relative">
-            {/* Continuous connection rail behind the cards */}
+            {/* Continuous rail */}
             <div className="absolute top-[72px] left-[5%] right-[5%] h-[2px] z-0" style={{ background: `linear-gradient(90deg, ${partner.primaryColor}40, ${partner.primaryColor}20, ${partner.primaryColor}20, ${partner.primaryColor}40)` }} />
-
             <div className="relative z-10 grid grid-cols-4 gap-5">
-              {phases.map((phase, i) => (
-                <div
-                  key={phase.number}
-                  className={`bg-[#131315] border rounded-2xl p-7 xl:p-9 flex flex-col transition-all hover:border-[#3A3A3F] ${phase.isIgnition ? 'border-[#3A3A3F]' : 'border-[#2A2A2C]'}`}
-                  style={{
-                    boxShadow: phase.isIgnition
-                      ? `0 0 50px ${partner.primaryColor}12, 0 0 100px ${partner.primaryColor}06`
-                      : `0 0 30px ${partner.primaryColor}04`,
-                  }}
-                >
-                  {/* Node dot — connects to the rail */}
-                  <div className="flex justify-center -mt-12 mb-4">
-                    <div className="w-5 h-5 rounded-full border-2" style={{ background: i === 0 ? partner.primaryColor : '#131315', borderColor: partner.primaryColor }} />
-                  </div>
-
-                  {/* Icon + Phase */}
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className={`shrink-0 rounded-xl flex items-center justify-center ${phase.isIgnition ? 'w-14 h-14' : 'w-12 h-12'}`} style={{ background: `${partner.primaryColor}${phase.isIgnition ? '18' : '10'}`, border: `1px solid ${partner.primaryColor}${phase.isIgnition ? '35' : '20'}` }}>
-                      <div className={phase.isIgnition ? 'w-8 h-8' : 'w-7 h-7'}><PhaseIcon type={phase.icon} color={partner.primaryColor} /></div>
-                    </div>
-                    <div>
-                      <span className="font-mono text-xl font-bold block" style={{ color: partner.primaryColor, opacity: 0.4 }}>{phase.number}</span>
-                      <span className="text-xs font-mono text-[#71717A] tracking-wider uppercase">{phase.label}</span>
-                    </div>
-                  </div>
-
-                  {/* Ignition tag */}
-                  {phase.isIgnition && (
-                    <div className="mb-3">
-                      <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded-md" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor, border: `1px solid ${partner.primaryColor}25` }}>ATTENTION ENGINE</span>
-                    </div>
-                  )}
-
-                  {/* Headline */}
-                  <h3 className="text-lg xl:text-xl font-bold text-white mb-3 leading-snug">{phase.headline}</h3>
-
-                  {/* Body — tightened */}
-                  <p className="text-sm xl:text-base text-[#A1A1AA] leading-relaxed mb-4">{phase.body}</p>
-
-                  {/* 3 Bullets max */}
-                  <div className="space-y-1.5 mb-5">
-                    {phase.bullets.map((b) => (
-                      <div key={b} className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full mt-[7px] shrink-0" style={{ background: partner.primaryColor }} />
-                        <span className="text-sm text-[#D4D4D8] font-medium">{b}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Why it matters — concise */}
-                  <div className="mt-auto pt-4 border-t border-[#2A2A2C]">
-                    <p className="text-sm text-[#B0B0B4] leading-relaxed"><span className="font-semibold text-[#D4D4D8]">Why:</span> {phase.why}</p>
-                  </div>
-                </div>
-              ))}
+              {phases.map((phase, i) => <PhaseCard key={phase.number} phase={phase} index={i} partner={partner} />)}
             </div>
           </div>
         </Fade>
 
-        {/* Mobile: vertical stacked timeline */}
-        <div className="lg:hidden">
-          {/* Mobile transformation strip */}
-          <Fade delay={0.12}>
-            <div className="flex items-center justify-center gap-1 mb-6 flex-wrap">
-              {transformSteps.map((step, i) => (
-                <div key={step} className="flex items-center gap-1">
-                  <span className="text-xs font-bold tracking-wide px-2.5 py-1 rounded-lg bg-[#131315] border border-[#2A2A2C]" style={{ color: i === 0 ? partner.primaryColor : i === transformSteps.length - 1 ? '#FAFAFA' : '#A1A1AA' }}>{step}</span>
-                  {i < transformSteps.length - 1 && <span className="text-[#52525B] text-xs">{'\u2192'}</span>}
-                </div>
-              ))}
-            </div>
-          </Fade>
-
+        {/* Mobile: vertical stacked */}
+        <div className="lg:hidden space-y-3">
           {phases.map((phase, i) => (
-            <div key={phase.number}>
-              <Fade delay={0.1 + i * 0.08}>
-                <div className={`bg-[#131315] border rounded-2xl p-6 md:p-8 ${phase.isIgnition ? 'border-[#3A3A3F]' : 'border-[#2A2A2C]'}`} style={phase.isIgnition ? { boxShadow: `0 0 40px ${partner.primaryColor}10` } : {}}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-11 h-11 shrink-0 rounded-xl flex items-center justify-center" style={{ background: `${partner.primaryColor}${phase.isIgnition ? '18' : '10'}`, border: `1px solid ${partner.primaryColor}20` }}>
-                      <div className="w-6 h-6"><PhaseIcon type={phase.icon} color={partner.primaryColor} /></div>
-                    </div>
-                    <div>
-                      <span className="font-mono text-lg font-bold block" style={{ color: partner.primaryColor, opacity: 0.4 }}>{phase.number}</span>
-                      <span className="text-xs font-mono text-[#71717A] tracking-wider uppercase">{phase.label}</span>
-                    </div>
-                    {phase.isIgnition && <span className="text-[9px] font-mono tracking-wider px-2 py-0.5 rounded ml-auto" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>ATTENTION ENGINE</span>}
-                  </div>
-
-                  <h3 className="text-base font-bold text-white mb-2">{phase.headline}</h3>
-                  <p className="text-sm text-[#A1A1AA] leading-relaxed mb-3">{phase.body}</p>
-
-                  <div className="space-y-1.5 mb-4">
-                    {phase.bullets.map((b) => (
-                      <div key={b} className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full mt-[7px] shrink-0" style={{ background: partner.primaryColor }} />
-                        <span className="text-sm text-[#D4D4D8] font-medium">{b}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pt-3 border-t border-[#2A2A2C]">
-                    <p className="text-sm text-[#B0B0B4] leading-relaxed"><span className="font-semibold text-[#D4D4D8]">Why:</span> {phase.why}</p>
-                  </div>
-                </div>
-              </Fade>
-              {i < phases.length - 1 && <MobileConnector color={partner.primaryColor} />}
-            </div>
+            <Fade key={phase.number} delay={0.1 + i * 0.08}>
+              <PhaseCard phase={phase} index={i} partner={partner} isMobile />
+            </Fade>
           ))}
         </div>
 
@@ -247,20 +192,20 @@ export function AttentionToGrowth({ partner }: { partner: PartnerConfig }) {
         <Fade delay={0.35}>
           <div className="mt-10 md:mt-12">
             <p className="text-sm font-mono text-[#71717A] tracking-wider uppercase mb-4 text-center">What this gives your brand</p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
               {buyerBenefits.map((benefit) => (
-                <div key={benefit} className="px-5 py-2.5 md:px-6 md:py-3 rounded-xl bg-[#131315] border border-[#2A2A2C] text-sm md:text-base text-[#D4D4D8] font-medium">{benefit}</div>
+                <div key={benefit} className="px-4 py-2 md:px-6 md:py-3 rounded-xl bg-[#131315] border border-[#2A2A2C] text-sm md:text-base text-[#D4D4D8] font-medium">{benefit}</div>
               ))}
             </div>
           </div>
         </Fade>
       </div>
 
-      {/* Closing — integrated footer band */}
-      <div className="w-content px-5 md:px-12 mt-12 md:mt-14">
+      {/* Closing — integrated summary band */}
+      <div className="w-content px-5 md:px-12 mt-10 md:mt-14">
         <Fade delay={0.4}>
           <div className="bg-[#0F0F10] border border-[#2A2A2C] rounded-2xl px-6 py-5 md:px-8 md:py-6 text-center" style={{ boxShadow: `0 0 40px ${partner.primaryColor}04` }}>
-            <p className="text-base md:text-lg text-[#A1A1AA] leading-[1.75]"><span className="text-white font-bold">In simple terms:</span> GolfN uses real attention and participation data to identify not just who responded, but who is most likely to respond next.</p>
+            <p className="text-base md:text-lg text-[#A1A1AA] leading-[1.7]"><span className="text-white font-bold">In simple terms:</span> GolfN uses real attention and participation data to identify not just who responded, but who is most likely to respond next.</p>
           </div>
         </Fade>
       </div>
