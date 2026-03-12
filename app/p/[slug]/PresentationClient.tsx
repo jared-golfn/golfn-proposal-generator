@@ -21,12 +21,12 @@ const sections = [
   { id: 'hero', label: 'Overview' },
   { id: 'budget', label: 'Budget Fit' },
   { id: 'best-fit', label: 'Best Fit' },
-  { id: 'commercial', label: 'Pricing' },
-  { id: 'progression', label: 'Progression' },
-  { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'paths', label: 'Paths' },
+  { id: 'commercial', label: 'How Pricing Works' },
   { id: 'extensions', label: 'Extensions' },
   { id: 'thresholds', label: 'Requirements' },
+  { id: 'progression', label: 'Progression' },
+  { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'testimonials', label: 'Proof' },
   { id: 'close', label: 'Next Step' },
 ]
@@ -51,17 +51,17 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
         <Divider />
         <div id="best-fit"><FindYourFit partner={partner} /></div>
         <Divider />
-        <div id="commercial"><CommercialModel partner={partner} /></div>
-        <Divider />
-        <div id="progression"><ProgressionFramework partner={partner} /></div>
-        <Divider />
-        <div id="daily-grind"><DailyGrindEvolution partner={partner} /></div>
-        <Divider />
         <div id="paths"><PartnerArchetypes partner={partner} /></div>
+        <Divider />
+        <div id="commercial"><CommercialModel partner={partner} /></div>
         <Divider />
         <div id="extensions"><Extensions partner={partner} /></div>
         <Divider />
         <div id="thresholds"><Thresholds partner={partner} /></div>
+        <Divider />
+        <div id="progression"><ProgressionFramework partner={partner} /></div>
+        <Divider />
+        <div id="daily-grind"><DailyGrindEvolution partner={partner} /></div>
         <Divider />
         <div id="testimonials"><Testimonials partner={partner} /></div>
         <Divider />
