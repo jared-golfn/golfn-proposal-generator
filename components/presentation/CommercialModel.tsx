@@ -107,7 +107,7 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
           <div className="inline-block text-xs font-mono px-3 py-1 rounded-full mb-4" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>PREFERRED</div>
           <h4 className="text-xl font-semibold mb-3">{commercialModel.performance.preferred.name}</h4>
           <div className="text-5xl md:text-6xl font-bold font-mono mb-4" style={{ color: partner.primaryColor }}>{commercialModel.performance.preferred.range}</div>
-          <p className="text-lg text-[#A1A1AA] mb-4">Preferred: {commercialModel.performance.preferred.preferredRange} \u00b7 Floor: {commercialModel.performance.preferred.floor}</p>
+          <p className="text-lg text-[#A1A1AA] mb-4">Preferred: {commercialModel.performance.preferred.preferredRange} · Floor: {commercialModel.performance.preferred.floor}</p>
           <p className="text-[17px] text-[#8C8C8C] leading-[1.75] max-w-2xl mb-4">{commercialModel.performance.preferred.description}</p>
           <p className="text-[15px] text-[#71717A] leading-[1.75] border-l-2 pl-5 mt-6" style={{ borderColor: `${partner.primaryColor}40` }}>{commercialModel.performance.preferred.whyNotAffiliate}</p>
         </div>

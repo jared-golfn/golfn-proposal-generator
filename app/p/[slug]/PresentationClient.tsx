@@ -56,9 +56,9 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
       <div id="close"><StrategicClose partner={partner} /></div>
 
       <footer className="max-w-[960px] mx-auto px-6 md:px-12 py-16 text-center border-t border-[#2A2A2C]">
-        <img src={images.logo} alt="GolfN" className="h-8 w-auto mx-auto mb-4 opacity-40" />
-        <p className="text-[#71717A] text-sm">Confidential — Prepared for {partner.partnerName} by GolfN</p>
-        <p className="text-[#52525B] text-xs mt-1 font-mono">Verified Golfers · Measurable Progression · Aligned Incentives</p>
+        <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-40" />
+        <p className="text-[#71717A] text-sm">{"Confidential \u2014 Prepared for "}{partner.partnerName}{" by GolfN"}</p>
+        <p className="text-[#52525B] text-xs mt-1 font-mono">{"Verified Golfers \u00b7 Measurable Progression \u00b7 Aligned Incentives"}</p>
       </footer>
     </main>
   )

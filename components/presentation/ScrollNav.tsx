@@ -31,24 +31,24 @@ export function ScrollNav({ sections, partnerColor }: { sections: Section[]; par
     <motion.nav
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
-      className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5"
+      className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6"
     >
       {sections.map((section) => {
         const isActive = active === section.id
         return (
-          <a key={section.id} href={`#${section.id}`} className="group flex items-center gap-4 justify-end">
+          <a key={section.id} href={`#${section.id}`} className="group flex items-center gap-5 justify-end">
             <span
-              className={`text-sm font-medium transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3 group-hover:opacity-50 group-hover:translate-x-0'}`}
+              className={`text-base font-medium transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3 group-hover:opacity-50 group-hover:translate-x-0'}`}
               style={{ color: isActive ? partnerColor : '#A1A1AA' }}
             >
               {section.label}
             </span>
             {isActive ? (
               <motion.img
-                src={images.logo}
+                src={images.logoIcon}
                 alt=""
                 className="shrink-0"
-                style={{ width: 20, height: 20, filter: `drop-shadow(0 0 8px ${partnerColor}60)` }}
+                style={{ width: 40, height: 40, filter: `drop-shadow(0 0 12px ${partnerColor}60)` }}
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.25 }}
@@ -56,7 +56,7 @@ export function ScrollNav({ sections, partnerColor }: { sections: Section[]; par
             ) : (
               <span
                 className="block rounded-full transition-all duration-300 shrink-0 group-hover:bg-[#71717A]"
-                style={{ width: 6, height: 6, backgroundColor: '#52525B' }}
+                style={{ width: 10, height: 10, backgroundColor: '#52525B' }}
               />
             )}
           </a>

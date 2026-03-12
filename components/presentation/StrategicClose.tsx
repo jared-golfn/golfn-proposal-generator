@@ -43,11 +43,10 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
         </div>
       </Fade>
 
-      {/* CTA */}
       <Fade delay={0.6}>
         <div className="mt-24 text-center">
-          <img src={images.logo} alt="GolfN" className="h-16 w-auto mx-auto mb-8 opacity-80" />
-          <h3 className="font-display text-4xl md:text-5xl mb-5">Let’s build together.</h3>
+          <img src={images.logo} alt="GolfN" className="h-14 md:h-16 w-auto mx-auto mb-8 opacity-80" />
+          <h3 className="font-display text-4xl md:text-5xl mb-5">{"Let\u2019s build together."}</h3>
           <p className="text-lg text-[#8C8C8C] max-w-md mx-auto mb-10">
             Design a {partner.partnerName} program that drives real golfers to real action.
           </p>
@@ -56,7 +55,7 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
             className="inline-flex items-center gap-3 px-10 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.02]"
             style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}
           >
-            Start the Conversation →
+            {"Start the Conversation \u2192"}
           </a>
         </div>
       </Fade>
