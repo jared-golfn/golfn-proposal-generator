@@ -48,8 +48,13 @@ export function BudgetPositioning({ partner }: { partner: PartnerConfig }) {
               <div className="col-span-4 p-7 md:p-9 border-l border-[#2A2A2C] flex items-center">
                 <span className="font-mono text-base tracking-[0.2em] text-[#52525B] font-medium">BROAD PAID MEDIA</span>
               </div>
-              <div className="col-span-5 p-7 md:p-9 border-l border-[#2A2A2C]" style={{ background: `${partner.primaryColor}0C` }}>
-                <img src={images.logo} alt="GolfN" className="h-10 md:h-12 w-auto" />
+              <div className="col-span-5 p-7 md:p-9 border-l border-[#2A2A2C] flex items-center" style={{ background: `${partner.primaryColor}0C` }}>
+                <img
+                  src="https://cdn.sanity.io/images/e3wja34v/production/3bcfd9b87d10769072b59ff0fe7cbefe7d36286e-3594x860.png"
+                  alt="GolfN"
+                  className="h-14 md:h-16 w-auto"
+                  style={{ filter: `drop-shadow(0 0 20px ${partner.primaryColor}40)` }}
+                />
               </div>
             </div>
 
