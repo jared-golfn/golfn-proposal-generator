@@ -59,23 +59,49 @@
     color: #FAFAFA;
     font-family: var(--font-body);
     font-size: 17px;
+    font-weight: 400;
     line-height: 1.7;
   }
 
   @media (min-width: 768px) {
-    body { font-size: 18px; }
+    body {
+      font-size: 18px;
+      font-weight: 450;
+    }
   }
 
   @media (min-width: 1440px) {
-    body { font-size: 19px; }
+    body {
+      font-size: 19px;
+      font-weight: 450;
+    }
   }
 
   @media (min-width: 1920px) {
-    body { font-size: 20px; }
+    body {
+      font-size: 20px;
+      font-weight: 450;
+    }
   }
 
   @media (min-width: 2560px) {
-    body { font-size: 21px; }
+    body {
+      font-size: 21px;
+      font-weight: 450;
+    }
+  }
+
+  /*
+   * Brighten muted text colors on large screens.
+   * Dark bg + thin font + dim color = unreadable at distance.
+   * These overrides push gray text closer to white on big monitors.
+   */
+  @media (min-width: 1440px) {
+    .text-\[\#71717A\] { color: #8C8C94 !important; }
+    .text-\[\#8C8C8C\] { color: #A1A1A8 !important; }
+    .text-\[\#52525B\] { color: #6B6B75 !important; }
+    .text-\[\#B0B0B4\] { color: #C4C4C8 !important; }
+    .text-\[\#A1A1AA\] { color: #B8B8C0 !important; }
   }
 
   ::selection {
