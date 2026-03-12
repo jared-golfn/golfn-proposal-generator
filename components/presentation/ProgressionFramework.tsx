@@ -11,6 +11,20 @@ function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: numb
   return <motion.div ref={ref} initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay }}>{children}</motion.div>
 }
 
+// Map stage numbers to images that should appear in the expanded view
+const stageImages: Record<number, { images: string[]; caption: string; layout: 'cards' | 'wide' }> = {
+  1: {
+    images: [images.cobraSweeps, images.miuraWedgeSweeps, images.wekopaSweeps, images.cobraOptmDriver],
+    caption: 'Sweepstakes drive awareness and initial engagement across the ecosystem',
+    layout: 'cards',
+  },
+  5: {
+    images: [images.labPointsExchange, images.miuraPointsExchange, images.bettinardiPointsExchange, images.cobraPointsExchange],
+    caption: 'Points Exchange enables direct conversion through partner product marketplace',
+    layout: 'wide',
+  },
+}
+
 export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
   const [expanded, setExpanded] = useState<number | null>(null)
 
@@ -38,6 +52,7 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
         {progressionStages.map((stage, i) => {
           const isOpen = expanded === i
           const pct = ((i + 1) / 8) * 100
+          const stageImgs = stageImages[stage.number]
           return (
             <Fade key={stage.number} delay={0.04 * i}>
               <div
@@ -54,18 +69,48 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                         {!isOpen && <p className="text-sm text-[#71717A] mt-0.5 hidden md:block">{stage.short}</p>}
                       </div>
                     </div>
-                    <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="20" height="20" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
-                      <path d="M5 8l5 5 5-5" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" />
-                    </motion.svg>
+                    <div className="flex items-center gap-3">
+                      {stageImgs && !isOpen && (
+                        <span className="text-[10px] font-mono tracking-wider px-2 py-1 rounded bg-[#2A2A2C] text-[#8C8C8C] hidden md:block">EXAMPLES</span>
+                      )}
+                      <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="20" height="20" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
+                        <path d="M5 8l5 5 5-5" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" />
+                      </motion.svg>
+                    </div>
                   </div>
                   {isOpen && (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5 pt-5 border-t border-[#2A2A2C]">
                       <p className="text-[17px] text-[#B0B0B4] leading-[1.75] mb-5">{stage.detail}</p>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 mb-5">
                         {stage.channels.map((ch) => (
                           <span key={ch} className="text-xs font-mono px-3 py-1.5 rounded-full" style={{ background: `${partner.primaryColor}12`, color: partner.primaryColor }}>{ch}</span>
                         ))}
                       </div>
+
+                      {/* Stage-specific images */}
+                      {stageImgs && (
+                        <div className="mt-6 pt-6 border-t border-[#2A2A2C]" onClick={(e) => e.stopPropagation()}>
+                          <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">Partner Examples</p>
+                          {stageImgs.layout === 'cards' ? (
+                            <div className="grid grid-cols-4 gap-3">
+                              {stageImgs.images.map((img, idx) => (
+                                <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                  <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="grid grid-cols-2 gap-3">
+                              {stageImgs.images.map((img, idx) => (
+                                <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                  <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          <p className="text-sm text-[#71717A] mt-3 italic">{stageImgs.caption}</p>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </div>
