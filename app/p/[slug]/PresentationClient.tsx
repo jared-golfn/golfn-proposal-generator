@@ -2,6 +2,7 @@
 
 import { type PartnerConfig } from '@/lib/presentation-data'
 import { images } from '@/lib/images'
+import { PartnershipProvider } from '@/lib/partnership-context'
 import { HeroSection } from '@/components/presentation/HeroSection'
 import { BudgetPositioning } from '@/components/presentation/BudgetPositioning'
 import { CommercialModel } from '@/components/presentation/CommercialModel'
@@ -33,33 +34,35 @@ const Divider = () => (
 
 export function PresentationClient({ partner }: { partner: PartnerConfig }) {
   return (
-    <main className="relative">
-      <div className="accent-line fixed top-0 left-0 right-0 z-50" />
-      <ScrollNav sections={sections} partnerColor={partner.primaryColor} />
+    <PartnershipProvider>
+      <main className="relative">
+        <div className="accent-line fixed top-0 left-0 right-0 z-50" />
+        <ScrollNav sections={sections} partnerColor={partner.primaryColor} />
 
-      <div id="hero"><HeroSection partner={partner} /></div>
-      <Divider />
-      <div id="budget"><BudgetPositioning partner={partner} /></div>
-      <Divider />
-      <div id="commercial"><CommercialModel partner={partner} /></div>
-      <Divider />
-      <div id="progression"><ProgressionFramework partner={partner} /></div>
-      <Divider />
-      <div id="daily-grind"><DailyGrindEvolution partner={partner} /></div>
-      <Divider />
-      <div id="archetypes"><PartnerArchetypes partner={partner} /></div>
-      <Divider />
-      <div id="thresholds"><Thresholds partner={partner} /></div>
-      <Divider />
-      <div id="testimonials"><Testimonials partner={partner} /></div>
-      <Divider />
-      <div id="close"><StrategicClose partner={partner} /></div>
+        <div id="hero"><HeroSection partner={partner} /></div>
+        <Divider />
+        <div id="budget"><BudgetPositioning partner={partner} /></div>
+        <Divider />
+        <div id="commercial"><CommercialModel partner={partner} /></div>
+        <Divider />
+        <div id="progression"><ProgressionFramework partner={partner} /></div>
+        <Divider />
+        <div id="daily-grind"><DailyGrindEvolution partner={partner} /></div>
+        <Divider />
+        <div id="archetypes"><PartnerArchetypes partner={partner} /></div>
+        <Divider />
+        <div id="thresholds"><Thresholds partner={partner} /></div>
+        <Divider />
+        <div id="testimonials"><Testimonials partner={partner} /></div>
+        <Divider />
+        <div id="close"><StrategicClose partner={partner} /></div>
 
-      <footer className="max-w-[960px] mx-auto px-6 md:px-12 py-16 text-center border-t border-[#2A2A2C]">
-        <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-40" />
-        <p className="text-[#71717A] text-sm">Confidential — Prepared for {partner.partnerName} by GolfN</p>
-        <p className="text-[#52525B] text-xs mt-1 font-mono">Verified Golfers · Measurable Progression · Aligned Incentives</p>
-      </footer>
-    </main>
+        <footer className="max-w-[960px] mx-auto px-6 md:px-12 py-16 text-center border-t border-[#2A2A2C]">
+          <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-40" />
+          <p className="text-[#71717A] text-sm">Confidential — Prepared for {partner.partnerName} by GolfN</p>
+          <p className="text-[#52525B] text-xs mt-1 font-mono">Verified Golfers · Measurable Progression · Aligned Incentives</p>
+        </footer>
+      </main>
+    </PartnershipProvider>
   )
 }
