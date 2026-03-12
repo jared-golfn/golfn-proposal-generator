@@ -9,13 +9,16 @@ const client = createClient({
   useCdn: false,
 })
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SanityDoc = any
+
 export async function GET() {
   if (!process.env.SANITY_API_TOKEN) {
     return NextResponse.json({ error: 'SANITY_API_TOKEN not set' }, { status: 500 })
   }
 
   const transaction = client.transaction()
-  const cor = (doc: Record<string, unknown>) => transaction.createOrReplace(doc)
+  const cor = (doc: SanityDoc) => transaction.createOrReplace(doc)
 
   // Platform Metrics
   cor({ _id: 'metric-registered-users', _type: 'platformMetric', label: 'Registered Users', value: '100,000+', subtitle: '~6,000/mo growth', order: 1, isHighlighted: true })
