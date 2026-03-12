@@ -3,6 +3,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { type PartnerConfig, strategicSummary, closingStatement } from '@/lib/presentation-data'
+import { images } from '@/lib/images'
 
 function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null)
@@ -45,7 +46,7 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
       {/* CTA */}
       <Fade delay={0.6}>
         <div className="mt-24 text-center">
-          <div className="w-20 h-[2px] mx-auto mb-10 rounded-full" style={{ background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})` }} />
+          <img src={images.logo} alt="GolfN" className="h-16 w-auto mx-auto mb-8 opacity-80" />
           <h3 className="font-display text-4xl md:text-5xl mb-5">Let\u2019s build together.</h3>
           <p className="text-lg text-[#8C8C8C] max-w-md mx-auto mb-10">
             Design a {partner.partnerName} program that drives real golfers to real action.

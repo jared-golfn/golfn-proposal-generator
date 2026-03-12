@@ -20,9 +20,12 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
       <div className="absolute inset-0 opacity-[0.03]" style={{ background: `radial-gradient(ellipse 70% 50% at 20% 40%, ${partner.primaryColor}, transparent)` }} />
 
       <div className="relative z-10 max-w-[960px] mx-auto w-full px-6 md:px-12 py-20">
-        {/* Header bar */}
+        {/* Header bar with real logo */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="flex items-center justify-between mb-28">
-          <span className="font-body font-bold text-xl tracking-wide">GolfN</span>
+          <div className="flex items-center gap-3">
+            <img src={images.logo} alt="GolfN" className="h-9 w-auto" />
+            <span className="font-body font-bold text-xl tracking-wide">GolfN</span>
+          </div>
           <span className="text-[#8C8C8C] text-base">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
         </motion.div>
 
