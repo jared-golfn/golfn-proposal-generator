@@ -37,7 +37,9 @@ const stageImageGroups: Record<number, ImageGroup[]> = {
   ],
 }
 
-const funnelWidths = [100, 93, 86, 79, 72, 65, 58, 51]
+// Funnel: starts wide (1280px) and narrows to content width (960px)
+// Using pixel max-widths for clean control
+const funnelMaxWidths = [1280, 1234, 1188, 1142, 1096, 1050, 1004, 960]
 
 export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
   const [expanded, setExpanded] = useState<number | null>(null)
@@ -64,121 +66,120 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
         </div>
       </div>
 
-      <div className="max-w-[1100px] mx-auto px-4 md:px-6">
-        <div className="flex flex-col items-center gap-2">
-          {progressionStages.map((stage, i) => {
-            const isOpen = expanded === i
-            const groups = stageImageGroups[stage.number]
-            const widthPct = funnelWidths[i]
-            const opacity = 0.4 + (i / 7) * 0.6
+      {/* Funnel stages */}
+      <div className="flex flex-col items-center gap-2 px-4 md:px-6">
+        {progressionStages.map((stage, i) => {
+          const isOpen = expanded === i
+          const groups = stageImageGroups[stage.number]
+          const maxW = funnelMaxWidths[i]
+          const opacity = 0.35 + (i / 7) * 0.65
 
-            return (
-              <Fade key={stage.number} delay={0.04 * i}>
-                <div style={{ width: `${widthPct}%`, minWidth: '320px' }} className="mx-auto">
-                  <div
-                    className={`relative border rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${isOpen ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] hover:border-[#3A3A3F] bg-[#131315]'}`}
-                    onClick={() => setExpanded(isOpen ? null : i)}
-                    style={isOpen ? { boxShadow: `0 0 40px ${partner.primaryColor}10` } : {}}
-                  >
-                    <div className="h-[3px]" style={{ background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})`, opacity }} />
+          return (
+            <Fade key={stage.number} delay={0.04 * i}>
+              <div style={{ maxWidth: `${maxW}px`, width: '100%' }}>
+                <div
+                  className={`relative border rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${isOpen ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] hover:border-[#3A3A3F] bg-[#131315]'}`}
+                  onClick={() => setExpanded(isOpen ? null : i)}
+                  style={isOpen ? { boxShadow: `0 0 40px ${partner.primaryColor}10` } : {}}
+                >
+                  <div className="h-[3px]" style={{ background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})`, opacity }} />
 
-                    <div className="p-5 md:p-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <span className="font-mono text-xl md:text-2xl font-bold" style={{ color: partner.primaryColor, opacity }}>{String(stage.number).padStart(2, '0')}</span>
-                          <div>
-                            <h3 className="text-base md:text-lg font-semibold">{stage.name}</h3>
-                            {!isOpen && <p className="text-sm text-[#71717A] mt-0.5 hidden md:block">{stage.short}</p>}
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3 shrink-0">
-                          {groups && !isOpen && (
-                            <span className="text-[10px] font-mono tracking-wider px-2 py-1 rounded bg-[#2A2A2C] text-[#8C8C8C] hidden md:block">EXAMPLES</span>
-                          )}
-                          <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="18" height="18" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
-                            <path d="M5 8l5 5 5-5" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" />
-                          </motion.svg>
+                  <div className="p-5 md:p-7">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-5">
+                        <span className="font-mono text-2xl md:text-3xl font-bold" style={{ color: partner.primaryColor, opacity }}>{String(stage.number).padStart(2, '0')}</span>
+                        <div>
+                          <h3 className="text-lg md:text-xl font-semibold">{stage.name}</h3>
+                          {!isOpen && <p className="text-sm text-[#71717A] mt-0.5 hidden md:block">{stage.short}</p>}
                         </div>
                       </div>
+                      <div className="flex items-center gap-3 shrink-0">
+                        {groups && !isOpen && (
+                          <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded bg-[#2A2A2C] text-[#8C8C8C] hidden md:block">EXAMPLES</span>
+                        )}
+                        <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="20" height="20" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
+                          <path d="M5 8l5 5 5-5" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" />
+                        </motion.svg>
+                      </div>
+                    </div>
 
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="mt-5 pt-5 border-t border-[#2A2A2C]">
-                              <p className="text-[15px] md:text-[17px] text-[#B0B0B4] leading-[1.75] mb-5">{stage.detail}</p>
-                              <div className="flex flex-wrap gap-2">
-                                {stage.channels.map((ch) => (
-                                  <span key={ch} className="text-xs font-mono px-3 py-1.5 rounded-full" style={{ background: `${partner.primaryColor}12`, color: partner.primaryColor }}>{ch}</span>
-                                ))}
-                              </div>
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-5 pt-5 border-t border-[#2A2A2C]">
+                            <p className="text-[17px] text-[#B0B0B4] leading-[1.75] mb-5">{stage.detail}</p>
+                            <div className="flex flex-wrap gap-2">
+                              {stage.channels.map((ch) => (
+                                <span key={ch} className="text-xs font-mono px-3 py-1.5 rounded-full" style={{ background: `${partner.primaryColor}12`, color: partner.primaryColor }}>{ch}</span>
+                              ))}
+                            </div>
 
-                              {groups && (
-                                <div className="mt-6 pt-6 border-t border-[#2A2A2C] space-y-8" onClick={(e) => e.stopPropagation()}>
-                                  {groups.map((group, gi) => (
-                                    <div key={gi}>
-                                      <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">{group.label}</p>
+                            {groups && (
+                              <div className="mt-6 pt-6 border-t border-[#2A2A2C] space-y-8" onClick={(e) => e.stopPropagation()}>
+                                {groups.map((group, gi) => (
+                                  <div key={gi}>
+                                    <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">{group.label}</p>
 
-                                      {/* Email type — scrollable container with fade */}
-                                      {group.type === 'email' ? (
-                                        <div className={`grid gap-4 ${group.cols === 1 ? 'max-w-sm' : `grid-cols-${group.cols}`}`} style={group.cols > 1 ? { gridTemplateColumns: `repeat(${group.cols}, minmax(0, 1fr))` } : {}}>
-                                          {group.images.map((img, idx) => (
-                                            <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
-                                              <div className="max-h-[500px] overflow-y-auto scrollbar-hide">
-                                                <img src={img} alt="" className="w-full h-auto" loading="lazy" />
-                                              </div>
-                                              <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style={{ background: 'linear-gradient(to top, #0F0F10, transparent)' }} />
-                                              <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
-                                                <span className="text-[10px] font-mono text-[#52525B] tracking-wider">SCROLL TO VIEW</span>
-                                              </div>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      ) : group.cols === 1 ? (
-                                        <div className="max-w-xs">
-                                          <div className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
-                                            <img src={group.images[0]} alt="" className="w-full h-auto max-h-[480px] object-cover object-top" loading="lazy" />
-                                          </div>
-                                        </div>
-                                      ) : (
-                                        <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${Math.min(group.cols, 4)}, minmax(0, 1fr))` }}>
-                                          {group.images.map((img, idx) => (
-                                            <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                    {group.type === 'email' ? (
+                                      <div className={`grid gap-4 ${group.cols === 1 ? 'max-w-sm' : ''}`} style={group.cols > 1 ? { gridTemplateColumns: `repeat(${group.cols}, minmax(0, 1fr))` } : {}}>
+                                        {group.images.map((img, idx) => (
+                                          <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                            <div className="max-h-[500px] overflow-y-auto scrollbar-hide">
                                               <img src={img} alt="" className="w-full h-auto" loading="lazy" />
                                             </div>
-                                          ))}
+                                            <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style={{ background: 'linear-gradient(to top, #0F0F10, transparent)' }} />
+                                            <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
+                                              <span className="text-[10px] font-mono text-[#52525B] tracking-wider">SCROLL TO VIEW</span>
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    ) : group.cols === 1 ? (
+                                      <div className="max-w-xs">
+                                        <div className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                          <img src={group.images[0]} alt="" className="w-full h-auto max-h-[480px] object-cover object-top" loading="lazy" />
                                         </div>
-                                      )}
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                                      </div>
+                                    ) : (
+                                      <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${Math.min(group.cols, 4)}, minmax(0, 1fr))` }}>
+                                        {group.images.map((img, idx) => (
+                                          <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                            <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
-              </Fade>
-            )
-          })}
-        </div>
-
-        <Fade delay={0.4}>
-          <div className="flex flex-col items-center mt-6">
-            <div className="w-px h-8" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}60, transparent)` }} />
-            <div className="mt-2 px-6 py-3 rounded-full border border-[#2A2A2C] bg-[#131315]">
-              <span className="text-sm font-mono text-[#71717A] tracking-wide">Fuller-funnel attribution · Measurable progression · Across the golfer journey</span>
-            </div>
-          </div>
-        </Fade>
+              </div>
+            </Fade>
+          )
+        })}
       </div>
+
+      {/* Funnel endpoint */}
+      <Fade delay={0.4}>
+        <div className="flex flex-col items-center mt-6">
+          <div className="w-px h-8" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}60, transparent)` }} />
+          <div className="mt-2 px-6 py-3 rounded-full border border-[#2A2A2C] bg-[#131315]">
+            <span className="text-sm font-mono text-[#71717A] tracking-wide">Fuller-funnel attribution · Measurable progression · Across the golfer journey</span>
+          </div>
+        </div>
+      </Fade>
     </section>
   )
 }
