@@ -5,6 +5,7 @@ import { images } from '@/lib/images'
 import { PartnershipProvider } from '@/lib/partnership-context'
 import { HeroSection } from '@/components/presentation/HeroSection'
 import { BudgetPositioning } from '@/components/presentation/BudgetPositioning'
+import { FindYourFit } from '@/components/presentation/FindYourFit'
 import { CommercialModel } from '@/components/presentation/CommercialModel'
 import { ProgressionFramework } from '@/components/presentation/ProgressionFramework'
 import { PartnerArchetypes } from '@/components/presentation/PartnerArchetypes'
@@ -17,6 +18,7 @@ import { StrategicClose } from '@/components/presentation/StrategicClose'
 const sections = [
   { id: 'hero', label: 'Overview' },
   { id: 'budget', label: 'Budget Fit' },
+  { id: 'best-fit', label: 'Best Fit' },
   { id: 'commercial', label: 'Commercial Model' },
   { id: 'progression', label: 'Progression' },
   { id: 'daily-grind', label: 'Daily Grind' },
@@ -42,6 +44,8 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
         <div id="hero"><HeroSection partner={partner} /></div>
         <Divider />
         <div id="budget"><BudgetPositioning partner={partner} /></div>
+        <Divider />
+        <div id="best-fit"><FindYourFit partner={partner} /></div>
         <Divider />
         <div id="commercial"><CommercialModel partner={partner} /></div>
         <Divider />
