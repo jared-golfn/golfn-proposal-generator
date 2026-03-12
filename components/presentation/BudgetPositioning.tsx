@@ -25,7 +25,6 @@ const comparisonRows = [
 export function BudgetPositioning({ partner }: { partner: PartnerConfig }) {
   return (
     <section className="py-32">
-      {/* Text content stays in container */}
       <div className="max-w-[960px] mx-auto px-6 md:px-12">
         <Fade>
           <span className="font-mono text-sm tracking-[0.2em] uppercase" style={{ color: partner.primaryColor }}>Budget Positioning</span>
@@ -39,37 +38,34 @@ export function BudgetPositioning({ partner }: { partner: PartnerConfig }) {
         ))}
       </div>
 
-      {/* Table breaks out of container — full width with max */}
+      {/* Table breaks out wide */}
       <Fade delay={0.35}>
-        <div className="max-w-[1200px] mx-auto px-4 md:px-8 mt-16">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 mt-16">
           <div className="bg-[#111113] border border-[#2A2A2C] rounded-3xl overflow-hidden">
-            {/* Table header */}
+            {/* Header row */}
             <div className="grid grid-cols-12">
-              <div className="col-span-3 p-6 md:p-8" />
-              <div className="col-span-4 p-6 md:p-8 border-l border-[#2A2A2C]">
-                <span className="font-mono text-sm tracking-[0.2em] text-[#52525B] font-medium">BROAD PAID MEDIA</span>
+              <div className="col-span-3 p-7 md:p-9" />
+              <div className="col-span-4 p-7 md:p-9 border-l border-[#2A2A2C] flex items-center">
+                <span className="font-mono text-base tracking-[0.2em] text-[#52525B] font-medium">BROAD PAID MEDIA</span>
               </div>
-              <div className="col-span-5 p-6 md:p-8 border-l border-[#2A2A2C]" style={{ background: `${partner.primaryColor}0A` }}>
-                <div className="flex items-center gap-3">
-                  <img src={images.logoIcon} alt="" className="h-7 w-7" />
-                  <span className="font-mono text-sm tracking-[0.2em] font-bold" style={{ color: partner.primaryColor }}>GOLFN</span>
-                </div>
+              <div className="col-span-5 p-7 md:p-9 border-l border-[#2A2A2C]" style={{ background: `${partner.primaryColor}0C` }}>
+                <img src={images.logo} alt="GolfN" className="h-10 md:h-12 w-auto" />
               </div>
             </div>
 
-            {/* Rows */}
-            {comparisonRows.map((row, i) => {
+            {/* Data rows */}
+            {comparisonRows.map((row) => {
               const isNotAvailable = row.broad === 'Not available'
               return (
-                <div key={row.category} className={`grid grid-cols-12 border-t border-[#2A2A2C]/70`}>
-                  <div className="col-span-3 p-5 md:p-6 flex items-start">
-                    <span className="text-[15px] font-semibold text-white">{row.category}</span>
+                <div key={row.category} className="grid grid-cols-12 border-t border-[#2A2A2C]/70">
+                  <div className="col-span-3 p-5 md:p-7 flex items-start">
+                    <span className="text-base font-semibold text-white">{row.category}</span>
                   </div>
-                  <div className="col-span-4 p-5 md:p-6 border-l border-[#2A2A2C]/70 flex items-start">
-                    <span className={`text-[15px] leading-relaxed ${isNotAvailable ? 'text-[#52525B] italic' : 'text-[#71717A]'}`}>{row.broad}</span>
+                  <div className="col-span-4 p-5 md:p-7 border-l border-[#2A2A2C]/70 flex items-start">
+                    <span className={`text-base leading-relaxed ${isNotAvailable ? 'text-[#3F3F46] italic' : 'text-[#71717A]'}`}>{row.broad}</span>
                   </div>
-                  <div className="col-span-5 p-5 md:p-6 border-l border-[#2A2A2C]/70 flex items-start" style={{ background: `${partner.primaryColor}06` }}>
-                    <span className="text-[15px] text-[#E4E4E7] leading-relaxed font-medium">{row.golfn}</span>
+                  <div className="col-span-5 p-5 md:p-7 border-l border-[#2A2A2C]/70 flex items-start" style={{ background: `${partner.primaryColor}06` }}>
+                    <span className="text-base text-[#F4F4F5] leading-relaxed font-medium">{row.golfn}</span>
                   </div>
                 </div>
               )
@@ -78,7 +74,6 @@ export function BudgetPositioning({ partner }: { partner: PartnerConfig }) {
         </div>
       </Fade>
 
-      {/* Blockquote back in container */}
       <div className="max-w-[960px] mx-auto px-6 md:px-12">
         <Fade delay={0.5}>
           <p className="text-[17px] text-[#B0B0B4] leading-[1.75] border-l-2 pl-6 mt-12 max-w-2xl" style={{ borderColor: partner.primaryColor }}>
