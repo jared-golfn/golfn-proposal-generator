@@ -4,6 +4,8 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { type PartnerConfig, progressionStages } from '@/lib/presentation-data'
 import { images } from '@/lib/images'
+import { usePartnership } from '@/lib/partnership-context'
+import { partnershipPaths } from '@/lib/partnership-paths'
 
 function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null)
@@ -76,8 +78,24 @@ function ImageGroupRenderer({ group }: { group: ImageGroup }) {
   )
 }
 
+// Which paths include which stages
+const stagePathLabels: Record<number, string[]> = {
+  1: ['Pilot', 'Growth', 'Strategic'],
+  2: ['Pilot', 'Growth', 'Strategic'],
+  3: ['Pilot', 'Growth', 'Strategic'],
+  4: ['Pilot', 'Growth', 'Strategic'],
+  5: ['Growth', 'Strategic'],
+  6: ['Growth', 'Strategic'],
+  7: ['Growth', 'Strategic'],
+  8: ['Strategic'],
+}
+
 export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
   const [expanded, setExpanded] = useState<number | null>(null)
+  const { state } = usePartnership()
+  const { selectedPath } = state
+  const activePath = selectedPath ? partnershipPaths[selectedPath] : null
+  const includedStages = activePath ? activePath.includedStages : null
 
   return (
     <section className="py-32">
@@ -87,7 +105,12 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
             <Fade>
               <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Eight Stages</span>
               <h2 className="font-display text-4xl md:text-6xl mt-3 mb-6 leading-[0.95]">Golfer<br /><span className="text-gradient">Progression</span></h2>
-              <p className="text-[17px] text-[#B0B0B4] leading-[1.75]">GolfN helps brands create measurable movement across the golfer journey. Eight stages, each producing distinct outcomes, each feeding the next. Together, they form a compounding growth engine.</p>
+              <p className="text-[17px] text-[#B0B0B4] leading-[1.75]">
+                {selectedPath
+                  ? `GolfN is built to move golfers through measurable stages, not just generate impressions. Your ${activePath?.name} path includes stages ${includedStages?.[0]}–${includedStages?.[includedStages.length - 1]}, highlighted below.`
+                  : 'GolfN helps brands create measurable movement across the golfer journey. Eight stages, each producing distinct outcomes, each feeding the next. Together, they form a compounding growth engine.'
+                }
+              </p>
             </Fade>
           </div>
           <Fade delay={0.3}>
@@ -99,6 +122,22 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
             </div>
           </Fade>
         </div>
+
+        {/* Path stage legend */}
+        {selectedPath && (
+          <Fade delay={0.15}>
+            <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm" style={{ background: partner.primaryColor }} />
+                <span className="text-sm text-[#A1A1AA]">Included in {activePath?.name}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-[#2A2A2C]" />
+                <span className="text-sm text-[#52525B]">Advanced stage</span>
+              </div>
+            </div>
+          </Fade>
+        )}
       </div>
 
       {/* Funnel with SVG background shape */}
@@ -122,31 +161,50 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
           {progressionStages.map((stage, i) => {
             const isOpen = expanded === i
             const groups = stageImageGroups[stage.number]
-            const opacity = 0.35 + (i / 7) * 0.65
+            const isIncluded = includedStages ? includedStages.includes(stage.number) : true
+            const isDimmed = selectedPath && !isIncluded
+
+            // Opacity: included stages get full treatment, dimmed stages are muted
+            const opacity = isDimmed ? 0.2 : 0.35 + (i / 7) * 0.65
+            const cardOpacity = isDimmed ? 0.5 : 1
+            const pathsForStage = stagePathLabels[stage.number] || []
 
             return (
               <Fade key={stage.number} delay={0.04 * i}>
                 <div
-                  className={`relative border rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${isOpen ? 'border-[#3A3A3F] bg-[#161618]' : 'border-[#2A2A2C] hover:border-[#3A3A3F] bg-[#131315]'}`}
+                  className={`relative border rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${isOpen ? 'border-[#3A3A3F] bg-[#161618]' : isDimmed ? 'border-[#1E1E20] bg-[#111113]' : 'border-[#2A2A2C] hover:border-[#3A3A3F] bg-[#131315]'}`}
                   onClick={() => setExpanded(isOpen ? null : i)}
-                  style={isOpen ? { boxShadow: `0 0 40px ${partner.primaryColor}10` } : {}}
+                  style={{
+                    ...(isOpen && !isDimmed ? { boxShadow: `0 0 40px ${partner.primaryColor}10` } : {}),
+                    opacity: cardOpacity,
+                    transition: 'opacity 0.3s, border-color 0.3s, background-color 0.3s',
+                  }}
                 >
                   <div className="h-[3px]" style={{ background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})`, opacity }} />
 
                   <div className="px-6 py-7 md:px-8 md:py-9">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-6">
-                        <span className="font-mono text-3xl md:text-4xl font-bold" style={{ color: partner.primaryColor, opacity }}>{String(stage.number).padStart(2, '0')}</span>
+                        <span className="font-mono text-3xl md:text-4xl font-bold" style={{ color: isDimmed ? '#3A3A3F' : partner.primaryColor, opacity: isDimmed ? 0.5 : opacity }}>{String(stage.number).padStart(2, '0')}</span>
                         <div>
-                          <h3 className="text-xl md:text-2xl font-semibold">{stage.name}</h3>
-                          {!isOpen && <p className="text-base text-[#71717A] mt-1 hidden md:block">{stage.short}</p>}
+                          <div className="flex items-center gap-3">
+                            <h3 className={`text-xl md:text-2xl font-semibold ${isDimmed ? 'text-[#52525B]' : ''}`}>{stage.name}</h3>
+                            {/* Included / Advanced badge */}
+                            {selectedPath && isIncluded && (
+                              <span className="text-[9px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: `${partner.primaryColor}20`, color: partner.primaryColor }}>INCLUDED</span>
+                            )}
+                            {selectedPath && !isIncluded && (
+                              <span className="text-[9px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#1A1A1D] text-[#52525B]">ADVANCED</span>
+                            )}
+                          </div>
+                          {!isOpen && <p className={`text-base mt-1 hidden md:block ${isDimmed ? 'text-[#3A3A3F]' : 'text-[#71717A]'}`}>{stage.short}</p>}
                         </div>
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
-                        {groups && !isOpen && (
+                        {groups && !isOpen && !isDimmed && (
                           <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded bg-[#2A2A2C] text-[#8C8C8C] hidden md:block">EXAMPLES</span>
                         )}
-                        <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="22" height="22" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
+                        <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="22" height="22" viewBox="0 0 20 20" className={isDimmed ? 'text-[#2A2A2C]' : 'text-[#52525B]'}>
                           <path d="M5 8l5 5 5-5" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" />
                         </motion.svg>
                       </div>
@@ -162,14 +220,34 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                           className="overflow-hidden"
                         >
                           <div className="mt-6 pt-6 border-t border-[#2A2A2C]">
-                            <p className="text-[17px] text-[#B0B0B4] leading-[1.75] mb-5">{stage.detail}</p>
+                            <p className={`text-[17px] leading-[1.75] mb-5 ${isDimmed ? 'text-[#52525B]' : 'text-[#B0B0B4]'}`}>{stage.detail}</p>
+
+                            {/* Path inclusion labels */}
+                            <div className="flex items-center gap-3 mb-5">
+                              <span className="text-xs text-[#52525B]">Typically included in:</span>
+                              <div className="flex gap-1.5">
+                                {pathsForStage.map(p => (
+                                  <span
+                                    key={p}
+                                    className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded"
+                                    style={selectedPath && p.toLowerCase() === activePath?.name.toLowerCase()
+                                      ? { background: `${partner.primaryColor}20`, color: partner.primaryColor }
+                                      : { background: '#1A1A1D', color: '#71717A' }
+                                    }
+                                  >
+                                    {p}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
                             <div className="flex flex-wrap gap-2">
                               {stage.channels.map((ch) => (
-                                <span key={ch} className="text-xs font-mono px-3 py-1.5 rounded-full" style={{ background: `${partner.primaryColor}12`, color: partner.primaryColor }}>{ch}</span>
+                                <span key={ch} className="text-xs font-mono px-3 py-1.5 rounded-full" style={{ background: isDimmed ? '#1A1A1D' : `${partner.primaryColor}12`, color: isDimmed ? '#52525B' : partner.primaryColor }}>{ch}</span>
                               ))}
                             </div>
 
-                            {groups && (
+                            {groups && !isDimmed && (
                               <div className="mt-6 pt-6 border-t border-[#2A2A2C] space-y-8" onClick={(e) => e.stopPropagation()}>
                                 {groups.map((group, gi) => (
                                   <div key={gi}>
@@ -177,6 +255,12 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                                     <ImageGroupRenderer group={group} />
                                   </div>
                                 ))}
+                              </div>
+                            )}
+
+                            {isDimmed && (
+                              <div className="mt-6 pt-4 border-t border-[#2A2A2C]">
+                                <p className="text-sm text-[#52525B] italic">This stage is typically available in {pathsForStage.join(' and ')} paths. Consider upgrading to access this stage.</p>
                               </div>
                             )}
                           </div>
