@@ -54,7 +54,9 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                         {!isOpen && <p className="text-sm text-[#71717A] mt-0.5 hidden md:block">{stage.short}</p>}
                       </div>
                     </div>
-                    <motion.span animate={{ rotate: isOpen ? 180 : 0 }} className="text-[#52525B] text-xl">{"\u25BE"}</motion.span>
+                    <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} width="20" height="20" viewBox="0 0 20 20" className="text-[#52525B] shrink-0">
+                      <path d="M5 8l5 5 5-5" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" />
+                    </motion.svg>
                   </div>
                   {isOpen && (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5 pt-5 border-t border-[#2A2A2C]">
@@ -74,7 +76,7 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
       </div>
 
       <Fade delay={0.4}>
-        <p className="text-center text-sm text-[#71717A] font-mono mt-12 tracking-wide">{"Fuller-funnel attribution \u00b7 Measurable progression \u00b7 Across the golfer journey"}</p>
+        <p className="text-center text-sm text-[#71717A] font-mono mt-12 tracking-wide">Fuller-funnel attribution · Measurable progression · Across the golfer journey</p>
       </Fade>
     </section>
   )
