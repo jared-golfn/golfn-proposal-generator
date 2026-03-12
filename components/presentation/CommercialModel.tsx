@@ -67,13 +67,13 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
 
   return (
     <section className="py-20 md:py-32">
-      <div className="max-w-[960px] mx-auto px-5 md:px-12">
+      <div className="w-content px-5 md:px-12">
         <Fade>
           <div className="flex items-start justify-between mb-6">
             <div>
               <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">How Pricing Works</span>
               <h2 className="font-display text-3xl md:text-5xl mt-3 leading-[0.95]">
-                {selectedPath ? <>Pricing for <span className="text-gradient">{activePath?.name}</span></> : <>Commercial <span className="text-gradient">Architecture</span></>}
+                {selectedPath ? <>Pricing for <span className="text-gradient">{activePath?.name}</span></> : <>How Pricing <span className="text-gradient">Works</span></>}
               </h2>
             </div>
 
@@ -108,14 +108,13 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
           {!selectedPath && <div className="mb-8" />}
         </Fade>
 
-        {/* Money Map */}
         <Fade delay={0.1}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-10">
             {[
-              { label: 'SETUP', sub: 'Builds the program', range: selectedPath ? activePath!.setup.range : '$7.5K–$35K+', layer: 0 },
-              { label: 'MANAGEMENT', sub: 'Runs and optimizes', range: selectedPath ? activePath!.monthly.starting : '$2.5K–$6.5K/mo', layer: 1 },
-              { label: 'MEDIA', sub: 'Funds delivery volume', range: selectedPath ? recommendedImpressions.join('–') : '$3.5K–$30K+', layer: 1 },
-              { label: 'PERFORMANCE', sub: 'When actions occur', range: '20–40%', layer: 2 },
+              { label: 'SETUP', sub: 'Builds the program', range: selectedPath ? activePath!.setup.range : '$7.5K\u2013$35K+', layer: 0 },
+              { label: 'MANAGEMENT', sub: 'Runs and optimizes', range: selectedPath ? activePath!.monthly.starting : '$2.5K\u2013$6.5K/mo', layer: 1 },
+              { label: 'MEDIA', sub: 'Funds delivery volume', range: selectedPath ? recommendedImpressions.join('\u2013') : '$3.5K\u2013$30K+', layer: 1 },
+              { label: 'PERFORMANCE', sub: 'Aligned with downstream results', range: 'When applicable', layer: 2 },
             ].map((c, i) => (
               <button
                 key={c.label}
@@ -124,14 +123,13 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
               >
                 <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: i < 2 ? partner.primaryColor : partner.secondaryColor }} />
                 <span className="font-mono text-[10px] md:text-xs tracking-[0.2em] text-[#71717A]">{c.label}</span>
-                <div className="text-xl md:text-3xl font-bold mt-2 md:mt-3 mb-1" style={{ color: i < 2 ? partner.primaryColor : partner.secondaryColor }}>{c.range}</div>
+                <div className={`font-bold mt-2 md:mt-3 mb-1 ${i === 3 ? 'text-lg md:text-xl' : 'text-xl md:text-3xl'}`} style={{ color: i < 2 ? partner.primaryColor : partner.secondaryColor }}>{c.range}</div>
                 <span className="text-sm md:text-base text-[#71717A]">{c.sub}</span>
               </button>
             ))}
           </div>
         </Fade>
 
-        {/* Simple View: Path pricing summary */}
         {!isDetailed && selectedPath && (
           <Fade delay={0.15}>
             <div className="bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden mb-8">
@@ -165,20 +163,19 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
 
                 <div className="border-t border-[#2A2A2C] pt-6 mt-6">
                   <p className="text-xs md:text-sm font-mono text-[#71717A] tracking-wider uppercase mb-4">Upside Alignment</p>
-                  <p className="text-base md:text-lg text-[#B0B0B4]">Performance economics apply when qualifying downstream actions are part of the program. GolfN's preferred range is 30–40% on wholesale/marketplace participation.</p>
+                  <p className="text-base md:text-lg text-[#B0B0B4]">Performance economics apply when qualifying downstream actions are part of the program. GolfN participates in upside when measurable results occur.</p>
                 </div>
               </div>
 
               <div className="px-6 md:px-10 py-5 border-t border-[#2A2A2C] bg-[#0F0F10]">
                 <button onClick={() => setViewMode('detailed')} className="text-sm md:text-base font-mono hover:underline" style={{ color: partner.primaryColor }}>
-                  See detailed pricing breakdown →
+                  See detailed pricing breakdown \u2192
                 </button>
               </div>
             </div>
           </Fade>
         )}
 
-        {/* Simple View: No path */}
         {!isDetailed && !selectedPath && (
           <Fade delay={0.15}>
             <div className="bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden mb-8">
@@ -204,14 +201,13 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
               </div>
               <div className="px-6 md:px-10 py-5 border-t border-[#2A2A2C] bg-[#0F0F10]">
                 <button onClick={() => setViewMode('detailed')} className="text-sm md:text-base font-mono hover:underline" style={{ color: partner.primaryColor }}>
-                  See detailed pricing breakdown →
+                  See detailed pricing breakdown \u2192
                 </button>
               </div>
             </div>
           </Fade>
         )}
 
-        {/* Detailed View */}
         {isDetailed && (
           <Fade delay={0.15}>
             <div className="space-y-3">
@@ -300,13 +296,13 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
                 </div>
               </LayerPanel>
 
-              <LayerPanel number="03" title="Performance Economics" subtitle="Variable compensation tied to downstream results" accent={partner.secondaryColor} isOpen={openLayer === 2} onToggle={() => toggle(2)} pathBadge={selectedPath ? 'When applicable' : undefined}>
+              <LayerPanel number="03" title="Performance Economics" subtitle="GolfN participates in upside when measurable downstream actions occur" accent={partner.secondaryColor} isOpen={openLayer === 2} onToggle={() => toggle(2)} pathBadge={selectedPath ? 'When applicable' : undefined}>
                 <p className="text-base md:text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.performance.description}</p>
                 <div className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-6 md:p-8 mb-4" style={{ boxShadow: `0 0 60px ${partner.primaryColor}06` }}>
                   <div className="inline-block text-xs md:text-sm font-mono px-3 py-1 rounded-full mb-4" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>PREFERRED</div>
                   <h4 className="text-lg md:text-xl font-semibold mb-2">{commercialModel.performance.preferred.name}</h4>
                   <div className="text-4xl md:text-6xl font-bold font-mono mb-3" style={{ color: partner.primaryColor }}>{commercialModel.performance.preferred.range}</div>
-                  <p className="text-base md:text-lg text-[#A1A1AA] mb-3">Preferred: {commercialModel.performance.preferred.preferredRange} · Floor: {commercialModel.performance.preferred.floor}</p>
+                  <p className="text-base md:text-lg text-[#A1A1AA] mb-3">Preferred: {commercialModel.performance.preferred.preferredRange} \u00B7 Floor: {commercialModel.performance.preferred.floor}</p>
                   <p className="text-sm md:text-base text-[#8C8C8C] leading-[1.75] max-w-2xl mb-4">{commercialModel.performance.preferred.description}</p>
                   <p className="text-sm md:text-base text-[#71717A] leading-[1.7] border-l-2 pl-4 mt-4" style={{ borderColor: `${partner.primaryColor}40` }}>{commercialModel.performance.preferred.whyNotAffiliate}</p>
                 </div>
