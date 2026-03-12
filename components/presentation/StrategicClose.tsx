@@ -29,8 +29,25 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
   const activePath = selectedPath ? partnershipPaths[selectedPath] : null
 
   const emailSubject = selectedPath
-    ? `Partnership Discussion — ${partner.partnerName} (${activePath?.name} Path)`
-    : `Partnership Discussion — ${partner.partnerName}`
+    ? `Partnership Discussion \u2014 ${partner.partnerName} (${activePath?.name} Path)`
+    : `Partnership Discussion \u2014 ${partner.partnerName}`
+
+  // Build enriched email body with full selected state (Priority 6)
+  const emailBodyParts: string[] = []
+  if (selectedPath) {
+    emailBodyParts.push(`Selected Path: ${activePath?.name}`)
+    emailBodyParts.push(`Setup: ${activePath?.setup.range}`)
+    emailBodyParts.push(`Monthly: ${activePath?.monthly.starting}`)
+    emailBodyParts.push(`Duration: ${activePath?.duration.recommended}`)
+    if (isRecommended) emailBodyParts.push(`(Recommended by Best Fit selector)`)
+    if (selectedGoals.length > 0) emailBodyParts.push(`Goals: ${selectedGoals.map(g => goalLabels[g] || g).join(', ')}`)
+    if (selectedExtensions.length > 0) emailBodyParts.push(`Extensions: ${selectedExtensions.map(getExtensionName).join(', ')}`)
+    emailBodyParts.push('')
+    emailBodyParts.push(`We would like to discuss scoping a ${activePath?.name} program for ${partner.partnerName}.`)
+  } else {
+    emailBodyParts.push(`We would like to discuss partnership options for ${partner.partnerName}.`)
+  }
+  const emailBody = emailBodyParts.join('\n')
 
   const headline = selectedPath
     ? { pre: "Let's ", verb: selectedPath === 'pilot' ? 'Launch a ' : selectedPath === 'growth' ? 'Build a ' : 'Scope a ', noun: `${activePath?.name} Program` }
@@ -38,17 +55,11 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
 
   const handleDownloadSummary = () => {
     if (!selectedPath) return
-    openSummary({
-      partner,
-      selectedPath,
-      selectedGoals,
-      selectedExtensions,
-      isRecommended,
-    })
+    openSummary({ partner, selectedPath, selectedGoals, selectedExtensions, isRecommended })
   }
 
   return (
-    <section className="max-w-[960px] mx-auto px-5 md:px-12 py-20 md:py-32">
+    <section className="w-content px-5 md:px-12 py-20 md:py-32">
       <Fade>
         <span className="font-mono text-sm tracking-[0.2em] uppercase" style={{ color: partner.primaryColor }}>Strategic Summary</span>
         <h2 className="font-display text-3xl md:text-6xl mt-4 mb-12 md:mb-16 leading-[0.95]">Why <span className="text-gradient">GolfN</span></h2>
@@ -72,13 +83,10 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
 
       <Fade delay={0.5}>
         <div className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-8 md:p-12">
-          <p className="text-lg md:text-2xl leading-[1.6] font-light text-[#D4D4D8]">
-            {closingStatement}
-          </p>
+          <p className="text-lg md:text-2xl leading-[1.6] font-light text-[#D4D4D8]">{closingStatement}</p>
         </div>
       </Fade>
 
-      {/* Personalized selection summary */}
       {selectedPath && (
         <Fade delay={0.55}>
           <div className="mt-12 md:mt-16 bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden" style={{ boxShadow: `0 0 60px ${partner.primaryColor}08` }}>
@@ -89,63 +97,24 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
                   <span className="text-sm font-mono tracking-wider" style={{ color: partner.primaryColor }}>YOUR PROGRAM SUMMARY</span>
                   {isRecommended && <span className="text-[9px] font-mono tracking-wider px-2 py-0.5 rounded hidden sm:inline-block" style={{ background: `${partner.primaryColor}20`, color: partner.primaryColor }}>RECOMMENDED</span>}
                 </div>
-                {/* Download button inside the summary card */}
-                <button
-                  onClick={handleDownloadSummary}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs md:text-sm font-medium border transition-all hover:scale-[1.02]"
-                  style={{ borderColor: `${partner.primaryColor}40`, color: partner.primaryColor }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke={partner.primaryColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                <button onClick={handleDownloadSummary} className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs md:text-sm font-medium border transition-all hover:scale-[1.02]" style={{ borderColor: `${partner.primaryColor}40`, color: partner.primaryColor }}>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke={partner.primaryColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   <span className="hidden sm:inline">Download Summary</span>
                   <span className="sm:hidden">PDF</span>
                 </button>
               </div>
             </div>
-
             <div className="px-6 md:px-10 py-6 md:py-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-                <div>
-                  <span className="text-[10px] md:text-xs text-[#52525B] font-mono">PATH</span>
-                  <div className="text-lg md:text-xl font-semibold mt-1">{activePath?.name}</div>
-                </div>
-                <div>
-                  <span className="text-[10px] md:text-xs text-[#52525B] font-mono">SETUP</span>
-                  <div className="text-lg md:text-xl font-mono font-bold mt-1" style={{ color: partner.primaryColor }}>{activePath?.setup.range}</div>
-                </div>
-                <div>
-                  <span className="text-[10px] md:text-xs text-[#52525B] font-mono">MONTHLY</span>
-                  <div className="text-lg md:text-xl font-mono font-bold mt-1" style={{ color: partner.primaryColor }}>{activePath?.monthly.starting}</div>
-                </div>
-                <div>
-                  <span className="text-[10px] md:text-xs text-[#52525B] font-mono">DURATION</span>
-                  <div className="text-lg md:text-xl font-mono font-bold mt-1" style={{ color: partner.primaryColor }}>{activePath?.duration.recommended}</div>
-                </div>
+                <div><span className="text-[10px] md:text-xs text-[#52525B] font-mono">PATH</span><div className="text-lg md:text-xl font-semibold mt-1">{activePath?.name}</div></div>
+                <div><span className="text-[10px] md:text-xs text-[#52525B] font-mono">SETUP</span><div className="text-lg md:text-xl font-mono font-bold mt-1" style={{ color: partner.primaryColor }}>{activePath?.setup.range}</div></div>
+                <div><span className="text-[10px] md:text-xs text-[#52525B] font-mono">MONTHLY</span><div className="text-lg md:text-xl font-mono font-bold mt-1" style={{ color: partner.primaryColor }}>{activePath?.monthly.starting}</div></div>
+                <div><span className="text-[10px] md:text-xs text-[#52525B] font-mono">DURATION</span><div className="text-lg md:text-xl font-mono font-bold mt-1" style={{ color: partner.primaryColor }}>{activePath?.duration.recommended}</div></div>
               </div>
-
               {(selectedGoals.length > 0 || selectedExtensions.length > 0) && (
                 <div className="border-t border-[#2A2A2C] pt-6 space-y-4">
-                  {selectedGoals.length > 0 && (
-                    <div>
-                      <span className="text-[10px] md:text-xs text-[#52525B] font-mono">SELECTED GOALS</span>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {selectedGoals.map(g => (
-                          <span key={g} className="text-xs md:text-sm px-3 py-1.5 rounded-lg bg-[#1A1A1D] border border-[#2A2A2C] text-[#D4D4D8]">{goalLabels[g]}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {selectedExtensions.length > 0 && (
-                    <div>
-                      <span className="text-[10px] md:text-xs text-[#52525B] font-mono">SELECTED EXTENSIONS</span>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {selectedExtensions.map(e => (
-                          <span key={e} className="text-xs md:text-sm px-3 py-1.5 rounded-lg border text-[#D4D4D8]" style={{ background: `${partner.primaryColor}08`, borderColor: `${partner.primaryColor}20` }}>{getExtensionName(e)}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  {selectedGoals.length > 0 && (<div><span className="text-[10px] md:text-xs text-[#52525B] font-mono">SELECTED GOALS</span><div className="flex flex-wrap gap-2 mt-2">{selectedGoals.map(g => (<span key={g} className="text-xs md:text-sm px-3 py-1.5 rounded-lg bg-[#1A1A1D] border border-[#2A2A2C] text-[#D4D4D8]">{goalLabels[g]}</span>))}</div></div>)}
+                  {selectedExtensions.length > 0 && (<div><span className="text-[10px] md:text-xs text-[#52525B] font-mono">SELECTED EXTENSIONS</span><div className="flex flex-wrap gap-2 mt-2">{selectedExtensions.map(e => (<span key={e} className="text-xs md:text-sm px-3 py-1.5 rounded-lg border text-[#D4D4D8]" style={{ background: `${partner.primaryColor}08`, borderColor: `${partner.primaryColor}20` }}>{getExtensionName(e)}</span>))}</div></div>)}
                 </div>
               )}
             </div>
@@ -153,64 +122,30 @@ export function StrategicClose({ partner }: { partner: PartnerConfig }) {
         </Fade>
       )}
 
-      {/* CTA section */}
       <Fade delay={0.6}>
         <div className="mt-20 md:mt-24 text-center">
           <img src={images.logo} alt="GolfN" className="h-12 md:h-16 w-auto mx-auto mb-6 md:mb-8 opacity-80" />
-
-          <h3 className="font-display text-3xl md:text-5xl mb-4 md:mb-5">
-            {headline.pre}<span className="text-gradient">{headline.verb}{headline.noun}</span>
-          </h3>
-
+          <h3 className="font-display text-3xl md:text-5xl mb-4 md:mb-5">{headline.pre}<span className="text-gradient">{headline.verb}{headline.noun}</span></h3>
           <p className="text-base md:text-lg text-[#8C8C8C] max-w-lg mx-auto mb-8 md:mb-10">
             {selectedPath
               ? `We'll build a ${activePath?.name} program for ${partner.partnerName} that drives real golfers to real action.`
               : `We'll recommend the right structure based on your goals, product complexity, activation requirements, and preferred commercial model.`
             }
           </p>
-
-          {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
-            <a
-              href={`mailto:jared@golfn.com?subject=${encodeURIComponent(emailSubject)}`}
-              className="inline-flex items-center gap-3 px-8 py-3.5 md:px-10 md:py-4 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.02] w-full sm:w-auto justify-center"
-              style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}
-            >
-              {selectedPath
-                ? `Scope My ${activePath?.name} Program`
-                : 'Start the Conversation'
-              }
+            <a href={`mailto:jared@golfn.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`} className="inline-flex items-center gap-3 px-8 py-3.5 md:px-10 md:py-4 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.02] w-full sm:w-auto justify-center" style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}>
+              {selectedPath ? `Scope My ${activePath?.name} Program` : 'Start the Conversation'}
             </a>
             {selectedPath && (
-              <button
-                onClick={handleDownloadSummary}
-                className="inline-flex items-center gap-2 px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-semibold text-base border transition-all hover:scale-[1.02] w-full sm:w-auto justify-center"
-                style={{ borderColor: `${partner.primaryColor}40`, color: partner.primaryColor }}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke={partner.primaryColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+              <button onClick={handleDownloadSummary} className="inline-flex items-center gap-2 px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-semibold text-base border transition-all hover:scale-[1.02] w-full sm:w-auto justify-center" style={{ borderColor: `${partner.primaryColor}40`, color: partner.primaryColor }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke={partner.primaryColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 Download Summary
               </button>
             )}
           </div>
-
-          {/* Tertiary actions */}
           <div className="flex items-center justify-center gap-6 mt-5 md:mt-6">
-            {selectedPath && (
-              <button onClick={resetAll} className="text-sm text-[#52525B] hover:text-[#71717A] transition-colors">
-                Reset Selection
-              </button>
-            )}
-            {!selectedPath && (
-              <button
-                onClick={() => document.getElementById('best-fit')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-sm hover:underline transition-colors"
-                style={{ color: partner.primaryColor }}
-              >
-                Find Your Best Fit First
-              </button>
-            )}
+            {selectedPath && (<button onClick={resetAll} className="text-sm text-[#52525B] hover:text-[#71717A] transition-colors">Reset Selection</button>)}
+            {!selectedPath && (<button onClick={() => document.getElementById('best-fit')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm hover:underline transition-colors" style={{ color: partner.primaryColor }}>Find Your Best Fit First</button>)}
           </div>
         </div>
       </Fade>
