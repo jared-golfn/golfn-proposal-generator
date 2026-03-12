@@ -17,7 +17,7 @@ export function DailyGrindEvolution({ partner }: { partner: PartnerConfig }) {
       <Fade>
         <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Real-World Activation</span>
         <h2 className="font-display text-4xl md:text-6xl mt-3 mb-6 leading-[0.95]">Daily Grind<br /><span className="text-gradient">Evolution</span></h2>
-        <p className="text-[17px] text-[#B0B0B4] max-w-xl leading-[1.75] mb-16">{"GolfN\u2019s real-world, location-based check-in system. Golfers check in at courses, pro shops, events, Topgolf, PGA Tour events, and partner retail locations."}</p>
+        <p className="text-[17px] text-[#B0B0B4] max-w-xl leading-[1.75] mb-16">GolfN's real-world, location-based check-in system. Golfers check in at courses, pro shops, events, Topgolf, PGA Tour events, and partner retail locations.</p>
       </Fade>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
@@ -36,8 +36,8 @@ export function DailyGrindEvolution({ partner }: { partner: PartnerConfig }) {
       <Fade delay={0.4}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-[#161618] border border-[#2A2A2C] rounded-2xl p-8 md:p-10">
           <div>
-            <h4 className="text-xl font-semibold mb-3">{"Learn & Earn \u2014 The Digital Complement"}</h4>
-            <p className="text-[17px] text-[#B0B0B4] leading-[1.75]">{"While Daily Grind is real-world and location-based, Learn & Earn is the digital education and comprehension system. It lives within the \u201cMore Ways to Earn\u201d section of the app. Users earn points by consuming content and proving comprehension \u2014 wrong answers mean no or reduced points. Couch, not course."}</p>
+            <h4 className="text-xl font-semibold mb-3">Learn & Earn — The Digital Complement</h4>
+            <p className="text-[17px] text-[#B0B0B4] leading-[1.75]">While Daily Grind is real-world and location-based, Learn & Earn is the digital education and comprehension system. It lives within the "More Ways to Earn" section of the app. Users earn points by consuming content and proving comprehension — wrong answers mean no or reduced points. Couch, not course.</p>
           </div>
           <div className="flex justify-center">
             <div className="relative">
