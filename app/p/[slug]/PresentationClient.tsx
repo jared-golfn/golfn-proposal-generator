@@ -22,8 +22,8 @@ const sections = [
   { id: 'commercial', label: 'Commercial Model' },
   { id: 'progression', label: 'Progression' },
   { id: 'daily-grind', label: 'Daily Grind' },
-  { id: 'archetypes', label: 'Archetypes' },
-  { id: 'thresholds', label: 'Thresholds' },
+  { id: 'paths', label: 'Paths' },
+  { id: 'thresholds', label: 'Requirements' },
   { id: 'testimonials', label: 'Testimonials' },
   { id: 'close', label: 'Summary' },
 ]
@@ -53,7 +53,7 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
         <Divider />
         <div id="daily-grind"><DailyGrindEvolution partner={partner} /></div>
         <Divider />
-        <div id="archetypes"><PartnerArchetypes partner={partner} /></div>
+        <div id="paths"><PartnerArchetypes partner={partner} /></div>
         <Divider />
         <div id="thresholds"><Thresholds partner={partner} /></div>
         <Divider />
