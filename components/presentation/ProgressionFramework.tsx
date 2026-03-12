@@ -11,11 +11,10 @@ function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: numb
   return <motion.div ref={ref} initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay }}>{children}</motion.div>
 }
 
-// Image groups for stages that have visual examples
 interface ImageGroup {
   label: string
   images: string[]
-  cols: number // grid columns
+  cols: number
 }
 
 const stageImageGroups: Record<number, ImageGroup[]> = {
@@ -31,10 +30,29 @@ const stageImageGroups: Record<number, ImageGroup[]> = {
       cols: 4,
     },
   ],
+  4: [
+    {
+      label: 'Affiliate Banners — Post-Sweepstakes Intent Conversion',
+      images: [images.affiliateBanner1, images.affiliateBanner2, images.affiliateBanner3],
+      cols: 3,
+    },
+    {
+      label: 'Targeted Banner — Users Who Expressed Interest in Cobra OPTM Driver',
+      images: [images.cobraOptmTargeted],
+      cols: 1,
+    },
+  ],
   5: [
     {
       label: 'Points Exchange Marketplace',
       images: [images.labPointsExchange, images.miuraPointsExchange, images.bettinardiPointsExchange, images.cobraPointsExchange],
+      cols: 2,
+    },
+  ],
+  7: [
+    {
+      label: 'OAuth-Verified Social Proof',
+      images: [images.socialProof1, images.socialProof2],
       cols: 2,
     },
   ],
@@ -102,19 +120,26 @@ export function ProgressionFramework({ partner }: { partner: PartnerConfig }) {
                         ))}
                       </div>
 
-                      {/* Stage-specific image groups */}
                       {groups && (
                         <div className="mt-6 pt-6 border-t border-[#2A2A2C] space-y-8" onClick={(e) => e.stopPropagation()}>
                           {groups.map((group, gi) => (
                             <div key={gi}>
                               <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">{group.label}</p>
-                              <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${group.cols}, minmax(0, 1fr))` }}>
-                                {group.images.map((img, idx) => (
-                                  <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
-                                    <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+                              {group.cols === 1 ? (
+                                <div className="max-w-xs">
+                                  <div className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                    <img src={group.images[0]} alt="" className="w-full h-auto max-h-[480px] object-cover object-top" loading="lazy" />
                                   </div>
-                                ))}
-                              </div>
+                                </div>
+                              ) : (
+                                <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${group.cols}, minmax(0, 1fr))` }}>
+                                  {group.images.map((img, idx) => (
+                                    <div key={idx} className="relative rounded-xl overflow-hidden bg-[#0F0F10] border border-[#2A2A2C]">
+                                      <img src={img} alt="" className="w-full h-auto" loading="lazy" />
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
                             </div>
                           ))}
                         </div>
