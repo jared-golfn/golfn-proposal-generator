@@ -10,6 +10,7 @@ import { PartnerArchetypes } from '@/components/presentation/PartnerArchetypes'
 import { DailyGrindEvolution } from '@/components/presentation/DailyGrindEvolution'
 import { ScrollNav } from '@/components/presentation/ScrollNav'
 import { Thresholds } from '@/components/presentation/Thresholds'
+import { Testimonials } from '@/components/presentation/Testimonials'
 import { StrategicClose } from '@/components/presentation/StrategicClose'
 
 const sections = [
@@ -20,6 +21,7 @@ const sections = [
   { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'archetypes', label: 'Archetypes' },
   { id: 'thresholds', label: 'Thresholds' },
+  { id: 'testimonials', label: 'Testimonials' },
   { id: 'close', label: 'Summary' },
 ]
 
@@ -48,6 +50,8 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
       <div id="archetypes"><PartnerArchetypes partner={partner} /></div>
       <Divider />
       <div id="thresholds"><Thresholds partner={partner} /></div>
+      <Divider />
+      <div id="testimonials"><Testimonials partner={partner} /></div>
       <Divider />
       <div id="close"><StrategicClose partner={partner} /></div>
 
