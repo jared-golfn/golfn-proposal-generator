@@ -25,7 +25,6 @@
   }
 
   :root {
-    /* Fluid content widths that scale with viewport */
     --content-width: min(960px, 90vw);
     --content-wide: min(1100px, 92vw);
     --content-wider: min(1280px, 94vw);
@@ -64,15 +63,11 @@
   }
 
   @media (min-width: 768px) {
-    body {
-      font-size: 18px;
-    }
+    body { font-size: 18px; }
   }
 
   @media (min-width: 1920px) {
-    body {
-      font-size: 19px;
-    }
+    body { font-size: 19px; }
   }
 
   ::selection {
@@ -80,10 +75,22 @@
   }
 }
 
-/* Utility classes for fluid content widths */
+/* Fluid content utility classes */
 .w-content { max-width: var(--content-width); margin-left: auto; margin-right: auto; }
 .w-content-wide { max-width: var(--content-wide); margin-left: auto; margin-right: auto; }
 .w-content-wider { max-width: var(--content-wider); margin-left: auto; margin-right: auto; }
+
+/*
+ * Override hardcoded Tailwind max-width classes on large screens.
+ * This catches any component still using max-w-[960px] etc.
+ * and makes them scale fluidly with the viewport.
+ */
+@media (min-width: 1440px) {
+  .max-w-\[960px\]  { max-width: var(--content-width) !important; }
+  .max-w-\[1100px\] { max-width: var(--content-wide) !important; }
+  .max-w-\[1200px\] { max-width: var(--content-wider) !important; }
+  .max-w-\[1280px\] { max-width: var(--content-wider) !important; }
+}
 
 .text-gradient {
   background: linear-gradient(135deg, #17A455, #8DC54A);
