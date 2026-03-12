@@ -11,6 +11,7 @@ import { ProgressionFramework } from '@/components/presentation/ProgressionFrame
 import { PartnerArchetypes } from '@/components/presentation/PartnerArchetypes'
 import { Extensions } from '@/components/presentation/Extensions'
 import { DailyGrindEvolution } from '@/components/presentation/DailyGrindEvolution'
+import { AttentionToGrowth } from '@/components/presentation/AttentionToGrowth'
 import { ScrollNav } from '@/components/presentation/ScrollNav'
 import { Thresholds } from '@/components/presentation/Thresholds'
 import { Testimonials } from '@/components/presentation/Testimonials'
@@ -25,6 +26,7 @@ const sections = [
   { id: 'commercial', label: 'How Pricing Works' },
   { id: 'extensions', label: 'Extensions' },
   { id: 'thresholds', label: 'Requirements' },
+  { id: 'growth-engine', label: 'Growth Engine' },
   { id: 'progression', label: 'Progression' },
   { id: 'daily-grind', label: 'Daily Grind' },
   { id: 'testimonials', label: 'Proof' },
@@ -58,6 +60,8 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
         <div id="extensions"><Extensions partner={partner} /></div>
         <Divider />
         <div id="thresholds"><Thresholds partner={partner} /></div>
+        <Divider />
+        <div id="growth-engine"><AttentionToGrowth partner={partner} /></div>
         <Divider />
         <div id="progression"><ProgressionFramework partner={partner} /></div>
         <Divider />
