@@ -27,7 +27,7 @@ export function Extensions({ partner }: { partner: PartnerConfig }) {
   })
 
   return (
-    <section className="max-w-[960px] mx-auto px-5 md:px-12 py-20 md:py-32">
+    <section className="w-content px-5 md:px-12 py-20 md:py-32">
       <Fade>
         <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Modular Add-Ons</span>
         <h2 className="font-display text-3xl md:text-5xl mt-3 mb-4 leading-[0.95]">Optional<br /><span className="text-gradient">Extensions</span></h2>

@@ -21,7 +21,7 @@ const testimonials = [
 export function Testimonials({ partner }: { partner: PartnerConfig }) {
   return (
     <section className="py-20 md:py-32">
-      <div className="max-w-[960px] mx-auto px-5 md:px-12 mb-10 md:mb-16">
+      <div className="w-content px-5 md:px-12 mb-10 md:mb-16">
         <Fade>
           <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Proof</span>
           <h2 className="font-display text-3xl md:text-5xl mt-3 mb-4 leading-[0.95]">Real Golfers,<br /><span className="text-gradient">Real Feedback</span></h2>
@@ -30,7 +30,7 @@ export function Testimonials({ partner }: { partner: PartnerConfig }) {
       </div>
 
       <Fade delay={0.2}>
-        <div className="max-w-[1200px] mx-auto px-4 md:px-6">
+        <div className="w-content-wider px-4 md:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {testimonials.map((img, i) => (
               <motion.div

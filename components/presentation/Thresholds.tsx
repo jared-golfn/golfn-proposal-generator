@@ -19,7 +19,7 @@ const items = [
 
 export function Thresholds({ partner }: { partner: PartnerConfig }) {
   return (
-    <section className="max-w-[960px] mx-auto px-5 md:px-12 py-20 md:py-32">
+    <section className="w-content px-5 md:px-12 py-20 md:py-32">
       <Fade>
         <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Minimums</span>
         <h2 className="font-display text-3xl md:text-5xl mt-3 mb-4 leading-[0.95]">Program<br /><span className="text-gradient">Requirements</span></h2>
