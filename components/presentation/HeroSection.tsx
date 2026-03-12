@@ -30,7 +30,7 @@ function TooltipChip({ label, tooltip, color }: { label: string; tooltip: string
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
         onClick={() => setShow(!show)}
-        className="text-xs md:text-sm font-mono text-[#71717A] border border-[#2A2A2C] rounded-full px-3 py-1.5 md:px-5 md:py-2 transition-all hover:border-[#3A3A3F] hover:text-[#A1A1AA] cursor-default"
+        className="text-xs md:text-base font-mono text-[#71717A] border border-[#2A2A2C] rounded-full px-3 py-1.5 md:px-5 md:py-2.5 transition-all hover:border-[#3A3A3F] hover:text-[#A1A1AA] cursor-default"
       >
         {label}
       </button>
@@ -38,10 +38,10 @@ function TooltipChip({ label, tooltip, color }: { label: string; tooltip: string
         <motion.div
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute left-0 top-full mt-2 z-20 w-64 md:w-72"
+          className="absolute left-0 top-full mt-2 z-20 w-64 md:w-80"
         >
-          <div className="bg-[#1A1A1D] border border-[#2A2A2C] rounded-xl p-4 shadow-xl" style={{ boxShadow: `0 8px 32px rgba(0,0,0,0.5), 0 0 20px ${color}08` }}>
-            <p className="text-sm text-[#D4D4D8] leading-relaxed">{tooltip}</p>
+          <div className="bg-[#1A1A1D] border border-[#2A2A2C] rounded-xl p-4 md:p-5 shadow-xl" style={{ boxShadow: `0 8px 32px rgba(0,0,0,0.5), 0 0 20px ${color}08` }}>
+            <p className="text-sm md:text-base text-[#D4D4D8] leading-relaxed">{tooltip}</p>
           </div>
         </motion.div>
       )}
@@ -57,7 +57,7 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
       <div className="relative z-10 max-w-[960px] mx-auto w-full px-5 md:px-12 py-16 md:py-20">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="flex items-center justify-between mb-16 md:mb-28">
           <img src={images.logo} alt="GolfN" className="h-8 md:h-12 w-auto" />
-          <span className="text-[#8C8C8C] text-sm md:text-base">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
+          <span className="text-[#8C8C8C] text-sm md:text-lg">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center mb-10 md:mb-12">
@@ -69,17 +69,17 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
               Golf-specific demand generation, activation, and customer progression built around verified golfers and measurable downstream action.
             </p>
 
-            <div className="flex flex-wrap gap-3 mt-8">
+            <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
               <a
                 href="#best-fit"
-                className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-3.5 rounded-xl font-semibold text-base transition-all hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 px-6 py-3 md:px-10 md:py-4 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.02]"
                 style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}
               >
                 Find Your Best Fit
               </a>
               <a
                 href="#paths"
-                className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-3.5 rounded-xl font-semibold text-base border border-[#2A2A2C] text-[#A1A1AA] hover:border-[#3A3A3F] transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 md:px-10 md:py-4 rounded-xl font-semibold text-base md:text-lg border border-[#2A2A2C] text-[#A1A1AA] hover:border-[#3A3A3F] transition-all"
               >
                 See Partnership Paths
               </a>
@@ -89,23 +89,22 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ duration: 1, delay: 0.4 }} className="flex justify-center">
             <div className="relative">
               <div className="absolute -inset-8 blur-[80px] opacity-[0.12] rounded-full" style={{ background: partner.primaryColor }} />
-              <img src={images.srixonAd1} alt="GolfN app" className="relative w-48 md:w-64 lg:w-72 rounded-[28px]" style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }} />
+              <img src={images.srixonAd1} alt="GolfN app" className="relative w-48 md:w-72 lg:w-80 rounded-[28px]" style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }} />
             </div>
           </motion.div>
         </div>
 
-        {/* Interactive tooltip chips */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="flex flex-wrap gap-2 md:gap-3 mb-16 md:mb-24">
           {differentiators.map((d) => (
             <TooltipChip key={d.label} label={d.label} tooltip={d.tooltip} color={partner.primaryColor} />
           ))}
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
           {stats.map((s, i) => (
-            <motion.div key={s.label} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + i * 0.06 }} className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-7">
+            <motion.div key={s.label} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + i * 0.06 }} className="bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-8">
               <div className="text-2xl md:text-4xl font-bold font-mono tracking-tight mb-1" style={{ color: s.highlight ? partner.primaryColor : '#FAFAFA' }}>{s.value}</div>
-              <div className="text-sm md:text-[15px] font-semibold text-[#A1A1AA]">{s.label}</div>
+              <div className="text-sm md:text-base font-semibold text-[#A1A1AA]">{s.label}</div>
               <div className="text-xs md:text-sm text-[#71717A] mt-0.5">{s.sub}</div>
             </motion.div>
           ))}
