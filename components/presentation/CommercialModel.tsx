@@ -27,9 +27,7 @@ function LayerPanel({
           <div>
             <div className="flex items-center gap-3">
               <h3 className="text-xl md:text-2xl font-semibold">{title}</h3>
-              {pathBadge && (
-                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: `${accent}20`, color: accent }}>{pathBadge}</span>
-              )}
+              {pathBadge && <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: `${accent}20`, color: accent }}>{pathBadge}</span>}
             </div>
             <p className="text-sm text-[#71717A] mt-0.5">{subtitle}</p>
           </div>
@@ -41,9 +39,7 @@ function LayerPanel({
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.35 }} className="overflow-hidden">
-            <div className="px-6 md:px-8 pb-8 border-t border-[#2A2A2C]">
-              <div className="pt-6">{children}</div>
-            </div>
+            <div className="px-6 md:px-8 pb-8 border-t border-[#2A2A2C]"><div className="pt-6">{children}</div></div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -51,57 +47,81 @@ function LayerPanel({
   )
 }
 
-// Map path to setup tier index and management tier index
 const pathToSetupTier: Record<string, number> = { pilot: 0, growth: 1, strategic: 2 }
 const pathToMgmtTier: Record<string, number> = { pilot: 0, growth: 1, strategic: 2 }
 
 export function CommercialModel({ partner }: { partner: PartnerConfig }) {
-  const [openLayer, setOpenLayer] = useState<number | null>(0)
-  const { state } = usePartnership()
+  const [openLayer, setOpenLayer] = useState<number | null>(null)
+  const { state, dispatch } = usePartnership()
   const { selectedPath, viewMode } = state
   const activePath = selectedPath ? partnershipPaths[selectedPath] : null
+  const isDetailed = viewMode === 'detailed'
 
   const toggle = (i: number) => setOpenLayer(openLayer === i ? null : i)
-
-  // Which impression tiers to recommend
   const recommendedImpressions = activePath ? activePath.impressionRecommendation : []
+
+  const setViewMode = (mode: 'simple' | 'detailed') => {
+    dispatch({ type: 'SET_VIEW_MODE', mode })
+    if (mode === 'detailed' && openLayer === null) setOpenLayer(0)
+  }
 
   return (
     <section className="py-32">
       <div className="max-w-[960px] mx-auto px-6 md:px-12">
         <Fade>
-          <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">Three-Layer Model</span>
-          <h2 className="font-display text-4xl md:text-6xl mt-3 mb-6 leading-[0.95]">Commercial<br /><span className="text-gradient">Architecture</span></h2>
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <span className="font-mono text-sm text-[#71717A] tracking-[0.2em] uppercase">How Pricing Works</span>
+              <h2 className="font-display text-4xl md:text-5xl mt-3 leading-[0.95]">
+                {selectedPath ? <>Pricing for <span className="text-gradient">{activePath?.name}</span></> : <>Commercial <span className="text-gradient">Architecture</span></>}
+              </h2>
+            </div>
+
+            {/* Simple / Detailed toggle */}
+            <div className="flex items-center bg-[#131315] border border-[#2A2A2C] rounded-xl p-1 shrink-0 mt-4">
+              <button
+                onClick={() => setViewMode('simple')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${!isDetailed ? 'text-white' : 'text-[#52525B] hover:text-[#71717A]'}`}
+                style={!isDetailed ? { background: `${partner.primaryColor}20`, color: partner.primaryColor } : {}}
+              >
+                Simple
+              </button>
+              <button
+                onClick={() => setViewMode('detailed')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${isDetailed ? 'text-white' : 'text-[#52525B] hover:text-[#71717A]'}`}
+                style={isDetailed ? { background: `${partner.primaryColor}20`, color: partner.primaryColor } : {}}
+              >
+                Detailed
+              </button>
+            </div>
+          </div>
+
           <p className="text-[17px] text-[#B0B0B4] max-w-2xl mb-6 leading-[1.75]">
-            {selectedPath
-              ? `This section shows how GolfN programs are typically structured commercially. Based on your selected ${activePath?.name} path, relevant tiers are highlighted.`
-              : "GolfN's compensation is structured in three layers. Each reflects a distinct category of value. Together, they create aligned incentives: GolfN is compensated for strategic and operational work, then participates in the upside when measurable downstream results occur."
-            }
+            Every GolfN program is built from four components. The mix depends on the partnership path selected.
           </p>
 
-          {/* Path indicator */}
           {selectedPath && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl mb-10 border" style={{ background: `${partner.primaryColor}08`, borderColor: `${partner.primaryColor}30` }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl mb-8 border" style={{ background: `${partner.primaryColor}08`, borderColor: `${partner.primaryColor}30` }}>
               <div className="w-2 h-2 rounded-full" style={{ background: partner.primaryColor }} />
               <span className="text-sm font-mono" style={{ color: partner.primaryColor }}>Showing pricing for: {activePath?.name} Path</span>
             </div>
           )}
-          {!selectedPath && <div className="mb-10" />}
+          {!selectedPath && <div className="mb-8" />}
         </Fade>
 
-        {/* Money Map */}
+        {/* Money Map — always visible */}
         <Fade delay={0.1}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[
-              { label: 'SETUP', sub: 'One-Time', range: selectedPath ? activePath!.setup.range : '$7.5K–$35K+', layer: 0 },
-              { label: 'MANAGEMENT', sub: 'Monthly', range: selectedPath ? activePath!.monthly.starting : '$2.5K–$6.5K/mo', layer: 1 },
-              { label: 'MEDIA', sub: 'Impressions', range: selectedPath ? recommendedImpressions.join('–') : '$3.5K–$30K+', layer: 1 },
-              { label: 'PERFORMANCE', sub: 'Variable', range: '20–40%', layer: 2 },
+              { label: 'SETUP', sub: 'Builds the program', range: selectedPath ? activePath!.setup.range : '$7.5K–$35K+', layer: 0 },
+              { label: 'MANAGEMENT', sub: 'Runs and optimizes', range: selectedPath ? activePath!.monthly.starting : '$2.5K–$6.5K/mo', layer: 1 },
+              { label: 'MEDIA', sub: 'Funds delivery volume', range: selectedPath ? recommendedImpressions.join('–') : '$3.5K–$30K+', layer: 1 },
+              { label: 'PERFORMANCE', sub: 'When actions occur', range: '20–40%', layer: 2 },
             ].map((c, i) => (
               <button
                 key={c.label}
-                onClick={() => setOpenLayer(c.layer)}
-                className={`bg-[#161618] border rounded-2xl p-6 relative overflow-hidden text-left transition-all ${openLayer === c.layer ? 'border-[#3A3A3F] scale-[1.02]' : 'border-[#2A2A2C] hover:border-[#3A3A3F]'}`}
+                onClick={() => { setViewMode('detailed'); setOpenLayer(c.layer) }}
+                className={`bg-[#161618] border rounded-2xl p-6 relative overflow-hidden text-left transition-all ${isDetailed && openLayer === c.layer ? 'border-[#3A3A3F] scale-[1.02]' : 'border-[#2A2A2C] hover:border-[#3A3A3F]'}`}
               >
                 <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: i < 2 ? partner.primaryColor : partner.secondaryColor }} />
                 <span className="font-mono text-[11px] tracking-[0.2em] text-[#71717A]">{c.label}</span>
@@ -112,141 +132,197 @@ export function CommercialModel({ partner }: { partner: PartnerConfig }) {
           </div>
         </Fade>
 
-        {/* Layer panels */}
-        <Fade delay={0.15}>
-          <div className="space-y-3">
-            {/* Layer 1: Setup */}
-            <LayerPanel
-              number="01" title="Program Setup"
-              subtitle="One-time investment to build the system"
-              accent={partner.primaryColor}
-              isOpen={openLayer === 0}
-              onToggle={() => toggle(0)}
-              pathBadge={selectedPath ? activePath!.setup.range : undefined}
-            >
-              <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.setup.description}</p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                {commercialModel.setup.tiers.map((t, idx) => {
-                  const isPathTier = selectedPath && pathToSetupTier[selectedPath] === idx
-                  return (
-                    <div key={t.name} className={`bg-[#0F0F10] border rounded-xl p-6 relative ${isPathTier ? 'border-[#3A3A3F]' : 'border-[#2A2A2C]'}`} style={isPathTier ? { boxShadow: `0 0 30px ${partner.primaryColor}10` } : {}}>
-                      {isPathTier && <span className="absolute -top-2.5 left-4 text-[9px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: partner.primaryColor, color: '#0F0F10' }}>YOUR PATH</span>}
-                      <span className="text-base font-semibold">{t.name}</span>
-                      <div className="text-2xl font-bold font-mono mt-2 mb-3" style={{ color: partner.primaryColor }}>{t.range}</div>
-                      <p className="text-sm text-[#8C8C8C] leading-relaxed">{t.description}</p>
+        {/* Simple View: Path pricing summary */}
+        {!isDetailed && selectedPath && (
+          <Fade delay={0.15}>
+            <div className="bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden mb-8">
+              <div className="p-8 md:p-10">
+                <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-6">Program Foundation</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  {[
+                    { label: 'Setup Investment', value: activePath!.setup.range, sub: 'One-time' },
+                    { label: 'Monthly Program Fee', value: activePath!.monthly.starting, sub: activePath!.managementTier },
+                    { label: 'Recommended Duration', value: activePath!.duration.recommended, sub: `${activePath!.duration.minimum} month minimum` },
+                  ].map(item => (
+                    <div key={item.label}>
+                      <span className="text-sm text-[#71717A]">{item.label}</span>
+                      <div className="text-2xl md:text-3xl font-bold font-mono mt-1" style={{ color: partner.primaryColor }}>{item.value}</div>
+                      <span className="text-xs text-[#52525B] mt-1 block">{item.sub}</span>
                     </div>
-                  )
-                })}
-              </div>
-              <p className="text-sm font-semibold text-[#A1A1AA] mb-3">Premium Content Extensions</p>
-              <div className="flex flex-wrap gap-3">
-                {commercialModel.setup.extensions.map((e) => (
-                  <div key={e.name} className="bg-[#0F0F10] border border-[#2A2A2C] rounded-lg px-4 py-2.5 flex items-center gap-3">
-                    <span className="text-sm text-[#A1A1AA]">{e.name}</span>
-                    <span className="font-mono text-sm font-semibold" style={{ color: partner.secondaryColor }}>{e.price}</span>
-                  </div>
-                ))}
-              </div>
-            </LayerPanel>
+                  ))}
+                </div>
 
-            {/* Layer 2: Managed Delivery */}
-            <LayerPanel
-              number="02" title="Managed Program Delivery"
-              subtitle="Recurring monthly execution and optimization"
-              accent={partner.primaryColor}
-              isOpen={openLayer === 1}
-              onToggle={() => toggle(1)}
-              pathBadge={selectedPath ? activePath!.managementTier : undefined}
-            >
-              <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.management.description}</p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
-                {commercialModel.management.functions.map((fn, i) => (
-                  <div key={fn.name} className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-6 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-[2px] h-full" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}, ${partner.secondaryColor})`, opacity: 0.4 + i * 0.15 }} />
-                    <span className="font-mono text-[10px] tracking-[0.2em] text-[#71717A]">0{i + 1}</span>
-                    <h4 className="text-base font-semibold mt-2 mb-2">{fn.name}</h4>
-                    <p className="text-sm text-[#8C8C8C] leading-[1.65]">{fn.description}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Fee tiers with path highlighting */}
-              <div className="flex flex-col md:flex-row gap-3 mb-8">
-                {commercialModel.management.tiers.map((t, i) => {
-                  const isPathTier = selectedPath && pathToMgmtTier[selectedPath] === i
-                  return (
-                    <div key={t.name} className={`bg-[#0F0F10] border rounded-xl p-6 flex-1 relative ${isPathTier ? 'border-[#3A3A3F]' : 'border-[#2A2A2C]'}`} style={isPathTier ? { boxShadow: `0 0 30px ${partner.primaryColor}10` } : {}}>
-                      {isPathTier && <span className="absolute -top-2.5 left-4 text-[9px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: partner.primaryColor, color: '#0F0F10' }}>YOUR PATH</span>}
-                      <div className="text-sm text-[#A1A1AA] mb-1">{t.name}</div>
-                      <div className="text-2xl font-bold font-mono" style={{ color: partner.primaryColor }}>{t.price}</div>
-                    </div>
-                  )
-                })}
-              </div>
-
-              {/* Impressions with recommendations */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div>
-                  <h4 className="text-lg font-semibold mb-2">Impression Banks</h4>
-                  <p className="text-sm text-[#8C8C8C] mb-4 leading-[1.7]">{commercialModel.media.description}</p>
-                  <div className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl overflow-hidden">
-                    <table className="w-full">
-                      <thead><tr className="border-b border-[#2A2A2C]">
-                        <th className="text-left p-4 font-mono text-[10px] tracking-[0.15em] text-[#71717A]">IMPRESSIONS</th>
-                        <th className="text-left p-4 font-mono text-[10px] tracking-[0.15em] text-[#71717A]">COST</th>
-                        <th className="text-left p-4 font-mono text-[10px] tracking-[0.15em] text-[#71717A]">CPM</th>
-                        {selectedPath && <th className="text-left p-4 font-mono text-[10px] tracking-[0.15em] text-[#71717A]"></th>}
-                      </tr></thead>
-                      <tbody>{commercialModel.media.tiers.map((t) => {
-                        const isRec = recommendedImpressions.includes(t.impressions)
-                        return (
-                          <tr key={t.impressions} className={`border-b border-[#2A2A2C]/40 ${isRec ? '' : ''}`} style={isRec ? { background: `${partner.primaryColor}06` } : {}}>
-                            <td className="p-4 text-sm font-medium">{t.impressions}</td>
-                            <td className="p-4 font-mono text-sm font-bold" style={{ color: partner.primaryColor }}>{t.cost}</td>
-                            <td className="p-4 font-mono text-xs text-[#71717A]">{t.cpm}</td>
-                            {selectedPath && (
-                              <td className="p-4 text-right">
-                                {isRec && <span className="text-[9px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: `${partner.primaryColor}20`, color: partner.primaryColor }}>REC</span>}
-                              </td>
-                            )}
-                          </tr>
-                        )
-                      })}</tbody>
-                    </table>
+                <div className="border-t border-[#2A2A2C] pt-6">
+                  <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">Delivery Scale</p>
+                  <p className="text-base text-[#B0B0B4] mb-3">Media volume determines reach and visibility. Recommended for {activePath!.name}:</p>
+                  <div className="flex gap-3">
+                    {recommendedImpressions.map(tier => (
+                      <span key={tier} className="px-4 py-2 rounded-lg font-mono text-sm font-semibold border" style={{ background: `${partner.primaryColor}10`, borderColor: `${partner.primaryColor}30`, color: partner.primaryColor }}>
+                        {tier} impressions
+                      </span>
+                    ))}
                   </div>
                 </div>
-                <div className="flex justify-center items-center">
-                  <div className="relative">
-                    <div className="absolute -inset-6 blur-[60px] opacity-[0.08] rounded-full" style={{ background: partner.primaryColor }} />
-                    <img src={images.srixonAd2} alt="GolfN ad" className="relative w-48 md:w-56 rounded-[20px]" style={{ filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.6))', transform: 'rotate(-2deg)' }} />
-                  </div>
+
+                <div className="border-t border-[#2A2A2C] pt-6 mt-6">
+                  <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-4">Upside Alignment</p>
+                  <p className="text-base text-[#B0B0B4]">Performance economics apply when qualifying downstream actions are part of the program. GolfN's preferred range is 30–40% on wholesale/marketplace participation.</p>
                 </div>
               </div>
-            </LayerPanel>
 
-            {/* Layer 3: Performance */}
-            <LayerPanel number="03" title="Performance Economics" subtitle="Variable compensation tied to downstream results" accent={partner.secondaryColor} isOpen={openLayer === 2} onToggle={() => toggle(2)} pathBadge={selectedPath ? 'When applicable' : undefined}>
-              <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.performance.description}</p>
-              <div className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-8 mb-4" style={{ boxShadow: `0 0 60px ${partner.primaryColor}06` }}>
-                <div className="inline-block text-xs font-mono px-3 py-1 rounded-full mb-4" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>PREFERRED</div>
-                <h4 className="text-lg font-semibold mb-2">{commercialModel.performance.preferred.name}</h4>
-                <div className="text-4xl md:text-5xl font-bold font-mono mb-3" style={{ color: partner.primaryColor }}>{commercialModel.performance.preferred.range}</div>
-                <p className="text-base text-[#A1A1AA] mb-3">Preferred: {commercialModel.performance.preferred.preferredRange} · Floor: {commercialModel.performance.preferred.floor}</p>
-                <p className="text-[15px] text-[#8C8C8C] leading-[1.75] max-w-2xl mb-4">{commercialModel.performance.preferred.description}</p>
-                <p className="text-sm text-[#71717A] leading-[1.7] border-l-2 pl-4 mt-4" style={{ borderColor: `${partner.primaryColor}40` }}>{commercialModel.performance.preferred.whyNotAffiliate}</p>
+              <div className="px-8 md:px-10 py-5 border-t border-[#2A2A2C] bg-[#0F0F10]">
+                <button onClick={() => setViewMode('detailed')} className="text-sm font-mono hover:underline" style={{ color: partner.primaryColor }}>
+                  See detailed pricing breakdown →
+                </button>
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                {commercialModel.performance.alternatives.map((a) => (
-                  <div key={a.name} className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-4">
-                    <span className="text-sm text-[#A1A1AA]">{a.name}</span>
-                    <div className="text-lg font-mono font-bold mt-1" style={{ color: partner.secondaryColor }}>{a.range}</div>
+            </div>
+          </Fade>
+        )}
+
+        {/* Simple View: No path — show comparison */}
+        {!isDetailed && !selectedPath && (
+          <Fade delay={0.15}>
+            <div className="bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden mb-8">
+              <div className="p-8 md:p-10">
+                <p className="text-xs font-mono text-[#71717A] tracking-wider uppercase mb-6">Typical Pricing by Path</p>
+                <div className="space-y-4">
+                  {(['pilot', 'growth', 'strategic'] as const).map(pathId => {
+                    const p = partnershipPaths[pathId]
+                    return (
+                      <div key={pathId} className="flex items-center justify-between py-4 border-b border-[#2A2A2C]/50 last:border-0">
+                        <div>
+                          <span className="text-lg font-semibold">{p.name}</span>
+                          <p className="text-sm text-[#71717A]">{p.tagline}</p>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-lg font-mono font-bold" style={{ color: partner.primaryColor }}>{p.setup.range}</div>
+                          <span className="text-sm text-[#52525B]">{p.monthly.starting}/mo</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              <div className="px-8 md:px-10 py-5 border-t border-[#2A2A2C] bg-[#0F0F10]">
+                <button onClick={() => setViewMode('detailed')} className="text-sm font-mono hover:underline" style={{ color: partner.primaryColor }}>
+                  See detailed pricing breakdown →
+                </button>
+              </div>
+            </div>
+          </Fade>
+        )}
+
+        {/* Detailed View: Full accordion */}
+        {isDetailed && (
+          <Fade delay={0.15}>
+            <div className="space-y-3">
+              <LayerPanel number="01" title="Program Setup" subtitle="One-time investment to build the system" accent={partner.primaryColor} isOpen={openLayer === 0} onToggle={() => toggle(0)} pathBadge={selectedPath ? activePath!.setup.range : undefined}>
+                <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.setup.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                  {commercialModel.setup.tiers.map((t, idx) => {
+                    const isPathTier = selectedPath && pathToSetupTier[selectedPath] === idx
+                    return (
+                      <div key={t.name} className={`bg-[#0F0F10] border rounded-xl p-6 relative ${isPathTier ? 'border-[#3A3A3F]' : 'border-[#2A2A2C]'}`} style={isPathTier ? { boxShadow: `0 0 30px ${partner.primaryColor}10` } : {}}>
+                        {isPathTier && <span className="absolute -top-2.5 left-4 text-[9px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: partner.primaryColor, color: '#0F0F10' }}>YOUR PATH</span>}
+                        <span className="text-base font-semibold">{t.name}</span>
+                        <div className="text-2xl font-bold font-mono mt-2 mb-3" style={{ color: partner.primaryColor }}>{t.range}</div>
+                        <p className="text-sm text-[#8C8C8C] leading-relaxed">{t.description}</p>
+                      </div>
+                    )
+                  })}
+                </div>
+                <p className="text-sm font-semibold text-[#A1A1AA] mb-3">Premium Content Extensions</p>
+                <div className="flex flex-wrap gap-3">
+                  {commercialModel.setup.extensions.map((e) => (
+                    <div key={e.name} className="bg-[#0F0F10] border border-[#2A2A2C] rounded-lg px-4 py-2.5 flex items-center gap-3">
+                      <span className="text-sm text-[#A1A1AA]">{e.name}</span>
+                      <span className="font-mono text-sm font-semibold" style={{ color: partner.secondaryColor }}>{e.price}</span>
+                    </div>
+                  ))}
+                </div>
+              </LayerPanel>
+
+              <LayerPanel number="02" title="Managed Program Delivery" subtitle="Recurring monthly execution and optimization" accent={partner.primaryColor} isOpen={openLayer === 1} onToggle={() => toggle(1)} pathBadge={selectedPath ? activePath!.managementTier : undefined}>
+                <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.management.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+                  {commercialModel.management.functions.map((fn, i) => (
+                    <div key={fn.name} className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-6 relative overflow-hidden">
+                      <div className="absolute top-0 left-0 w-[2px] h-full" style={{ background: `linear-gradient(to bottom, ${partner.primaryColor}, ${partner.secondaryColor})`, opacity: 0.4 + i * 0.15 }} />
+                      <span className="font-mono text-[10px] tracking-[0.2em] text-[#71717A]">0{i + 1}</span>
+                      <h4 className="text-base font-semibold mt-2 mb-2">{fn.name}</h4>
+                      <p className="text-sm text-[#8C8C8C] leading-[1.65]">{fn.description}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-col md:flex-row gap-3 mb-8">
+                  {commercialModel.management.tiers.map((t, i) => {
+                    const isPathTier = selectedPath && pathToMgmtTier[selectedPath] === i
+                    return (
+                      <div key={t.name} className={`bg-[#0F0F10] border rounded-xl p-6 flex-1 relative ${isPathTier ? 'border-[#3A3A3F]' : 'border-[#2A2A2C]'}`} style={isPathTier ? { boxShadow: `0 0 30px ${partner.primaryColor}10` } : {}}>
+                        {isPathTier && <span className="absolute -top-2.5 left-4 text-[9px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: partner.primaryColor, color: '#0F0F10' }}>YOUR PATH</span>}
+                        <div className="text-sm text-[#A1A1AA] mb-1">{t.name}</div>
+                        <div className="text-2xl font-bold font-mono" style={{ color: partner.primaryColor }}>{t.price}</div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-2">Impression Banks</h4>
+                    <p className="text-sm text-[#8C8C8C] mb-4 leading-[1.7]">{commercialModel.media.description}</p>
+                    <div className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl overflow-hidden">
+                      <table className="w-full">
+                        <thead><tr className="border-b border-[#2A2A2C]">
+                          <th className="text-left p-4 font-mono text-[10px] tracking-[0.15em] text-[#71717A]">IMPRESSIONS</th>
+                          <th className="text-left p-4 font-mono text-[10px] tracking-[0.15em] text-[#71717A]">COST</th>
+                          <th className="text-left p-4 font-mono text-[10px] tracking-[0.15em] text-[#71717A]">CPM</th>
+                          {selectedPath && <th className="p-4"></th>}
+                        </tr></thead>
+                        <tbody>{commercialModel.media.tiers.map((t) => {
+                          const isRec = recommendedImpressions.includes(t.impressions)
+                          return (
+                            <tr key={t.impressions} className="border-b border-[#2A2A2C]/40" style={isRec ? { background: `${partner.primaryColor}06` } : {}}>
+                              <td className="p-4 text-sm font-medium">{t.impressions}</td>
+                              <td className="p-4 font-mono text-sm font-bold" style={{ color: partner.primaryColor }}>{t.cost}</td>
+                              <td className="p-4 font-mono text-xs text-[#71717A]">{t.cpm}</td>
+                              {selectedPath && <td className="p-4 text-right">{isRec && <span className="text-[9px] font-mono tracking-wider px-2 py-0.5 rounded" style={{ background: `${partner.primaryColor}20`, color: partner.primaryColor }}>REC</span>}</td>}
+                            </tr>
+                          )
+                        })}</tbody>
+                      </table>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </LayerPanel>
-          </div>
-        </Fade>
+                  <div className="flex justify-center items-center">
+                    <div className="relative">
+                      <div className="absolute -inset-6 blur-[60px] opacity-[0.08] rounded-full" style={{ background: partner.primaryColor }} />
+                      <img src={images.srixonAd2} alt="GolfN ad" className="relative w-48 md:w-56 rounded-[20px]" style={{ filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.6))', transform: 'rotate(-2deg)' }} />
+                    </div>
+                  </div>
+                </div>
+              </LayerPanel>
+
+              <LayerPanel number="03" title="Performance Economics" subtitle="Variable compensation tied to downstream results" accent={partner.secondaryColor} isOpen={openLayer === 2} onToggle={() => toggle(2)} pathBadge={selectedPath ? 'When applicable' : undefined}>
+                <p className="text-[17px] text-[#8C8C8C] mb-8 leading-[1.75] max-w-2xl">{commercialModel.performance.description}</p>
+                <div className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-8 mb-4" style={{ boxShadow: `0 0 60px ${partner.primaryColor}06` }}>
+                  <div className="inline-block text-xs font-mono px-3 py-1 rounded-full mb-4" style={{ background: `${partner.primaryColor}15`, color: partner.primaryColor }}>PREFERRED</div>
+                  <h4 className="text-lg font-semibold mb-2">{commercialModel.performance.preferred.name}</h4>
+                  <div className="text-4xl md:text-5xl font-bold font-mono mb-3" style={{ color: partner.primaryColor }}>{commercialModel.performance.preferred.range}</div>
+                  <p className="text-base text-[#A1A1AA] mb-3">Preferred: {commercialModel.performance.preferred.preferredRange} · Floor: {commercialModel.performance.preferred.floor}</p>
+                  <p className="text-[15px] text-[#8C8C8C] leading-[1.75] max-w-2xl mb-4">{commercialModel.performance.preferred.description}</p>
+                  <p className="text-sm text-[#71717A] leading-[1.7] border-l-2 pl-4 mt-4" style={{ borderColor: `${partner.primaryColor}40` }}>{commercialModel.performance.preferred.whyNotAffiliate}</p>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {commercialModel.performance.alternatives.map((a) => (
+                    <div key={a.name} className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-4">
+                      <span className="text-sm text-[#A1A1AA]">{a.name}</span>
+                      <div className="text-lg font-mono font-bold mt-1" style={{ color: partner.secondaryColor }}>{a.range}</div>
+                    </div>
+                  ))}
+                </div>
+              </LayerPanel>
+            </div>
+          </Fade>
+        )}
 
         {/* Separation note */}
         <Fade delay={0.3}>
