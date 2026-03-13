@@ -1,6 +1,10 @@
 import { partners } from '@/lib/presentation-data'
+import { wilsonMotocaddyConfig } from '@/lib/wilson-motocaddy-config'
 import { PresentationClient } from './PresentationClient'
 import { notFound } from 'next/navigation'
+
+// Merge additional partner configs
+const allPartners = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -8,7 +12,7 @@ interface PageProps {
 
 export default async function PresentationPage({ params }: PageProps) {
   const { slug } = await params
-  const partner = partners[slug]
+  const partner = allPartners[slug]
 
   if (!partner) {
     notFound()
@@ -18,5 +22,5 @@ export default async function PresentationPage({ params }: PageProps) {
 }
 
 export function generateStaticParams() {
-  return Object.keys(partners).map((slug) => ({ slug }))
+  return Object.keys(allPartners).map((slug) => ({ slug }))
 }
