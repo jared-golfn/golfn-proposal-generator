@@ -62,22 +62,22 @@ export function S11_FAQ({ partner }: { partner: PartnerData }) {
   const customFAQ = (partner.customFAQ || []).map(f => ({ q: f.question, a: f.answer }))
 
   return (
-    <section className="py-24 md:py-32">
-      <div className="w-content px-5 md:px-12">
+    <section className="py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-5 md:px-12">
         <Fade>
-          <p className="text-sm font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">FAQ</p>
-          <h2 className="text-3xl md:text-[3.5rem] font-bold leading-[0.95] mb-14">Frequently asked<br /><span className="text-gradient">questions</span></h2>
+          <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">FAQ</p>
+          <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-14">Frequently asked<br /><span className="text-gradient">questions</span></h2>
         </Fade>
 
         <div className="space-y-10">
           {faqGroups.map((group, gi) => (
             <Fade key={group.group} delay={0.05 * gi}>
               <div>
-                <h3 className="text-sm font-mono tracking-[0.15em] uppercase mb-4 text-[#00ff9d]">{group.group}</h3>
+                <h3 className="text-base font-mono tracking-[0.15em] uppercase mb-4 text-[#00ff9d]">{group.group}</h3>
                 <div className="space-y-2">
                   {group.items.map((faq, i) => (
-                    <Expand key={i} accentColor="#00ff9d" trigger={<span className="text-base font-semibold text-white">{faq.q}</span>}>
-                      <p className="text-base text-[#d1d5db] leading-relaxed pt-1">{faq.a}</p>
+                    <Expand key={i} accentColor="#00ff9d" trigger={<span className="text-lg font-semibold text-white">{faq.q}</span>}>
+                      <p className="text-lg text-[#d1d5db] leading-8 pt-1">{faq.a}</p>
                     </Expand>
                   ))}
                 </div>
@@ -88,11 +88,11 @@ export function S11_FAQ({ partner }: { partner: PartnerData }) {
           {customFAQ.length > 0 && (
             <Fade delay={0.3}>
               <div>
-                <h3 className="text-sm font-mono tracking-[0.15em] uppercase mb-4 text-[#00ff9d]">Partner-Specific</h3>
+                <h3 className="text-base font-mono tracking-[0.15em] uppercase mb-4 text-[#00ff9d]">Partner-Specific</h3>
                 <div className="space-y-2">
                   {customFAQ.map((faq, i) => (
-                    <Expand key={i} accentColor="#00ff9d" trigger={<span className="text-base font-semibold text-white">{faq.q}</span>}>
-                      <p className="text-base text-[#d1d5db] leading-relaxed pt-1">{faq.a}</p>
+                    <Expand key={i} accentColor="#00ff9d" trigger={<span className="text-lg font-semibold text-white">{faq.q}</span>}>
+                      <p className="text-lg text-[#d1d5db] leading-8 pt-1">{faq.a}</p>
                     </Expand>
                   ))}
                 </div>

@@ -9,17 +9,17 @@ export function S12_FinalCTA({ partner }: { partner: PartnerData }) {
 
   return (
     <section className="py-28 md:py-40">
-      <div className="w-content px-5 md:px-12 text-center">
+      <div className="max-w-7xl mx-auto px-5 md:px-12 text-center">
         <Fade>
           <img src={images.logo} alt="GolfN" className="h-16 md:h-24 w-auto mx-auto mb-12 opacity-80" />
         </Fade>
         <Fade delay={0.1}>
-          <h2 className="text-4xl md:text-[4rem] font-bold leading-[0.92] mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold leading-[0.92] tracking-tight mb-6">
             See what a GolfN program<br />could look like <span className="text-gradient">for your brand</span>
           </h2>
         </Fade>
         <Fade delay={0.2}>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-xl mx-auto mb-12">
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-xl mx-auto leading-8 mb-12">
             GolfN will recommend the right campaign structure, follow-up pathways, reporting rhythm, and activation mix based on your goals, product, and audience.
           </p>
         </Fade>
@@ -37,7 +37,7 @@ export function S12_FinalCTA({ partner }: { partner: PartnerData }) {
                 href={partner.bookingUrl}
                 target="_blank"
                 rel="noopener"
-                className="inline-flex items-center gap-2 px-8 py-5 rounded-2xl font-bold text-lg border border-[#2a2f38] text-white hover:bg-[#161a21] transition-all"
+                className="inline-flex items-center gap-2 px-8 py-5 rounded-2xl font-bold text-lg border border-[#2a3347] text-white hover:bg-[#1a1f2e] transition-all"
               >
                 Book a Walkthrough
               </a>

@@ -23,46 +23,44 @@ const differentiators = [
 
 export function S10_DataDifference({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-24 md:py-32">
-      <div className="w-content px-5 md:px-12">
+    <section className="py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-5 md:px-12">
         <Fade>
-          <p className="text-sm font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">Data Advantage</p>
-          <h2 className="text-3xl md:text-[3.5rem] font-bold leading-[0.95] mb-5">Why GolfN data<br />is <span className="text-gradient">different</span></h2>
-          <p className="text-lg text-[#9ca3af] max-w-2xl mb-14">
+          <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">Data Advantage</p>
+          <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">Why GolfN data<br />is <span className="text-gradient">different</span></h2>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl leading-8 mb-14">
             GolfN audience intelligence is built from verified golf behavior, not broad assumptions or purchased audience models.
           </p>
         </Fade>
 
-        {/* Proof cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-14">
           {proofCards.map((card, i) => (
             <Fade key={card.label} delay={0.04 * i}>
-              <div className="card-lift bg-[#131619] border border-[#1e2128] rounded-xl p-5">
+              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
                 <div className="w-8 h-8 rounded-lg mb-3 flex items-center justify-center bg-[#00ff9d]/10">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <h4 className="text-sm font-bold text-white mb-1">{card.label}</h4>
-                <p className="text-xs text-[#6b7280] leading-relaxed">{card.desc}</p>
+                <h4 className="text-base font-bold text-white mb-1">{card.label}</h4>
+                <p className="text-base text-[#6b7280] leading-7">{card.desc}</p>
               </div>
             </Fade>
           ))}
         </div>
 
-        {/* Comparison table */}
         <Fade delay={0.25}>
-          <div className="bg-[#131619] border border-[#1e2128] rounded-2xl overflow-hidden">
-            <div className="grid grid-cols-3 gap-4 px-6 py-4 border-b border-[#1e2128]">
+          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-3 gap-4 px-6 py-4 border-b border-[#2a3347]">
               <span></span>
-              <span className="text-sm font-mono tracking-wider text-[#00ff9d]">GOLFN</span>
-              <span className="text-sm font-mono tracking-wider text-[#6b7280]">BROAD MEDIA</span>
+              <span className="text-base font-mono tracking-wider text-[#00ff9d]">GOLFN</span>
+              <span className="text-base font-mono tracking-wider text-[#6b7280]">BROAD MEDIA</span>
             </div>
             {differentiators.map((d, i) => (
-              <div key={d.label} className={`grid grid-cols-3 gap-4 px-6 py-4 ${i < differentiators.length - 1 ? 'border-b border-[#1e2128]/50' : ''} hover:bg-[#161a21] transition-colors`}>
-                <span className="text-sm font-semibold text-[#d1d5db]">{d.label}</span>
-                <span className="text-sm font-medium text-[#00ff9d]">{d.golfn}</span>
-                <span className="text-sm text-[#6b7280]">{d.broad}</span>
+              <div key={d.label} className={`grid grid-cols-3 gap-4 px-6 py-4 ${i < differentiators.length - 1 ? 'border-b border-[#2a3347]/50' : ''} hover:bg-[#1f2538] transition-colors`}>
+                <span className="text-base font-semibold text-[#d1d5db]">{d.label}</span>
+                <span className="text-base font-medium text-[#00ff9d]">{d.golfn}</span>
+                <span className="text-base text-[#6b7280]">{d.broad}</span>
               </div>
             ))}
           </div>

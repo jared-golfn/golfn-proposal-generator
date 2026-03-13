@@ -25,15 +25,15 @@ const navSections = [
 
 export function TemplateClient({ partner }: { partner: PartnerData }) {
   return (
-    <main className="relative">
+    <main className="relative bg-[#0f1217]">
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
       {/* Minimal right-rail nav */}
       <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5">
         {navSections.map((s) => (
           <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-4 justify-end">
-            <span className="text-sm font-medium text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
-            <span className="block w-2.5 h-2.5 rounded-full bg-[#1e2128] group-hover:bg-[#00ff9d] transition-colors shrink-0" />
+            <span className="text-base font-medium text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
+            <span className="block w-2.5 h-2.5 rounded-full bg-[#2a3347] group-hover:bg-[#00ff9d] transition-colors shrink-0" />
           </a>
         ))}
       </nav>
@@ -77,10 +77,10 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       <SectionDivider />
       <S12_FinalCTA partner={partner} />
 
-      <footer className="w-content px-5 md:px-12 py-14 md:py-20 text-center border-t border-[#1e2128]">
+      <footer className="max-w-7xl mx-auto px-5 md:px-12 py-14 md:py-20 text-center border-t border-[#2a3347]">
         <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-        <p className="text-[#4b5563] text-sm">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
-        <p className="text-[#2a2f38] text-xs mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>
+        <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
+        <p className="text-[#2a3347] text-sm mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>
       </footer>
     </main>
   )
