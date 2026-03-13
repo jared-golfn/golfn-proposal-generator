@@ -11,7 +11,7 @@ const golfnHandles = [
 
 const partnerProvides = [
   'Sweepstakes prize budget (recommended $5,000)',
-  'Startup fee ($2,500\u2013$7,500 one-time, tiered by extras)',
+  'Startup fee ($2,500\u20137,500 one-time, tiered by extras)',
   'Brand assets, guidelines, logos, product photography, descriptions',
   'Landing pages or approved destinations',
   'Affiliate terms where relevant (20%+ commission)',

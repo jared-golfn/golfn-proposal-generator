@@ -32,7 +32,8 @@ function calcBuckets(users: number) {
   for (const tier of perUserTiers) {
     if (remaining <= 0) break
     const bucketSize = tier.max === Infinity ? remaining : Math.min(remaining, tier.max - tier.min + 1)
-    buckets.push({ tierLabel: `${tier.min.toLocaleString()}\u2013${tier.max === Infinity ? users.toLocaleString() + '+' : tier.max.toLocaleString()}`, usersInBucket: bucketSize, rate: tier.rate, subtotal: bucketSize * tier.rate })
+    const maxLabel = tier.max === Infinity ? users.toLocaleString() + '+' : tier.max.toLocaleString()
+    buckets.push({ tierLabel: tier.min.toLocaleString() + '\u2013' + maxLabel, usersInBucket: bucketSize, rate: tier.rate, subtotal: bucketSize * tier.rate })
     remaining -= bucketSize
   }
   return buckets
@@ -111,7 +112,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 <tbody>
                   {perUserTiers.map((row, i) => (
                     <tr key={row.min} className={`border-t border-[#2a3347]/60 transition-all duration-200 hover:bg-[#1a1f2e]/80 ${i >= 2 ? 'bg-[#00ff9d]/[0.04]' : 'bg-transparent'}`}>
-                      <td className="px-6 py-5 text-lg text-white font-medium">{row.min === 10001 ? '10,001+' : `${row.min.toLocaleString()} \u2013 ${row.max.toLocaleString()}`}</td>
+                      <td className="px-6 py-5 text-lg text-white font-medium">{row.min === 10001 ? '10,001+' : row.min.toLocaleString() + '\u2013' + row.max.toLocaleString()}</td>
                       <td className="px-6 py-5"><span className="text-2xl font-mono font-bold text-[#00ff9d]">${row.rate.toFixed(2)}</span></td>
                       <td className="px-6 py-5 text-base text-[#9ca3af]"><span className="mr-2">{row.icon}</span>{row.label}</td>
                     </tr>

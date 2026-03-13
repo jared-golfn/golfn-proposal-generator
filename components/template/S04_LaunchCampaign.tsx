@@ -73,7 +73,7 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
               <Layers className="w-5 h-5 text-[#00ff9d]" />
             </div>
             <div>
-              <h4 className="text-lg font-bold text-white mb-1">Startup Fee: <span className="text-[#00ff9d]">$2,500 \u2013 $7,500</span> <span className="text-[#6b7280] text-base font-normal">(one-time)</span></h4>
+              <h4 className="text-lg font-bold text-white mb-1">Startup Fee: <span className="text-[#00ff9d]">$2,500 &ndash; $7,500</span> <span className="text-[#6b7280] text-base font-normal">(one-time)</span></h4>
               <p className="text-base text-[#d1d5db] leading-8">
                 Covers strategy, creative production, campaign setup, and full launch execution. GolfN creates <strong className="text-white">all</strong> assets: emails, in-app messages, banners, social co-promo, blog with backlink, and promo video. Tiered by extras (executive endorsement, custom creative, AI lookalike, priority support). <strong className="text-white">30 days post-campaign follow-up included free.</strong>
               </p>
@@ -126,7 +126,7 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
         <Fade delay={0.25}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-2xl p-8 md:p-10 mb-14">
             <h4 className="text-xl md:text-2xl font-bold text-white mb-3">This is your chance to showcase your brand and develop your cohort of users</h4>
-            <p className="text-lg md:text-xl text-[#d1d5db] leading-9">The launch creates the first wave of verified behavioral signal and sets up the strongest possible cohort. Everything that follows \u2014 activation, commerce, education, re-engagement \u2014 is built on this foundation. A strong launch with a compelling prize drives higher participation, better qualification signal, and a bigger, more engaged cohort from day one.</p>
+            <p className="text-lg md:text-xl text-[#d1d5db] leading-9">The launch creates the first wave of verified behavioral signal and sets up the strongest possible cohort. Everything that follows &mdash; activation, commerce, education, re-engagement &mdash; is built on this foundation. A strong launch with a compelling prize drives higher participation, better qualification signal, and a bigger, more engaged cohort from day one.</p>
           </div>
         </Fade>
 
@@ -138,7 +138,6 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
               <h3 className="text-2xl md:text-3xl font-bold text-white">Campaign Examples</h3>
             </div>
             <p className="text-lg text-[#9ca3af] mb-8 max-w-3xl leading-8">Every launch includes multi-channel creative production. Here are real examples from recent partner campaigns across every distribution surface.</p>
-            {/* GALVIN GREEN: Replace with GORE-TEX jacket prize mockups, "Never Compromise" emails, layering product cards, seasonal capsule banners, Swedish-design co-promo visuals, rain jacket editorial */}
             <GalleryTabs tabs={tabs} accentColor="#00ff9d" />
           </div>
         </Fade>
