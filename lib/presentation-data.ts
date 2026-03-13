@@ -60,8 +60,8 @@ export const partners: Record<string, PartnerConfig> = {
     agencyBrands: ['Wilson Golf', 'Motorcaddy'],
     defaultPath: 'pilot',
     commerceNotes: [
-      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy can layer on top of existing affiliate partnerships \u2014 users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
-      'For capsule collection drops and limited-edition releases, sweepstakes-driven awareness campaigns create urgency and introduce the brand to golfers who may not know Galvin Green yet.',
+      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy layers on top of existing affiliate partnerships \u2014 users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
+      'For capsule collection drops and limited-edition releases, exclusive early-access activations create urgency and introduce the brand to golfers who may not know Galvin Green yet \u2014 without discounting or competitions that compromise premium positioning.',
       'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means Galvin Green campaigns reach golfers in climates where technical outerwear is essential \u2014 not wasted on golfers in perpetual sunshine.',
     ],
   },
