@@ -1,5 +1,4 @@
-// GolfN Partnership Paths — Pilot / Growth / Strategic
-// Complete data model for the interactive guided buying experience
+// GolfN Partnership Paths
 // Partner-specific scenario overrides for Sports Impact portfolio (Mar 9 2026)
 
 export type PathId = 'pilot' | 'growth' | 'strategic'
@@ -29,14 +28,11 @@ export type ActivationImportance = 'notNeeded' | 'niceToHave' | 'important'
 
 export type ViewMode = 'simple' | 'detailed'
 
-// --- Partner-Specific Scenario Overrides ---
-
 export interface ScenarioOverride {
   title: string
   description: string
 }
 
-/** Per-partner example scenario overrides keyed by partner slug then path id */
 export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, ScenarioOverride>>> = {
   'galvin-green': {
     pilot: {
@@ -94,9 +90,21 @@ export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, Sce
       description: 'Sports Impact becomes a strategic agency partner with year-round activation across all three brands. Shared infrastructure, combined reporting, cross-brand audience insights, and seasonal campaign coordination. The portfolio approach creates compounding value as learnings from one brand inform campaigns for others.',
     },
   },
+  'wilson-motocaddy': {
+    pilot: {
+      title: 'Dual-Brand Equipment & Trolley Pilot',
+      description: 'Launch Wilson and Motorcaddy together on shared infrastructure. Wilson targets golfers ready for an equipment upgrade. Motorcaddy targets verified walkers. Both brands share audience intelligence and consolidated pricing while running distinct activations with affiliate-tracked conversion.',
+    },
+    growth: {
+      title: 'Equipment + Trolley Growth Program',
+      description: 'A coordinated multi-month campaign. Wilson runs demo day activations and equipment-readiness targeting. Motorcaddy runs walker-to-ride conversion with Learn & Earn content. Cross-brand insights surface golfers who walk AND play competitor clubs \u2014 the ideal dual-brand prospect.',
+    },
+    strategic: {
+      title: 'Year-Round Equipment & Mobility Partner',
+      description: 'Wilson and Motorcaddy run year-round as complementary partners. Equipment targeting feeds trolley awareness and vice versa. Seasonal coordination, shared reporting, and compounding audience intelligence across both product categories.',
+    },
+  },
 }
-
-// --- Partnership Path Definitions ---
 
 export interface PartnershipPath {
   id: PathId
@@ -125,11 +133,7 @@ export const partnershipPaths: Record<PathId, PartnershipPath> = {
     name: 'Pilot',
     tagline: 'Best for first-time programs',
     bestFor: 'Brands testing GolfN for the first time with a contained scope.',
-    includes: [
-      'Awareness',
-      'Cohort building',
-      'Early activation',
-    ],
+    includes: ['Awareness', 'Cohort building', 'Early activation'],
     includedStages: [1, 2, 3, 4],
     setup: { range: '$7,500 \u2013 $12,500', low: 7500, high: 12500 },
     monthly: { starting: '$5,000+', floor: 5000 },
@@ -139,24 +143,14 @@ export const partnershipPaths: Record<PathId, PartnershipPath> = {
     recommendedExtensions: ['contentProduction', 'learnAndEarn', 'platformDistribution'],
     managementTier: 'Growth ($2,500/mo)',
     impressionRecommendation: ['50K', '100K'],
-    exampleScenario: {
-      title: 'First-Time Product Launch',
-      description: 'A first-time partner launching one product and validating initial golfer response.',
-    },
+    exampleScenario: { title: 'First-Time Product Launch', description: 'A first-time partner launching one product and validating initial golfer response.' },
   },
   growth: {
     id: 'growth',
     name: 'Growth',
     tagline: 'Best for full-funnel activation',
     bestFor: 'Brands ready to run a fuller-funnel program with progression goals.',
-    includes: [
-      'Awareness',
-      'Intent capture',
-      'Education',
-      'Activation',
-      'Conversion',
-      'Early adoption',
-    ],
+    includes: ['Awareness', 'Intent capture', 'Education', 'Activation', 'Conversion', 'Early adoption'],
     includedStages: [1, 2, 3, 4, 5, 6, 7],
     setup: { range: '$12,500 \u2013 $20,000', low: 12500, high: 20000 },
     monthly: { starting: '$8,000+', floor: 8000 },
@@ -166,23 +160,14 @@ export const partnershipPaths: Record<PathId, PartnershipPath> = {
     recommendedExtensions: ['learnAndEarn', 'dailyGrind', 'socialActivation', 'contentProduction'],
     managementTier: 'Scale ($4,500/mo)',
     impressionRecommendation: ['100K', '250K'],
-    exampleScenario: {
-      title: 'Seasonal Growth Campaign',
-      description: 'A product launch or seasonal program designed to move golfers from awareness into conversion and repeat engagement.',
-    },
+    exampleScenario: { title: 'Seasonal Growth Campaign', description: 'A product launch or seasonal program designed to move golfers from awareness into conversion and repeat engagement.' },
   },
   strategic: {
     id: 'strategic',
     name: 'Strategic',
     tagline: 'Best for long-term partnerships',
     bestFor: 'Brands committing to sustained, multi-stage activation with advanced cohort development.',
-    includes: [
-      'Full progression model',
-      'Advanced segmentation',
-      'Real-world activation',
-      'Adoption',
-      'Advocacy',
-    ],
+    includes: ['Full progression model', 'Advanced segmentation', 'Real-world activation', 'Adoption', 'Advocacy'],
     includedStages: [1, 2, 3, 4, 5, 6, 7, 8],
     setup: { range: '$20,000 \u2013 $35,000+', low: 20000, high: 35000 },
     monthly: { starting: '$12,000+', floor: 12000 },
@@ -192,14 +177,9 @@ export const partnershipPaths: Record<PathId, PartnershipPath> = {
     recommendedExtensions: ['dailyGrind', 'socialActivation', 'advancedReporting', 'executiveStorytelling', 'platformDistribution'],
     managementTier: 'Enterprise ($6,500/mo)',
     impressionRecommendation: ['250K', '500K+'],
-    exampleScenario: {
-      title: 'Strategic Partner Program',
-      description: 'A leading brand building a long-term ecosystem presence with measurable adoption and advocacy.',
-    },
+    exampleScenario: { title: 'Strategic Partner Program', description: 'A leading brand building a long-term ecosystem presence with measurable adoption and advocacy.' },
   },
 }
-
-// --- Extension Definitions ---
 
 export interface Extension {
   id: ExtensionId
@@ -210,116 +190,43 @@ export interface Extension {
 }
 
 export const extensions: Extension[] = [
-  {
-    id: 'learnAndEarn',
-    name: 'Learn & Earn',
-    description: 'Digital education and verified comprehension',
-    bestForPaths: ['pilot', 'growth', 'strategic'],
-    price: 'Included in setup',
-  },
-  {
-    id: 'dailyGrind',
-    name: 'Daily Grind',
-    description: 'Real-world, location-based activation and check-ins',
-    bestForPaths: ['growth', 'strategic'],
-  },
-  {
-    id: 'socialActivation',
-    name: 'Social Activation',
-    description: 'OAuth-connected advocacy and measurable social proof',
-    bestForPaths: ['growth', 'strategic'],
-  },
-  {
-    id: 'contentProduction',
-    name: 'Campaign Content Production',
-    description: 'Creative assets for launches, offers, and partner messaging',
-    bestForPaths: ['pilot', 'growth'],
-    price: '$1,000/piece',
-  },
-  {
-    id: 'executiveStorytelling',
-    name: 'Executive Brand Storytelling',
-    description: 'High-touch brand storytelling and premium content',
-    bestForPaths: ['strategic'],
-    price: '$2,500/video',
-  },
-  {
-    id: 'advancedReporting',
-    name: 'Advanced Reporting',
-    description: 'Deeper analytics and custom reporting views',
-    bestForPaths: ['strategic'],
-  },
-  {
-    id: 'platformDistribution',
-    name: 'Platform Distribution Extension',
-    description: 'Additional distribution surfaces and expanded ecosystem visibility',
-    bestForPaths: ['pilot', 'growth', 'strategic'],
-    price: '$750/platform',
-  },
+  { id: 'learnAndEarn', name: 'Learn & Earn', description: 'Digital education and verified comprehension', bestForPaths: ['pilot', 'growth', 'strategic'], price: 'Included in setup' },
+  { id: 'dailyGrind', name: 'Daily Grind', description: 'Real-world, location-based activation and check-ins', bestForPaths: ['growth', 'strategic'] },
+  { id: 'socialActivation', name: 'Social Activation', description: 'OAuth-connected advocacy and measurable social proof', bestForPaths: ['growth', 'strategic'] },
+  { id: 'contentProduction', name: 'Campaign Content Production', description: 'Creative assets for launches, offers, and partner messaging', bestForPaths: ['pilot', 'growth'], price: '$1,000/piece' },
+  { id: 'executiveStorytelling', name: 'Executive Brand Storytelling', description: 'High-touch brand storytelling and premium content', bestForPaths: ['strategic'], price: '$2,500/video' },
+  { id: 'advancedReporting', name: 'Advanced Reporting', description: 'Deeper analytics and custom reporting views', bestForPaths: ['strategic'] },
+  { id: 'platformDistribution', name: 'Platform Distribution Extension', description: 'Additional distribution surfaces and expanded ecosystem visibility', bestForPaths: ['pilot', 'growth', 'strategic'], price: '$750/platform' },
 ]
 
-// --- Selector Questions ---
-
-export interface SelectorOption {
-  id: string
-  label: string
-  description?: string
-}
-
-export interface SelectorQuestion {
-  id: string
-  question: string
-  subtitle?: string
-  type: 'single' | 'multi'
-  options: SelectorOption[]
-}
+export interface SelectorOption { id: string; label: string; description?: string }
+export interface SelectorQuestion { id: string; question: string; subtitle?: string; type: 'single' | 'multi'; options: SelectorOption[] }
 
 export const selectorQuestions: SelectorQuestion[] = [
-  {
-    id: 'need',
-    question: 'What best describes your current need?',
-    type: 'single',
-    options: [
-      { id: 'firstTimeTest', label: 'Testing GolfN for the first time' },
-      { id: 'productLaunch', label: 'Launching a product or campaign' },
-      { id: 'seasonalCampaign', label: 'Running a seasonal campaign' },
-      { id: 'multiMonthGrowth', label: 'Running a multi-month growth program' },
-      { id: 'retailActivation', label: 'Driving real-world activation' },
-      { id: 'strategicPartner', label: 'Building a long-term strategic partnership' },
-    ],
-  },
-  {
-    id: 'goals',
-    question: 'What outcomes matter most?',
-    subtitle: 'Select all that apply',
-    type: 'multi',
-    options: [
-      { id: 'awareness', label: 'Awareness', description: 'Reach verified golfers' },
-      { id: 'education', label: 'Education', description: 'Teach why the product matters' },
-      { id: 'activation', label: 'Activation', description: 'Drive measurable golfer actions' },
-      { id: 'conversion', label: 'Conversion', description: 'Generate purchase behavior' },
-      { id: 'adoption', label: 'Adoption', description: 'Post-purchase engagement' },
-      { id: 'advocacy', label: 'Advocacy', description: 'Turn users into visible advocates' },
-    ],
-  },
-  {
-    id: 'complexity',
-    question: 'How involved does this need to be?',
-    type: 'single',
-    options: [
-      { id: 'focused', label: 'Focused and contained', description: 'Single priority, clear scope' },
-      { id: 'fullFunnel', label: 'Full-funnel and optimized', description: 'Multiple stages, measurable progression' },
-      { id: 'sustained', label: 'Sustained and strategic', description: 'Long-term, multi-stage, advanced' },
-    ],
-  },
-  {
-    id: 'activation',
-    question: 'Are real-world check-ins or location-based activations important?',
-    type: 'single',
-    options: [
-      { id: 'notNeeded', label: 'Not needed' },
-      { id: 'niceToHave', label: 'Nice to have' },
-      { id: 'important', label: 'Important' },
-    ],
-  },
+  { id: 'need', question: 'What best describes your current need?', type: 'single', options: [
+    { id: 'firstTimeTest', label: 'Testing GolfN for the first time' },
+    { id: 'productLaunch', label: 'Launching a product or campaign' },
+    { id: 'seasonalCampaign', label: 'Running a seasonal campaign' },
+    { id: 'multiMonthGrowth', label: 'Running a multi-month growth program' },
+    { id: 'retailActivation', label: 'Driving real-world activation' },
+    { id: 'strategicPartner', label: 'Building a long-term strategic partnership' },
+  ]},
+  { id: 'goals', question: 'What outcomes matter most?', subtitle: 'Select all that apply', type: 'multi', options: [
+    { id: 'awareness', label: 'Awareness', description: 'Reach verified golfers' },
+    { id: 'education', label: 'Education', description: 'Teach why the product matters' },
+    { id: 'activation', label: 'Activation', description: 'Drive measurable golfer actions' },
+    { id: 'conversion', label: 'Conversion', description: 'Generate purchase behavior' },
+    { id: 'adoption', label: 'Adoption', description: 'Post-purchase engagement' },
+    { id: 'advocacy', label: 'Advocacy', description: 'Turn users into visible advocates' },
+  ]},
+  { id: 'complexity', question: 'How involved does this need to be?', type: 'single', options: [
+    { id: 'focused', label: 'Focused and contained', description: 'Single priority, clear scope' },
+    { id: 'fullFunnel', label: 'Full-funnel and optimized', description: 'Multiple stages, measurable progression' },
+    { id: 'sustained', label: 'Sustained and strategic', description: 'Long-term, multi-stage, advanced' },
+  ]},
+  { id: 'activation', question: 'Are real-world check-ins or location-based activations important?', type: 'single', options: [
+    { id: 'notNeeded', label: 'Not needed' },
+    { id: 'niceToHave', label: 'Nice to have' },
+    { id: 'important', label: 'Important' },
+  ]},
 ]
