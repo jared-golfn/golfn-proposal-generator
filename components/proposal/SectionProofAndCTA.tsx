@@ -34,7 +34,7 @@ export function SectionProofAndCTA({ partner }: { partner: PartnerConfig }) {
           </p>
         </Fade>
 
-        {/* Featured case studies — 2 only */}
+        {/* Featured case studies */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mb-8">
           {studies.map((study, i) => (
             <Fade key={study.id} delay={0.08 * i}>
@@ -51,14 +51,14 @@ export function SectionProofAndCTA({ partner }: { partner: PartnerConfig }) {
                   ))}
                 </div>
                 {study.pullQuote && (
-                  <p className="text-base text-[#D4D4D8] italic border-l-2 pl-4" style={{ borderColor: study.color }}>\u201c{study.pullQuote}\u201d</p>
+                  <p className="text-base text-[#D4D4D8] italic border-l-2 pl-4" style={{ borderColor: study.color }}>&ldquo;{study.pullQuote}&rdquo;</p>
                 )}
               </div>
             </Fade>
           ))}
         </div>
 
-        {/* See all case studies — expandable */}
+        {/* See all case studies */}
         {allStudies.length > 2 && (
           <Fade delay={0.2}>
             <Expandable
@@ -71,7 +71,7 @@ export function SectionProofAndCTA({ partner }: { partner: PartnerConfig }) {
                     <p className="text-xs font-mono tracking-wider uppercase mb-1" style={{ color: study.color }}>{study.category}</p>
                     <h4 className="text-lg font-bold text-white mb-2">{study.title}</h4>
                     <p className="text-sm text-[#A1A1AA] leading-relaxed mb-3">{study.approach}</p>
-                    {study.pullQuote && <p className="text-sm text-[#D4D4D8] italic">\u201c{study.pullQuote}\u201d</p>}
+                    {study.pullQuote && <p className="text-sm text-[#D4D4D8] italic">&ldquo;{study.pullQuote}&rdquo;</p>}
                   </div>
                 ))}
               </div>
@@ -79,7 +79,7 @@ export function SectionProofAndCTA({ partner }: { partner: PartnerConfig }) {
           </Fade>
         )}
 
-        {/* Testimonial screenshots — expandable */}
+        {/* Testimonial screenshots */}
         <div className="mt-5">
           <Fade delay={0.25}>
             <Expandable
@@ -95,7 +95,7 @@ export function SectionProofAndCTA({ partner }: { partner: PartnerConfig }) {
           </Fade>
         </div>
 
-        {/* Why GolfN — the 3 strategic points */}
+        {/* Why GolfN */}
         <div className="mt-16 md:mt-24 space-y-6">
           {strategicSummary.map((point, i) => (
             <Fade key={i} delay={0.1 * i}>
@@ -117,13 +117,13 @@ export function SectionProofAndCTA({ partner }: { partner: PartnerConfig }) {
           </div>
         </Fade>
 
-        {/* Final CTA — BIG */}
+        {/* Final CTA */}
         <Fade delay={0.5}>
           <div className="mt-20 md:mt-28 text-center">
             <img src={images.logo} alt="GolfN" className="h-14 md:h-20 w-auto mx-auto mb-8 opacity-80" />
-            <h3 className="font-display text-4xl md:text-6xl mb-5">Let\u2019s <span className="text-gradient">Build This</span></h3>
+            <h3 className="font-display text-4xl md:text-6xl mb-5">{"Let's"} <span className="text-gradient">Build This</span></h3>
             <p className="text-lg md:text-xl text-[#8C8C8C] max-w-lg mx-auto mb-10">
-              We\u2019ll scope the right program based on your goals.
+              {"We'll scope the right program based on your goals."}
             </p>
             <a href={`mailto:jared@golfn.com?subject=Partnership%20Discussion%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`} className="inline-flex items-center gap-3 px-10 py-5 md:px-14 md:py-6 rounded-2xl font-bold text-xl md:text-2xl transition-all hover:scale-[1.03]" style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0F0F10' }}>
               Start the Conversation &rarr;

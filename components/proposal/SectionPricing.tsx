@@ -35,7 +35,7 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
           </p>
         </Fade>
 
-        {/* Tab selector — BIG buttons */}
+        {/* Tab selector */}
         <Fade delay={0.1}>
           <div className="flex gap-3 mb-8">
             {pathOrder.map((pathId) => {
@@ -58,10 +58,9 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
           </div>
         </Fade>
 
-        {/* Active path — CLEAN compact card */}
+        {/* Active path card */}
         <Fade delay={0.15}>
           <div className="bg-[#131315] border border-[#2A2A2C] rounded-2xl overflow-hidden" style={{ boxShadow: `0 0 80px ${partner.primaryColor}08` }}>
-            {/* Scenario + pricing — the stuff people care about */}
             <div className="p-6 md:p-10">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
                 <div className="flex-1">
@@ -71,17 +70,17 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
                 </div>
                 <div className="shrink-0 md:text-right">
                   <p className="text-sm font-mono text-[#71717A] tracking-wider uppercase mb-2">Stages</p>
-                  <span className="text-2xl md:text-3xl font-mono font-bold" style={{ color: partner.primaryColor }}>{path.includedStages[0]}\u2013{path.includedStages[path.includedStages.length - 1]}</span>
+                  <span className="text-2xl md:text-3xl font-mono font-bold" style={{ color: partner.primaryColor }}>{path.includedStages[0]}&ndash;{path.includedStages[path.includedStages.length - 1]}</span>
                 </div>
               </div>
 
-              {/* Pricing grid — BIG numbers */}
+              {/* Pricing grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 {[
                   { label: 'Setup', value: path.setup.range },
                   { label: 'Monthly', value: path.monthly.starting },
                   { label: 'Duration', value: path.duration.recommended },
-                  { label: 'Impressions', value: path.impressionRecommendation.join(' \u2013 ') },
+                  { label: 'Impressions', value: path.impressionRecommendation.join(' - ') },
                 ].map((row) => (
                   <div key={row.label} className="bg-[#0F0F10] rounded-xl p-4 md:p-5">
                     <p className="text-sm text-[#71717A] mb-1">{row.label}</p>
@@ -91,7 +90,7 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
               </div>
             </div>
 
-            {/* Per-brand breakdown for portfolio — expandable */}
+            {/* Per-brand breakdown for portfolio */}
             {isPortfolio && partner.portfolioBrands && (
               <div className="border-t border-[#2A2A2C]">
                 <Expandable
@@ -117,11 +116,11 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
               </div>
             )}
 
-            {/* What's included — expandable */}
+            {/* Includes + Extensions */}
             <div className="border-t border-[#2A2A2C]">
               <Expandable
                 accentColor={partner.primaryColor}
-                trigger={<span className="text-lg font-semibold text-white">What\u2019s Included + Extensions</span>}
+                trigger={<span className="text-lg font-semibold text-white">{"What's Included + Extensions"}</span>}
               >
                 <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
@@ -147,7 +146,7 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
               </Expandable>
             </div>
 
-            {/* Commerce notes — expandable, only on pilot for GG */}
+            {/* Commerce notes */}
             {partner.commerceNotes && partner.commerceNotes.length > 0 && (
               <div className="border-t border-[#2A2A2C]">
                 <Expandable
@@ -166,7 +165,7 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
               </div>
             )}
 
-            {/* Pricing components breakdown — expandable */}
+            {/* Pricing components */}
             <div className="border-t border-[#2A2A2C]">
               <Expandable
                 accentColor={partner.primaryColor}
@@ -189,7 +188,7 @@ export function SectionPricing({ partner }: { partner: PartnerConfig }) {
                   ))}
                 </div>
                 <div className="mt-6 pt-4 border-t border-[#2A2A2C]/40">
-                  <p className="text-sm text-[#71717A]"><span className="text-[#A1A1AA] font-medium">Minimums:</span> $7,500 setup \u00b7 $5,000/mo floor \u00b7 3 month minimum \u00b7 20% margin floor (30\u201340% preferred)</p>
+                  <p className="text-sm text-[#71717A]"><span className="text-[#A1A1AA] font-medium">Minimums:</span> $7,500 setup &middot; $5,000/mo floor &middot; 3 month minimum &middot; 20% margin floor (30-40% preferred)</p>
                 </div>
               </Expandable>
             </div>
