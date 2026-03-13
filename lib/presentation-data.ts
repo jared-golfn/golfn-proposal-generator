@@ -45,7 +45,7 @@ export interface PartnerConfig {
 }
 
 export const partners: Record<string, PartnerConfig> = {
-  // ── Generic template (use as base for new partners) ─────────────────
+  // -- Generic template (use as base for new partners) -----------------
   'template': {
     slug: 'template',
     partnerName: '[Brand Name]',
@@ -58,10 +58,11 @@ export const partners: Record<string, PartnerConfig> = {
     defaultPath: 'pilot',
   },
 
-  // ── Galvin Green ────────────────────────────────────────────────────
+  // -- Galvin Green ----------------------------------------------------
   'galvin-green': {
     slug: 'galvin-green',
     partnerName: 'Galvin Green',
+    password: 'galvin2026',
     logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/6bbe863fced77a5f36904db460f7ed06a3a0e782-230x46.webp',
     primaryColor: '#17A455',
     secondaryColor: '#8DC54A',
@@ -80,10 +81,11 @@ export const partners: Record<string, PartnerConfig> = {
     ],
   },
 
-  // ── Sports Impact (Portfolio) ───────────────────────────────────────
+  // -- Sports Impact (Portfolio) ---------------------------------------
   'sports-impact': {
     slug: 'sports-impact',
     partnerName: 'Sports Impact',
+    password: 'sportsimpact2026',
     logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     primaryColor: '#17A455',
     secondaryColor: '#8DC54A',
@@ -134,7 +136,7 @@ export const partners: Record<string, PartnerConfig> = {
     ],
   },
 
-  // ── Wilson Golf ─────────────────────────────────────────────────────
+  // -- Wilson Golf -----------------------------------------------------
   'wilson-golf': {
     slug: 'wilson-golf',
     partnerName: 'Wilson Golf',
@@ -148,7 +150,7 @@ export const partners: Record<string, PartnerConfig> = {
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
 
-  // ── Motorcaddy ──────────────────────────────────────────────────────
+  // -- Motorcaddy ------------------------------------------------------
   'motocaddy': {
     slug: 'motocaddy',
     partnerName: 'Motorcaddy',
@@ -162,7 +164,7 @@ export const partners: Record<string, PartnerConfig> = {
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
 
-  // ── Demo ─────────────────────────────────────────────────────────────
+  // -- Demo ------------------------------------------------------------
   demo: {
     slug: 'demo',
     partnerName: 'Your Brand',
