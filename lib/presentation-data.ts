@@ -1,4 +1,4 @@
-// GolfN Partnership Structure — v9 FINAL content + v8.1 expanded copy
+// GolfN Partnership Structure -- v9 FINAL content + v8.1 expanded copy
 // Platform stats updated Mar 11, 2026
 // Sports Impact portfolio presentation from Mar 9, 2026 call
 
@@ -45,6 +45,20 @@ export interface PartnerConfig {
 }
 
 export const partners: Record<string, PartnerConfig> = {
+  // ── Generic template (use as base for new partners) ─────────────────
+  'template': {
+    slug: 'template',
+    partnerName: '[Brand Name]',
+    primaryColor: '#17A455',
+    secondaryColor: '#8DC54A',
+    productCategory: '[Brand Category]',
+    productNames: ['[Product Line 1]', '[Product Line 2]', '[Product Line 3]'],
+    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers -- built around [Brand Name]\'s [Key Product Feature] and [Product Strategy / Seasonal Focus].',
+    keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
+    defaultPath: 'pilot',
+  },
+
+  // ── Galvin Green ────────────────────────────────────────────────────
   'galvin-green': {
     slug: 'galvin-green',
     partnerName: 'Galvin Green',
@@ -53,18 +67,20 @@ export const partners: Record<string, PartnerConfig> = {
     secondaryColor: '#8DC54A',
     productCategory: 'Premium Golf Outerwear',
     productNames: ['GORE-TEX Jackets', 'Interface Layers', 'Base Layers', 'Accessories'],
-    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers \u2014 built around Galvin Green\'s multi-layer system and seasonal capsule collections.',
+    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers -- built around Galvin Green\'s multi-layer system and seasonal capsule collections.',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
     agencyName: 'Sports Impact',
     agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     agencyBrands: ['Wilson Golf', 'Motorcaddy'],
     defaultPath: 'pilot',
     commerceNotes: [
-      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy layers on top of existing affiliate partnerships \u2014 users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
-      'For capsule collection drops and limited-edition releases, exclusive early-access activations create urgency and introduce the brand to golfers who may not know Galvin Green yet \u2014 without discounting or competitions that compromise premium positioning.',
-      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means Galvin Green campaigns reach golfers in climates where technical outerwear is essential \u2014 not wasted on golfers in perpetual sunshine.',
+      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy layers on top of existing affiliate partnerships -- users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
+      'For capsule collection drops and limited-edition releases, exclusive early-access activations create urgency and introduce the brand to golfers who may not know Galvin Green yet -- without discounting or competitions that compromise premium positioning.',
+      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means Galvin Green campaigns reach golfers in climates where technical outerwear is essential -- not wasted on golfers in perpetual sunshine.',
     ],
   },
+
+  // ── Sports Impact (Portfolio) ───────────────────────────────────────
   'sports-impact': {
     slug: 'sports-impact',
     partnerName: 'Sports Impact',
@@ -73,7 +89,7 @@ export const partners: Record<string, PartnerConfig> = {
     secondaryColor: '#8DC54A',
     productCategory: 'Multi-Brand Golf Portfolio',
     productNames: ['Galvin Green', 'Wilson Golf', 'Motorcaddy'],
-    heroSubtitle: 'A consolidated partnership framework for Sports Impact\'s golf portfolio \u2014 shared infrastructure, audience intelligence, and activation across Galvin Green, Wilson, and Motorcaddy.',
+    heroSubtitle: 'A consolidated partnership framework for Sports Impact\'s golf portfolio -- shared infrastructure, audience intelligence, and activation across Galvin Green, Wilson, and Motorcaddy.',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
     agencyName: 'Sports Impact',
     agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
@@ -88,7 +104,7 @@ export const partners: Record<string, PartnerConfig> = {
         category: 'Premium Golf Outerwear',
         products: ['GORE-TEX Jackets', 'Interface Layers', 'Base Layers', 'Accessories'],
         pitch: 'Brand awareness and technical education for a premium Swedish outerwear brand expanding US recognition. Capsule collection drops and weather-targeted campaigns.',
-        targetingEdge: 'GolfN knows which golfers play in rain, wind, and cold \u2014 and targets only climates where technical outerwear matters.',
+        targetingEdge: 'GolfN knows which golfers play in rain, wind, and cold -- and targets only climates where technical outerwear matters.',
       },
       {
         slug: 'wilson-golf',
@@ -98,7 +114,7 @@ export const partners: Record<string, PartnerConfig> = {
         category: 'Golf Equipment',
         products: ['Dynapower Drivers', 'Staff Model Irons', 'Triad Golf Balls', 'Quiver Stand Bags'],
         pitch: 'Full-funnel activation for equipment launches and demo day programs. Affiliate partnerships with strong price-point breadth across clubs, balls, and bags.',
-        targetingEdge: 'GolfN tracks what clubs users play, when they last upgraded, and their handicap range \u2014 so Wilson campaigns reach golfers ready to switch.',
+        targetingEdge: 'GolfN tracks what clubs users play, when they last upgraded, and their handicap range -- so Wilson campaigns reach golfers ready to switch.',
       },
       {
         slug: 'motocaddy',
@@ -108,15 +124,17 @@ export const partners: Record<string, PartnerConfig> = {
         category: 'Electric Golf Trolleys',
         products: ['M7 GPS', 'M5 GPS', 'S1 DHC', 'Cube Push Trolley'],
         pitch: 'Precision targeting for a high-ticket product. GolfN identifies walkers vs. riders, making every impression count at a $2,000+ price point with strong affiliate commission.',
-        targetingEdge: 'GolfN is the only platform that knows which golfers walk. Every Motorcaddy impression goes to a verified walker \u2014 zero waste.',
+        targetingEdge: 'GolfN is the only platform that knows which golfers walk. Every Motorcaddy impression goes to a verified walker -- zero waste.',
       },
     ],
     commerceNotes: [
-      'All three brands have existing affiliate partnerships. GolfN\u2019s points economy layers on top \u2014 users earn points for purchases through tracked links, creating dual incentive without replacing current affiliate structures.',
-      'Consolidated agency pricing applies across the portfolio. Campaign architecture, audience intelligence, and infrastructure are shared \u2014 reducing per-brand costs significantly compared to activating each brand independently.',
+      'All three brands have existing affiliate partnerships. GolfN\'s points economy layers on top -- users earn points for purchases through tracked links, creating dual incentive without replacing current affiliate structures.',
+      'Consolidated agency pricing applies across the portfolio. Campaign architecture, audience intelligence, and infrastructure are shared -- reducing per-brand costs significantly compared to activating each brand independently.',
       'Each brand gets distinct targeting: weather-based for Galvin Green, equipment-readiness for Wilson, walker identification for Motorcaddy. Shared infrastructure, differentiated activation.',
     ],
   },
+
+  // ── Wilson Golf ─────────────────────────────────────────────────────
   'wilson-golf': {
     slug: 'wilson-golf',
     partnerName: 'Wilson Golf',
@@ -129,6 +147,8 @@ export const partners: Record<string, PartnerConfig> = {
     agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
+
+  // ── Motorcaddy ──────────────────────────────────────────────────────
   'motocaddy': {
     slug: 'motocaddy',
     partnerName: 'Motorcaddy',
@@ -141,6 +161,8 @@ export const partners: Record<string, PartnerConfig> = {
     agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
+
+  // ── Demo ─────────────────────────────────────────────────────────────
   demo: {
     slug: 'demo',
     partnerName: 'Your Brand',
@@ -171,9 +193,9 @@ export const commercialModel = {
     subtitle: 'One-Time Investment',
     description: 'A one-time investment covering the strategic, creative, and operational infrastructure required to launch a full-funnel golfer activation program. This includes campaign strategy, creative development, distribution planning, landing page and offer architecture, Learn & Earn module creation, and integration setup.',
     tiers: [
-      { name: 'Focused Launch', range: '$7,500 \u2013 $12,500', description: 'Core audience build, initial Learn & Earn, single activation pathway' },
-      { name: 'Full Program', range: '$12,500 \u2013 $20,000', description: 'Multi-channel activation, Daily Grind integration, content production' },
-      { name: 'Enterprise', range: '$20,000 \u2013 $35,000+', description: 'Full eight-stage deployment, custom integrations, dedicated strategy' },
+      { name: 'Focused Launch', range: '$7,500 - $12,500', description: 'Core audience build, initial Learn & Earn, single activation pathway' },
+      { name: 'Full Program', range: '$12,500 - $20,000', description: 'Multi-channel activation, Daily Grind integration, content production' },
+      { name: 'Enterprise', range: '$20,000 - $35,000+', description: 'Full eight-stage deployment, custom integrations, dedicated strategy' },
     ],
     extensions: [
       { name: 'Executive Brand Storytelling', price: '$2,500/video' },
@@ -184,7 +206,7 @@ export const commercialModel = {
   management: {
     title: 'Managed Program Delivery',
     subtitle: 'Recurring Monthly',
-    description: 'The setup fee builds the system. The monthly management fee runs and optimizes it. This is not a passive monitoring retainer \u2014 it funds four distinct recurring functions that operate every month the program is active.',
+    description: 'The setup fee builds the system. The monthly management fee runs and optimizes it. This is not a passive monitoring retainer -- it funds four distinct recurring functions that operate every month the program is active.',
     functions: [
       { name: 'Audience Intelligence & Lookalike Enrollment', description: 'Continuous refinement of the interest cohort and AI-driven lookalike model. As new users onboard, the system identifies behavioral matches and enrolls them into the progression. The audience grows and sharpens every month.' },
       { name: 'Live Program Orchestration', description: 'Active management of Learn & Earn modules, exclusive offers and points-back incentives, Daily Grind check-in coordination, OAuth social activation campaigns, and post-conversion engagement sequences.' },
@@ -200,7 +222,7 @@ export const commercialModel = {
   media: {
     title: 'Impression Banks',
     subtitle: 'Billed as Served, No Expiration',
-    description: 'The management fee funds ongoing program operation. Media and impression spend funds audience delivery volume. These are separate by design \u2014 one pays for the team and systems running the program, the other pays for the reach delivered to golfers.',
+    description: 'The management fee funds ongoing program operation. Media and impression spend funds audience delivery volume. These are separate by design -- one pays for the team and systems running the program, the other pays for the reach delivered to golfers.',
     tiers: [
       { impressions: '50K', cost: '$3,500', cpm: '$70' },
       { impressions: '100K', cost: '$7,000', cpm: '$70' },
@@ -210,26 +232,26 @@ export const commercialModel = {
   },
   performance: {
     title: 'Performance Economics',
-    subtitle: 'Variable \u2014 Attributed Commerce',
-    description: 'This layer is not guaranteed compensation. It is realized only when GolfN drives qualifying downstream actions. If qualifying actions do not occur, GolfN does not realize this layer. This creates direct alignment: GolfN\u2019s economic upside is tied to the partner\u2019s commercial success.',
+    subtitle: 'Variable -- Attributed Commerce',
+    description: 'This layer is not guaranteed compensation. It is realized only when GolfN drives qualifying downstream actions. If qualifying actions do not occur, GolfN does not realize this layer. This creates direct alignment: GolfN\'s economic upside is tied to the partner\'s commercial success.',
     preferred: {
       name: 'Wholesale & Marketplace Participation',
-      range: '20\u201340%',
-      preferredRange: '30\u201340%',
+      range: '20-40%',
+      preferredRange: '30-40%',
       floor: '20%',
-      description: 'The partner provides wholesale account access or wholesale-equivalent pricing. Orders are generated through GolfN\u2019s marketplace or attributed commerce flow. The partner fulfills and drop-ships directly to the customer. GolfN does not hold inventory.',
-      whyNotAffiliate: 'Standard affiliate rates of 3\u20135% are not sufficient. The margin must be large enough for GolfN to pass a meaningful portion back to users as points-based incentives while maintaining working margin for activation costs.',
+      description: 'The partner provides wholesale account access or wholesale-equivalent pricing. Orders are generated through GolfN\'s marketplace or attributed commerce flow. The partner fulfills and drop-ships directly to the customer. GolfN does not hold inventory.',
+      whyNotAffiliate: 'Standard affiliate rates of 3-5% are not sufficient. The margin must be large enough for GolfN to pass a meaningful portion back to users as points-based incentives while maintaining working margin for activation costs.',
     },
     alternatives: [
-      { name: 'Revenue Share', range: '12\u201325%' },
-      { name: 'Fixed CPA', range: '$10\u2013$75+' },
+      { name: 'Revenue Share', range: '12-25%' },
+      { name: 'Fixed CPA', range: '$10-$75+' },
       { name: 'Hybrid', range: 'Custom structure' },
     ],
   },
 }
 
 export const budgetPositioning = {
-  headline: 'Where GolfN Fits in a Brand\u2019s Budget',
+  headline: 'Where GolfN Fits in a Brand\'s Budget',
   paragraphs: [
     'Brands already allocate spend across paid social, paid search, affiliate and performance marketing, audience retargeting, activation programs, and partner growth initiatives. GolfN does not require a new budget category. It earns a place inside spend that already exists.',
     'GolfN should not replace broad paid media. It should earn a share of that spend where the objective is to reach verified golfers in a golf-native environment and move them through a more measurable progression from awareness to action.',
@@ -240,20 +262,20 @@ export const budgetPositioning = {
 export const progressionStages = [
   {
     number: 1, name: 'Awareness',
-    short: 'Full ecosystem distribution \u2014 email, in-app, push, banners, social, Daily Grind banners, blog/SEO.',
+    short: 'Full ecosystem distribution -- email, in-app, push, banners, social, Daily Grind banners, blog/SEO.',
     detail: 'GolfN introduces partner brands to highly relevant golfers through premium placements, targeted campaigns, content, and ecosystem-wide visibility. Distribution spans the full ecosystem: email to the collected base, in-app messages, push notifications, persistent banners, social feed placement, awareness banners within Daily Grind, blog and SEO content, and co-promotion.',
     channels: ['Email', 'In-App', 'Push', 'Banners', 'Social', 'Daily Grind', 'Blog/SEO'],
   },
   {
     number: 2, name: 'Intent Capture',
     short: 'Behavioral profiles, interest cohorts, AI lookalike models.',
-    detail: 'GolfN identifies and segments golfers showing relevant interest signals, moving beyond broad reach into measurable audience qualification. Every interaction writes to the user\u2019s profile. The platform constructs behavioral profiles of interested users, producing a defined interest cohort and an AI-powered lookalike model. Campaign is temporary \u2014 intelligence is permanent.',
+    detail: 'GolfN identifies and segments golfers showing relevant interest signals, moving beyond broad reach into measurable audience qualification. Every interaction writes to the user\'s profile. The platform constructs behavioral profiles of interested users, producing a defined interest cohort and an AI-powered lookalike model. Campaign is temporary -- intelligence is permanent.',
     channels: ['Behavioral Profiles', 'Interest Cohorts', 'AI Lookalike Models'],
   },
   {
     number: 3, name: 'Education',
     short: 'Learn & Earn within More Ways to Earn. Verified comprehension.',
-    detail: 'GolfN helps partners teach golfers why a product, service, or experience matters through Learn & Earn, storytelling, and contextual education. Learn & Earn lives within GolfN\u2019s \u201cMore Ways to Earn\u201d section \u2014 a digital engagement area where users can earn points from anywhere, not just on the course. Wrong answers mean no points or reduced points. Education becomes measurable.',
+    detail: 'GolfN helps partners teach golfers why a product, service, or experience matters through Learn & Earn, storytelling, and contextual education. Learn & Earn lives within GolfN\'s "More Ways to Earn" section -- a digital engagement area where users can earn points from anywhere, not just on the course. Wrong answers mean no points or reduced points. Education becomes measurable.',
     channels: ['Learn & Earn', 'Verified Comprehension', 'Points Incentive'],
   },
   {
@@ -291,20 +313,20 @@ export const progressionStages = [
 export const archetypes = [
   {
     name: 'Emerging / Test Program',
-    stages: 'Stages 1\u20134',
+    stages: 'Stages 1-4',
     description: 'For brands entering the GolfN ecosystem for the first time or testing the model with a contained scope. Awareness + cohort building + early activation.',
     management: 'Growth ($2,500/mo)',
     dailyGrind: 'Fixed fee if included',
-    setupRange: '$7,500 \u2013 $12,500',
+    setupRange: '$7,500 - $12,500',
     monthlyMin: '$5,000+',
   },
   {
     name: 'Growth / Full-Funnel',
-    stages: 'Stages 1\u20137',
+    stages: 'Stages 1-7',
     description: 'For brands ready to run the full progression from awareness through conversion and into early post-purchase engagement. Education, activation, conversion, early adoption and advocacy.',
     management: 'Scale ($4,500/mo)',
     dailyGrind: 'Hybrid model',
-    setupRange: '$12,500 \u2013 $20,000',
+    setupRange: '$12,500 - $20,000',
     monthlyMin: '$8,000+',
   },
   {
@@ -313,7 +335,7 @@ export const archetypes = [
     description: 'For brands committing to sustained, multi-stage activation with advanced cohort development, real-world engagement, and compounding re-engagement.',
     management: 'Enterprise ($6,500/mo)',
     dailyGrind: 'Performance-led verified check-in model',
-    setupRange: '$20,000 \u2013 $35,000+',
+    setupRange: '$20,000 - $35,000+',
     monthlyMin: '$12,000+',
   },
 ]
@@ -328,13 +350,13 @@ export const thresholds = {
   setup: '$7,500 minimum',
   recurring: '$5,000/month absolute floor',
   duration: '3 months minimum',
-  commerce: '20% minimum margin, 30\u201340% preferred',
+  commerce: '20% minimum margin, 30-40% preferred',
 }
 
 export const strategicSummary = [
   {
     lead: 'Brands deserve more than impressions.',
-    body: 'They deserve measurable progression \u2014 verified awareness, qualified intent, proven education, tracked activation, attributed conversion, confirmed adoption, visible advocacy, and compounding retention. GolfN delivers all eight.',
+    body: 'They deserve measurable progression -- verified awareness, qualified intent, proven education, tracked activation, attributed conversion, confirmed adoption, visible advocacy, and compounding retention. GolfN delivers all eight.',
   },
   {
     lead: 'The economics are aligned.',
@@ -342,8 +364,8 @@ export const strategicSummary = [
   },
   {
     lead: 'Brands already pay for these functions.',
-    body: 'Awareness, education, activation, conversion, social proof, and retention \u2014 across fragmented partners and channels. GolfN consolidates them into one coordinated system built around verified golfers and first-party behavioral data.',
+    body: 'Awareness, education, activation, conversion, social proof, and retention -- across fragmented partners and channels. GolfN consolidates them into one coordinated system built around verified golfers and first-party behavioral data.',
   },
 ]
 
-export const closingStatement = 'GolfN does not ask brands to take a leap of faith. It asks them to redirect a portion of spend they are already committed to \u2014 into a channel that is more contextual, more measurable, and more complete than anything else available in golf.'
+export const closingStatement = 'GolfN does not ask brands to take a leap of faith. It asks them to redirect a portion of spend they are already committed to -- into a channel that is more contextual, more measurable, and more complete than anything else available in golf.'

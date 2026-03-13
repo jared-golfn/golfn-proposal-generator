@@ -56,7 +56,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             </motion.div>
           </div>
 
-          {/* GALVIN GREEN WATERPROOF JACKET PRIZE MOCKUP */}
+          {/* Campaign creative mockup area -- populated per partner */}
           <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 flex justify-center">
             <div className="relative">
               <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: 'radial-gradient(circle, #00ff9d, #001a14, transparent)' }} />
