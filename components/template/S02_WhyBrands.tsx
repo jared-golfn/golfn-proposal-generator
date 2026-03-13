@@ -41,12 +41,12 @@ const cards = [
 
 export function S02_WhyBrands({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-24 md:py-32">
-      <div className="w-content px-5 md:px-12">
+    <section className="py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-5 md:px-12">
         <Fade>
-          <p className="text-sm font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">Why Brands Use GolfN</p>
-          <h2 className="text-3xl md:text-[3.5rem] font-bold leading-[0.95] mb-5">More than impressions.<br /><span className="text-gradient">Measurable progression.</span></h2>
-          <p className="text-lg text-[#9ca3af] max-w-2xl mb-16">
+          <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">Why Brands Use GolfN</p>
+          <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">More than impressions.<br /><span className="text-gradient">Measurable progression.</span></h2>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl leading-8 mb-16">
             GolfN helps brands do more than show up. It helps them generate premium attention, identify qualified interest, and continue activating responsive golfers over time.
           </p>
         </Fade>
@@ -54,10 +54,10 @@ export function S02_WhyBrands({ partner }: { partner: PartnerData }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {cards.map((card, i) => (
             <Fade key={card.title} delay={0.08 * i}>
-              <div className="card-lift bg-[#131619] border border-[#1e2128] rounded-2xl p-8 md:p-9 group cursor-default">
+              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-9 group cursor-default hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
                 <div className="mb-5 group-hover:scale-110 transition-transform duration-300">{card.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
-                <p className="text-[#9ca3af] leading-relaxed">{card.body}</p>
+                <h3 className="text-2xl font-semibold text-white mb-3">{card.title}</h3>
+                <p className="text-lg text-[#9ca3af] leading-8">{card.body}</p>
               </div>
             </Fade>
           ))}

@@ -2,8 +2,8 @@
 
 @theme {
   --color-golfn-bg: #0f1217;
-  --color-golfn-card: #131619;
-  --color-golfn-border: #1e2128;
+  --color-golfn-card: #1a1f2e;
+  --color-golfn-border: #2a3347;
   --color-golfn-muted: #4b5563;
   --color-golfn-green: #00ff9d;
   --color-golfn-green-dark: #17A455;
@@ -47,21 +47,13 @@
     }
   }
 
-  @media (min-width: 2560px) {
-    :root {
-      --content-width: min(1400px, 55vw);
-      --content-wide: min(1600px, 63vw);
-      --content-wider: min(1760px, 69vw);
-    }
-  }
-
   body {
     background: #0f1217;
     color: #FAFAFA;
     font-family: var(--font-body);
     font-size: 1.125rem;
     font-weight: 400;
-    line-height: 1.7;
+    line-height: 1.75;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -104,13 +96,14 @@
   background: linear-gradient(90deg, #00ff9d, #8DC54A);
 }
 
-/* Card hover lift */
+/* Card hover lift — used via className on interactive cards */
 .card-lift {
-  transition: transform 300ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms ease;
+  transition: transform 300ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms ease, border-color 300ms ease;
 }
 .card-lift:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0,255,157,0.04);
+  border-color: rgba(0, 255, 157, 0.3);
 }
 
 /* Green glow for hero elements */
@@ -120,4 +113,4 @@
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #1e2128; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #2a3347; border-radius: 2px; }

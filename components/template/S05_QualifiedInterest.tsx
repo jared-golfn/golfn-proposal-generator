@@ -22,7 +22,7 @@ function Tooltip({ title, body }: { title: string; body: string }) {
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
         onClick={() => setShow(!show)}
-        className="inline-flex items-center gap-1.5 text-sm font-semibold underline underline-offset-2 decoration-dotted cursor-help text-[#00ff9d]"
+        className="inline-flex items-center gap-1.5 text-base font-semibold underline underline-offset-2 decoration-dotted cursor-help text-[#00ff9d]"
       >
         {title}
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="shrink-0">
@@ -32,9 +32,9 @@ function Tooltip({ title, body }: { title: string; body: string }) {
       </button>
       {show && (
         <span className="absolute left-0 top-full mt-2 z-30 w-80 md:w-96 block">
-          <span className="block bg-[#131619] border border-[#2a2f38] rounded-xl p-5 shadow-2xl">
-            <span className="block text-sm font-bold text-white mb-2">{title}</span>
-            <span className="block text-sm text-[#d1d5db] leading-relaxed">{body}</span>
+          <span className="block bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5 shadow-2xl">
+            <span className="block text-base font-bold text-white mb-2">{title}</span>
+            <span className="block text-base text-[#d1d5db] leading-7">{body}</span>
           </span>
         </span>
       )}
@@ -44,27 +44,27 @@ function Tooltip({ title, body }: { title: string; body: string }) {
 
 export function S05_QualifiedInterest({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-24 md:py-32">
-      <div className="w-content px-5 md:px-12">
+    <section className="py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-5 md:px-12">
         <Fade>
           <div className="flex items-center gap-3 mb-4">
             <span className="text-2xl font-mono font-bold text-[#00ff9d]">02</span>
-            <p className="text-sm font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Qualification</p>
+            <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Qualification</p>
           </div>
-          <h2 className="text-3xl md:text-[3.5rem] font-bold leading-[0.95] mb-5">From attention to<br /><span className="text-gradient">qualified interest</span></h2>
-          <p className="text-lg text-[#9ca3af] max-w-2xl mb-14">
+          <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">From attention to<br /><span className="text-gradient">qualified interest</span></h2>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl leading-8 mb-14">
             GolfN does more than count views. It analyzes how users engage with a campaign and uses those signals to identify which golfers are most likely to care.
           </p>
         </Fade>
 
-        {/* Signal Ladder: Two columns of chips */}
+        {/* Signal Ladder */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <Fade delay={0.05}>
-            <div className="bg-[#131619] border border-[#1e2128] rounded-2xl p-6 md:p-8">
-              <h3 className="text-lg font-bold text-white mb-5">Initial Interest Signals</h3>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8">
+              <h3 className="text-2xl font-semibold text-white mb-5">Initial Interest Signals</h3>
               <div className="flex flex-wrap gap-2">
                 {initialSignals.map(s => (
-                  <span key={s} className="text-sm px-4 py-2 rounded-full border border-[#2a2f38] text-[#9ca3af] bg-[#0f1217]">
+                  <span key={s} className="text-base px-4 py-2 rounded-full border border-[#2a3347] text-[#9ca3af] bg-[#0f1217]">
                     <span className="inline-block w-2 h-2 rounded-full bg-[#4b5563] mr-2" />{s}
                   </span>
                 ))}
@@ -72,11 +72,11 @@ export function S05_QualifiedInterest({ partner }: { partner: PartnerData }) {
             </div>
           </Fade>
           <Fade delay={0.1}>
-            <div className="bg-[#131619] border border-[#1e2128] rounded-2xl p-6 md:p-8" style={{ borderLeftWidth: 2, borderLeftColor: '#00ff9d' }}>
-              <h3 className="text-lg font-bold text-white mb-5">Stronger Intent Signals</h3>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8" style={{ borderLeftWidth: 2, borderLeftColor: '#00ff9d' }}>
+              <h3 className="text-2xl font-semibold text-white mb-5">Stronger Intent Signals</h3>
               <div className="flex flex-wrap gap-2">
                 {strongerSignals.map(s => (
-                  <span key={s} className="text-sm px-4 py-2 rounded-full border border-[#00ff9d]/30 text-white bg-[#00ff9d]/5">
+                  <span key={s} className="text-base px-4 py-2 rounded-full border border-[#00ff9d]/30 text-white bg-[#00ff9d]/5">
                     <span className="inline-block w-2 h-2 rounded-full bg-[#00ff9d] mr-2" />{s}
                   </span>
                 ))}
@@ -87,9 +87,9 @@ export function S05_QualifiedInterest({ partner }: { partner: PartnerData }) {
 
         {/* Cohort + Tooltip */}
         <Fade delay={0.15}>
-          <div className="bg-[#131619] border border-[#1e2128] rounded-2xl p-6 md:p-8 mb-6">
-            <h3 className="text-lg font-bold text-white mb-3">Cohort Qualification</h3>
-            <p className="text-base text-[#d1d5db] leading-relaxed mb-4">
+          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
+            <h3 className="text-2xl font-semibold text-white mb-3">Cohort Qualification</h3>
+            <p className="text-lg text-[#d1d5db] leading-8 mb-4">
               GolfN uses the behavior of users who show the strongest campaign-relevant interest to define a partner-specific audience cohort. That cohort becomes the basis for future follow-up, optimization, and continued prospect identification.
             </p>
             <Tooltip
@@ -101,12 +101,12 @@ export function S05_QualifiedInterest({ partner }: { partner: PartnerData }) {
 
         {/* Why the Launch Offer Matters */}
         <Fade delay={0.2}>
-          <div className="bg-[#131619] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8">
-            <h4 className="text-base font-bold text-white mb-2">Why the Launch Offer Matters</h4>
-            <p className="text-sm text-[#d1d5db] leading-relaxed mb-3">
+          <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8">
+            <h4 className="text-xl font-semibold text-white mb-2">Why the Launch Offer Matters</h4>
+            <p className="text-lg text-[#d1d5db] leading-8 mb-3">
               The quality of the initial prize or offer affects both campaign participation and the strength of the behavioral signal generated. A stronger launch experience helps GolfN identify more responsive users and creates a better foundation for future cohort expansion.
             </p>
-            <p className="text-sm font-semibold text-[#00ff9d]">Recommended prize value: up to $5,000 total</p>
+            <p className="text-lg font-semibold text-[#00ff9d]">Recommended prize value: up to $5,000 total</p>
           </div>
         </Fade>
       </div>
