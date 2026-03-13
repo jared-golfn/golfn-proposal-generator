@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { type PartnerConfig, platformStats } from '@/lib/presentation-data'
 import { images } from '@/lib/images'
+import { marketData, marketDataTotal, getPartnerMarkets } from '@/lib/market-data'
 
 const stats = [
   { value: platformStats.registeredUsers, label: 'Registered Users', sub: platformStats.monthlyGrowth + ' growth', highlight: true },
@@ -92,6 +93,13 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
   const defaultSubtitle = 'Golf-specific demand generation, activation, and customer progression built around verified golfers and measurable downstream action.'
   const subtitle = partner.heroSubtitle || defaultSubtitle
   const isPortfolio = partner.isPortfolio && partner.portfolioBrands
+
+  // Get market data — filter to partner's key markets if specified, otherwise show all
+  const partnerMarkets = partner.keyMarkets ? getPartnerMarkets(partner.keyMarkets) : []
+  // Also grab the full list for showing the "+ N more countries" line
+  const allMarkets = marketData
+  const maxUsers = allMarkets.length > 0 ? allMarkets[0].users : 1
+  const partnerMarketsTotal = partnerMarkets.reduce((sum, m) => sum + m.users, 0)
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
@@ -188,21 +196,61 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
           </motion.div>
         )}
 
-        {/* Key Markets */}
-        {partner.keyMarkets && partner.keyMarkets.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: isPortfolio ? 1.4 : 1.1 }} className="mt-5 md:mt-8 bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-              <div>
-                <p className="text-sm font-mono text-[#71717A] tracking-wider uppercase mb-2">Key Markets</p>
-                <div className="flex flex-wrap gap-2">
-                  {partner.keyMarkets.map((market) => (
-                    <span key={market} className="text-sm md:text-base px-4 py-2 rounded-xl border text-[#D4D4D8] font-medium" style={{ background: `${partner.primaryColor}08`, borderColor: `${partner.primaryColor}25` }}>{market}</span>
-                  ))}
+        {/* Market Reach — Visual Bar Chart */}
+        {partnerMarkets.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: isPortfolio ? 1.4 : 1.1 }} className="mt-5 md:mt-8 bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-8 overflow-hidden">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-5">
+                  <p className="text-sm font-mono text-[#71717A] tracking-wider uppercase">Your Key Markets</p>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#1A1A1D] border border-[#2A2A2C] text-[#52525B]">{marketDataTotal.asOfDate}</span>
+                </div>
+                <div className="space-y-3">
+                  {partnerMarkets.sort((a, b) => b.users - a.users).map((market, i) => {
+                    const pct = (market.users / maxUsers) * 100
+                    return (
+                      <motion.div
+                        key={market.code}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: (isPortfolio ? 1.5 : 1.2) + i * 0.06 }}
+                      >
+                        <div className="flex items-center justify-between mb-1.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-base md:text-lg">{market.flag}</span>
+                            <span className="text-sm md:text-base text-[#D4D4D8] font-medium">{market.country}</span>
+                          </div>
+                          <span className="text-sm md:text-base font-mono font-bold" style={{ color: partner.primaryColor }}>{market.users.toLocaleString()}</span>
+                        </div>
+                        <div className="h-2 bg-[#1A1A1D] rounded-full overflow-hidden">
+                          <motion.div
+                            className="h-full rounded-full"
+                            style={{ background: `linear-gradient(90deg, ${partner.primaryColor}, ${partner.secondaryColor})` }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${pct}%` }}
+                            transition={{ delay: (isPortfolio ? 1.6 : 1.3) + i * 0.08, duration: 0.8, ease: 'easeOut' }}
+                          />
+                        </div>
+                      </motion.div>
+                    )
+                  })}
                 </div>
               </div>
-              <div className="hidden sm:block w-px h-12 bg-[#2A2A2C]" />
-              <div className="text-sm md:text-base text-[#A1A1AA] max-w-sm">
-                GolfN is live in <span className="text-white font-semibold">57 countries</span>. The UK is GolfN&apos;s <span className="text-white font-semibold">#2 market</span> behind the United States, with strong presence across Australia and Canada.
+
+              <div className="md:w-64 shrink-0 md:pl-6 md:border-l border-[#2A2A2C]">
+                <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
+                  <div>
+                    <p className="text-2xl md:text-3xl font-bold font-mono" style={{ color: partner.primaryColor }}>{partnerMarketsTotal.toLocaleString()}</p>
+                    <p className="text-xs md:text-sm text-[#71717A]">Verified golfers in your key markets</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl md:text-3xl font-bold font-mono text-white">{marketDataTotal.countriesGlobal}</p>
+                    <p className="text-xs md:text-sm text-[#71717A]">Countries total</p>
+                  </div>
+                </div>
+                <div className="mt-4 pt-4 border-t border-[#2A2A2C]/50">
+                  <p className="text-xs md:text-sm text-[#A1A1AA] leading-relaxed">All-time unique verified golfers. The UK is GolfN&apos;s <span className="text-white font-semibold">#2 international market</span>. Australia and Canada are top 5 globally.</p>
+                </div>
               </div>
             </div>
           </motion.div>
