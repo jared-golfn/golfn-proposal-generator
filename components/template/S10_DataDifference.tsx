@@ -2,6 +2,7 @@
 
 import { Shield } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
+import { images } from '@/lib/images'
 import { Fade } from './Fade'
 
 const proofCards = [
@@ -24,7 +25,7 @@ const differentiators = [
 
 export function S10_DataDifference({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <div className="flex items-center gap-2 mb-4">
@@ -32,7 +33,7 @@ export function S10_DataDifference({ partner }: { partner: PartnerData }) {
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Data Advantage</p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">Why GolfN data<br />is <span className="text-gradient">different</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-14">GolfN audience intelligence is built from verified golf behavior, not broad assumptions or purchased audience models.</p>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-9 mb-14">GolfN audience intelligence is built from verified golf behavior, not broad assumptions or purchased audience models.</p>
         </Fade>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-14">
@@ -49,19 +50,19 @@ export function S10_DataDifference({ partner }: { partner: PartnerData }) {
           ))}
         </div>
 
-        {/* Enlarged comparison table */}
+        {/* Enlarged comparison table with GolfN logo */}
         <Fade delay={0.25}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
-            <div className="grid grid-cols-3 gap-6 px-8 md:px-10 py-6 border-b border-[#2a3347]">
+            <div className="grid grid-cols-[1fr_1.5fr_1.5fr] gap-6 px-8 md:px-12 py-7 border-b border-[#2a3347] items-center">
               <span></span>
-              <span className="text-lg md:text-xl font-mono tracking-wider font-bold text-[#00ff9d]">GOLFN</span>
+              <span><img src={images.logo} alt="GolfN" className="h-7 md:h-9 w-auto" /></span>
               <span className="text-lg md:text-xl font-mono tracking-wider text-[#6b7280]">BROAD MEDIA</span>
             </div>
             {differentiators.map((d, i) => (
-              <div key={d.label} className={`grid grid-cols-3 gap-6 px-8 md:px-10 py-6 md:py-7 ${i < differentiators.length - 1 ? 'border-b border-[#2a3347]/50' : ''} hover:bg-[#1f2538] transition-colors`}>
+              <div key={d.label} className={`grid grid-cols-[1fr_1.5fr_1.5fr] gap-6 px-8 md:px-12 py-7 md:py-8 ${i < differentiators.length - 1 ? 'border-b border-[#2a3347]/50' : ''} hover:bg-[#1f2538] transition-colors`}>
                 <span className="text-lg md:text-xl font-semibold text-[#d1d5db]">{d.label}</span>
-                <span className="text-lg md:text-xl font-medium text-[#00ff9d]">{d.golfn}</span>
-                <span className="text-lg text-[#6b7280]">{d.broad}</span>
+                <span className="text-lg md:text-xl font-medium text-[#00ff9d] leading-7">{d.golfn}</span>
+                <span className="text-lg md:text-xl text-[#6b7280] leading-7">{d.broad}</span>
               </div>
             ))}
           </div>
