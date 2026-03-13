@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck } from 'lucide-react'
+import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Share2 } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { Fade } from './Fade'
 
@@ -26,14 +26,15 @@ const baseIncludes = [
   'Full distribution setup',
   '30-day free follow-up',
   'Standard creative revisions & support during launch',
+  'Partner social co-promotion (you share the sweepstakes, driving new GolfN downloads)',
 ]
 
 const addOns = [
   {
     title: 'Executive / Founder Endorsement',
-    price: '+$1,500',
-    desc: 'Produce + embed 10-15s video in sweepstakes pre-roll and app touchpoints',
-    value: 'Builds trust & storytelling, lifts entries 25-40%',
+    price: '+$2,500',
+    desc: 'Produce + embed 30-45s founder video in sweepstakes pre-roll and app touchpoints',
+    value: 'Highest trust signal, lifts entries 25-40%',
     Icon: UserCheck,
   },
   {
@@ -105,7 +106,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </p>
         </Fade>
 
-        {/* ── A La Carte Startup Fee ── */}
+        {/* A La Carte Startup Fee */}
         <Fade delay={0.06}>
           <div className="mb-12">
             <div className="flex items-center gap-2.5 mb-6">
