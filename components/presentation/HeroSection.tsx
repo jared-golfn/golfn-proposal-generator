@@ -249,7 +249,7 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-[#2A2A2C]/50">
-                  <p className="text-xs md:text-sm text-[#A1A1AA] leading-relaxed">All-time unique verified golfers. The UK is GolfN&apos;s <span className="text-white font-semibold">#2 international market</span>. Australia and Canada are top 5 globally.</p>
+                  <p className="text-xs md:text-sm text-[#A1A1AA] leading-relaxed">All-time unique verified golfers. Australia, UK, and South Africa form a <span className="text-white font-semibold">tightly clustered top 3</span> outside the US &mdash; all within 2% of each other and growing.</p>
                 </div>
               </div>
             </div>
