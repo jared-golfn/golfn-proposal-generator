@@ -1,6 +1,6 @@
 'use client'
 
-import { Flag, Mail, Smartphone, Image, Share2, BookOpen, DollarSign, Layers } from 'lucide-react'
+import { Flag, DollarSign, Layers, Video } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { galleryAssets } from '@/lib/images'
 import { Fade } from './Fade'
@@ -22,6 +22,7 @@ const golfnHandles = [
   'Full creative production (emails, in-app messages, push notifications, banners, social co-promotion, blog post with SEO backlink)',
   'Campaign distribution across all channels',
   'Asset creation and approval workflow',
+  'Partner promo video production for campaign kickoff',
 ]
 
 export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
@@ -31,8 +32,9 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
     { id: 'inapp', label: 'In-App', images: galleryAssets.inApp },
     { id: 'banners', label: 'Banners', images: galleryAssets.banners },
     { id: 'social', label: 'Social Co-Promo', images: galleryAssets.social },
-    { id: 'blog', label: 'Blog', images: galleryAssets.blog },
-  ]
+    { id: 'video', label: 'Promo Video', images: galleryAssets.video },
+    { id: 'blog', label: 'Blog', images: galleryAssets.blog, fullWidth: true },
+  ] as const
 
   return (
     <section className="py-20 md:py-28">
@@ -49,7 +51,7 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
           </p>
         </Fade>
 
-        {/* Prize Budget + Startup Fee */}
+        {/* Prize Budget */}
         <Fade delay={0.05}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-6 md:p-8 mb-6 flex items-start gap-4">
             <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
@@ -64,15 +66,16 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
+        {/* Startup Fee */}
         <Fade delay={0.07}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 md:p-8 mb-10 flex items-start gap-4">
             <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5">
               <Layers className="w-5 h-5 text-[#00ff9d]" />
             </div>
             <div>
-              <h4 className="text-lg font-bold text-white mb-1">Startup Fee: <span className="text-[#00ff9d]">$2,500 &ndash; $7,500</span> <span className="text-[#6b7280] text-base font-normal">(one-time)</span></h4>
+              <h4 className="text-lg font-bold text-white mb-1">Startup Fee: <span className="text-[#00ff9d]">$2,500 \u2013 $7,500</span> <span className="text-[#6b7280] text-base font-normal">(one-time)</span></h4>
               <p className="text-base text-[#d1d5db] leading-8">
-                Covers strategy, creative production, campaign setup, and full launch execution. GolfN creates <strong className="text-white">all</strong> assets: emails, in-app messages, banners, social co-promo, blog with backlink. Tiered by extras (executive endorsement, custom creative, AI lookalike, priority support). <strong className="text-white">30 days post-campaign follow-up included free.</strong>
+                Covers strategy, creative production, campaign setup, and full launch execution. GolfN creates <strong className="text-white">all</strong> assets: emails, in-app messages, banners, social co-promo, blog with backlink, and promo video. Tiered by extras (executive endorsement, custom creative, AI lookalike, priority support). <strong className="text-white">30 days post-campaign follow-up included free.</strong>
               </p>
             </div>
           </div>
@@ -121,21 +124,23 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
 
         {/* Why the launch matters */}
         <Fade delay={0.25}>
-          <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8 mb-14">
-            <h4 className="text-lg font-semibold text-white mb-2">Why the launch matters</h4>
-            <p className="text-base md:text-lg text-[#d1d5db] leading-9">This creates the first wave of verified behavioral signal and sets up the strongest possible cohort. Everything that follows \u2014 activation, commerce, education, re-engagement \u2014 is built on top of this foundation.</p>
+          <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-2xl p-8 md:p-10 mb-14">
+            <h4 className="text-xl md:text-2xl font-bold text-white mb-3">This is your chance to showcase your brand and develop your cohort of users</h4>
+            <p className="text-lg md:text-xl text-[#d1d5db] leading-9">The launch creates the first wave of verified behavioral signal and sets up the strongest possible cohort. Everything that follows \u2014 activation, commerce, education, re-engagement \u2014 is built on this foundation. A strong launch with a compelling prize drives higher participation, better qualification signal, and a bigger, more engaged cohort from day one.</p>
           </div>
         </Fade>
 
+        {/* Campaign Examples Gallery */}
         <Fade delay={0.3}>
-          <p className="text-base font-mono tracking-wider uppercase mb-5 text-[#00ff9d]">Campaign Examples</p>
-          {/* GALVIN GREEN: Sweepstakes tab shows GORE-TEX jacket prize mockups */}
-          {/* GALVIN GREEN: Email tab shows "Never Compromise" headline email designs */}
-          {/* GALVIN GREEN: In-App tab shows GORE-TEX layering product feature cards */}
-          {/* GALVIN GREEN: Banners tab shows seasonal capsule collection banners */}
-          {/* GALVIN GREEN: Social tab shows Swedish-design co-promo visuals */}
-          {/* GALVIN GREEN: Blog tab shows rain jacket editorial photography */}
-          <GalleryTabs tabs={tabs} accentColor="#00ff9d" />
+          <div className="bg-[#1a1f2e]/50 border border-[#2a3347] rounded-2xl p-6 md:p-10">
+            <div className="flex items-center gap-3 mb-6">
+              <Video className="w-6 h-6 text-[#00ff9d]" />
+              <h3 className="text-2xl md:text-3xl font-bold text-white">Campaign Examples</h3>
+            </div>
+            <p className="text-lg text-[#9ca3af] mb-8 max-w-3xl leading-8">Every launch includes multi-channel creative production. Here are real examples from recent partner campaigns across every distribution surface.</p>
+            {/* GALVIN GREEN: Replace with GORE-TEX jacket prize mockups, "Never Compromise" emails, layering product cards, seasonal capsule banners, Swedish-design co-promo visuals, rain jacket editorial */}
+            <GalleryTabs tabs={tabs} accentColor="#00ff9d" />
+          </div>
         </Fade>
       </div>
     </section>

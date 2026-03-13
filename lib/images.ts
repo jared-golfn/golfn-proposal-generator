@@ -40,12 +40,19 @@ export const images = {
   // Targeted campaign examples
   cobraOptmTargeted: 'https://cdn.sanity.io/images/e3wja34v/production/f5dc22cfdf19455b88c9f2bc61df8c7df337adc9-1500x3248.png',
 
-  // Social proof / UGC
+  // Social co-promo
   socialProof1: 'https://cdn.sanity.io/images/e3wja34v/production/dad0d094bfd4086f2537b3202feac3690bf8d9ec-6400x3600.png',
   socialProof2: 'https://cdn.sanity.io/images/e3wja34v/production/32613af5fe166425577aebdb9e167a2c26fe4fd2-4096x7280.png',
   socialProof3: 'https://cdn.sanity.io/images/e3wja34v/production/2cf4f4b3a52d254435dcdabde9e4c109e24969f0-786x922.png',
   socialProof4: 'https://cdn.sanity.io/images/e3wja34v/production/6cfb1ea1d9ebb830f74f6419cf133dfb5a081d5b-898x850.png',
   socialProof5: 'https://cdn.sanity.io/images/e3wja34v/production/d6acc7b8da7e55f9989e5ad1b3927ede4a96ec0f-946x770.png',
+  // Miura Instagram & X announcements
+  miuraInstagram: 'https://cdn.sanity.io/images/e3wja34v/production/1c43d141b397616439a0926f9d71e2aa4dfe53bd-1642x985.png',
+  miuraTwitter: 'https://cdn.sanity.io/images/e3wja34v/production/54d0780f91edad781f5f02ec24e1165c097157f8-611x538.png',
+
+  // Partner promo video screen grabs
+  promoVideo1: 'https://cdn.sanity.io/images/e3wja34v/production/aa9d578022e632d234bfc557dfcbe78a5c743067-1507x1143.png',
+  promoVideo2: 'https://cdn.sanity.io/images/e3wja34v/production/b81c3dacde8421cd1806ffb33c8df121a6330783-1286x1111.png',
 
   // Email campaign examples
   emailIntentFollowUp: 'https://cdn.sanity.io/images/e3wja34v/production/51d6a3937f93961fe3d32bab6b0dc74e690d5abf-2400x9616.png',
@@ -93,12 +100,16 @@ export const galleryAssets = {
     { src: images.affiliateBanner3, alt: 'Promotion banner' },
   ],
   social: [
-    { src: images.socialProof1, alt: 'Social proof' },
-    { src: images.socialProof2, alt: 'User engagement' },
-    { src: images.socialProof3, alt: 'Golfer feedback' },
+    { src: images.miuraInstagram, alt: 'Miura Instagram sweepstakes announcement' },
+    { src: images.miuraTwitter, alt: 'Miura X/Twitter sweepstakes announcement' },
+    { src: images.socialProof1, alt: 'Social co-promotion creative' },
+  ],
+  video: [
+    { src: images.promoVideo1, alt: 'Partner promo video - sweepstakes kickoff' },
+    { src: images.promoVideo2, alt: 'Partner promo video - product showcase' },
   ],
   blog: [
-    { src: images.blogEditorial, alt: 'Blog editorial example' },
+    { src: images.blogEditorial, alt: 'Campaign blog editorial with backlink' },
   ],
   pointsExchange: [
     { src: images.labPointsExchange, alt: 'LAB points exchange' },
