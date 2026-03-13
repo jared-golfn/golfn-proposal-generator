@@ -7,6 +7,9 @@ import type { PartnerData } from '@/lib/template-types'
 import { partnerScenarioOverrides } from '@/lib/partnership-paths'
 import { notFound } from 'next/navigation'
 
+// Force dynamic rendering (cookies need request-time evaluation)
+export const dynamic = 'force-dynamic'
+
 // All known partner configs
 const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
 
@@ -71,8 +74,4 @@ export default async function BrandPage({ params }: PageProps) {
 
   const partner = toPartnerData(config)
   return <TemplateClient partner={partner} />
-}
-
-export function generateStaticParams() {
-  return Object.keys(allPartners).map((slug) => ({ slug }))
 }
