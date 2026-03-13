@@ -35,7 +35,7 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
           </p>
         </Fade>
 
-        {/* STYLIZED REPORT MOCKUP – metrics + chart + recs */}
+        {/* STYLIZED REPORT MOCKUP */}
         <Fade delay={0.1}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 mb-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -116,7 +116,7 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
         <Fade delay={0.25}>
           <div className="mt-6 bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-8">
             <h4 className="text-xl font-semibold text-white mb-2">Why ongoing management exists</h4>
-            <p className="text-lg text-[#d1d5db] leading-8">The initial package includes 30 days of post-campaign follow-up. After that, ongoing management covers reporting, creative refreshes, message testing, cohort expansion, and continued program optimization.</p>
+            <p className="text-lg text-[#d1d5db] leading-8">The initial package includes 30 days of post-campaign follow-up. After that, ongoing management is billed <strong className="text-white">monthly per qualified user</strong> added to your cohort (starting at $5/user, tiering down to $1). This covers reporting, creative refreshes, message testing, cohort expansion, and continued program optimization.</p>
           </div>
         </Fade>
       </div>

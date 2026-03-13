@@ -30,14 +30,16 @@ const faqGroups = [
   { group: 'Reporting and Management', items: [
     { q: 'What reporting is included?', a: 'Monthly performance reports covering campaign metrics, cohort intelligence, progression analysis, and optimization recommendations. Plus a monthly strategy review call and raw data exports.' },
     { q: 'What is included in the first 30 days after launch?', a: 'Post-campaign follow-up, initial cohort qualification, first-wave activation across relevant channels, initial reporting, and strategic recommendations for the next phase.' },
-    { q: 'Why is there an ongoing management fee?', a: 'After the initial 30-day included period, ongoing management covers reporting, creative refreshes (up to 3 variants per message), message testing, cohort expansion, and continued program optimization.' },
+    { q: 'Why is there an ongoing management fee?', a: 'After the initial 30-day included period, ongoing management covers reporting, creative refreshes (up to 3 variants per message), message testing, cohort expansion, and continued program optimization. It is billed monthly per qualified user added to your cohort.' },
   ]},
-  { group: 'Requirements and Economics', items: [
-    { q: 'What does a brand need to provide to launch?', a: 'Prize package or offer, brand assets and guidelines, logos, product photography, product descriptions, landing pages or destinations, and a point of contact for approvals.' },
-    { q: 'Why is setup investment required?', a: 'Every program includes real upfront work: strategy, offer design, audience definition, tracking logic, campaign implementation, and the first 30 days of post-campaign follow-up.' },
+  { group: 'Pricing and Economics', items: [
+    { q: 'How does pricing work?', a: 'You provide the sweepstakes prize budget (recommended $5,000 for maximum participation and strongest cohort). GolfN handles all creative execution, distribution, asset creation, qualification, and ongoing activation. Ongoing management is billed monthly per qualified user added to your cohort (starting at $5/user, tiering down to $1).' },
+    { q: 'What does a brand need to provide to launch?', a: 'Sweepstakes prize budget (recommended $5,000), brand assets and guidelines, logos, product photography, product descriptions, landing pages or destinations, and a point of contact for approvals.' },
+    { q: 'Why is setup investment required?', a: 'Every program includes real upfront work: strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why setup investment is required before launch.' },
     { q: 'What affiliate economics are required?', a: 'Minimum 20% affiliate commission for external offer campaigns. Standard 3-5% rates are insufficient.' },
     { q: 'What wholesale requirements apply for marketplace?', a: 'Minimum 30% wholesale margin plus dropship arrangement. The brand fulfills all orders directly. GolfN holds zero inventory.' },
     { q: 'How are points billed?', a: 'Points are billed as served, invoiced net 30. No upfront bulk purchase required beyond the initial deposit. Billing scales with actual user engagement.' },
+    { q: 'Are there prepay discounts?', a: 'Yes. Quarterly prepay saves 10%, semi-annual saves 15%, and annual prepay saves 20% on ongoing management fees.' },
   ]},
 ]
 

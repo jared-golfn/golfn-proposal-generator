@@ -53,7 +53,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
         heightLeft -= pdf.internal.pageSize.getHeight()
       }
-      pdf.save(`GolfN-${partner.partnerName.replace(/\s+/g, '-')}-Partnership-Proposal.pdf`)
+      pdf.save(`GolfN-${partner.partnerName.replace(/\\s+/g, '-')}-Partnership-Proposal.pdf`)
     } catch (err) {
       console.error('PDF generation failed:', err)
     } finally {
@@ -74,28 +74,51 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         ))}
       </nav>
 
+      {/* S1: Hero */}
       <div id="top"><S01_Hero partner={partner} /></div>
       <SectionDivider />
+
+      {/* S2: Why Brands */}
       <S02_WhyBrands partner={partner} />
       <SectionDivider label="See the process" targetId="how-it-works" />
+
+      {/* S3: How It Works */}
       <S03_HowItWorks partner={partner} />
       <SectionDivider />
+
+      {/* S4: Launch Campaign */}
       <S04_LaunchCampaign partner={partner} />
       <SectionDivider />
+
+      {/* S5: Attention, Intent, Cohort */}
       <S05_QualifiedInterest partner={partner} />
       <SectionDivider />
+
+      {/* S6: Post-Campaign Activation */}
       <S06_PostCampaign partner={partner} />
       <SectionDivider />
+
+      {/* S7: Monthly Reporting */}
       <S07_MonthlyReporting partner={partner} />
-      <SectionDivider label="See partnership paths" targetId="ways-to-work" />
+      <SectionDivider />
+
+      {/* S8: What We Need (was S09) */}
+      <S09_WhatWeNeed partner={partner} />
+      <SectionDivider label="See pricing" targetId="ways-to-work" />
+
+      {/* S9: Ways to Work / Pricing (was S08) */}
       <S08_WaysToWork partner={partner} />
       <SectionDivider />
-      <S09_WhatWeNeed partner={partner} />
-      <SectionDivider />
+
+      {/* S10: Data Difference */}
       <S10_DataDifference partner={partner} />
       <SectionDivider />
+
+      {/* S11: FAQ */}
       <div id="faq-section"><S11_FAQ partner={partner} /></div>
       <SectionDivider />
+
+      {/* S12: Final CTA */}
       <S12_FinalCTA partner={partner} />
 
       <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">

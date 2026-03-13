@@ -50,7 +50,7 @@ export function S06_PostCampaign({ partner }: { partner: PartnerData }) {
         <Fade delay={0.05}>
           <div className="mb-8 bg-[#1a1f2e] border border-[#2a3347] rounded-xl px-6 py-4 flex items-start gap-3">
             <Badge label="30 Days Included" color="#00ff9d" />
-            <p className="text-base text-[#d1d5db]">30 days of post-campaign follow-up and management are included after the launch campaign closes.</p>
+            <p className="text-base text-[#d1d5db]">30 days of post-campaign follow-up and management are free after the sweepstakes closes. Ongoing activation and management move into recurring <strong className="text-white">per-qualified-user billing</strong> (starting at $5/user, tiering down to $1).</p>
           </div>
         </Fade>
 

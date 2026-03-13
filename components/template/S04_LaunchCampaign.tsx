@@ -1,6 +1,6 @@
 'use client'
 
-import { Flag, Mail, Smartphone, Image, Share2, BookOpen, Award } from 'lucide-react'
+import { Flag, Mail, Smartphone, Image, Share2, BookOpen, Award, DollarSign } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { galleryAssets } from '@/lib/images'
 import { Fade } from './Fade'
@@ -18,7 +18,12 @@ const distributionChannels = [
   'Co-Promotion on Facebook', 'Campaign blog post with backlink',
 ]
 
-const tabIcons = [Flag, Mail, Smartphone, Image, Share2, BookOpen, Award]
+const golfnHandles = [
+  'Full creative production (emails, in-app messages, push notifications, banners, social co-promotion, blog post with SEO backlink)',
+  'Campaign distribution across all channels',
+  'Asset creation and approval workflow',
+  'Executive Endorsement module (optional add-on during launch)',
+]
 
 export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
   const tabs = [
@@ -46,8 +51,36 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
           </p>
         </Fade>
 
-        <div className="space-y-3 mb-14">
+        {/* Prize Budget Callout */}
+        <Fade delay={0.05}>
+          <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-6 md:p-8 mb-10 flex items-start gap-4">
+            <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
+              <DollarSign className="w-5 h-5 text-[#00ff9d]" />
+            </div>
+            <div>
+              <h4 className="text-lg font-bold text-white mb-1">Prize Budget</h4>
+              <p className="text-base md:text-lg text-[#d1d5db] leading-8">
+                You (the brand) provide the sweepstakes prize budget (recommended <span className="text-[#00ff9d] font-semibold">$5,000</span> total for strongest participation and best cohort signal). GolfN does <strong className="text-white">all</strong> execution.
+              </p>
+            </div>
+          </div>
+        </Fade>
+
+        <div className="space-y-3 mb-10">
           <Fade delay={0.1}>
+            <Expand accentColor="#00ff9d" trigger={<span className="text-lg font-semibold text-white">What GolfN handles</span>}>
+              <ul className="pt-2 space-y-2">
+                {golfnHandles.map(item => (
+                  <li key={item} className="flex items-start gap-3 text-base text-[#d1d5db] leading-7">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-1.5 shrink-0"><path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Expand>
+          </Fade>
+
+          <Fade delay={0.12}>
             <Expand accentColor="#00ff9d" trigger={<span className="text-lg font-semibold text-white">What a launch campaign can include</span>}>
               <div className="flex flex-wrap gap-2 pt-2">
                 {campaignTypes.map(t => (
@@ -74,15 +107,25 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
           </Fade>
         </div>
 
+        {/* Why the launch matters */}
+        <Fade delay={0.25}>
+          <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8 mb-14">
+            <h4 className="text-lg font-semibold text-white mb-2">Why the launch matters</h4>
+            <p className="text-base md:text-lg text-[#d1d5db] leading-8">This creates the first wave of verified behavioral signal and sets up the strongest possible cohort. Everything that follows — activation, commerce, education, re-engagement — is built on top of this foundation.</p>
+          </div>
+        </Fade>
+
+        {/* Pricing Note */}
+        <Fade delay={0.27}>
+          <div className="bg-[#0f1217] border border-[#2a3347] rounded-xl px-6 py-4 mb-14">
+            <p className="text-base text-[#6b7280] leading-7">
+              <span className="text-[#9ca3af] font-medium">Pricing note:</span> You provide the sweepstakes prize budget (recommended $5,000). GolfN handles all creative execution, distribution, asset creation, qualification, and ongoing activation. Ongoing management is billed monthly per qualified user added to your cohort (starting at $5/user, tiering down to $1).
+            </p>
+          </div>
+        </Fade>
+
         <Fade delay={0.3}>
           <p className="text-base font-mono tracking-wider uppercase mb-5 text-[#00ff9d]">Campaign Examples</p>
-          {/* GALVIN GREEN: Replace sweepstakes with waterproof jacket prize mockups */}
-          {/* GALVIN GREEN: Replace email with "Never Compromise" headline email mockups */}
-          {/* GALVIN GREEN: Replace in-app with GORE-TEX product feature cards */}
-          {/* GALVIN GREEN: Replace banner with seasonal capsule collection banners */}
-          {/* GALVIN GREEN: Replace social with Swedish-design co-promo visuals */}
-          {/* GALVIN GREEN: Replace blog with rain jacket editorial photography */}
-          {/* GALVIN GREEN: Replace exec with founder/brand story content */}
           <GalleryTabs tabs={tabs} accentColor="#00ff9d" />
         </Fade>
       </div>

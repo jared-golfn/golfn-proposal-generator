@@ -10,9 +10,14 @@ const golfnHandles = [
 ]
 
 const partnerProvides = [
-  'Prize package or launch offer', 'Brand assets and guidelines', 'Approved logos and product photography',
-  'Product descriptions and messaging hierarchy', 'Landing pages or approved destinations', 'Affiliate terms where relevant',
-  'Wholesale terms where relevant', 'Social handles where relevant', 'Educational content where relevant', 'Approval process and contacts',
+  'Sweepstakes prize budget (recommended $5,000)',
+  'Brand assets, guidelines, logos, product photography, descriptions',
+  'Landing pages or approved destinations',
+  'Affiliate terms where relevant (20%+ commission)',
+  'Wholesale terms where relevant (30%+ margin)',
+  'Social handles where relevant',
+  'Educational content where relevant',
+  'Approval process and contacts',
 ]
 
 export function S09_WhatWeNeed({ partner }: { partner: PartnerData }) {
@@ -49,10 +54,14 @@ export function S09_WhatWeNeed({ partner }: { partner: PartnerData }) {
                 <h3 className="text-2xl md:text-3xl font-semibold text-white">Partner Provides</h3>
               </div>
               <ul className="space-y-3">
-                {partnerProvides.map((item) => (
+                {partnerProvides.map((item, i) => (
                   <li key={item} className="flex items-start gap-3 text-[#d1d5db]">
-                    <div className="w-1.5 h-1.5 rounded-full mt-2.5 shrink-0 bg-[#6b7280]" />
-                    <span className="text-lg">{item}</span>
+                    {i === 0 ? (
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-1 shrink-0"><path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    ) : (
+                      <div className="w-1.5 h-1.5 rounded-full mt-2.5 shrink-0 bg-[#6b7280]" />
+                    )}
+                    <span className={`text-lg ${i === 0 ? 'text-[#00ff9d] font-semibold' : ''}`}>{item}</span>
                   </li>
                 ))}
               </ul>
