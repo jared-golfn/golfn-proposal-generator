@@ -1,19 +1,20 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-golfn-bg: #0F0F10;
-  --color-golfn-card: #161618;
-  --color-golfn-border: #2A2A2C;
-  --color-golfn-muted: #52525B;
-  --color-golfn-green: #17A455;
+  --color-golfn-bg: #0f1217;
+  --color-golfn-card: #131619;
+  --color-golfn-border: #1e2128;
+  --color-golfn-muted: #4b5563;
+  --color-golfn-green: #00ff9d;
+  --color-golfn-green-dark: #17A455;
   --color-golfn-green-light: #8DC54A;
   --color-golfn-gold: #BFC951;
   --color-golfn-white: #FAFAFA;
-  --color-golfn-dim: #A1A1AA;
-  --color-golfn-faint: #71717A;
+  --color-golfn-dim: #9ca3af;
+  --color-golfn-faint: #6b7280;
 
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-display: 'Figtree', system-ui, sans-serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -55,57 +56,27 @@
   }
 
   body {
-    background: #0F0F10;
+    background: #0f1217;
     color: #FAFAFA;
     font-family: var(--font-body);
-    font-size: 17px;
+    font-size: 1.125rem;
     font-weight: 400;
     line-height: 1.7;
   }
 
-  @media (min-width: 768px) {
-    body {
-      font-size: 18px;
-      font-weight: 450;
-    }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
   }
 
   @media (min-width: 1440px) {
-    body {
-      font-size: 19px;
-      font-weight: 450;
-    }
+    body { font-size: 1.15rem; }
   }
-
   @media (min-width: 1920px) {
-    body {
-      font-size: 20px;
-      font-weight: 450;
-    }
-  }
-
-  @media (min-width: 2560px) {
-    body {
-      font-size: 21px;
-      font-weight: 450;
-    }
-  }
-
-  /*
-   * Brighten muted text colors on large screens.
-   * Dark bg + thin font + dim color = unreadable at distance.
-   * These overrides push gray text closer to white on big monitors.
-   */
-  @media (min-width: 1440px) {
-    .text-\[\#71717A\] { color: #8C8C94 !important; }
-    .text-\[\#8C8C8C\] { color: #A1A1A8 !important; }
-    .text-\[\#52525B\] { color: #6B6B75 !important; }
-    .text-\[\#B0B0B4\] { color: #C4C4C8 !important; }
-    .text-\[\#A1A1AA\] { color: #B8B8C0 !important; }
+    body { font-size: 1.2rem; }
   }
 
   ::selection {
-    background: color-mix(in srgb, #17A455 30%, transparent);
+    background: color-mix(in srgb, #00ff9d 25%, transparent);
   }
 }
 
@@ -114,9 +85,6 @@
 .w-content-wide { max-width: var(--content-wide); margin-left: auto; margin-right: auto; }
 .w-content-wider { max-width: var(--content-wider); margin-left: auto; margin-right: auto; }
 
-/*
- * Override hardcoded Tailwind max-widths on large screens
- */
 @media (min-width: 1440px) {
   [class*="max-w-[960px]"]  { max-width: var(--content-width) !important; }
   [class*="max-w-[1100px]"] { max-width: var(--content-wide) !important; }
@@ -125,7 +93,7 @@
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #17A455, #8DC54A);
+  background: linear-gradient(135deg, #00ff9d, #8DC54A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -133,9 +101,23 @@
 
 .accent-line {
   height: 2px;
-  background: linear-gradient(90deg, #17A455, #8DC54A);
+  background: linear-gradient(90deg, #00ff9d, #8DC54A);
+}
+
+/* Card hover lift */
+.card-lift {
+  transition: transform 300ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0,255,157,0.04);
+}
+
+/* Green glow for hero elements */
+.glow-green {
+  box-shadow: 0 0 60px rgba(0,255,157,0.08), 0 0 120px rgba(0,255,157,0.04);
 }
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2A2A2C; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #1e2128; border-radius: 2px; }

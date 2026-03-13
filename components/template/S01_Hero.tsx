@@ -17,9 +17,9 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden">
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 opacity-[0.06]" style={{ background: `radial-gradient(ellipse 70% 50% at 20% 50%, ${partner.primaryColor}, transparent)` }} />
-      <div className="absolute inset-0 opacity-[0.03]" style={{ background: `radial-gradient(ellipse 50% 40% at 80% 30%, ${partner.secondaryColor}, transparent)` }} />
+      {/* Background radial glows */}
+      <div className="absolute inset-0 opacity-[0.07]" style={{ background: `radial-gradient(ellipse 60% 50% at 15% 50%, ${partner.primaryColor}, transparent)` }} />
+      <div className="absolute inset-0 opacity-[0.04]" style={{ background: `radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)` }} />
 
       <div className="relative z-10 w-content w-full px-5 md:px-12 py-16 md:py-24">
         {/* Header bar */}
@@ -40,47 +40,92 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           )}
         </motion.div>
 
-        {/* Headline */}
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}>
-          <h1 className="font-display text-[2.75rem] md:text-[5.5rem] lg:text-[6.5rem] leading-[0.9] tracking-tight mb-8">
-            Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
-          </h1>
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+          {/* Left: Copy */}
+          <div className="lg:col-span-3">
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[2.75rem] md:text-[4.5rem] lg:text-[5.5rem] font-bold leading-[0.92] tracking-tight mb-8"
+            >
+              Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
+            </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.7 }}
-          className="text-lg md:text-xl text-[#9ca3af] max-w-2xl leading-relaxed mb-10"
-        >
-          {subtitle}
-        </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+              className="text-lg md:text-xl text-[#9ca3af] max-w-xl leading-relaxed mb-10"
+            >
+              {subtitle}
+            </motion.p>
 
-        {/* CTAs */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-4 mb-16 md:mb-20">
-          <a
-            href={`mailto:${email}?subject=Partnership%20Proposal%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`}
-            className="px-8 py-4 rounded-xl font-semibold text-base transition-all hover:scale-[1.02]"
-            style={{ background: `linear-gradient(135deg, ${partner.primaryColor}, ${partner.secondaryColor})`, color: '#0f1217' }}
+            {/* CTAs */}
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-4 mb-16">
+              <a
+                href={`mailto:${email}?subject=Partnership%20Proposal%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`}
+                className="px-8 py-4 rounded-xl font-semibold text-base transition-all hover:scale-[1.03] glow-green"
+                style={{ background: `linear-gradient(135deg, #00ff9d, ${partner.primaryColor})`, color: '#0f1217' }}
+              >
+                Request a Proposal
+              </a>
+              {partner.bookingUrl && (
+                <a href={partner.bookingUrl} target="_blank" rel="noopener" className="px-8 py-4 rounded-xl font-semibold text-base border border-[#2a2f38] text-white hover:bg-[#161a21] transition-all">
+                  Book a Walkthrough
+                </a>
+              )}
+              <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium hover:underline transition-colors text-[#00ff9d]">
+                See How It Works &darr;
+              </button>
+            </motion.div>
+          </div>
+
+          {/* Right: Hero visual composition */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, rotate: 1 }}
+            animate={{ opacity: 1, y: 0, rotate: 2 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="lg:col-span-2 flex justify-center"
           >
-            Request a Proposal
-          </a>
-          {partner.bookingUrl && (
-            <a href={partner.bookingUrl} target="_blank" rel="noopener" className="px-8 py-4 rounded-xl font-semibold text-base border border-[#2a2f38] text-white hover:bg-[#161a21] transition-all">
-              Book a Walkthrough
-            </a>
-          )}
-          <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium hover:underline transition-colors" style={{ color: partner.primaryColor }}>
-            See How It Works &darr;
-          </button>
-        </motion.div>
+            <div className="relative">
+              {/* Glow behind mockup */}
+              <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: `radial-gradient(circle, #00ff9d, ${partner.primaryColor}, transparent)` }} />
+              {/* Main device mockup */}
+              <img
+                src={images.cobraSweeps}
+                alt="Campaign creative"
+                className="relative w-52 md:w-64 lg:w-72 rounded-[24px] glow-green"
+                style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }}
+              />
+              {/* Floating offer card */}
+              <motion.img
+                src={images.srixonAd1}
+                alt="In-app campaign"
+                className="absolute -left-12 md:-left-16 top-1/3 w-28 md:w-36 rounded-xl shadow-2xl border border-[#1e2128]"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+                style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}
+              />
+              {/* Floating cohort badge */}
+              <motion.div
+                className="absolute -right-6 md:-right-10 bottom-12 bg-[#131619] border border-[#2a2f38] rounded-xl px-4 py-3 shadow-xl"
+                animate={{ y: [0, 6, 0] }}
+                transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 1 }}
+              >
+                <p className="text-[10px] font-mono text-[#6b7280] uppercase tracking-wider">Qualified Cohort</p>
+                <p className="text-lg font-bold text-[#00ff9d]">2,847 golfers</p>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
 
         {/* KPI strip */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} className="flex flex-wrap gap-8 md:gap-14">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-8 flex flex-wrap gap-8 md:gap-14">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
-              <span className="text-2xl md:text-3xl font-bold font-mono" style={{ color: partner.primaryColor }}>{kpi.value}</span>
-              <span className="block text-xs md:text-sm text-[#6b7280] mt-1">{kpi.label}</span>
+              <span className="text-2xl md:text-3xl font-bold font-mono text-[#00ff9d]">{kpi.value}</span>
+              <span className="block text-sm text-[#6b7280] mt-1">{kpi.label}</span>
             </div>
           ))}
         </motion.div>
