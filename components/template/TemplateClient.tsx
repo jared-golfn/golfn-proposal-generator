@@ -28,7 +28,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
     <main className="relative bg-[#0f1217]">
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-      {/* Minimal right-rail nav */}
       <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5">
         {navSections.map((s) => (
           <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-4 justify-end">
@@ -38,46 +37,31 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         ))}
       </nav>
 
-      <div id="top">
-        <S01_Hero partner={partner} />
-      </div>
-
+      <div id="top"><S01_Hero partner={partner} /></div>
       <SectionDivider />
       <S02_WhyBrands partner={partner} />
-
       <SectionDivider label="See the process" targetId="how-it-works" />
       <S03_HowItWorks partner={partner} />
-
       <SectionDivider />
       <S04_LaunchCampaign partner={partner} />
-
       <SectionDivider />
       <S05_QualifiedInterest partner={partner} />
-
       <SectionDivider />
       <S06_PostCampaign partner={partner} />
-
       <SectionDivider />
       <S07_MonthlyReporting partner={partner} />
-
       <SectionDivider label="See partnership paths" targetId="ways-to-work" />
       <S08_WaysToWork partner={partner} />
-
       <SectionDivider />
       <S09_WhatWeNeed partner={partner} />
-
       <SectionDivider />
       <S10_DataDifference partner={partner} />
-
       <SectionDivider />
-      <div id="faq-section">
-        <S11_FAQ partner={partner} />
-      </div>
-
+      <div id="faq-section"><S11_FAQ partner={partner} /></div>
       <SectionDivider />
       <S12_FinalCTA partner={partner} />
 
-      <footer className="max-w-7xl mx-auto px-5 md:px-12 py-14 md:py-20 text-center border-t border-[#2a3347]">
+      <footer className="max-w-7xl mx-auto px-6 md:px-12 py-14 md:py-20 text-center border-t border-[#2a3347]">
         <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
         <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
         <p className="text-[#2a3347] text-sm mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>

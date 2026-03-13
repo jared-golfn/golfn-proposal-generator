@@ -1,5 +1,6 @@
 'use client'
 
+import { Send } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { images } from '@/lib/images'
 import { Fade } from './Fade'
@@ -9,7 +10,7 @@ export function S12_FinalCTA({ partner }: { partner: PartnerData }) {
 
   return (
     <section className="py-28 md:py-40">
-      <div className="max-w-7xl mx-auto px-5 md:px-12 text-center">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
         <Fade>
           <img src={images.logo} alt="GolfN" className="h-16 md:h-24 w-auto mx-auto mb-12 opacity-80" />
         </Fade>
@@ -30,7 +31,8 @@ export function S12_FinalCTA({ partner }: { partner: PartnerData }) {
               className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-bold text-lg md:text-xl transition-all hover:scale-[1.03] glow-green"
               style={{ background: 'linear-gradient(135deg, #00ff9d, #17A455)', color: '#0f1217' }}
             >
-              Request a Proposal &rarr;
+              <Send className="w-5 h-5" />
+              Request a Proposal
             </a>
             {partner.bookingUrl && (
               <a
