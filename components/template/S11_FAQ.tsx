@@ -50,10 +50,10 @@ const faqGroups = [
     items: [
       { q: 'What does a brand need to provide to launch?', a: 'Prize package or offer, brand assets and guidelines, logos, product photography, product descriptions, landing pages or destinations, and a point of contact for approvals.' },
       { q: 'Why is setup investment required?', a: 'Every program includes real upfront work: strategy, offer design, audience definition, tracking logic, campaign implementation, and the first 30 days of post-campaign follow-up. Setup investment ensures proper program architecture.' },
-      { q: 'What affiliate economics are required for external offer campaigns?', a: 'Minimum 20% affiliate commission. Standard 3-5% rates are insufficient. The margin supports meaningful points-back incentives for users and working margin for GolfN activation costs.' },
-      { q: 'What wholesale requirements apply for marketplace placement?', a: 'Minimum 30% wholesale margin plus dropship arrangement. The brand fulfills all orders directly. GolfN holds zero inventory.' },
+      { q: 'What affiliate economics are required?', a: 'Minimum 20% affiliate commission for external offer campaigns. Standard 3-5% rates are insufficient. The margin supports points-back incentives and working margin for GolfN activation costs.' },
+      { q: 'What wholesale requirements apply for marketplace?', a: 'Minimum 30% wholesale margin plus dropship arrangement. The brand fulfills all orders directly. GolfN holds zero inventory.' },
       { q: 'How are rewards funded in Learn & Earn?', a: 'Rewards are vendor-funded. The partner deposits points value upfront. When points are depleted, the campaign pauses until re-filled. Points are billed based on actual points served.' },
-      { q: 'How are points billed?', a: 'Points are billed as served, invoiced net 30. There is no upfront bulk purchase required beyond the initial deposit. Billing scales with actual user engagement.' },
+      { q: 'How are points billed?', a: 'Points are billed as served, invoiced net 30. No upfront bulk purchase required beyond the initial deposit. Billing scales with actual user engagement.' },
     ],
   },
 ]
@@ -62,21 +62,21 @@ export function S11_FAQ({ partner }: { partner: PartnerData }) {
   const customFAQ = (partner.customFAQ || []).map(f => ({ q: f.question, a: f.answer }))
 
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-24 md:py-32">
       <div className="w-content px-5 md:px-12">
         <Fade>
-          <p className="text-xs font-mono tracking-[0.2em] uppercase mb-4" style={{ color: partner.primaryColor }}>FAQ</p>
-          <h2 className="font-display text-3xl md:text-5xl leading-[0.95] mb-12">Frequently asked<br /><span className="text-gradient">questions</span></h2>
+          <p className="text-sm font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">FAQ</p>
+          <h2 className="text-3xl md:text-[3.5rem] font-bold leading-[0.95] mb-14">Frequently asked<br /><span className="text-gradient">questions</span></h2>
         </Fade>
 
         <div className="space-y-10">
           {faqGroups.map((group, gi) => (
             <Fade key={group.group} delay={0.05 * gi}>
               <div>
-                <h3 className="text-sm font-mono tracking-[0.15em] uppercase mb-4" style={{ color: partner.primaryColor }}>{group.group}</h3>
+                <h3 className="text-sm font-mono tracking-[0.15em] uppercase mb-4 text-[#00ff9d]">{group.group}</h3>
                 <div className="space-y-2">
                   {group.items.map((faq, i) => (
-                    <Expand key={i} accentColor={partner.primaryColor} trigger={<span className="text-base font-semibold text-white">{faq.q}</span>}>
+                    <Expand key={i} accentColor="#00ff9d" trigger={<span className="text-base font-semibold text-white">{faq.q}</span>}>
                       <p className="text-base text-[#d1d5db] leading-relaxed pt-1">{faq.a}</p>
                     </Expand>
                   ))}
@@ -85,14 +85,13 @@ export function S11_FAQ({ partner }: { partner: PartnerData }) {
             </Fade>
           ))}
 
-          {/* Partner custom FAQ */}
           {customFAQ.length > 0 && (
             <Fade delay={0.3}>
               <div>
-                <h3 className="text-sm font-mono tracking-[0.15em] uppercase mb-4" style={{ color: partner.primaryColor }}>Partner-Specific</h3>
+                <h3 className="text-sm font-mono tracking-[0.15em] uppercase mb-4 text-[#00ff9d]">Partner-Specific</h3>
                 <div className="space-y-2">
                   {customFAQ.map((faq, i) => (
-                    <Expand key={i} accentColor={partner.primaryColor} trigger={<span className="text-base font-semibold text-white">{faq.q}</span>}>
+                    <Expand key={i} accentColor="#00ff9d" trigger={<span className="text-base font-semibold text-white">{faq.q}</span>}>
                       <p className="text-base text-[#d1d5db] leading-relaxed pt-1">{faq.a}</p>
                     </Expand>
                   ))}
