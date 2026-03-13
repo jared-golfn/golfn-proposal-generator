@@ -89,7 +89,7 @@ export function PasswordGate({ slug, partnerName }: { slug: string; partnerName:
         </form>
 
         <p className="text-center text-sm text-[#4b5563] mt-8">
-          Confidential document. Contact <a href="mailto:jared@golfn.com" className="text-[#00ff9d] hover:underline">jared@golfn.com</a> for access.
+          Confidential document. Reach out to Jared for access.
         </p>
       </div>
     </div>
