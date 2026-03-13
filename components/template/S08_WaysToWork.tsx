@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Target, TrendingDown, Zap, Calculator, DollarSign } from 'lucide-react'
+import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { Fade } from './Fade'
 
@@ -19,11 +19,44 @@ const prepayOptions = [
   { term: '12 months', discount: '22% off', factor: 0.78 },
 ]
 
-const startupTiers = [
-  { label: 'Standard', range: '$2,500', desc: 'Strategy, creative, campaign setup, 30-day follow-up' },
-  { label: '+ Executive Endorsement', range: '$4,000', desc: 'Adds founder/athlete content module' },
-  { label: '+ Custom Creative + AI Lookalike', range: '$5,500', desc: 'Advanced creative + AI audience expansion' },
-  { label: 'Full Suite + Priority Support', range: '$7,500', desc: 'Everything above + dedicated account manager' },
+const baseIncludes = [
+  'Strategy session + campaign brief',
+  'Portal setup & brand onboarding',
+  'Basic creative templates',
+  'Full distribution setup',
+  '30-day free follow-up',
+  'Standard creative revisions & support during launch',
+]
+
+const addOns = [
+  {
+    title: 'Executive / Founder Endorsement',
+    price: '+$1,500',
+    desc: 'Produce + embed 10-15s video in sweepstakes pre-roll and app touchpoints',
+    value: 'Builds trust & storytelling, lifts entries 25-40%',
+    Icon: UserCheck,
+  },
+  {
+    title: 'Custom Creative Package',
+    price: '+$1,500',
+    desc: 'Full custom production: 3-5 variant emails/in-app/banners/social + blog draft with backlink',
+    value: 'Higher engagement than templates',
+    Icon: Sparkles,
+  },
+  {
+    title: 'Social Video Takeover',
+    price: '+$1,500',
+    desc: 'Brandon creates 15-30s social video pushed on GolfN channels + in-app',
+    value: 'Drives external traffic & virality',
+    Icon: Video,
+  },
+  {
+    title: 'In-App Banner Network Takeover',
+    price: '+$1,000 - $2,000',
+    desc: 'Rotating/persistent banners throughout app experience during campaign',
+    value: 'Extends visibility beyond sweepstakes',
+    Icon: LayoutGrid,
+  },
 ]
 
 function calcBuckets(users: number) {
@@ -72,24 +105,59 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </p>
         </Fade>
 
-        {/* Startup Fee */}
+        {/* ── A La Carte Startup Fee ── */}
         <Fade delay={0.06}>
           <div className="mb-12">
-            <div className="flex items-center gap-2.5 mb-5">
+            <div className="flex items-center gap-2.5 mb-6">
               <DollarSign className="w-5 h-5 text-[#00ff9d]" />
-              <h3 className="text-2xl md:text-3xl font-semibold text-white">One-Time Startup Fee</h3>
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">One-Time Startup Fee: Starts at $2,500&nbsp;&mdash;&nbsp;Add What You Want</h3>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {startupTiers.map((t, i) => (
-                <div key={t.label} className={`bg-[#1a1f2e] border rounded-xl p-5 transition-all hover:border-[#00ff9d]/50 hover:scale-[1.02] duration-300 ${i === 0 ? 'border-[#00ff9d]/40' : 'border-[#2a3347]'}`}>
-                  {i === 0 && <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217] mb-2 inline-block">STARTS AT</span>}
-                  <p className="text-2xl font-mono font-bold text-[#00ff9d] mb-1">{t.range}</p>
-                  <p className="text-sm font-semibold text-white mb-1">{t.label}</p>
-                  <p className="text-sm text-[#6b7280]">{t.desc}</p>
+
+            {/* Base Card */}
+            <div className="bg-[#1a1f2e] border-2 border-[#00ff9d]/40 rounded-2xl p-8 mb-6">
+              <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+                <div>
+                  <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217] mr-3">BASE</span>
+                  <span className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">$2,500</span>
+                  <span className="text-base text-[#6b7280] ml-2">one-time</span>
+                </div>
+              </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5">
+                {baseIncludes.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-[#d1d5db]">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-1 shrink-0"><path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    <span className="text-base">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Add-Ons Grid */}
+            <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-4 flex items-center gap-2"><Plus className="w-4 h-4 text-[#00ff9d]" /> Add-Ons</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              {addOns.map((a) => (
+                <div key={a.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <a.Icon className="w-4.5 h-4.5 text-[#00ff9d]" />
+                    </div>
+                    <div>
+                      <h4 className="text-base font-bold text-white leading-snug">{a.title}</h4>
+                      <p className="text-lg font-mono font-bold text-[#00ff9d] mt-0.5">{a.price}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-[#9ca3af] leading-6 mb-2">{a.desc}</p>
+                  <p className="text-sm text-[#00ff9d]/80 italic">{a.value}</p>
                 </div>
               ))}
             </div>
-            <p className="text-base text-[#6b7280] mt-3">Launch campaign execution is <strong className="text-[#9ca3af]">included</strong> in startup. GolfN creates all assets: emails, in-app messages, banners, social co-promo, blog with backlink. 30 days post-campaign follow-up included free.</p>
+
+            {/* A la carte callout */}
+            <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-6">
+              <p className="text-base md:text-lg text-[#d1d5db] leading-8">
+                Build your launch exactly how you want it. Start at <span className="text-[#00ff9d] font-semibold">$2,500</span> and add only the extras that drive results. <strong className="text-white">For your first campaign, we'll include one add-on free to prove the impact.</strong>
+              </p>
+            </div>
           </div>
         </Fade>
 
@@ -245,7 +313,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
         {/* Setup Band */}
         <Fade delay={0.25}>
           <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8">
-            <p className="text-lg text-[#d1d5db] leading-9"><strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why a one-time startup fee ($2,500&ndash;$7,500) is required before launch.</p>
+            <p className="text-lg text-[#d1d5db] leading-9"><strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why a one-time startup fee (starts at $2,500) is required before launch.</p>
           </div>
         </Fade>
 
