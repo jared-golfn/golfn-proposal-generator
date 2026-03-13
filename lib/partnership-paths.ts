@@ -40,8 +40,8 @@ export interface ScenarioOverride {
 export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, ScenarioOverride>>> = {
   'galvin-green': {
     pilot: {
-      title: 'Masters Capsule Collection Launch',
-      description: 'A limited-edition Masters-inspired capsule drop promoted through a sweepstakes that introduces Galvin Green to golfers who don\u2019t yet know the brand. Entries drive awareness, post-sweep follow-up drives education on the multi-layer system, and affiliate-tracked links convert interest into purchases at premium price points.',
+      title: 'Masters Capsule Collection \u2014 Exclusive Drop Activation',
+      description: 'A limited-edition Masters-inspired capsule promoted through an exclusive early-access activation that introduces Galvin Green to golfers who don\u2019t yet know the brand. Featured placement and Learn & Earn modules educate golfers on the multi-layer system, while affiliate-tracked links convert interest into purchases at premium price points. No discounting, no competitions \u2014 just premium brand exposure to the right audience.',
     },
     growth: {
       title: 'Seasonal Outerwear Awareness & Education Campaign',
@@ -54,7 +54,7 @@ export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, Sce
   },
   'wilson-golf': {
     pilot: {
-      title: 'New Product Launch Sweepstakes',
+      title: 'New Product Launch Activation',
       description: 'A launch activation for a new Wilson product line \u2014 sweepstakes-driven awareness introduces the product, then post-sweep campaigns target golfers whose equipment profiles and handicap range make them ideal upgrade candidates. Affiliate-tracked links drive conversion.',
     },
     growth: {
@@ -69,7 +69,7 @@ export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, Sce
   'motocaddy': {
     pilot: {
       title: 'Walker Identification & Awareness Campaign',
-      description: 'GolfN identifies every golfer in the ecosystem who walks \u2014 the only platform that can do this. A targeted sweepstakes introduces Motorcaddy to verified walkers, followed by affiliate-tracked conversion at a $2,000+ price point with strong commission.',
+      description: 'GolfN identifies every golfer in the ecosystem who walks \u2014 the only platform that can do this. A targeted awareness activation introduces Motorcaddy to verified walkers, followed by affiliate-tracked conversion at a $2,000+ price point with strong commission.',
     },
     growth: {
       title: 'Walk-to-Ride Conversion Program',
@@ -83,7 +83,7 @@ export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, Sce
   'sports-impact': {
     pilot: {
       title: 'Multi-Brand Portfolio Pilot',
-      description: 'Launch all three Sports Impact brands into GolfN simultaneously with shared infrastructure and consolidated pricing. Each brand gets a tailored sweepstakes activation \u2014 Masters capsule drop for Galvin Green, product launch for Wilson, walker-targeted awareness for Motorcaddy \u2014 with shared audience intelligence and reporting.',
+      description: 'Launch all three Sports Impact brands into GolfN simultaneously with shared infrastructure and consolidated pricing. Each brand gets a tailored activation \u2014 exclusive capsule drop awareness for Galvin Green, product launch for Wilson, walker-targeted awareness for Motorcaddy \u2014 with shared audience intelligence and reporting.',
     },
     growth: {
       title: 'Portfolio Growth Program',
