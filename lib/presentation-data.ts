@@ -49,6 +49,7 @@ export const partners: Record<string, PartnerConfig> = {
   'template': {
     slug: 'template',
     partnerName: '[Brand Name]',
+    password: 'golfnpartners',
     primaryColor: '#17A455',
     secondaryColor: '#8DC54A',
     productCategory: '[Brand Category]',
@@ -140,6 +141,7 @@ export const partners: Record<string, PartnerConfig> = {
   'wilson-golf': {
     slug: 'wilson-golf',
     partnerName: 'Wilson Golf',
+    password: 'wilson2026',
     logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/dea5a3da06394dc9f1d779c94d3d75e847ba623f-807x200.svg',
     primaryColor: '#C41E3A',
     secondaryColor: '#E8344E',
@@ -154,6 +156,7 @@ export const partners: Record<string, PartnerConfig> = {
   'motocaddy': {
     slug: 'motocaddy',
     partnerName: 'Motorcaddy',
+    password: 'motocaddy2026',
     logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
     primaryColor: '#0066CC',
     secondaryColor: '#3399FF',
@@ -168,6 +171,7 @@ export const partners: Record<string, PartnerConfig> = {
   demo: {
     slug: 'demo',
     partnerName: 'Your Brand',
+    password: 'golfnpartners',
     primaryColor: '#17A455',
     secondaryColor: '#8DC54A',
     productCategory: 'Golf Products',
