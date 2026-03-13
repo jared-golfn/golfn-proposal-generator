@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Share2 } from 'lucide-react'
+import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { Fade } from './Fade'
 
@@ -29,14 +29,7 @@ const baseIncludes = [
   'Partner social co-promotion (you share the sweepstakes, driving new GolfN downloads)',
 ]
 
-const addOns = [
-  {
-    title: 'Executive / Founder Endorsement',
-    price: '+$2,500',
-    desc: 'Produce + embed 30-45s founder video in sweepstakes pre-roll and app touchpoints',
-    value: 'Highest trust signal, lifts entries 25-40%',
-    Icon: UserCheck,
-  },
+const launchAddOns = [
   {
     title: 'Custom Creative Package',
     price: '+$1,500',
@@ -59,6 +52,14 @@ const addOns = [
     Icon: LayoutGrid,
   },
 ]
+
+const premiumAddOn = {
+  title: 'Executive / Founder Endorsement',
+  price: '+$2,500',
+  desc: 'Produce + embed 30-45s founder video in sweepstakes pre-roll and app touchpoints',
+  value: 'Highest trust signal, lifts entries 25-40%',
+  Icon: UserCheck,
+}
 
 function calcBuckets(users: number) {
   const buckets: { tierLabel: string; usersInBucket: number; rate: number; subtotal: number }[] = []
@@ -115,7 +116,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
             </div>
 
             {/* Base Card */}
-            <div className="bg-[#1a1f2e] border-2 border-[#00ff9d]/40 rounded-2xl p-8 mb-6">
+            <div className="bg-[#1a1f2e] border-2 border-[#00ff9d]/40 rounded-2xl p-8 mb-8">
               <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
                 <div>
                   <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217] mr-3">BASE</span>
@@ -133,30 +134,59 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               </ul>
             </div>
 
-            {/* Add-Ons Grid */}
-            <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-4 flex items-center gap-2"><Plus className="w-4 h-4 text-[#00ff9d]" /> Add-Ons</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-              {addOns.map((a) => (
-                <div key={a.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-9 h-9 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <a.Icon className="w-4.5 h-4.5 text-[#00ff9d]" />
+            {/* Launch Add-Ons (Tier 1) - one free with first campaign */}
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Plus className="w-4 h-4 text-[#00ff9d]" />
+                <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280]">Launch Add-Ons</p>
+                <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217] ml-2">1 FREE WITH FIRST CAMPAIGN</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {launchAddOns.map((a) => (
+                  <div key={a.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-9 h-9 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <a.Icon className="w-4.5 h-4.5 text-[#00ff9d]" />
+                      </div>
+                      <div>
+                        <h4 className="text-base font-bold text-white leading-snug">{a.title}</h4>
+                        <p className="text-lg font-mono font-bold text-[#00ff9d] mt-0.5">{a.price}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-base font-bold text-white leading-snug">{a.title}</h4>
-                      <p className="text-lg font-mono font-bold text-[#00ff9d] mt-0.5">{a.price}</p>
-                    </div>
+                    <p className="text-sm text-[#9ca3af] leading-6 mb-2">{a.desc}</p>
+                    <p className="text-sm text-[#00ff9d]/80 italic">{a.value}</p>
                   </div>
-                  <p className="text-sm text-[#9ca3af] leading-6 mb-2">{a.desc}</p>
-                  <p className="text-sm text-[#00ff9d]/80 italic">{a.value}</p>
+                ))}
+              </div>
+            </div>
+
+            {/* Premium Add-On (Tier 2) - never free */}
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Star className="w-4 h-4 text-[#00ff9d]" />
+                <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280]">Premium Add-On</p>
+              </div>
+              <div className="bg-[#1a1f2e] border border-[#00ff9d]/30 rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <premiumAddOn.Icon className="w-5 h-5 text-[#00ff9d]" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <h4 className="text-lg font-bold text-white">{premiumAddOn.title}</h4>
+                      <span className="text-xl font-mono font-bold text-[#00ff9d]">{premiumAddOn.price}</span>
+                    </div>
+                    <p className="text-base text-[#9ca3af] leading-7 mt-1">{premiumAddOn.desc}</p>
+                    <p className="text-sm text-[#00ff9d]/80 italic mt-1">{premiumAddOn.value}</p>
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
 
             {/* A la carte callout */}
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-6">
               <p className="text-base md:text-lg text-[#d1d5db] leading-8">
-                Build your launch exactly how you want it. Start at <span className="text-[#00ff9d] font-semibold">$2,500</span> and add only the extras that drive results. <strong className="text-white">For your first campaign, we'll include one add-on free to prove the impact.</strong>
+                Build your launch exactly how you want it. Start at <span className="text-[#00ff9d] font-semibold">$2,500</span> and add only the extras that drive results. <strong className="text-white">For your first campaign, we'll include one Launch Add-On free to prove the impact.</strong>
               </p>
             </div>
           </div>
