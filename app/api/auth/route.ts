@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { partners } from '@/lib/presentation-data'
+import { partners, type PartnerConfig } from '@/lib/presentation-data'
 import { wilsonMotocaddyConfig } from '@/lib/wilson-motocaddy-config'
 
-const allPartners = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
+const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
 
 export async function POST(request: NextRequest) {
   try {
-    const { slug, password } = await request.json()
+    const body = await request.json() as { slug?: string; password?: string }
+    const { slug, password } = body
 
     if (!slug || !password) {
       return NextResponse.json({ error: 'Missing slug or password' }, { status: 400 })
@@ -22,7 +23,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Password correct -- set an httpOnly cookie
-    // Cookie value is a simple hash of slug + password so it can't be reused across proposals
     const token = Buffer.from(`${slug}:${password}:${Date.now()}`).toString('base64')
     const response = NextResponse.json({ success: true })
     response.cookies.set(`golfn-auth-${slug}`, token, {
