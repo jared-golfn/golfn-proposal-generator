@@ -15,12 +15,12 @@ export function S12_FinalCTA({ partner }: { partner: PartnerData }) {
         </Fade>
         <Fade delay={0.1}>
           <h2 className="font-display text-4xl md:text-6xl leading-[0.9] mb-5">
-            Ready to launch a<br /><span className="text-gradient">premium program?</span>
+            See what a GolfN program<br />could look like <span className="text-gradient">for your brand</span>
           </h2>
         </Fade>
         <Fade delay={0.2}>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-lg mx-auto mb-10">
-            {"We'll scope the right program based on your goals, product complexity, and preferred commercial model."}
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-xl mx-auto mb-10">
+            GolfN will recommend the right campaign structure, follow-up pathways, reporting rhythm, and activation mix based on your goals, product, and audience.
           </p>
         </Fade>
         <Fade delay={0.3}>
