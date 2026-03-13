@@ -1,26 +1,15 @@
 'use client'
 
+import { BarChart3, Clock } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { Fade } from './Fade'
 import { Expand } from './Expand'
 
 const reportCategories = [
-  {
-    title: 'Campaign Reporting',
-    items: ['Total entries and unique entrants', 'Opens, views, and clicks', 'Banner interactions and deep-link engagement', 'Performance by distribution channel'],
-  },
-  {
-    title: 'Cohort Reporting',
-    items: ['Qualified audience size', 'High-intent segment size', 'Cohort definition based on engagement patterns', 'Newly added qualifying users over time'],
-  },
-  {
-    title: 'Progression Reporting',
-    items: ['Offer follow-up performance', 'Cohort-to-conversion movement', 'Marketplace or reward performance where relevant', 'Learn & Earn or social outcomes if included'],
-  },
-  {
-    title: 'Optimization Recommendations',
-    items: ['What is working and why', 'What should change next period', 'Best-performing message variant (up to 3 tested)', 'Recommended next actions'],
-  },
+  { title: 'Campaign Reporting', items: ['Total entries and unique entrants', 'Opens, views, and clicks', 'Banner interactions and deep-link engagement', 'Performance by distribution channel'] },
+  { title: 'Cohort Reporting', items: ['Qualified audience size', 'High-intent segment size', 'Cohort definition based on engagement patterns', 'Newly added qualifying users over time'] },
+  { title: 'Progression Reporting', items: ['Offer follow-up performance', 'Cohort-to-conversion movement', 'Marketplace or reward performance where relevant', 'Learn & Earn or social outcomes if included'] },
+  { title: 'Optimization Recommendations', items: ['What is working and why', 'What should change next period', 'Best-performing message variant (up to 3 tested)', 'Recommended next actions'] },
 ]
 
 const managementTiers = [
@@ -32,22 +21,23 @@ const managementTiers = [
 
 export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-20 md:py-32">
-      <div className="max-w-7xl mx-auto px-5 md:px-12">
+    <section className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <div className="flex items-center gap-3 mb-4">
+            <BarChart3 className="w-6 h-6 text-[#00ff9d]" />
             <span className="text-2xl font-mono font-bold text-[#00ff9d]">04</span>
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Reporting</p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">{"What you'll see"}<br /><span className="text-gradient">each month</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl leading-8 mb-14">
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-14">
             Every active program includes monthly reporting and strategic recommendations. This is not a passive dashboard. It is an ongoing optimization rhythm.
           </p>
         </Fade>
 
-        {/* STYLIZED MONTHLY REPORT MOCKUP – metrics + chart + recs */}
+        {/* STYLIZED REPORT MOCKUP – metrics + chart + recs */}
         <Fade delay={0.1}>
-          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-10 overflow-hidden">
+          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 mb-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="bg-[#0f1217] rounded-xl p-5">
                 <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-4">Campaign Performance</p>
@@ -107,10 +97,13 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
 
         <Fade delay={0.2}>
           <div className="mt-10">
-            <h3 className="text-2xl font-semibold text-white mb-6">Ongoing Campaign Management Options</h3>
+            <div className="flex items-center gap-2 mb-6">
+              <Clock className="w-5 h-5 text-[#00ff9d]" />
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">Management Options</h3>
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {managementTiers.map((tier) => (
-                <div key={tier.name} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5 text-center hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                <div key={tier.name} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 text-center hover:border-[#00ff9d]/50 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
                   <span className="text-2xl font-mono font-bold text-[#00ff9d] block mb-1">{tier.icon}<span className="text-base text-[#6b7280]">mo</span></span>
                   <h4 className="text-lg font-semibold text-white mb-2">{tier.name}</h4>
                   <p className="text-base text-[#9ca3af] leading-7">{tier.desc}</p>
@@ -121,11 +114,9 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
         </Fade>
 
         <Fade delay={0.25}>
-          <div className="mt-6 bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8">
+          <div className="mt-6 bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-8">
             <h4 className="text-xl font-semibold text-white mb-2">Why ongoing management exists</h4>
-            <p className="text-lg text-[#d1d5db] leading-8">
-              The initial package includes 30 days of post-campaign follow-up. After that, ongoing management covers reporting, creative refreshes, message testing, cohort expansion, and continued program optimization.
-            </p>
+            <p className="text-lg text-[#d1d5db] leading-8">The initial package includes 30 days of post-campaign follow-up. After that, ongoing management covers reporting, creative refreshes, message testing, cohort expansion, and continued program optimization.</p>
           </div>
         </Fade>
       </div>

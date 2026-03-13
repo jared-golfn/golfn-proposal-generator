@@ -1,5 +1,6 @@
 'use client'
 
+import { Shield } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { Fade } from './Fade'
 
@@ -23,24 +24,23 @@ const differentiators = [
 
 export function S10_DataDifference({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-20 md:py-32">
-      <div className="max-w-7xl mx-auto px-5 md:px-12">
+    <section className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
-          <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">Data Advantage</p>
+          <div className="flex items-center gap-2 mb-4">
+            <Shield className="w-6 h-6 text-[#00ff9d]" />
+            <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Data Advantage</p>
+          </div>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">Why GolfN data<br />is <span className="text-gradient">different</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl leading-8 mb-14">
-            GolfN audience intelligence is built from verified golf behavior, not broad assumptions or purchased audience models.
-          </p>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-14">GolfN audience intelligence is built from verified golf behavior, not broad assumptions or purchased audience models.</p>
         </Fade>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-14">
           {proofCards.map((card, i) => (
             <Fade key={card.label} delay={0.04 * i}>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
                 <div className="w-8 h-8 rounded-lg mb-3 flex items-center justify-center bg-[#00ff9d]/10">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
                 <h4 className="text-base font-bold text-white mb-1">{card.label}</h4>
                 <p className="text-base text-[#6b7280] leading-7">{card.desc}</p>
@@ -50,7 +50,7 @@ export function S10_DataDifference({ partner }: { partner: PartnerData }) {
         </div>
 
         <Fade delay={0.25}>
-          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
+          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden">
             <div className="grid grid-cols-3 gap-4 px-6 py-4 border-b border-[#2a3347]">
               <span></span>
               <span className="text-base font-mono tracking-wider text-[#00ff9d]">GOLFN</span>
