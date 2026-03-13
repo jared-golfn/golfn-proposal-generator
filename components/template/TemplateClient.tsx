@@ -65,11 +65,17 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
     <main id="main-content" className="relative bg-[#0f1217]">
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-      <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5">
+      {/* Right-side nav — 2x larger with GolfN icon */}
+      <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8">
         {navSections.map((s) => (
-          <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-4 justify-end">
-            <span className="text-base font-medium text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
-            <span className="block w-2.5 h-2.5 rounded-full bg-[#2a3347] group-hover:bg-[#00ff9d] transition-colors shrink-0" />
+          <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-5 justify-end">
+            <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
+            <img
+              src={images.logoIcon}
+              alt=""
+              className="block w-7 h-7 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
           </a>
         ))}
       </nav>
@@ -102,11 +108,11 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       <S07_MonthlyReporting partner={partner} />
       <SectionDivider />
 
-      {/* S8: What We Need (was S09) */}
+      {/* S8: What We Need */}
       <S09_WhatWeNeed partner={partner} />
       <SectionDivider label="See pricing" targetId="ways-to-work" />
 
-      {/* S9: Ways to Work / Pricing (was S08) */}
+      {/* S9: Ways to Work / Pricing */}
       <S08_WaysToWork partner={partner} />
       <SectionDivider />
 

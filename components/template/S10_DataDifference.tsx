@@ -49,18 +49,19 @@ export function S10_DataDifference({ partner }: { partner: PartnerData }) {
           ))}
         </div>
 
+        {/* Enlarged comparison table */}
         <Fade delay={0.25}>
-          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden">
-            <div className="grid grid-cols-3 gap-4 px-6 py-4 border-b border-[#2a3347]">
+          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-3 gap-6 px-8 md:px-10 py-6 border-b border-[#2a3347]">
               <span></span>
-              <span className="text-base font-mono tracking-wider text-[#00ff9d]">GOLFN</span>
-              <span className="text-base font-mono tracking-wider text-[#6b7280]">BROAD MEDIA</span>
+              <span className="text-lg md:text-xl font-mono tracking-wider font-bold text-[#00ff9d]">GOLFN</span>
+              <span className="text-lg md:text-xl font-mono tracking-wider text-[#6b7280]">BROAD MEDIA</span>
             </div>
             {differentiators.map((d, i) => (
-              <div key={d.label} className={`grid grid-cols-3 gap-4 px-6 py-4 ${i < differentiators.length - 1 ? 'border-b border-[#2a3347]/50' : ''} hover:bg-[#1f2538] transition-colors`}>
-                <span className="text-base font-semibold text-[#d1d5db]">{d.label}</span>
-                <span className="text-base font-medium text-[#00ff9d]">{d.golfn}</span>
-                <span className="text-base text-[#6b7280]">{d.broad}</span>
+              <div key={d.label} className={`grid grid-cols-3 gap-6 px-8 md:px-10 py-6 md:py-7 ${i < differentiators.length - 1 ? 'border-b border-[#2a3347]/50' : ''} hover:bg-[#1f2538] transition-colors`}>
+                <span className="text-lg md:text-xl font-semibold text-[#d1d5db]">{d.label}</span>
+                <span className="text-lg md:text-xl font-medium text-[#00ff9d]">{d.golfn}</span>
+                <span className="text-lg text-[#6b7280]">{d.broad}</span>
               </div>
             ))}
           </div>

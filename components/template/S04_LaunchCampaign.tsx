@@ -1,6 +1,6 @@
 'use client'
 
-import { Flag, Mail, Smartphone, Image, Share2, BookOpen, Award, DollarSign } from 'lucide-react'
+import { Flag, Mail, Smartphone, Image, Share2, BookOpen, DollarSign } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { galleryAssets } from '@/lib/images'
 import { Fade } from './Fade'
@@ -9,7 +9,7 @@ import { GalleryTabs } from './GalleryTabs'
 
 const campaignTypes = [
   'Sweepstakes', 'Product launch campaign', 'Seasonal activation',
-  'Brand spotlight campaign', 'Offer-led campaign', 'Executive Endorsement module',
+  'Brand spotlight campaign', 'Offer-led campaign',
 ]
 
 const distributionChannels = [
@@ -22,7 +22,6 @@ const golfnHandles = [
   'Full creative production (emails, in-app messages, push notifications, banners, social co-promotion, blog post with SEO backlink)',
   'Campaign distribution across all channels',
   'Asset creation and approval workflow',
-  'Executive Endorsement module (optional add-on during launch)',
 ]
 
 export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
@@ -33,7 +32,6 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
     { id: 'banners', label: 'Banners', images: galleryAssets.banners },
     { id: 'social', label: 'Social Co-Promo', images: galleryAssets.social },
     { id: 'blog', label: 'Blog', images: galleryAssets.blog },
-    { id: 'exec', label: 'Executive Endorsement', images: galleryAssets.pointsExchange },
   ]
 
   return (
@@ -111,16 +109,7 @@ export function S04_LaunchCampaign({ partner }: { partner: PartnerData }) {
         <Fade delay={0.25}>
           <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8 mb-14">
             <h4 className="text-lg font-semibold text-white mb-2">Why the launch matters</h4>
-            <p className="text-base md:text-lg text-[#d1d5db] leading-8">This creates the first wave of verified behavioral signal and sets up the strongest possible cohort. Everything that follows — activation, commerce, education, re-engagement — is built on top of this foundation.</p>
-          </div>
-        </Fade>
-
-        {/* Pricing Note */}
-        <Fade delay={0.27}>
-          <div className="bg-[#0f1217] border border-[#2a3347] rounded-xl px-6 py-4 mb-14">
-            <p className="text-base text-[#6b7280] leading-7">
-              <span className="text-[#9ca3af] font-medium">Pricing note:</span> You provide the sweepstakes prize budget (recommended $5,000). GolfN handles all creative execution, distribution, asset creation, qualification, and ongoing activation. Ongoing management is billed monthly per qualified user added to your cohort (starting at $5/user, tiering down to $1).
-            </p>
+            <p className="text-base md:text-lg text-[#d1d5db] leading-8">This creates the first wave of verified behavioral signal and sets up the strongest possible cohort. Everything that follows \u2014 activation, commerce, education, re-engagement \u2014 is built on top of this foundation.</p>
           </div>
         </Fade>
 
