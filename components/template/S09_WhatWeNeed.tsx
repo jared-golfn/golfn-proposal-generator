@@ -11,7 +11,7 @@ const golfnHandles = [
 
 const partnerProvides = [
   'Sweepstakes prize budget (recommended $5,000)',
-  'Startup fee ($2,500\u20137,500 one-time, tiered by extras)',
+  'Startup fee ($2,500 to $7,500 one-time, tiered by extras)',
   'Brand assets, guidelines, logos, product photography, descriptions',
   'Landing pages or approved destinations',
   'Affiliate terms where relevant (20%+ commission)',
@@ -69,15 +69,6 @@ export function S09_WhatWeNeed({ partner }: { partner: PartnerData }) {
             </div>
           </Fade>
         </div>
-
-        <Fade delay={0.2}>
-          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 border-l-2 border-l-[#00ff9d]">
-            <h4 className="text-xl font-semibold text-white mb-2">Commerce Economics</h4>
-            <p className="text-lg text-[#d1d5db] leading-9">
-              GolfN requires either an <strong>affiliate structure with 20%+ commission</strong> or a <strong>wholesale account with 30%+ margin</strong>. Standard affiliate rates of 3-5% are insufficient.
-            </p>
-          </div>
-        </Fade>
       </div>
     </section>
   )
