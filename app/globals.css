@@ -83,3 +83,111 @@
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #2a3347; border-radius: 2px; }
+
+/* ═══════════════ PRINT STYLES ═══════════════ */
+@media print {
+  /* Force dark background + colors to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  html, body {
+    background: #0f1217 !important;
+    color: #FAFAFA !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Hide UI chrome */
+  .no-print,
+  .accent-line,
+  nav[class*="fixed"],
+  button[class*="fixed"] {
+    display: none !important;
+  }
+
+  /* Kill animations and transforms */
+  * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Tighten up spacing for print */
+  section {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+    page-break-inside: avoid;
+  }
+
+  /* Let large sections break across pages */
+  section > div {
+    page-break-inside: auto;
+  }
+
+  /* Avoid breaking inside cards */
+  div[class*="rounded-xl"],
+  div[class*="rounded-2xl"],
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Hero: much smaller for print */
+  #top section,
+  #top > section {
+    min-height: auto !important;
+    padding-top: 32px !important;
+    padding-bottom: 16px !important;
+  }
+
+  /* Collapsed expandables: show content */
+  details > div,
+  [data-state="closed"] > div {
+    display: block !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Section dividers: minimal */
+  .py-3 {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  /* Footer: simple */
+  footer {
+    page-break-before: avoid;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  /* Page margins via @page */
+  @page {
+    size: letter;
+    margin: 0.5in 0.4in;
+  }
+
+  /* Gradient text: make it print as green instead of invisible */
+  .text-gradient {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #00ff9d !important;
+    background-clip: unset !important;
+    color: #00ff9d !important;
+  }
+
+  /* Images: max-width for fit */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Gallery: show only first tab content, 2-col */
+  .grid.grid-cols-1.sm\:grid-cols-2 img {
+    max-height: 200px !important;
+    object-fit: contain !important;
+  }
+}
