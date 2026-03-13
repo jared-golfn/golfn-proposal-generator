@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { Flag, Users, Zap } from 'lucide-react'
 import type { PartnerData, PlatformKPI } from '@/lib/template-types'
 import { images } from '@/lib/images'
 
@@ -17,12 +18,10 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden">
-      {/* Background radial glows */}
       <div className="absolute inset-0 opacity-[0.07]" style={{ background: 'radial-gradient(ellipse 60% 50% at 15% 50%, #001a14, transparent)' }} />
       <div className="absolute inset-0 opacity-[0.04]" style={{ background: 'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-5 md:px-12 py-16 md:py-24">
-        {/* Header bar */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 py-16 md:py-24">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex items-center justify-between mb-24 md:mb-32">
           <img src={images.logo} alt="GolfN" className="h-9 md:h-12 w-auto" />
           {partner.agencyLogoUrl ? (
@@ -41,7 +40,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-          {/* Left: Copy */}
           <div className="lg:col-span-3">
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
@@ -56,33 +54,34 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.7 }}
-              className="text-lg md:text-xl text-[#9ca3af] max-w-xl leading-8 mb-10"
+              className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-10"
             >
               {subtitle}
             </motion.p>
 
-            {/* CTAs */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-4 mb-16">
               <a
                 href={`mailto:${email}?subject=Partnership%20Proposal%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`}
-                className="px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.03] glow-green"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.03] glow-green"
                 style={{ background: 'linear-gradient(135deg, #00ff9d, #17A455)', color: '#0f1217' }}
               >
+                <Flag className="w-5 h-5" />
                 Request a Proposal
               </a>
               {partner.bookingUrl && (
-                <a href={partner.bookingUrl} target="_blank" rel="noopener" className="px-8 py-4 rounded-xl font-semibold text-lg border border-[#2a3347] text-white hover:bg-[#1a1f2e] transition-all">
+                <a href={partner.bookingUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-lg border border-[#2a3347] text-white hover:bg-[#1a1f2e] transition-all">
+                  <Users className="w-5 h-5" />
                   Book a Walkthrough
                 </a>
               )}
-              <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="text-base font-medium hover:underline transition-colors text-[#00ff9d]">
-                See How It Works &darr;
+              <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-base font-medium hover:underline transition-colors text-[#00ff9d]">
+                <Zap className="w-4 h-4" />
+                See How It Works
               </button>
             </motion.div>
           </div>
 
-          {/* Right: Hero visual composition */}
-          {/* GALVIN GREEN GORE-TEX JACKET SWEEPSTAKES MOCKUP – replace with real asset showing waterproof jacket as prize */}
+          {/* GALVIN GREEN WATERPROOF JACKET PRIZE MOCKUP */}
           <motion.div
             initial={{ opacity: 0, y: 30, rotate: 1 }}
             animate={{ opacity: 1, y: 0, rotate: 2 }}
@@ -90,17 +89,9 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             className="lg:col-span-2 flex justify-center"
           >
             <div className="relative">
-              {/* Glow behind mockup */}
               <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: 'radial-gradient(circle, #00ff9d, #001a14, transparent)' }} />
-              {/* Main device mockup */}
               {/* GALVIN GREEN: Replace with in-app sweepstakes card showing GORE-TEX jacket prize */}
-              <img
-                src={images.cobraSweeps}
-                alt="Campaign creative"
-                className="relative w-52 md:w-64 lg:w-72 rounded-[24px] glow-green"
-                style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }}
-              />
-              {/* Floating offer card */}
+              <img src={images.cobraSweeps} alt="Campaign creative" className="relative w-52 md:w-64 lg:w-72 rounded-[24px] glow-green" style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }} />
               {/* GALVIN GREEN: Replace with Galvin Green product offer card */}
               <motion.img
                 src={images.srixonAd1}
@@ -110,7 +101,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
                 transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
                 style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}
               />
-              {/* Floating cohort badge */}
               <motion.div
                 className="absolute -right-6 md:-right-10 bottom-12 bg-[#1a1f2e] border border-[#2a3347] rounded-xl px-4 py-3 shadow-xl"
                 animate={{ y: [0, 6, 0] }}
@@ -123,7 +113,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           </motion.div>
         </div>
 
-        {/* KPI strip */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-8 flex flex-wrap gap-8 md:gap-14">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>

@@ -13,9 +13,10 @@
   --color-golfn-dim: #9ca3af;
   --color-golfn-faint: #6b7280;
 
-  --font-display: 'Figtree', system-ui, sans-serif;
-  --font-body: 'Figtree', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+  --font-display: var(--font-figtree), system-ui, sans-serif;
+  --font-body: var(--font-figtree), system-ui, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', monospace;
 }
 
 @layer base {
@@ -25,32 +26,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  :root {
-    --content-width: min(960px, 90vw);
-    --content-wide: min(1100px, 92vw);
-    --content-wider: min(1280px, 94vw);
-  }
-
-  @media (min-width: 1440px) {
-    :root {
-      --content-width: min(1100px, 76vw);
-      --content-wide: min(1320px, 84vw);
-      --content-wider: min(1440px, 90vw);
-    }
-  }
-
-  @media (min-width: 1920px) {
-    :root {
-      --content-width: min(1280px, 67vw);
-      --content-wide: min(1480px, 77vw);
-      --content-wider: min(1600px, 83vw);
-    }
-  }
-
   body {
     background: #0f1217;
     color: #FAFAFA;
-    font-family: var(--font-body);
+    font-family: var(--font-sans);
     font-size: 1.125rem;
     font-weight: 400;
     line-height: 1.75;
@@ -58,6 +37,10 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
   }
 
   @media (min-width: 1440px) {
@@ -72,18 +55,6 @@
   }
 }
 
-/* Fluid content utility classes */
-.w-content { max-width: var(--content-width); margin-left: auto; margin-right: auto; }
-.w-content-wide { max-width: var(--content-wide); margin-left: auto; margin-right: auto; }
-.w-content-wider { max-width: var(--content-wider); margin-left: auto; margin-right: auto; }
-
-@media (min-width: 1440px) {
-  [class*="max-w-[960px]"]  { max-width: var(--content-width) !important; }
-  [class*="max-w-[1100px]"] { max-width: var(--content-wide) !important; }
-  [class*="max-w-[1200px]"] { max-width: var(--content-wider) !important; }
-  [class*="max-w-[1280px]"] { max-width: var(--content-wider) !important; }
-}
-
 .text-gradient {
   background: linear-gradient(135deg, #00ff9d, #8DC54A);
   -webkit-background-clip: text;
@@ -96,7 +67,6 @@
   background: linear-gradient(90deg, #00ff9d, #8DC54A);
 }
 
-/* Card hover lift — used via className on interactive cards */
 .card-lift {
   transition: transform 300ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms ease, border-color 300ms ease;
 }
@@ -106,7 +76,6 @@
   border-color: rgba(0, 255, 157, 0.3);
 }
 
-/* Green glow for hero elements */
 .glow-green {
   box-shadow: 0 0 60px rgba(0,255,157,0.08), 0 0 120px rgba(0,255,157,0.04);
 }
