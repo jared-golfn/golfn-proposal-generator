@@ -1,6 +1,7 @@
 'use client'
 
-import { Download } from 'lucide-react'
+import { useState } from 'react'
+import { Download, Loader2 } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { images } from '@/lib/images'
 import { S01_Hero } from './S01_Hero'
@@ -25,9 +26,80 @@ const navSections = [
 ]
 
 export function TemplateClient({ partner }: { partner: PartnerData }) {
+  const [generating, setGenerating] = useState(false)
 
-  const handlePrint = () => {
-    window.print()
+  const downloadPDF = async () => {
+    if (generating) return
+    setGenerating(true)
+
+    try {
+      // Dynamic import to avoid SSR issues
+      const html2pdf = (await import('html2pdf.js')).default
+
+      const element = document.getElementById('proposal-content')
+      if (!element) {
+        setGenerating(false)
+        return
+      }
+
+      const opt = {
+        margin: [10, 10, 10, 10],
+        filename: `GolfN-${partner.partnerName.replace(/\s+/g, '-')}-Partnership-Proposal.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 3,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#0f1217',
+          logging: false,
+          letterRendering: true,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: element.scrollWidth,
+          onclone: (clonedDoc: Document) => {
+            // Force dark backgrounds in cloned doc
+            const clonedEl = clonedDoc.getElementById('proposal-content')
+            if (clonedEl) {
+              clonedEl.style.background = '#0f1217'
+            }
+            // Hide the PDF button and nav in clone
+            const pdfBtn = clonedDoc.getElementById('pdf-download-btn')
+            if (pdfBtn) pdfBtn.style.display = 'none'
+            const nav = clonedDoc.querySelector('nav[class*="fixed"]') as HTMLElement
+            if (nav) nav.style.display = 'none'
+            const accentLine = clonedDoc.querySelector('.accent-line') as HTMLElement
+            if (accentLine) accentLine.style.display = 'none'
+            // Force all opacity to 1 and remove transforms (animated elements)
+            const allEls = clonedDoc.querySelectorAll('*') as NodeListOf<HTMLElement>
+            allEls.forEach(el => {
+              const style = window.getComputedStyle(el)
+              if (parseFloat(style.opacity) < 1) {
+                el.style.opacity = '1'
+              }
+              el.style.transform = 'none'
+              el.style.transition = 'none'
+              el.style.animation = 'none'
+            })
+            // Fix gradient text in clone
+            const gradientEls = clonedDoc.querySelectorAll('.text-gradient') as NodeListOf<HTMLElement>
+            gradientEls.forEach(el => {
+              el.style.background = 'none'
+              el.style.webkitBackgroundClip = 'unset'
+              el.style.webkitTextFillColor = '#00ff9d'
+              el.style.color = '#00ff9d'
+            })
+          },
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+      }
+
+      await html2pdf().from(element).set(opt).save()
+    } catch (err) {
+      console.error('PDF generation failed:', err)
+    } finally {
+      setGenerating(false)
+    }
   }
 
   return (
@@ -49,66 +121,80 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         ))}
       </nav>
 
-      {/* S1: Hero */}
-      <div id="top"><S01_Hero partner={partner} /></div>
-      <SectionDivider />
+      {/* All proposal content wrapped for PDF capture */}
+      <div id="proposal-content">
+        {/* S1: Hero */}
+        <div id="top"><S01_Hero partner={partner} /></div>
+        <SectionDivider />
 
-      {/* S2: Why Brands */}
-      <S02_WhyBrands partner={partner} />
-      <SectionDivider label="See the process" targetId="how-it-works" />
+        {/* S2: Why Brands */}
+        <S02_WhyBrands partner={partner} />
+        <SectionDivider label="See the process" targetId="how-it-works" />
 
-      {/* S3: How It Works */}
-      <S03_HowItWorks partner={partner} />
-      <SectionDivider />
+        {/* S3: How It Works */}
+        <S03_HowItWorks partner={partner} />
+        <SectionDivider />
 
-      {/* S4: Launch Campaign */}
-      <S04_LaunchCampaign partner={partner} />
-      <SectionDivider />
+        {/* S4: Launch Campaign */}
+        <S04_LaunchCampaign partner={partner} />
+        <SectionDivider />
 
-      {/* S5: Attention, Intent, Cohort */}
-      <S05_QualifiedInterest partner={partner} />
-      <SectionDivider />
+        {/* S5: Attention, Intent, Cohort */}
+        <S05_QualifiedInterest partner={partner} />
+        <SectionDivider />
 
-      {/* S6: Post-Campaign Activation */}
-      <S06_PostCampaign partner={partner} />
-      <SectionDivider />
+        {/* S6: Post-Campaign Activation */}
+        <S06_PostCampaign partner={partner} />
+        <SectionDivider />
 
-      {/* S7: Monthly Reporting */}
-      <S07_MonthlyReporting partner={partner} />
-      <SectionDivider />
+        {/* S7: Monthly Reporting */}
+        <S07_MonthlyReporting partner={partner} />
+        <SectionDivider />
 
-      {/* S8: What We Need */}
-      <S09_WhatWeNeed partner={partner} />
-      <SectionDivider label="See pricing" targetId="ways-to-work" />
+        {/* S8: What We Need */}
+        <S09_WhatWeNeed partner={partner} />
+        <SectionDivider label="See pricing" targetId="ways-to-work" />
 
-      {/* S9: Ways to Work / Pricing */}
-      <S08_WaysToWork partner={partner} />
-      <SectionDivider />
+        {/* S9: Ways to Work / Pricing */}
+        <S08_WaysToWork partner={partner} />
+        <SectionDivider />
 
-      {/* S10: Data Difference */}
-      <S10_DataDifference partner={partner} />
-      <SectionDivider />
+        {/* S10: Data Difference */}
+        <S10_DataDifference partner={partner} />
+        <SectionDivider />
 
-      {/* S11: FAQ */}
-      <div id="faq-section"><S11_FAQ partner={partner} /></div>
-      <SectionDivider />
+        {/* S11: FAQ */}
+        <div id="faq-section"><S11_FAQ partner={partner} /></div>
+        <SectionDivider />
 
-      {/* S12: Final CTA */}
-      <S12_FinalCTA partner={partner} />
+        {/* S12: Final CTA */}
+        <S12_FinalCTA partner={partner} />
 
-      <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
-        <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-        <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
-        <p className="text-[#2a3347] text-sm mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>
-      </footer>
+        <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
+          <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
+          <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
+          <p className="text-[#2a3347] text-sm mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>
+        </footer>
+      </div>
 
-      {/* Save as PDF button - uses browser native print */}
+      {/* Download PDF button */}
       <button
-        onClick={handlePrint}
-        className="fixed bottom-8 right-8 bg-[#00ff9d] text-black font-semibold px-6 py-3 rounded-full shadow-2xl hover:bg-[#00e08a] transition z-50 flex items-center gap-2"
+        id="pdf-download-btn"
+        onClick={downloadPDF}
+        disabled={generating}
+        className="fixed bottom-8 right-8 bg-[#00ff9d] text-black font-semibold px-6 py-3 rounded-full shadow-2xl hover:bg-[#00e08a] transition z-50 flex items-center gap-2 disabled:opacity-70 disabled:cursor-wait"
       >
-        <Download className="w-5 h-5" />
-        Save as PDF
+        {generating ? (
+          <>
+            <Loader2 className="w-5 h-5 animate-spin" />
+            Generating PDF...
+          </>
+        ) : (
+          <>
+            <Download className="w-5 h-5" />
+            Download Proposal as PDF
+          </>
+        )}
       </button>
     </main>
   )
