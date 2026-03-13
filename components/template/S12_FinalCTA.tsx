@@ -45,7 +45,6 @@ export function S12_FinalCTA({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
       </div>
-      {/* ALL ASSETS ARE PLACEHOLDERS – replace with real Galvin Green creatives -->
     </section>
   )
 }
