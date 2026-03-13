@@ -18,20 +18,17 @@ const pathOrder: PathId[] = ['pilot', 'growth', 'strategic']
 export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
   const { state, setPath } = usePartnership()
   const { selectedPath, isRecommended } = state
-  // Default to partner's recommended path if set, otherwise growth
   const defaultTab = partner.defaultPath || 'growth'
   const [activeTab, setActiveTab] = useState<PathId>(selectedPath || defaultTab)
 
   useEffect(() => { if (selectedPath) setActiveTab(selectedPath) }, [selectedPath])
 
   const path = partnershipPaths[activeTab]
-
-  // Use partner-specific scenario override if available, otherwise fall back to default
   const scenarioOverrides = partnerScenarioOverrides[partner.slug]
   const scenario = scenarioOverrides?.[activeTab] || path.exampleScenario
-
   const recommendedExtensions = allExtensions.filter(e => path.recommendedExtensions.includes(e.id))
   const handleTabClick = (pathId: PathId) => { setActiveTab(pathId); setPath(pathId) }
+  const isPortfolio = partner.isPortfolio && partner.portfolioBrands
 
   return (
     <section className="py-20 md:py-32">
@@ -99,6 +96,33 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
                 <p className="text-base md:text-lg text-[#B0B0B4]">{scenario.description}</p>
               </div>
 
+              {/* Per-Brand Breakdown for Portfolio presentations */}
+              {isPortfolio && partner.portfolioBrands && (
+                <div className="p-8 md:p-12 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}03` }}>
+                  <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-5">Per-Brand Activation at This Tier</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {partner.portfolioBrands.map((brand) => {
+                      const brandScenario = partnerScenarioOverrides[brand.slug]?.[activeTab]
+                      return (
+                        <div key={brand.slug} className="bg-[#0F0F10] border border-[#2A2A2C] rounded-xl p-5" style={{ borderTopColor: brand.color, borderTopWidth: '2px' }}>
+                          <div className="flex items-center gap-2 mb-3">
+                            <img src={brand.logoUrl} alt={brand.name} className="h-4 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.8 }} />
+                          </div>
+                          {brandScenario ? (
+                            <>
+                              <p className="text-sm font-semibold text-[#D4D4D8] mb-1">{brandScenario.title}</p>
+                              <p className="text-xs md:text-sm text-[#A1A1AA] leading-relaxed">{brandScenario.description}</p>
+                            </>
+                          ) : (
+                            <p className="text-sm text-[#71717A]">{brand.pitch}</p>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* Partner-Specific Commerce Notes */}
               {partner.commerceNotes && partner.commerceNotes.length > 0 && activeTab === 'pilot' && (
                 <div className="p-8 md:p-12 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}03` }}>
@@ -114,7 +138,7 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
                 </div>
               )}
 
-              {/* 90-Day Pilot Launch — only in Pilot tab */}
+              {/* 90-Day Pilot Launch \u2014 only in Pilot tab */}
               {activeTab === 'pilot' && (
                 <div className="p-8 md:p-12 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}06` }}>
                   <div className="flex items-center gap-3 mb-4">
@@ -142,14 +166,18 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
           </AnimatePresence>
         </Fade>
 
-        {/* Multi-Brand Agency Callout — enhanced when agency brands are defined */}
+        {/* Multi-Brand Agency Callout */}
         <Fade delay={0.25}>
           <div className="mt-8 md:mt-10 bg-[#131315] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 border-l-[3px]" style={{ borderLeftColor: partner.secondaryColor }}>
             <p className="text-base md:text-lg text-[#B0B0B4]">
               <span className="text-white font-semibold">Multi-Brand Pricing:</span>{' '}
-              {partner.agencyName && partner.agencyBrands && partner.agencyBrands.length > 0 ? (
+              {isPortfolio ? (
                 <>
-                  {partner.agencyName} represents {partner.partnerName}, {partner.agencyBrands.join(', and ')} through GolfN. When multiple brands activate through a single agency relationship, consolidated pricing applies. Campaign architecture, audience intelligence, and infrastructure are shared \u2014 reducing per-brand costs and increasing efficiency across the portfolio.
+                  Sports Impact activates {partner.portfolioBrands!.map(b => b.name).join(', ')} through GolfN as a consolidated portfolio. Campaign architecture, audience intelligence, and infrastructure are shared across all brands &mdash; reducing per-brand costs significantly and creating compounding value as learnings from one brand inform campaigns for others.
+                </>
+              ) : partner.agencyName && partner.agencyBrands && partner.agencyBrands.length > 0 ? (
+                <>
+                  {partner.agencyName} represents {partner.partnerName}, {partner.agencyBrands.join(', and ')} through GolfN. When multiple brands activate through a single agency relationship, consolidated pricing applies. Campaign architecture, audience intelligence, and infrastructure are shared &mdash; reducing per-brand costs and increasing efficiency across the portfolio.
                 </>
               ) : (
                 <>When an agency activates multiple brands through GolfN, consolidated pricing applies. Efficiencies increase when campaign architecture, audience intelligence, and infrastructure are shared.</>
