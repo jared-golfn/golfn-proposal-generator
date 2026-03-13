@@ -29,33 +29,56 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
   const [downloading, setDownloading] = useState(false)
 
   const downloadPDF = async () => {
+    if (downloading) return
     setDownloading(true)
     try {
-      const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+      const [html2canvasModule, jsPDFModule] = await Promise.all([
         import('html2canvas'),
         import('jspdf'),
       ])
+      const html2canvas = html2canvasModule.default
+      const jsPDF = jsPDFModule.default
+
       const content = document.getElementById('main-content')
-      if (!content) return
-      const canvas = await html2canvas(content, { scale: 2, logging: false, useCORS: true })
-      const imgData = canvas.toDataURL('image/png')
+      if (!content) {
+        console.error('PDF: Could not find #main-content')
+        return
+      }
+
+      const canvas = await html2canvas(content, {
+        scale: 1,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#0f1217',
+        windowWidth: 1280,
+        removeContainer: true,
+      })
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.85)
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
       const pdfWidth = pdf.internal.pageSize.getWidth()
+      const pdfHeight = pdf.internal.pageSize.getHeight()
       const imgWidth = pdfWidth
       const imgHeight = (canvas.height * imgWidth) / canvas.width
       let heightLeft = imgHeight
       let position = 0
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-      heightLeft -= pdf.internal.pageSize.getHeight()
+
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
+      heightLeft -= pdfHeight
+
       while (heightLeft > 0) {
-        position -= pdf.internal.pageSize.getHeight()
+        position -= pdfHeight
         pdf.addPage()
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-        heightLeft -= pdf.internal.pageSize.getHeight()
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pdfHeight
       }
-      pdf.save(`GolfN-${partner.partnerName.replace(/\\s+/g, '-')}-Partnership-Proposal.pdf`)
+
+      const safeName = partner.partnerName.replace(/\s+/g, '-')
+      pdf.save('GolfN-' + safeName + '-Partnership-Proposal.pdf')
     } catch (err) {
       console.error('PDF generation failed:', err)
+      alert('PDF generation failed. Please try again or use your browser\'s Print to PDF (Ctrl+P / Cmd+P).')
     } finally {
       setDownloading(false)
     }
@@ -65,7 +88,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
     <main id="main-content" className="relative bg-[#0f1217]">
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-      {/* Right-side nav — 2x larger with GolfN icon */}
+      {/* Right-side nav */}
       <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8">
         {navSections.map((s) => (
           <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-5 justify-end">
@@ -140,7 +163,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         className="fixed bottom-8 right-8 bg-[#00ff9d] text-black font-semibold px-6 py-3 rounded-full shadow-2xl hover:bg-[#00e08a] transition z-50 flex items-center gap-2 disabled:opacity-50"
       >
         <Download className="w-5 h-5" />
-        {downloading ? 'Generating...' : 'Download PDF'}
+        {downloading ? 'Generating PDF...' : 'Download PDF'}
       </button>
     </main>
   )
