@@ -9,36 +9,39 @@ import { Badge } from './Badge'
 
 type PathId = 'pilot' | 'growth' | 'strategic'
 
-const paths: Record<PathId, { name: string; tagline: string; stages: string; setup: string; monthly: string; duration: string; impressions: string; bestFor: string }> = {
+const paths: Record<PathId, { name: string; tagline: string; stages: string; setup: string; monthly: string; duration: string; impressions: string; bestFor: string; scope: string[] }> = {
   pilot: {
     name: 'Pilot',
-    tagline: 'Best for first-time programs',
+    tagline: 'Best for first-time programs and contained launches',
     stages: '1 - 4',
     setup: '$7,500 - $12,500',
     monthly: '$5,000+',
     duration: '3 months',
     impressions: '50K - 100K',
-    bestFor: 'Brands testing GolfN for the first time with a contained scope.',
+    bestFor: 'Brands testing GolfN for the first time with a contained scope. 90-day contained launch available for qualified partners.',
+    scope: ['Launch campaign', 'Basic cohort creation', 'Initial post-campaign follow-up', '90-day contained launch available for qualified partners'],
   },
   growth: {
     name: 'Growth',
-    tagline: 'Best for full-funnel activation',
+    tagline: 'Best for multi-month activation and optimization',
     stages: '1 - 7',
     setup: '$12,500 - $20,000',
     monthly: '$8,000+',
     duration: '3 - 6 months',
     impressions: '100K - 250K',
     bestFor: 'Brands ready to run a fuller-funnel program with progression goals.',
+    scope: ['Launch campaign', 'Cohort building', 'Post-campaign activation', 'Creative refreshes', 'Recurring reporting', 'Optional commerce / social / education / event modules'],
   },
   strategic: {
     name: 'Strategic',
-    tagline: 'Best for long-term partnerships',
+    tagline: 'Best for long-term partnerships and advanced activation',
     stages: '1 - 8',
     setup: '$20,000 - $35,000+',
     monthly: '$12,000+',
     duration: '6+ months',
     impressions: '250K - 500K+',
     bestFor: 'Brands committing to sustained, multi-stage activation with advanced cohort development.',
+    scope: ['Full program architecture', 'Multi-stage activation', 'Advanced cohort expansion', 'Marketplace / education / real-world modules', 'Advanced reporting cadence', 'Executive storytelling'],
   },
 }
 
@@ -99,6 +102,16 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 </div>
               )}
 
+              {/* Typical scope */}
+              <div className="mb-6">
+                <p className="text-xs font-mono text-[#6b7280] tracking-wider uppercase mb-3">Typical Scope</p>
+                <div className="flex flex-wrap gap-2">
+                  {path.scope.map((s) => (
+                    <span key={s} className="text-sm px-3 py-1.5 rounded-lg bg-[#0f1217] border border-[#1e2128] text-[#d1d5db]">{s}</span>
+                  ))}
+                </div>
+              </div>
+
               {/* Pricing grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
                 {[
@@ -157,6 +170,15 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 </Expand>
               </div>
             )}
+          </div>
+        </Fade>
+
+        {/* Setup logic callout band */}
+        <Fade delay={0.25}>
+          <div className="mt-6 bg-[#131619] border-l-2 rounded-r-xl p-6 md:p-8" style={{ borderLeftColor: partner.primaryColor }}>
+            <p className="text-sm text-[#d1d5db] leading-relaxed">
+              <strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, and the first 30 days of post-campaign follow-up. That is why setup investment is required before launch.
+            </p>
           </div>
         </Fade>
       </div>
