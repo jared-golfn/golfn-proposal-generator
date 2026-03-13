@@ -6,10 +6,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 interface GalleryTab {
   id: string
   label: string
-  images: { src: string; alt: string }[]
+  images: readonly { readonly src: string; readonly alt: string }[]
 }
 
-export function GalleryTabs({ tabs, accentColor = '#00ff9d' }: { tabs: GalleryTab[]; accentColor?: string }) {
+export function GalleryTabs({ tabs, accentColor = '#00ff9d' }: { tabs: readonly GalleryTab[]; accentColor?: string }) {
   const [active, setActive] = useState(tabs[0]?.id || '')
   const activeTab = tabs.find(t => t.id === active)
 
