@@ -18,12 +18,16 @@ import { Thresholds } from '@/components/presentation/Thresholds'
 import { Testimonials } from '@/components/presentation/Testimonials'
 import { StrategicClose } from '@/components/presentation/StrategicClose'
 import { StickySummary } from '@/components/presentation/StickySummary'
+import { CaseStudies } from '@/components/presentation/CaseStudies'
+import { Recommendations } from '@/components/presentation/Recommendations'
 
 const sections = [
   { id: 'hero', label: 'Overview' },
+  { id: 'recommendations', label: 'Our Rec' },
   { id: 'budget', label: 'Budget Fit' },
   { id: 'best-fit', label: 'Best Fit' },
   { id: 'paths', label: 'Paths' },
+  { id: 'case-studies', label: 'Case Studies' },
   { id: 'commercial', label: 'How Pricing Works' },
   { id: 'extensions', label: 'Extensions' },
   { id: 'thresholds', label: 'Requirements' },
@@ -51,11 +55,15 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
 
         <div id="hero"><HeroSection partner={partner} /></div>
         <Divider />
+        <div id="recommendations"><Recommendations partner={partner} /></div>
+        <Divider />
         <div id="budget"><BudgetPositioning partner={partner} /></div>
         <Divider />
         <div id="best-fit"><FindYourFit partner={partner} /></div>
         <Divider />
         <div id="paths"><PartnerArchetypes partner={partner} /></div>
+        <Divider />
+        <div id="case-studies"><CaseStudies partner={partner} /></div>
         <Divider />
         <div id="commercial"><CommercialModel partner={partner} /></div>
         <Divider />
@@ -77,8 +85,8 @@ export function PresentationClient({ partner }: { partner: PartnerConfig }) {
 
         <footer className="w-content px-5 md:px-12 py-12 md:py-16 text-center border-t border-[#2A2A2C]">
           <img src={images.logo} alt="GolfN" className="h-7 md:h-10 w-auto mx-auto mb-4 opacity-40" />
-          <p className="text-[#71717A] text-xs md:text-sm">Confidential — Prepared for {partner.partnerName} by GolfN</p>
-          <p className="text-[#52525B] text-[10px] md:text-xs mt-1 font-mono">Verified Golfers · Measurable Progression · Aligned Incentives</p>
+          <p className="text-[#71717A] text-xs md:text-sm">Confidential \u2014 Prepared for {partner.partnerName} by GolfN</p>
+          <p className="text-[#52525B] text-[10px] md:text-xs mt-1 font-mono">Verified Golfers \u00b7 Measurable Progression \u00b7 Aligned Incentives</p>
         </footer>
       </main>
     </PartnershipProvider>
