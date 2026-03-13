@@ -11,6 +11,7 @@ const golfnHandles = [
 
 const partnerProvides = [
   'Sweepstakes prize budget (recommended $5,000)',
+  'Startup fee ($2,500\u2013$7,500 one-time, tiered by extras)',
   'Brand assets, guidelines, logos, product photography, descriptions',
   'Landing pages or approved destinations',
   'Affiliate terms where relevant (20%+ commission)',
@@ -22,12 +23,12 @@ const partnerProvides = [
 
 export function S09_WhatWeNeed({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">Requirements</p>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">What we need<br /><span className="text-gradient">from you</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-14">Every GolfN program requires a few key inputs from the partner to launch successfully. GolfN handles everything else.</p>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-4xl leading-9 mb-14">Every GolfN program requires a few key inputs from the partner to launch successfully. GolfN handles everything else.</p>
         </Fade>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -56,12 +57,12 @@ export function S09_WhatWeNeed({ partner }: { partner: PartnerData }) {
               <ul className="space-y-3">
                 {partnerProvides.map((item, i) => (
                   <li key={item} className="flex items-start gap-3 text-[#d1d5db]">
-                    {i === 0 ? (
+                    {i <= 1 ? (
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-1 shrink-0"><path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     ) : (
                       <div className="w-1.5 h-1.5 rounded-full mt-2.5 shrink-0 bg-[#6b7280]" />
                     )}
-                    <span className={`text-lg ${i === 0 ? 'text-[#00ff9d] font-semibold' : ''}`}>{item}</span>
+                    <span className={`text-lg ${i <= 1 ? 'text-[#00ff9d] font-semibold' : ''}`}>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -72,7 +73,7 @@ export function S09_WhatWeNeed({ partner }: { partner: PartnerData }) {
         <Fade delay={0.2}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 border-l-2 border-l-[#00ff9d]">
             <h4 className="text-xl font-semibold text-white mb-2">Commerce Economics</h4>
-            <p className="text-lg text-[#d1d5db] leading-8">
+            <p className="text-lg text-[#d1d5db] leading-9">
               GolfN requires either an <strong>affiliate structure with 20%+ commission</strong> or a <strong>wholesale account with 30%+ margin</strong>. Standard affiliate rates of 3-5% are insufficient.
             </p>
           </div>

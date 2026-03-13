@@ -10,7 +10,7 @@ const faqGroups = [
     { q: 'How does a GolfN brand program begin?', a: 'Every program starts with a kickoff call to define goals, audience priorities, and campaign strategy. GolfN then handles creative production, campaign architecture, and technical setup. Typical launch timeline is 2 to 3 weeks from kickoff.' },
     { q: 'How long does a typical launch campaign run?', a: 'Typical campaign window is 14 to 30 days. Campaign length depends on prize quality, creative strength, and participation goals.' },
     { q: 'Why does the launch sweepstakes matter?', a: 'The launch sweepstakes creates the first wave of verified behavioral signal. It drives high-volume participation and establishes the foundation for audience qualification and all downstream activation.' },
-    { q: 'What is included in the initial package?', a: 'Campaign strategy, creative production, launch campaign distribution, blog/article support with backlink, initial reporting, initial audience qualification, initial cohort definition, and 30 days of post-campaign follow-up and management.' },
+    { q: 'What is included in the initial package?', a: 'Campaign strategy, creative production, launch campaign distribution (emails, in-app messages, banners, social co-promo, blog with backlink), initial reporting, initial audience qualification, initial cohort definition, and 30 days of post-campaign follow-up and management. All included in the one-time startup fee.' },
     { q: 'What happens after the first campaign ends?', a: 'Within 30 days of campaign close, GolfN activates the qualified cohort through targeted follow-on campaigns: offers, education, commerce, social activation, and progression-based experiences. The audience compounds over time.' },
   ]},
   { group: 'Audience Qualification and Cohorts', items: [
@@ -24,22 +24,22 @@ const faqGroups = [
     { q: 'Can GolfN support custom offer follow-up?', a: 'Yes. Targeted follow-up offers are delivered to users who showed verified interest. External offers require an affiliate structure with 20%+ commission.' },
     { q: 'How does Learn & Earn work?', a: 'Users watch videos, read materials, and complete quizzes. Correct answers earn points. Wrong answers reduce or eliminate points. Rewards are vendor-funded and billed based on actual points served, invoiced net 30.' },
     { q: 'Can products be added to the GolfN Marketplace?', a: 'Yes. Users redeem earned points toward purchases. The brand fulfills and drop-ships directly. Requires 30% wholesale margin plus dropship arrangement.' },
-    { q: 'What is Executive Endorsement?', a: 'Founder, executive, athlete, or expert-led content designed to create stronger trust, better product context, and more persuasive storytelling.' },
+    { q: 'What is Executive Endorsement?', a: 'Founder, executive, athlete, or expert-led content designed to create stronger trust, better product context, and more persuasive storytelling. Available as a startup fee add-on.' },
     { q: 'How does Daily Grind event activation work?', a: 'GolfN activates the qualified cohort to attend real-world events. Fees are performance-based and only triggered when a user checks in through the GolfN app.' },
   ]},
   { group: 'Reporting and Management', items: [
     { q: 'What reporting is included?', a: 'Monthly performance reports covering campaign metrics, cohort intelligence, progression analysis, and optimization recommendations. Plus a monthly strategy review call and raw data exports.' },
-    { q: 'What is included in the first 30 days after launch?', a: 'Post-campaign follow-up, initial cohort qualification, first-wave activation across relevant channels, initial reporting, and strategic recommendations for the next phase.' },
-    { q: 'Why is there an ongoing management fee?', a: 'After the initial 30-day included period, ongoing management covers reporting, creative refreshes (up to 3 variants per message), message testing, cohort expansion, and continued program optimization. It is billed monthly per qualified user added to your cohort.' },
+    { q: 'What is included in the first 30 days after launch?', a: 'Post-campaign follow-up, initial cohort qualification, first-wave activation across relevant channels, initial reporting, and strategic recommendations for the next phase. All included in the startup fee.' },
+    { q: 'Why is there an ongoing management fee?', a: 'After the initial 30-day included period, ongoing management covers reporting, creative refreshes (up to 3 variants per message), message testing, cohort expansion, and continued program optimization. It is billed monthly per qualified user added to your cohort (First 2,000 at $5/user, 2,001\u20135,000 at $3.50, 5,001\u201310,000 at $2, 10,001+ at $1).' },
   ]},
   { group: 'Pricing and Economics', items: [
-    { q: 'How does pricing work?', a: 'You provide the sweepstakes prize budget (recommended $5,000 for maximum participation and strongest cohort). GolfN handles all creative execution, distribution, asset creation, qualification, and ongoing activation. Ongoing management is billed monthly per qualified user added to your cohort (starting at $5/user, tiering down to $1).' },
-    { q: 'What does a brand need to provide to launch?', a: 'Sweepstakes prize budget (recommended $5,000), brand assets and guidelines, logos, product photography, product descriptions, landing pages or destinations, and a point of contact for approvals.' },
-    { q: 'Why is setup investment required?', a: 'Every program includes real upfront work: strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why setup investment is required before launch.' },
+    { q: 'How does pricing work?', a: 'You provide the sweepstakes prize budget (recommended $5,000 for strongest cohort). GolfN charges a one-time startup fee of $2,500\u2013$7,500 (tiered by extras: executive endorsement, custom creative, AI lookalike, priority support). Launch campaign execution is included in startup. 30 days post-campaign follow-up is free. After that, ongoing management is billed monthly per qualified user: First 2,000 at $5.00, 2,001\u20135,000 at $3.50, 5,001\u201310,000 at $2.00, 10,001+ at $1.00.' },
+    { q: 'What is the startup fee?', a: 'A one-time fee of $2,500\u2013$7,500 that covers strategy, offer design, audience definition, tracking logic, campaign implementation, full creative asset creation, and the first 30 days of post-campaign follow-up. Tiered by add-ons: executive endorsement module, custom creative packages, AI lookalike audience expansion, and priority account support.' },
+    { q: 'What does a brand need to provide to launch?', a: 'Sweepstakes prize budget (recommended $5,000), startup fee, brand assets and guidelines, logos, product photography, product descriptions, landing pages or destinations, and a point of contact for approvals.' },
     { q: 'What affiliate economics are required?', a: 'Minimum 20% affiliate commission for external offer campaigns. Standard 3-5% rates are insufficient.' },
     { q: 'What wholesale requirements apply for marketplace?', a: 'Minimum 30% wholesale margin plus dropship arrangement. The brand fulfills all orders directly. GolfN holds zero inventory.' },
     { q: 'How are points billed?', a: 'Points are billed as served, invoiced net 30. No upfront bulk purchase required beyond the initial deposit. Billing scales with actual user engagement.' },
-    { q: 'Are there prepay discounts?', a: 'Yes. Quarterly prepay saves 10%, semi-annual saves 15%, and annual prepay saves 20% on ongoing management fees.' },
+    { q: 'Are there prepay discounts?', a: 'Yes. Prepaying buys a credit balance that is deducted monthly. 3-month prepay saves 8%, 6-month saves 15%, and 12-month saves 22% on ongoing per-user management fees.' },
   ]},
 ]
 
@@ -47,7 +47,7 @@ export function S11_FAQ({ partner }: { partner: PartnerData }) {
   const customFAQ = (partner.customFAQ || []).map(f => ({ q: f.question, a: f.answer }))
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <div className="flex items-center gap-2 mb-4">
