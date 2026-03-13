@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+import { Download } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { images } from '@/lib/images'
 import { S01_Hero } from './S01_Hero'
@@ -24,8 +26,43 @@ const navSections = [
 ]
 
 export function TemplateClient({ partner }: { partner: PartnerData }) {
+  const [downloading, setDownloading] = useState(false)
+
+  const downloadPDF = async () => {
+    setDownloading(true)
+    try {
+      const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf'),
+      ])
+      const content = document.getElementById('main-content')
+      if (!content) return
+      const canvas = await html2canvas(content, { scale: 2, logging: false, useCORS: true })
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+      const pdfWidth = pdf.internal.pageSize.getWidth()
+      const imgWidth = pdfWidth
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      let heightLeft = imgHeight
+      let position = 0
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+      heightLeft -= pdf.internal.pageSize.getHeight()
+      while (heightLeft > 0) {
+        position -= pdf.internal.pageSize.getHeight()
+        pdf.addPage()
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pdf.internal.pageSize.getHeight()
+      }
+      pdf.save(`GolfN-${partner.partnerName.replace(/\s+/g, '-')}-Partnership-Proposal.pdf`)
+    } catch (err) {
+      console.error('PDF generation failed:', err)
+    } finally {
+      setDownloading(false)
+    }
+  }
+
   return (
-    <main className="relative bg-[#0f1217]">
+    <main id="main-content" className="relative bg-[#0f1217]">
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
       <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5">
@@ -61,11 +98,21 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       <SectionDivider />
       <S12_FinalCTA partner={partner} />
 
-      <footer className="max-w-7xl mx-auto px-6 md:px-12 py-14 md:py-20 text-center border-t border-[#2a3347]">
+      <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
         <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
         <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
         <p className="text-[#2a3347] text-sm mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>
       </footer>
+
+      {/* Download PDF button */}
+      <button
+        onClick={downloadPDF}
+        disabled={downloading}
+        className="fixed bottom-8 right-8 bg-[#00ff9d] text-black font-semibold px-6 py-3 rounded-full shadow-2xl hover:bg-[#00e08a] transition z-50 flex items-center gap-2 disabled:opacity-50"
+      >
+        <Download className="w-5 h-5" />
+        {downloading ? 'Generating...' : 'Download PDF'}
+      </button>
     </main>
   )
 }

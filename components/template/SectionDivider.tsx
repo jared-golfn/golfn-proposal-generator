@@ -4,22 +4,17 @@ import { motion } from 'framer-motion'
 
 export function SectionDivider({ color = '#00ff9d', label, targetId }: { color?: string; label?: string; targetId?: string }) {
   const inner = (
-    <div className="flex flex-col items-center py-8">
-      <motion.div
-        className="w-px h-16"
-        style={{ background: `linear-gradient(to bottom, transparent, ${color}40, transparent)` }}
-        initial={{ scaleY: 0 }}
-        whileInView={{ scaleY: 1 }}
-        viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.6 }}
-      />
+    <div className="flex flex-col items-center py-3">
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
+        <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, ${color}20, transparent)` }} />
+      </div>
       {label && (
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="text-xs font-mono tracking-[0.2em] uppercase mt-2"
-          style={{ color: `${color}80` }}
+          style={{ color: `${color}60` }}
         >
           {label}
         </motion.span>
