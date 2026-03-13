@@ -1,18 +1,81 @@
 // Sanity GROQ queries for partner presentations
-// Phase 1: Using static data. These queries are ready for when content is migrated to Sanity.
+// Updated to match expanded partnerPresentation schema
 
-export const partnerPresentationQuery = `*[_type == "partnerPresentation" && slug.current == $slug][0]{
-  title,
+import imageUrlBuilder from '@sanity/image-url'
+import { client } from './client'
+
+const builder = imageUrlBuilder(client)
+export function urlFor(source: any) {
+  return builder.image(source)
+}
+
+// ── Main presentation query ─────────────────────────────────────
+export const partnerPresentationQuery = `*[_type == "partnerPresentation" && slug.current == $slug && isActive == true][0]{
   partnerName,
+  "slug": slug.current,
   partnerLogo,
   primaryColor,
   secondaryColor,
   productCategory,
   productNames,
+  recommendedPath,
+  keyMarkets,
+
+  // Campaign customization
+  heroSubtitle,
+  recommendedPathRationale,
+  customScenarios,
+  highlightedActivations,
+  customFAQ,
+
+  // Agency / Portfolio
+  isPortfolio,
+  agencyName,
+  agencyLogo,
+  portfolioBrands[]{
+    brandName,
+    brandLogo,
+    brandColor,
+    category,
+    products,
+    pitch,
+    targetingEdge
+  },
+
+  // Commerce
+  commerceModel,
+  commerceNotes,
+  hasExistingAffiliate,
+
+  // Admin
   linkPassword,
-  "commercialLayers": *[_type == "commercialLayer"] | order(order asc),
-  "progressionStages": *[_type == "progressionStage"] | order(order asc),
-  "archetypes": *[_type == "partnershipArchetype"] | order(order asc),
-  "metrics": *[_type == "platformMetric"] | order(order asc),
-  "settings": *[_type == "globalSettings"][0]
+  contactEmail,
+  bookingUrl,
+
+  // Related global data
+  "metrics": *[_type == "platformMetric"] | order(order asc){
+    label, value, subtitle, isHighlighted
+  },
+  "settings": *[_type == "presentationSettings"][0]{
+    positioningStatement,
+    notStatements,
+    setupMinimum,
+    recurringMinimum,
+    durationMinimum,
+    commerceMinimum
+  }
+}`
+
+// ── List all active presentations (for generateStaticParams) ────
+export const allPresentationSlugsQuery = `*[_type == "partnerPresentation" && isActive == true]{
+  "slug": slug.current
+}`
+
+// ── Quick list for the Studio dashboard ─────────────────────────
+export const presentationListQuery = `*[_type == "partnerPresentation"] | order(partnerName asc){
+  partnerName,
+  "slug": slug.current,
+  productCategory,
+  isActive,
+  partnerLogo
 }`
