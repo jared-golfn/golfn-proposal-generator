@@ -89,23 +89,37 @@ function StatCard({ stat, index, partner }: { stat: typeof stats[0]; index: numb
 }
 
 export function HeroSection({ partner }: { partner: PartnerConfig }) {
+  const defaultSubtitle = 'Golf-specific demand generation, activation, and customer progression built around verified golfers and measurable downstream action.'
+  const subtitle = partner.heroSubtitle || defaultSubtitle
+  const isPortfolio = partner.isPortfolio && partner.portfolioBrands
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03]" style={{ background: `radial-gradient(ellipse 70% 50% at 20% 40%, ${partner.primaryColor}, transparent)` }} />
 
       <div className="relative z-10 w-content w-full px-5 md:px-12 py-16 md:py-20">
+        {/* Header: GolfN logo + partner/agency identity */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="flex items-center justify-between mb-16 md:mb-28">
           <img src={images.logo} alt="GolfN" className="h-8 md:h-12 w-auto" />
-          <span className="text-[#8C8C8C] text-sm md:text-lg">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
+          <div className="flex items-center gap-3">
+            {partner.agencyLogoUrl ? (
+              <>
+                <span className="text-[#52525B] text-sm">Prepared for</span>
+                <img src={partner.agencyLogoUrl} alt={partner.agencyName || partner.partnerName} className="h-6 md:h-8 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+              </>
+            ) : (
+              <span className="text-[#8C8C8C] text-sm md:text-lg">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
+            )}
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center mb-10 md:mb-12">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.15 }}>
             <h1 className="font-display text-[3rem] md:text-[5.5rem] lg:text-[6.5rem] leading-[0.88] tracking-tight mb-6 md:mb-8">
-              Partnership<br /><span className="text-gradient">Structure</span>
+              {isPortfolio ? (<>Portfolio<br /><span className="text-gradient">Partnership</span></>) : (<>Partnership<br /><span className="text-gradient">Structure</span></>)}
             </h1>
             <p className="text-lg md:text-xl text-[#B0B0B4] max-w-lg leading-relaxed font-light">
-              Golf-specific demand generation, activation, and customer progression built around verified golfers and measurable downstream action.
+              {subtitle}
             </p>
 
             <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
@@ -145,9 +159,64 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
           ))}
         </motion.div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="mt-12 md:mt-16 flex items-center gap-4">
+        {/* Portfolio Brand Cards */}
+        {isPortfolio && partner.portfolioBrands && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.0 }} className="mt-8 md:mt-12">
+            <p className="text-sm font-mono text-[#71717A] tracking-wider uppercase mb-5">Portfolio Brands</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+              {partner.portfolioBrands.map((brand, i) => (
+                <motion.div
+                  key={brand.slug}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.1 + i * 0.08 }}
+                  className="bg-[#131315] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 hover:border-[#3A3A3F] transition-all group"
+                  style={{ borderTopColor: brand.color, borderTopWidth: '2px' }}
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <img src={brand.logoUrl} alt={brand.name} className="h-5 md:h-6 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
+                  </div>
+                  <p className="text-xs font-mono tracking-wider uppercase mb-3" style={{ color: brand.color }}>{brand.category}</p>
+                  <p className="text-sm md:text-base text-[#B0B0B4] leading-relaxed mb-4">{brand.pitch}</p>
+                  <div className="pt-3 border-t border-[#2A2A2C]/50">
+                    <p className="text-xs font-mono text-[#52525B] tracking-wider uppercase mb-2">GolfN Targeting Edge</p>
+                    <p className="text-sm text-[#A1A1AA] leading-relaxed">{brand.targetingEdge}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Key Markets */}
+        {partner.keyMarkets && partner.keyMarkets.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: isPortfolio ? 1.4 : 1.1 }} className="mt-5 md:mt-8 bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+              <div>
+                <p className="text-sm font-mono text-[#71717A] tracking-wider uppercase mb-2">Key Markets</p>
+                <div className="flex flex-wrap gap-2">
+                  {partner.keyMarkets.map((market) => (
+                    <span key={market} className="text-sm md:text-base px-4 py-2 rounded-xl border text-[#D4D4D8] font-medium" style={{ background: `${partner.primaryColor}08`, borderColor: `${partner.primaryColor}25` }}>{market}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="hidden sm:block w-px h-12 bg-[#2A2A2C]" />
+              <div className="text-sm md:text-base text-[#A1A1AA] max-w-sm">
+                GolfN is live in <span className="text-white font-semibold">57 countries</span>. The UK is GolfN&apos;s <span className="text-white font-semibold">#2 market</span> behind the United States, with strong presence across Australia and Canada.
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: isPortfolio ? 1.6 : 1.3 }} className="mt-12 md:mt-16 flex items-center gap-4">
           <div className="h-px w-12 md:w-16" style={{ background: partner.primaryColor }} />
-          <span className="text-sm md:text-base text-[#71717A]">{partner.productCategory} — {partner.productNames.join(' · ')}</span>
+          <span className="text-sm md:text-base text-[#71717A]">
+            {isPortfolio ? (
+              <>{partner.portfolioBrands!.map(b => b.name).join(' \u00b7 ')}</>
+            ) : (
+              <>{partner.productCategory} \u2014 {partner.productNames.join(' \u00b7 ')}</>
+            )}
+          </span>
         </motion.div>
       </div>
 

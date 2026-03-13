@@ -1,5 +1,6 @@
 // GolfN Partnership Paths — Pilot / Growth / Strategic
 // Complete data model for the interactive guided buying experience
+// Partner-specific scenario overrides for Sports Impact portfolio (Mar 9 2026)
 
 export type PathId = 'pilot' | 'growth' | 'strategic'
 
@@ -28,6 +29,73 @@ export type ActivationImportance = 'notNeeded' | 'niceToHave' | 'important'
 
 export type ViewMode = 'simple' | 'detailed'
 
+// --- Partner-Specific Scenario Overrides ---
+
+export interface ScenarioOverride {
+  title: string
+  description: string
+}
+
+/** Per-partner example scenario overrides keyed by partner slug then path id */
+export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, ScenarioOverride>>> = {
+  'galvin-green': {
+    pilot: {
+      title: 'Masters Capsule Collection \u2014 Exclusive Drop Activation',
+      description: 'A limited-edition Masters-inspired capsule promoted through an exclusive early-access activation that introduces Galvin Green to golfers who don\u2019t yet know the brand. Featured placement and Learn & Earn modules educate golfers on the multi-layer system, while affiliate-tracked links convert interest into purchases at premium price points. No discounting, no competitions \u2014 just premium brand exposure to the right audience.',
+    },
+    growth: {
+      title: 'Seasonal Outerwear Awareness & Education Campaign',
+      description: 'A multi-month campaign timed to fall and winter golf seasons. Golfers in rain-heavy and cold-weather regions are targeted with Learn & Earn modules explaining why Galvin Green\u2019s GORE-TEX layering system outperforms standard rain gear. Weather-based regional targeting ensures the message reaches golfers who need it most. Affiliate-tracked conversion pathways layer on top of existing Galvin Green affiliate partnerships.',
+    },
+    strategic: {
+      title: 'Year-Round Premium Outerwear Partner',
+      description: 'Galvin Green becomes a featured outerwear partner across the GolfN ecosystem with seasonal campaigns tied to capsule drops, weather-targeted awareness in key markets (US, UK, Australia, Canada), and ongoing Learn & Earn education about the multi-layer system.',
+    },
+  },
+  'wilson-golf': {
+    pilot: {
+      title: 'New Product Launch Activation',
+      description: 'A launch activation for a new Wilson product line \u2014 sweepstakes-driven awareness introduces the product, then post-sweep campaigns target golfers whose equipment profiles and handicap range make them ideal upgrade candidates. Affiliate-tracked links drive conversion.',
+    },
+    growth: {
+      title: 'Equipment Upgrade Campaign with Demo Day Integration',
+      description: 'A multi-month program combining digital education (Learn & Earn on Wilson technology), demo day check-ins through Daily Grind, and affiliate-tracked conversion. GolfN identifies golfers playing competitor clubs or overdue for an upgrade and targets them with Wilson content.',
+    },
+    strategic: {
+      title: 'Full-Line Equipment Partner',
+      description: 'Wilson Golf runs year-round across clubs, balls, and bags with seasonal product launches, demo day activations, and ongoing Learn & Earn education. Equipment profile targeting ensures every impression reaches golfers who are ready to switch or upgrade.',
+    },
+  },
+  'motocaddy': {
+    pilot: {
+      title: 'Walker Identification & Awareness Campaign',
+      description: 'GolfN identifies every golfer in the ecosystem who walks \u2014 the only platform that can do this. A targeted awareness activation introduces Motorcaddy to verified walkers, followed by affiliate-tracked conversion at a $2,000+ price point with strong commission.',
+    },
+    growth: {
+      title: 'Walk-to-Ride Conversion Program',
+      description: 'A multi-month campaign targeting verified walkers with Learn & Earn content on electric trolley benefits, demo day check-ins at golf retail locations, and points-backed incentives. At Motorcaddy\u2019s price point, even modest conversion rates produce significant affiliate revenue.',
+    },
+    strategic: {
+      title: 'Year-Round Walking Golfer Activation',
+      description: 'Motorcaddy becomes the exclusive electric trolley partner with year-round walker targeting, seasonal campaigns, retail check-in activations, and ongoing education. GolfN\u2019s unique walker identification data ensures zero wasted impressions.',
+    },
+  },
+  'sports-impact': {
+    pilot: {
+      title: 'Multi-Brand Portfolio Pilot',
+      description: 'Launch all three Sports Impact brands into GolfN simultaneously with shared infrastructure and consolidated pricing. Each brand gets a tailored activation \u2014 exclusive capsule drop awareness for Galvin Green, product launch for Wilson, walker-targeted awareness for Motorcaddy \u2014 with shared audience intelligence and reporting.',
+    },
+    growth: {
+      title: 'Portfolio Growth Program',
+      description: 'A coordinated multi-month program across Galvin Green, Wilson, and Motorcaddy. Each brand runs distinct targeting (weather-based, equipment-readiness, walker identification) while sharing campaign infrastructure, audience intelligence, and optimization. Consolidated agency pricing reduces per-brand costs significantly.',
+    },
+    strategic: {
+      title: 'Year-Round Portfolio Partnership',
+      description: 'Sports Impact becomes a strategic agency partner with year-round activation across all three brands. Shared infrastructure, combined reporting, cross-brand audience insights, and seasonal campaign coordination. The portfolio approach creates compounding value as learnings from one brand inform campaigns for others.',
+    },
+  },
+}
+
 // --- Partnership Path Definitions ---
 
 export interface PartnershipPath {
@@ -36,7 +104,7 @@ export interface PartnershipPath {
   tagline: string
   bestFor: string
   includes: string[]
-  includedStages: number[] // stage numbers 1-8
+  includedStages: number[]
   setup: { range: string; low: number; high: number }
   monthly: { starting: string; floor: number }
   duration: { recommended: string; minimum: number }
