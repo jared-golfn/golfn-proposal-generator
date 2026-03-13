@@ -4,9 +4,13 @@ import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { type PartnerConfig } from '@/lib/presentation-data'
 import { brandRecommendations } from '@/lib/case-studies'
+import { wilsonMotocaddyRecommendations } from '@/lib/wilson-motocaddy-recs'
 import { partnershipPaths } from '@/lib/partnership-paths'
 import { marketData, marketDataTotal, getPartnerMarkets } from '@/lib/market-data'
 import { Expandable } from './Expandable'
+
+// Merge all recommendations
+const allRecs = [...brandRecommendations, ...wilsonMotocaddyRecommendations]
 
 function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null)
@@ -16,13 +20,23 @@ function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: numb
 
 export function SectionRecommendation({ partner }: { partner: PartnerConfig }) {
   const isPortfolio = partner.isPortfolio && partner.portfolioBrands
-  const recs = isPortfolio
-    ? brandRecommendations
-    : brandRecommendations.filter(r => r.brandSlug === partner.slug)
+
+  // For portfolio: filter recs to brands actually in this portfolio
+  // For single brand: filter to that brand's slug
+  let recs
+  if (isPortfolio && partner.portfolioBrands) {
+    const portfolioSlugs = partner.portfolioBrands.map(b => b.slug)
+    recs = allRecs.filter(r => portfolioSlugs.includes(r.brandSlug))
+  } else {
+    recs = allRecs.filter(r => r.brandSlug === partner.slug)
+  }
 
   const partnerMarkets = partner.keyMarkets ? getPartnerMarkets(partner.keyMarkets) : []
   const maxUsers = marketData.length > 0 ? marketData[0].users : 1
   const partnerMarketsTotal = partnerMarkets.reduce((sum, m) => sum + m.users, 0)
+
+  // Determine grid cols based on number of recs
+  const gridCols = recs.length === 2 ? 'md:grid-cols-2' : recs.length >= 3 ? 'md:grid-cols-3' : 'max-w-2xl'
 
   return (
     <section className="py-20 md:py-32">
@@ -37,13 +51,12 @@ export function SectionRecommendation({ partner }: { partner: PartnerConfig }) {
         </Fade>
 
         {/* Recommendation cards */}
-        <div className={`grid grid-cols-1 ${isPortfolio ? 'md:grid-cols-3' : 'max-w-2xl'} gap-5 md:gap-6 mb-12`}>
+        <div className={`grid grid-cols-1 ${gridCols} gap-5 md:gap-6 mb-12`}>
           {recs.map((rec, i) => {
             const path = partnershipPaths[rec.recommendedPath]
             return (
               <Fade key={rec.brandSlug} delay={0.1 * i}>
                 <div className="bg-[#131315] border-2 rounded-2xl overflow-hidden" style={{ borderColor: `${rec.brandColor}40` }}>
-                  {/* Brand header */}
                   <div className="px-6 py-5 md:px-8 md:py-6" style={{ background: `${rec.brandColor}08` }}>
                     <div className="flex items-center justify-between gap-3 mb-4">
                       <img src={rec.brandLogoUrl} alt={rec.brandName} className="h-7 md:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
@@ -53,7 +66,6 @@ export function SectionRecommendation({ partner }: { partner: PartnerConfig }) {
                     </div>
                     <p className="text-base md:text-lg text-[#B0B0B4] leading-relaxed">{rec.rationale}</p>
                   </div>
-                  {/* Pricing quick-look */}
                   <div className="px-6 py-4 md:px-8 md:py-5 grid grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-[#71717A] mb-1">Setup</p>
@@ -64,7 +76,6 @@ export function SectionRecommendation({ partner }: { partner: PartnerConfig }) {
                       <p className="text-xl md:text-2xl font-mono font-bold" style={{ color: rec.brandColor }}>{path.monthly.starting}</p>
                     </div>
                   </div>
-                  {/* CTA */}
                   <div className="px-6 py-4 md:px-8 border-t border-[#2A2A2C]/50">
                     <a href={`mailto:jared@golfn.com?subject=Partnership%20Discussion%20%E2%80%94%20${encodeURIComponent(rec.brandName)}%20(${path.name}%20Path)`} className="text-base md:text-lg font-semibold transition-all hover:opacity-80" style={{ color: rec.brandColor }}>
                       Scope {rec.brandName} Program &rarr;
@@ -81,13 +92,17 @@ export function SectionRecommendation({ partner }: { partner: PartnerConfig }) {
           <Fade delay={0.3}>
             <div className="bg-[#131315] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 border-l-4 mb-10" style={{ borderLeftColor: partner.primaryColor }}>
               <p className="text-lg md:text-xl text-[#D4D4D8] leading-relaxed">
-                <span className="font-bold text-white">Portfolio play:</span> Start all three brands as Pilots on shared infrastructure. Consolidated pricing kicks in from day one. Successful Pilots become Growth programs with proven data behind them.
+                <span className="font-bold text-white">Portfolio play:</span>{' '}
+                {recs.length === 2
+                  ? 'Start both brands as Pilots on shared infrastructure. Consolidated pricing kicks in from day one. Cross-brand audience insights surface prospects neither brand could find alone.'
+                  : 'Start all three brands as Pilots on shared infrastructure. Consolidated pricing kicks in from day one. Successful Pilots become Growth programs with proven data behind them.'
+                }
               </p>
             </div>
           </Fade>
         )}
 
-        {/* Market data — expandable */}
+        {/* Market data */}
         {partnerMarkets.length > 0 && (
           <Fade delay={0.35}>
             <Expandable
