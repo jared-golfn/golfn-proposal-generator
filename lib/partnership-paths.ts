@@ -1,6 +1,6 @@
 // GolfN Partnership Paths — Pilot / Growth / Strategic
 // Complete data model for the interactive guided buying experience
-// Partner-specific scenario overrides added for Galvin Green (Sports Impact, Mar 9 2026)
+// Partner-specific scenario overrides for Sports Impact portfolio (Mar 9 2026)
 
 export type PathId = 'pilot' | 'growth' | 'strategic'
 
@@ -49,7 +49,49 @@ export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, Sce
     },
     strategic: {
       title: 'Year-Round Premium Outerwear Partner',
-      description: 'Galvin Green becomes a featured outerwear partner across the GolfN ecosystem with seasonal campaigns tied to capsule drops, weather-targeted awareness in key markets (US, UK, Australia, Canada), and ongoing Learn & Earn education about the multi-layer system. Points-backed incentives drive first purchases, and regional targeting ensures spend is concentrated where technical outerwear matters most.',
+      description: 'Galvin Green becomes a featured outerwear partner across the GolfN ecosystem with seasonal campaigns tied to capsule drops, weather-targeted awareness in key markets (US, UK, Australia, Canada), and ongoing Learn & Earn education about the multi-layer system.',
+    },
+  },
+  'wilson-golf': {
+    pilot: {
+      title: 'New Product Launch Sweepstakes',
+      description: 'A launch activation for a new Wilson product line \u2014 sweepstakes-driven awareness introduces the product, then post-sweep campaigns target golfers whose equipment profiles and handicap range make them ideal upgrade candidates. Affiliate-tracked links drive conversion.',
+    },
+    growth: {
+      title: 'Equipment Upgrade Campaign with Demo Day Integration',
+      description: 'A multi-month program combining digital education (Learn & Earn on Wilson technology), demo day check-ins through Daily Grind, and affiliate-tracked conversion. GolfN identifies golfers playing competitor clubs or overdue for an upgrade and targets them with Wilson content.',
+    },
+    strategic: {
+      title: 'Full-Line Equipment Partner',
+      description: 'Wilson Golf runs year-round across clubs, balls, and bags with seasonal product launches, demo day activations, and ongoing Learn & Earn education. Equipment profile targeting ensures every impression reaches golfers who are ready to switch or upgrade.',
+    },
+  },
+  'motocaddy': {
+    pilot: {
+      title: 'Walker Identification & Awareness Campaign',
+      description: 'GolfN identifies every golfer in the ecosystem who walks \u2014 the only platform that can do this. A targeted sweepstakes introduces Motorcaddy to verified walkers, followed by affiliate-tracked conversion at a $2,000+ price point with strong commission.',
+    },
+    growth: {
+      title: 'Walk-to-Ride Conversion Program',
+      description: 'A multi-month campaign targeting verified walkers with Learn & Earn content on electric trolley benefits, demo day check-ins at golf retail locations, and points-backed incentives. At Motorcaddy\u2019s price point, even modest conversion rates produce significant affiliate revenue.',
+    },
+    strategic: {
+      title: 'Year-Round Walking Golfer Activation',
+      description: 'Motorcaddy becomes the exclusive electric trolley partner with year-round walker targeting, seasonal campaigns, retail check-in activations, and ongoing education. GolfN\u2019s unique walker identification data ensures zero wasted impressions.',
+    },
+  },
+  'sports-impact': {
+    pilot: {
+      title: 'Multi-Brand Portfolio Pilot',
+      description: 'Launch all three Sports Impact brands into GolfN simultaneously with shared infrastructure and consolidated pricing. Each brand gets a tailored sweepstakes activation \u2014 Masters capsule drop for Galvin Green, product launch for Wilson, walker-targeted awareness for Motorcaddy \u2014 with shared audience intelligence and reporting.',
+    },
+    growth: {
+      title: 'Portfolio Growth Program',
+      description: 'A coordinated multi-month program across Galvin Green, Wilson, and Motorcaddy. Each brand runs distinct targeting (weather-based, equipment-readiness, walker identification) while sharing campaign infrastructure, audience intelligence, and optimization. Consolidated agency pricing reduces per-brand costs significantly.',
+    },
+    strategic: {
+      title: 'Year-Round Portfolio Partnership',
+      description: 'Sports Impact becomes a strategic agency partner with year-round activation across all three brands. Shared infrastructure, combined reporting, cross-brand audience insights, and seasonal campaign coordination. The portfolio approach creates compounding value as learnings from one brand inform campaigns for others.',
     },
   },
 }
@@ -62,7 +104,7 @@ export interface PartnershipPath {
   tagline: string
   bestFor: string
   includes: string[]
-  includedStages: number[] // stage numbers 1-8
+  includedStages: number[]
   setup: { range: string; low: number; high: number }
   monthly: { starting: string; floor: number }
   duration: { recommended: string; minimum: number }

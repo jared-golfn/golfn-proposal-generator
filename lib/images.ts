@@ -38,4 +38,9 @@ export const images = {
   testimonial2: 'https://cdn.sanity.io/images/e3wja34v/production/e8923e3ed5079a1b7decc6152201dd56b6d7bd35-1024x1280.png',
   testimonial3: 'https://cdn.sanity.io/images/e3wja34v/production/8291715a9b95c451dd74a772a3db4d3412bdaae2-1024x1280.png',
   testimonial4: 'https://cdn.sanity.io/images/e3wja34v/production/ee51b33d5db1e85811ad6232722c5018722a75b3-1024x1280.png',
+  // Partner & Agency Logos
+  sportsImpactLogo: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
+  galvinGreenLogo: 'https://cdn.sanity.io/images/e3wja34v/production/6bbe863fced77a5f36904db460f7ed06a3a0e782-230x46.webp',
+  wilsonLogo: 'https://cdn.sanity.io/images/e3wja34v/production/dea5a3da06394dc9f1d779c94d3d75e847ba623f-807x200.svg',
+  motocaddyLogo: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
 } as const

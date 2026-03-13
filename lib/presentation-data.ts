@@ -1,6 +1,19 @@
 // GolfN Partnership Structure — v9 FINAL content + v8.1 expanded copy
 // Platform stats updated Mar 11, 2026
-// Galvin Green customization from Sports Impact call Mar 9, 2026
+// Sports Impact portfolio presentation from Mar 9, 2026 call
+
+export interface PortfolioBrand {
+  slug: string
+  name: string
+  logoUrl: string
+  color: string
+  category: string
+  products: string[]
+  /** One-line pitch for the portfolio overview */
+  pitch: string
+  /** What GolfN uniquely knows or can target for this brand */
+  targetingEdge: string
+}
 
 export interface PartnerConfig {
   slug: string
@@ -17,48 +30,116 @@ export interface PartnerConfig {
   keyMarkets?: string[]
   /** Agency name if partner comes through an agency */
   agencyName?: string
+  /** Agency logo URL */
+  agencyLogoUrl?: string
   /** Additional brands the agency represents */
   agencyBrands?: string[]
+  /** Full portfolio brand definitions for agency-level presentations */
+  portfolioBrands?: PortfolioBrand[]
   /** Partner-specific notes surfaced in the commercial model */
   commerceNotes?: string[]
   /** Default path recommendation for this partner */
   defaultPath?: 'pilot' | 'growth' | 'strategic'
+  /** Whether this is a portfolio/agency-level presentation */
+  isPortfolio?: boolean
 }
 
 export const partners: Record<string, PartnerConfig> = {
   'galvin-green': {
     slug: 'galvin-green',
     partnerName: 'Galvin Green',
+    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/6bbe863fced77a5f36904db460f7ed06a3a0e782-230x46.webp',
     primaryColor: '#17A455',
     secondaryColor: '#8DC54A',
     productCategory: 'Premium Golf Outerwear',
     productNames: ['GORE-TEX Jackets', 'Interface Layers', 'Base Layers', 'Accessories'],
-    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers — built around Galvin Green\'s multi-layer system and seasonal capsule collections.',
+    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers \u2014 built around Galvin Green\'s multi-layer system and seasonal capsule collections.',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
     agencyName: 'Sports Impact',
+    agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     agencyBrands: ['Wilson Golf', 'Motorcaddy'],
     defaultPath: 'pilot',
     commerceNotes: [
-      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy can layer on top of existing affiliate partnerships — users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
+      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy can layer on top of existing affiliate partnerships \u2014 users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
       'For capsule collection drops and limited-edition releases, sweepstakes-driven awareness campaigns create urgency and introduce the brand to golfers who may not know Galvin Green yet.',
-      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means Galvin Green campaigns reach golfers in climates where technical outerwear is essential — not wasted on golfers in perpetual sunshine.',
+      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means Galvin Green campaigns reach golfers in climates where technical outerwear is essential \u2014 not wasted on golfers in perpetual sunshine.',
+    ],
+  },
+  'sports-impact': {
+    slug: 'sports-impact',
+    partnerName: 'Sports Impact',
+    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
+    primaryColor: '#17A455',
+    secondaryColor: '#8DC54A',
+    productCategory: 'Multi-Brand Golf Portfolio',
+    productNames: ['Galvin Green', 'Wilson Golf', 'Motorcaddy'],
+    heroSubtitle: 'A consolidated partnership framework for Sports Impact\'s golf portfolio \u2014 shared infrastructure, audience intelligence, and activation across Galvin Green, Wilson, and Motorcaddy.',
+    keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
+    agencyName: 'Sports Impact',
+    agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
+    defaultPath: 'pilot',
+    isPortfolio: true,
+    portfolioBrands: [
+      {
+        slug: 'galvin-green',
+        name: 'Galvin Green',
+        logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/6bbe863fced77a5f36904db460f7ed06a3a0e782-230x46.webp',
+        color: '#17A455',
+        category: 'Premium Golf Outerwear',
+        products: ['GORE-TEX Jackets', 'Interface Layers', 'Base Layers', 'Accessories'],
+        pitch: 'Brand awareness and technical education for a premium Swedish outerwear brand expanding US recognition. Capsule collection drops and weather-targeted campaigns.',
+        targetingEdge: 'GolfN knows which golfers play in rain, wind, and cold \u2014 and targets only climates where technical outerwear matters.',
+      },
+      {
+        slug: 'wilson-golf',
+        name: 'Wilson Golf',
+        logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/dea5a3da06394dc9f1d779c94d3d75e847ba623f-807x200.svg',
+        color: '#C41E3A',
+        category: 'Golf Equipment',
+        products: ['Dynapower Drivers', 'Staff Model Irons', 'Triad Golf Balls', 'Quiver Stand Bags'],
+        pitch: 'Full-funnel activation for equipment launches and demo day programs. Affiliate partnerships with strong price-point breadth across clubs, balls, and bags.',
+        targetingEdge: 'GolfN tracks what clubs users play, when they last upgraded, and their handicap range \u2014 so Wilson campaigns reach golfers ready to switch.',
+      },
+      {
+        slug: 'motocaddy',
+        name: 'Motorcaddy',
+        logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
+        color: '#0066CC',
+        category: 'Electric Golf Trolleys',
+        products: ['M7 GPS', 'M5 GPS', 'S1 DHC', 'Cube Push Trolley'],
+        pitch: 'Precision targeting for a high-ticket product. GolfN identifies walkers vs. riders, making every impression count at a $2,000+ price point with strong affiliate commission.',
+        targetingEdge: 'GolfN is the only platform that knows which golfers walk. Every Motorcaddy impression goes to a verified walker \u2014 zero waste.',
+      },
+    ],
+    commerceNotes: [
+      'All three brands have existing affiliate partnerships. GolfN\u2019s points economy layers on top \u2014 users earn points for purchases through tracked links, creating dual incentive without replacing current affiliate structures.',
+      'Consolidated agency pricing applies across the portfolio. Campaign architecture, audience intelligence, and infrastructure are shared \u2014 reducing per-brand costs significantly compared to activating each brand independently.',
+      'Each brand gets distinct targeting: weather-based for Galvin Green, equipment-readiness for Wilson, walker identification for Motorcaddy. Shared infrastructure, differentiated activation.',
     ],
   },
   'wilson-golf': {
     slug: 'wilson-golf',
     partnerName: 'Wilson Golf',
+    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/dea5a3da06394dc9f1d779c94d3d75e847ba623f-807x200.svg',
     primaryColor: '#C41E3A',
     secondaryColor: '#E8344E',
     productCategory: 'Golf Equipment',
     productNames: ['Dynapower Drivers', 'Staff Model Irons', 'Triad Golf Balls', 'Quiver Stand Bags'],
+    agencyName: 'Sports Impact',
+    agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
+    keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
   'motocaddy': {
     slug: 'motocaddy',
-    partnerName: 'Motocaddy',
+    partnerName: 'Motorcaddy',
+    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
     primaryColor: '#0066CC',
     secondaryColor: '#3399FF',
-    productCategory: 'Electric Golf Caddies',
+    productCategory: 'Electric Golf Trolleys',
     productNames: ['M7 GPS', 'M5 GPS', 'S1 DHC', 'Cube Push Trolley'],
+    agencyName: 'Sports Impact',
+    agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
+    keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
   demo: {
     slug: 'demo',
