@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Download } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { images } from '@/lib/images'
@@ -27,69 +27,72 @@ const navSections = [
 
 export function TemplateClient({ partner }: { partner: PartnerData }) {
   const [downloading, setDownloading] = useState(false)
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const navRef = useRef<HTMLElement>(null)
+  const accentRef = useRef<HTMLDivElement>(null)
 
   const downloadPDF = async () => {
     if (downloading) return
     setDownloading(true)
-    try {
-      const [html2canvasModule, jsPDFModule] = await Promise.all([
-        import('html2canvas'),
-        import('jspdf'),
-      ])
-      const html2canvas = html2canvasModule.default
-      const jsPDF = jsPDFModule.default
 
-      const content = document.getElementById('main-content')
+    // Hide fixed UI elements before capture
+    if (btnRef.current) btnRef.current.style.display = 'none'
+    if (navRef.current) navRef.current.style.display = 'none'
+    if (accentRef.current) accentRef.current.style.display = 'none'
+
+    try {
+      const html2pdfModule = await import('html2pdf.js')
+      const html2pdf = html2pdfModule.default
+
+      const content = document.getElementById('proposal-content')
       if (!content) {
-        console.error('PDF: Could not find #main-content')
+        console.error('PDF: Could not find #proposal-content')
         return
       }
 
-      const canvas = await html2canvas(content, {
-        scale: 1,
-        logging: false,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#0f1217',
-        windowWidth: 1280,
-        removeContainer: true,
-      })
+      const safeName = partner.partnerName.replace(/\s+/g, '-')
 
-      const imgData = canvas.toDataURL('image/jpeg', 0.85)
-      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-      const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
-      const imgWidth = pdfWidth
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-      let heightLeft = imgHeight
-      let position = 0
-
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
-      heightLeft -= pdfHeight
-
-      while (heightLeft > 0) {
-        position -= pdfHeight
-        pdf.addPage()
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
-        heightLeft -= pdfHeight
+      const opt = {
+        margin: [0.3, 0.3, 0.3, 0.3],
+        filename: 'GolfN-' + safeName + '-Partnership-Proposal.pdf',
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#0f1217',
+          logging: false,
+          windowWidth: 1280,
+          scrollX: 0,
+          scrollY: 0,
+        },
+        jsPDF: {
+          unit: 'in',
+          format: 'letter',
+          orientation: 'portrait' as const,
+        },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
       }
 
-      const safeName = partner.partnerName.replace(/\s+/g, '-')
-      pdf.save('GolfN-' + safeName + '-Partnership-Proposal.pdf')
+      await html2pdf().set(opt).from(content).save()
     } catch (err) {
       console.error('PDF generation failed:', err)
-      alert('PDF generation failed. Please try again or use your browser\'s Print to PDF (Ctrl+P / Cmd+P).')
+      alert('PDF generation encountered an issue. Try using your browser Print to PDF as a backup (Ctrl+P / Cmd+P).')
     } finally {
+      // Restore fixed UI elements
+      if (btnRef.current) btnRef.current.style.display = ''
+      if (navRef.current) navRef.current.style.display = ''
+      if (accentRef.current) accentRef.current.style.display = ''
       setDownloading(false)
     }
   }
 
   return (
-    <main id="main-content" className="relative bg-[#0f1217]">
-      <div className="accent-line fixed top-0 left-0 right-0 z-50" />
+    <main className="relative bg-[#0f1217]">
+      <div ref={accentRef} className="accent-line fixed top-0 left-0 right-0 z-50" />
 
       {/* Right-side nav */}
-      <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8">
+      <nav ref={navRef} className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8">
         {navSections.map((s) => (
           <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-5 justify-end">
             <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
@@ -103,67 +106,73 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         ))}
       </nav>
 
-      {/* S1: Hero */}
-      <div id="top"><S01_Hero partner={partner} /></div>
-      <SectionDivider />
+      {/* PDF capture target */}
+      <div id="proposal-content">
 
-      {/* S2: Why Brands */}
-      <S02_WhyBrands partner={partner} />
-      <SectionDivider label="See the process" targetId="how-it-works" />
+        {/* S1: Hero */}
+        <div id="top"><S01_Hero partner={partner} /></div>
+        <SectionDivider />
 
-      {/* S3: How It Works */}
-      <S03_HowItWorks partner={partner} />
-      <SectionDivider />
+        {/* S2: Why Brands */}
+        <S02_WhyBrands partner={partner} />
+        <SectionDivider label="See the process" targetId="how-it-works" />
 
-      {/* S4: Launch Campaign */}
-      <S04_LaunchCampaign partner={partner} />
-      <SectionDivider />
+        {/* S3: How It Works */}
+        <S03_HowItWorks partner={partner} />
+        <SectionDivider />
 
-      {/* S5: Attention, Intent, Cohort */}
-      <S05_QualifiedInterest partner={partner} />
-      <SectionDivider />
+        {/* S4: Launch Campaign */}
+        <S04_LaunchCampaign partner={partner} />
+        <SectionDivider />
 
-      {/* S6: Post-Campaign Activation */}
-      <S06_PostCampaign partner={partner} />
-      <SectionDivider />
+        {/* S5: Attention, Intent, Cohort */}
+        <S05_QualifiedInterest partner={partner} />
+        <SectionDivider />
 
-      {/* S7: Monthly Reporting */}
-      <S07_MonthlyReporting partner={partner} />
-      <SectionDivider />
+        {/* S6: Post-Campaign Activation */}
+        <S06_PostCampaign partner={partner} />
+        <SectionDivider />
 
-      {/* S8: What We Need */}
-      <S09_WhatWeNeed partner={partner} />
-      <SectionDivider label="See pricing" targetId="ways-to-work" />
+        {/* S7: Monthly Reporting */}
+        <S07_MonthlyReporting partner={partner} />
+        <SectionDivider />
 
-      {/* S9: Ways to Work / Pricing */}
-      <S08_WaysToWork partner={partner} />
-      <SectionDivider />
+        {/* S8: What We Need */}
+        <S09_WhatWeNeed partner={partner} />
+        <SectionDivider label="See pricing" targetId="ways-to-work" />
 
-      {/* S10: Data Difference */}
-      <S10_DataDifference partner={partner} />
-      <SectionDivider />
+        {/* S9: Ways to Work / Pricing */}
+        <S08_WaysToWork partner={partner} />
+        <SectionDivider />
 
-      {/* S11: FAQ */}
-      <div id="faq-section"><S11_FAQ partner={partner} /></div>
-      <SectionDivider />
+        {/* S10: Data Difference */}
+        <S10_DataDifference partner={partner} />
+        <SectionDivider />
 
-      {/* S12: Final CTA */}
-      <S12_FinalCTA partner={partner} />
+        {/* S11: FAQ */}
+        <div id="faq-section"><S11_FAQ partner={partner} /></div>
+        <SectionDivider />
 
-      <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
-        <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-        <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
-        <p className="text-[#2a3347] text-sm mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>
-      </footer>
+        {/* S12: Final CTA */}
+        <S12_FinalCTA partner={partner} />
+
+        <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
+          <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
+          <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
+          <p className="text-[#2a3347] text-sm mt-2 font-mono">Verified Golfers &middot; Measurable Progression &middot; Aligned Incentives</p>
+        </footer>
+
+      </div>
 
       {/* Download PDF button */}
       <button
+        ref={btnRef}
         onClick={downloadPDF}
         disabled={downloading}
         className="fixed bottom-8 right-8 bg-[#00ff9d] text-black font-semibold px-6 py-3 rounded-full shadow-2xl hover:bg-[#00e08a] transition z-50 flex items-center gap-2 disabled:opacity-50"
       >
         <Download className="w-5 h-5" />
-        {downloading ? 'Generating PDF...' : 'Download PDF'}
+        {downloading ? 'Generating PDF...' : 'Download Proposal as PDF'}
       </button>
     </main>
   )
