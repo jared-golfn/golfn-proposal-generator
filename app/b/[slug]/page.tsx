@@ -9,11 +9,9 @@ import { notFound } from 'next/navigation'
 const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
 
 // Convert PartnerConfig to PartnerData for the template
-// Some PartnerData fields don't exist on PartnerConfig yet (they come from Sanity CMS)
-// so we safely default them to undefined
+// Some PartnerData fields don't exist on PartnerConfig yet (they'll come from Sanity CMS)
 function toPartnerData(config: PartnerConfig): PartnerData {
   const scenarios = partnerScenarioOverrides[config.slug]
-  const ext = config as Record<string, unknown>
 
   return {
     partnerName: config.partnerName,
@@ -35,8 +33,6 @@ function toPartnerData(config: PartnerConfig): PartnerData {
       strategicTitle: scenarios.strategic?.title,
       strategicDescription: scenarios.strategic?.description,
     } : undefined,
-    highlightedActivations: ext.highlightedActivations as string[] | undefined,
-    customFAQ: ext.customFAQ as PartnerData['customFAQ'],
     isPortfolio: config.isPortfolio,
     agencyName: config.agencyName,
     agencyLogoUrl: config.agencyLogoUrl,
@@ -49,11 +45,7 @@ function toPartnerData(config: PartnerConfig): PartnerData {
       pitch: b.pitch,
       targetingEdge: b.targetingEdge,
     })),
-    commerceModel: ext.commerceModel as PartnerData['commerceModel'],
     commerceNotes: config.commerceNotes,
-    hasExistingAffiliate: ext.hasExistingAffiliate as boolean | undefined,
-    contactEmail: ext.contactEmail as string | undefined,
-    bookingUrl: ext.bookingUrl as string | undefined,
   }
 }
 
