@@ -4,7 +4,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
 import { type PartnerConfig } from '@/lib/presentation-data'
 import { usePartnership } from '@/lib/partnership-context'
-import { partnershipPaths, extensions as allExtensions } from '@/lib/partnership-paths'
+import { partnershipPaths, extensions as allExtensions, partnerScenarioOverrides } from '@/lib/partnership-paths'
 import type { PathId } from '@/lib/partnership-paths'
 
 function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
@@ -18,11 +18,18 @@ const pathOrder: PathId[] = ['pilot', 'growth', 'strategic']
 export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
   const { state, setPath } = usePartnership()
   const { selectedPath, isRecommended } = state
-  const [activeTab, setActiveTab] = useState<PathId>(selectedPath || 'growth')
+  // Default to partner's recommended path if set, otherwise growth
+  const defaultTab = partner.defaultPath || 'growth'
+  const [activeTab, setActiveTab] = useState<PathId>(selectedPath || defaultTab)
 
   useEffect(() => { if (selectedPath) setActiveTab(selectedPath) }, [selectedPath])
 
   const path = partnershipPaths[activeTab]
+
+  // Use partner-specific scenario override if available, otherwise fall back to default
+  const scenarioOverrides = partnerScenarioOverrides[partner.slug]
+  const scenario = scenarioOverrides?.[activeTab] || path.exampleScenario
+
   const recommendedExtensions = allExtensions.filter(e => path.recommendedExtensions.includes(e.id))
   const handleTabClick = (pathId: PathId) => { setActiveTab(pathId); setPath(pathId) }
 
@@ -87,10 +94,25 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
               </div>
 
               <div className="p-8 md:p-12 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}04` }}>
-                <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-3">Example Scenario</p>
-                <h4 className="text-lg md:text-xl font-bold mb-2">{path.exampleScenario.title}</h4>
-                <p className="text-base md:text-lg text-[#B0B0B4]">{path.exampleScenario.description}</p>
+                <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-3">Example Scenario{scenarioOverrides?.[activeTab] ? ` \u2014 ${partner.partnerName}` : ''}</p>
+                <h4 className="text-lg md:text-xl font-bold mb-2">{scenario.title}</h4>
+                <p className="text-base md:text-lg text-[#B0B0B4]">{scenario.description}</p>
               </div>
+
+              {/* Partner-Specific Commerce Notes */}
+              {partner.commerceNotes && partner.commerceNotes.length > 0 && activeTab === 'pilot' && (
+                <div className="p-8 md:p-12 border-b border-[#2A2A2C]" style={{ background: `${partner.primaryColor}03` }}>
+                  <p className="text-sm md:text-base font-mono text-[#71717A] tracking-wider uppercase mb-4">How This Works for {partner.partnerName}</p>
+                  <div className="space-y-4">
+                    {partner.commerceNotes.map((note, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <div className="w-2 h-2 rounded-full mt-[10px] shrink-0" style={{ background: partner.primaryColor }} />
+                        <p className="text-sm md:text-base text-[#C4C4C8] leading-relaxed">{note}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* 90-Day Pilot Launch — only in Pilot tab */}
               {activeTab === 'pilot' && (
@@ -120,9 +142,19 @@ export function PartnerArchetypes({ partner }: { partner: PartnerConfig }) {
           </AnimatePresence>
         </Fade>
 
+        {/* Multi-Brand Agency Callout — enhanced when agency brands are defined */}
         <Fade delay={0.25}>
           <div className="mt-8 md:mt-10 bg-[#131315] border border-[#2A2A2C] rounded-2xl p-6 md:p-8 border-l-[3px]" style={{ borderLeftColor: partner.secondaryColor }}>
-            <p className="text-base md:text-lg text-[#B0B0B4]"><span className="text-white font-semibold">Multi-Brand Pricing:</span> When an agency activates multiple brands through GolfN, consolidated pricing applies. Efficiencies increase when campaign architecture, audience intelligence, and infrastructure are shared.</p>
+            <p className="text-base md:text-lg text-[#B0B0B4]">
+              <span className="text-white font-semibold">Multi-Brand Pricing:</span>{' '}
+              {partner.agencyName && partner.agencyBrands && partner.agencyBrands.length > 0 ? (
+                <>
+                  {partner.agencyName} represents {partner.partnerName}, {partner.agencyBrands.join(', and ')} through GolfN. When multiple brands activate through a single agency relationship, consolidated pricing applies. Campaign architecture, audience intelligence, and infrastructure are shared \u2014 reducing per-brand costs and increasing efficiency across the portfolio.
+                </>
+              ) : (
+                <>When an agency activates multiple brands through GolfN, consolidated pricing applies. Efficiencies increase when campaign architecture, audience intelligence, and infrastructure are shared.</>
+              )}
+            </p>
           </div>
         </Fade>
       </div>

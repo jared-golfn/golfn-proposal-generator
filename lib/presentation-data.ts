@@ -1,5 +1,6 @@
 // GolfN Partnership Structure — v9 FINAL content + v8.1 expanded copy
 // Platform stats updated Mar 11, 2026
+// Galvin Green customization from Sports Impact call Mar 9, 2026
 
 export interface PartnerConfig {
   slug: string
@@ -10,6 +11,18 @@ export interface PartnerConfig {
   productCategory: string
   productNames: string[]
   password?: string
+  /** Partner-specific hero subtitle override */
+  heroSubtitle?: string
+  /** Key geographic markets for this partner */
+  keyMarkets?: string[]
+  /** Agency name if partner comes through an agency */
+  agencyName?: string
+  /** Additional brands the agency represents */
+  agencyBrands?: string[]
+  /** Partner-specific notes surfaced in the commercial model */
+  commerceNotes?: string[]
+  /** Default path recommendation for this partner */
+  defaultPath?: 'pilot' | 'growth' | 'strategic'
 }
 
 export const partners: Record<string, PartnerConfig> = {
@@ -20,6 +33,16 @@ export const partners: Record<string, PartnerConfig> = {
     secondaryColor: '#8DC54A',
     productCategory: 'Premium Golf Outerwear',
     productNames: ['GORE-TEX Jackets', 'Interface Layers', 'Base Layers', 'Accessories'],
+    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers — built around Galvin Green\'s multi-layer system and seasonal capsule collections.',
+    keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
+    agencyName: 'Sports Impact',
+    agencyBrands: ['Wilson Golf', 'Motorcaddy'],
+    defaultPath: 'pilot',
+    commerceNotes: [
+      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy can layer on top of existing affiliate partnerships — users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
+      'For capsule collection drops and limited-edition releases, sweepstakes-driven awareness campaigns create urgency and introduce the brand to golfers who may not know Galvin Green yet.',
+      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means Galvin Green campaigns reach golfers in climates where technical outerwear is essential — not wasted on golfers in perpetual sunshine.',
+    ],
   },
   'wilson-golf': {
     slug: 'wilson-golf',

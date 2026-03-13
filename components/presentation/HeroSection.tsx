@@ -89,6 +89,9 @@ function StatCard({ stat, index, partner }: { stat: typeof stats[0]; index: numb
 }
 
 export function HeroSection({ partner }: { partner: PartnerConfig }) {
+  const defaultSubtitle = 'Golf-specific demand generation, activation, and customer progression built around verified golfers and measurable downstream action.'
+  const subtitle = partner.heroSubtitle || defaultSubtitle
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03]" style={{ background: `radial-gradient(ellipse 70% 50% at 20% 40%, ${partner.primaryColor}, transparent)` }} />
@@ -96,7 +99,7 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
       <div className="relative z-10 w-content w-full px-5 md:px-12 py-16 md:py-20">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="flex items-center justify-between mb-16 md:mb-28">
           <img src={images.logo} alt="GolfN" className="h-8 md:h-12 w-auto" />
-          <span className="text-[#8C8C8C] text-sm md:text-lg">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span></span>
+          <span className="text-[#8C8C8C] text-sm md:text-lg">Prepared for <span className="text-white font-semibold">{partner.partnerName}</span>{partner.agencyName && <span className="text-[#71717A]"> via {partner.agencyName}</span>}</span>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center mb-10 md:mb-12">
@@ -105,7 +108,7 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
               Partnership<br /><span className="text-gradient">Structure</span>
             </h1>
             <p className="text-lg md:text-xl text-[#B0B0B4] max-w-lg leading-relaxed font-light">
-              Golf-specific demand generation, activation, and customer progression built around verified golfers and measurable downstream action.
+              {subtitle}
             </p>
 
             <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
@@ -144,6 +147,26 @@ export function HeroSection({ partner }: { partner: PartnerConfig }) {
             <StatCard key={s.label} stat={s} index={i} partner={partner} />
           ))}
         </motion.div>
+
+        {/* Key Markets callout for partners with keyMarkets defined */}
+        {partner.keyMarkets && partner.keyMarkets.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }} className="mt-5 md:mt-8 bg-[#161618] border border-[#2A2A2C] rounded-2xl p-5 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+              <div>
+                <p className="text-sm font-mono text-[#71717A] tracking-wider uppercase mb-2">Key Markets for {partner.partnerName}</p>
+                <div className="flex flex-wrap gap-2">
+                  {partner.keyMarkets.map((market) => (
+                    <span key={market} className="text-sm md:text-base px-4 py-2 rounded-xl border text-[#D4D4D8] font-medium" style={{ background: `${partner.primaryColor}08`, borderColor: `${partner.primaryColor}25` }}>{market}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="hidden sm:block w-px h-12 bg-[#2A2A2C]" />
+              <div className="text-sm md:text-base text-[#A1A1AA] max-w-sm">
+                GolfN is live in <span className="text-white font-semibold">57 countries</span>. The UK is GolfN&apos;s <span className="text-white font-semibold">#2 market</span> behind the United States, with strong presence across Australia and Canada.
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }} className="mt-12 md:mt-16 flex items-center gap-4">
           <div className="h-px w-12 md:w-16" style={{ background: partner.primaryColor }} />

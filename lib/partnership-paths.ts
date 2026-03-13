@@ -1,5 +1,6 @@
 // GolfN Partnership Paths — Pilot / Growth / Strategic
 // Complete data model for the interactive guided buying experience
+// Partner-specific scenario overrides added for Galvin Green (Sports Impact, Mar 9 2026)
 
 export type PathId = 'pilot' | 'growth' | 'strategic'
 
@@ -27,6 +28,31 @@ export type ComplexityId = 'focused' | 'fullFunnel' | 'sustained'
 export type ActivationImportance = 'notNeeded' | 'niceToHave' | 'important'
 
 export type ViewMode = 'simple' | 'detailed'
+
+// --- Partner-Specific Scenario Overrides ---
+
+export interface ScenarioOverride {
+  title: string
+  description: string
+}
+
+/** Per-partner example scenario overrides keyed by partner slug then path id */
+export const partnerScenarioOverrides: Record<string, Partial<Record<PathId, ScenarioOverride>>> = {
+  'galvin-green': {
+    pilot: {
+      title: 'Masters Capsule Collection Launch',
+      description: 'A limited-edition Masters-inspired capsule drop promoted through a sweepstakes that introduces Galvin Green to golfers who don\u2019t yet know the brand. Entries drive awareness, post-sweep follow-up drives education on the multi-layer system, and affiliate-tracked links convert interest into purchases at premium price points.',
+    },
+    growth: {
+      title: 'Seasonal Outerwear Awareness & Education Campaign',
+      description: 'A multi-month campaign timed to fall and winter golf seasons. Golfers in rain-heavy and cold-weather regions are targeted with Learn & Earn modules explaining why Galvin Green\u2019s GORE-TEX layering system outperforms standard rain gear. Weather-based regional targeting ensures the message reaches golfers who need it most. Affiliate-tracked conversion pathways layer on top of existing Galvin Green affiliate partnerships.',
+    },
+    strategic: {
+      title: 'Year-Round Premium Outerwear Partner',
+      description: 'Galvin Green becomes a featured outerwear partner across the GolfN ecosystem with seasonal campaigns tied to capsule drops, weather-targeted awareness in key markets (US, UK, Australia, Canada), and ongoing Learn & Earn education about the multi-layer system. Points-backed incentives drive first purchases, and regional targeting ensures spend is concentrated where technical outerwear matters most.',
+    },
+  },
+}
 
 // --- Partnership Path Definitions ---
 
