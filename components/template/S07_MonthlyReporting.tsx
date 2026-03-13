@@ -21,7 +21,7 @@ const managementTiers = [
 
 export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <div className="flex items-center gap-3 mb-4">
@@ -30,15 +30,16 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Reporting</p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">{"What you'll see"}<br /><span className="text-gradient">each month</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-14">
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-4xl leading-9 mb-14">
             Every active program includes monthly reporting and strategic recommendations. This is not a passive dashboard. It is an ongoing optimization rhythm.
           </p>
         </Fade>
 
-        {/* STYLIZED REPORT MOCKUP */}
+        {/* STYLIZED MONTHLY REPORT MOCKUP */}
         <Fade delay={0.1}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 mb-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {/* Left: Metrics Panel */}
               <div className="bg-[#0f1217] rounded-xl p-5">
                 <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-4">Campaign Performance</p>
                 <div className="space-y-3">
@@ -50,6 +51,7 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
                   ))}
                 </div>
               </div>
+              {/* Center: Green Cohort Growth Line Chart */}
               <div className="bg-[#0f1217] rounded-xl p-5">
                 <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-4">Cohort Growth</p>
                 <div className="flex items-end gap-1 h-24">
@@ -59,6 +61,7 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
                 </div>
                 <p className="text-sm text-[#6b7280] mt-2">+34% qualified cohort growth this period</p>
               </div>
+              {/* Right: Recommendations Card */}
               <div className="bg-[#0f1217] rounded-xl p-5">
                 <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-4">Recommendations</p>
                 <div className="space-y-2">
@@ -116,7 +119,7 @@ export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
         <Fade delay={0.25}>
           <div className="mt-6 bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-8">
             <h4 className="text-xl font-semibold text-white mb-2">Why ongoing management exists</h4>
-            <p className="text-lg text-[#d1d5db] leading-8">The initial package includes 30 days of post-campaign follow-up. After that, ongoing management is billed <strong className="text-white">monthly per qualified user</strong> added to your cohort (starting at $5/user, tiering down to $1). This covers reporting, creative refreshes, message testing, cohort expansion, and continued program optimization.</p>
+            <p className="text-lg text-[#d1d5db] leading-9">The initial package includes 30 days of post-campaign follow-up. After that, ongoing management is billed <strong className="text-white">monthly per qualified user</strong> added to your cohort (First 2,000 at $5, tiering down to $1 at 10,001+). This covers reporting, creative refreshes, message testing, cohort expansion, and continued program optimization.</p>
           </div>
         </Fade>
       </div>
