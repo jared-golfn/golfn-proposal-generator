@@ -84,15 +84,14 @@ export function S03_HowItWorks({ partner }: { partner: PartnerData }) {
           ))}
         </div>
 
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {expanded && (
             <motion.div
               key={expanded}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
             >
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 mt-4">
                 <div className="flex items-center gap-3 mb-3">
