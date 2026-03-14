@@ -14,6 +14,7 @@ import { S09_WhatWeNeed } from './S09_WhatWeNeed'
 import { S10_DataDifference } from './S10_DataDifference'
 import { S11_FAQ } from './S11_FAQ'
 import { S12_FinalCTA } from './S12_FinalCTA'
+import { CaseStudy } from './CaseStudy'
 import { SectionDivider } from './SectionDivider'
 
 const navSections = [
@@ -51,6 +52,8 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         <S06_PostCampaign partner={partner} />
         <SectionDivider />
         <S07_MonthlyReporting partner={partner} />
+        <SectionDivider />
+        <CaseStudy />
         <SectionDivider />
         <S09_WhatWeNeed partner={partner} />
         <SectionDivider label="See pricing" targetId="ways-to-work" />
