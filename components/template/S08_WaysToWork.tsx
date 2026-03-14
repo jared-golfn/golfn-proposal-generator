@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star, Trophy, ChevronDown, ChevronUp } from 'lucide-react'
+import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star, Trophy, ChevronDown, ChevronUp, Clock, Megaphone, ArrowRight } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { campaignImageStyles } from '@/lib/campaign-images'
 import { Fade } from './Fade'
@@ -27,7 +27,6 @@ const baseIncludes = [
   'Portal setup & brand onboarding',
   'Basic creative templates',
   'Full distribution setup',
-  '30-day free follow-up',
   'Standard creative revisions & support during launch',
   'Partner social co-promotion (you share the sweepstakes, driving new GolfN downloads)',
 ]
@@ -132,42 +131,21 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                   const opaqueLogo = c.brandLogoUrl ? isOpaqueImage(c.brandLogoUrl) : false
                   const imgStyle = campaignImageStyles[c.brandName]
                   return (
-                    <div
-                      key={c.brandName}
-                      className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col"
-                    >
+                    <div key={c.brandName} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col">
                       {c.brandLogoUrl && (
                         <div className={`mb-4 h-10 flex items-center ${opaqueLogo ? 'bg-white rounded-lg px-3 w-fit' : ''}`}>
-                          <img
-                            src={c.brandLogoUrl}
-                            alt={c.brandName}
-                            className="h-6 md:h-7 w-auto max-w-[140px] object-contain"
-                            style={opaqueLogo ? {} : { filter: 'brightness(0) invert(1)', opacity: 0.8 }}
-                          />
+                          <img src={c.brandLogoUrl} alt={c.brandName} className="h-6 md:h-7 w-auto max-w-[140px] object-contain" style={opaqueLogo ? {} : { filter: 'brightness(0) invert(1)', opacity: 0.8 }} />
                         </div>
                       )}
-
                       <div className="w-full h-44 rounded-lg bg-[#0f1217] border border-[#2a3347] mb-4 overflow-hidden">
                         {c.heroImageUrl ? (
-                          <img
-                            src={c.heroImageUrl}
-                            alt={c.title}
-                            className="w-full h-full object-cover"
-                            style={{
-                              objectPosition: imgStyle?.position || 'center center',
-                              transform: `scale(${imgStyle?.scale || '1'})`,
-                            }}
-                          />
+                          <img src={c.heroImageUrl} alt={c.title} className="w-full h-full object-cover" style={{ objectPosition: imgStyle?.position || 'center center', transform: `scale(${imgStyle?.scale || '1'})` }} />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <span className="text-sm text-[#4b5563] font-mono">Product image</span>
-                          </div>
+                          <div className="w-full h-full flex items-center justify-center"><span className="text-sm text-[#4b5563] font-mono">Product image</span></div>
                         )}
                       </div>
-
                       <h4 className="text-lg font-bold text-white mb-1">{c.title}</h4>
                       <p className="text-sm text-[#9ca3af] leading-6 mb-3">{c.description}</p>
-
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217]">PRIZE POOL</span>
                         <span className="text-xl font-mono font-bold text-[#00ff9d]">{c.prizePool}</span>
@@ -177,11 +155,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                         <span className="text-lg font-mono font-bold text-white">{formatUSD(startupPerBrand)}</span>
                         <span className="text-sm text-[#6b7280]">per brand</span>
                       </div>
-
-                      <button
-                        onClick={() => setExpandedCampaign(expandedCampaign === ci ? null : ci)}
-                        className="flex items-center gap-1.5 text-sm font-semibold text-[#00ff9d] hover:underline mt-auto"
-                      >
+                      <button onClick={() => setExpandedCampaign(expandedCampaign === ci ? null : ci)} className="flex items-center gap-1.5 text-sm font-semibold text-[#00ff9d] hover:underline mt-auto">
                         {expandedCampaign === ci ? 'Hide prizes' : 'View prizes'}
                         {expandedCampaign === ci ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                       </button>
@@ -189,10 +163,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                         <div className="mt-3 space-y-2">
                           {c.prizes.map((p, pi) => (
                             <div key={pi} className="flex justify-between items-start text-sm border-t border-[#2a3347]/50 pt-2">
-                              <div>
-                                <span className="text-[#00ff9d] font-mono font-bold mr-2">{p.place}</span>
-                                <span className="text-[#d1d5db]">{p.description}</span>
-                              </div>
+                              <div><span className="text-[#00ff9d] font-mono font-bold mr-2">{p.place}</span><span className="text-[#d1d5db]">{p.description}</span></div>
                               <span className="text-white font-mono font-semibold shrink-0 ml-3">{p.value}</span>
                             </div>
                           ))}
@@ -205,22 +176,11 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
 
               {hasDiscount && (
                 <div className="mt-6 bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden">
-                  <div className="px-6 py-4 border-b border-[#2a3347] bg-[#0f1217]">
-                    <h4 className="text-lg font-bold text-white">Portfolio Startup Summary</h4>
-                  </div>
+                  <div className="px-6 py-4 border-b border-[#2a3347] bg-[#0f1217]"><h4 className="text-lg font-bold text-white">Portfolio Startup Summary</h4></div>
                   <div className="px-6 py-4 space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-base text-[#d1d5db]">{formatUSD(startupPerBrand)} x {brandCount} brands</span>
-                      <span className="text-base font-mono text-[#9ca3af]">{formatUSD(startupSubtotal)}</span>
-                    </div>
-                    <div className="flex justify-between items-center text-[#00ff9d]">
-                      <span className="text-base">Portfolio discount ({startupDiscountPct}% off)</span>
-                      <span className="text-base font-mono font-semibold">-{formatUSD(startupSavings)}</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-[#2a3347]">
-                      <span className="text-lg font-bold text-white">Total Startup</span>
-                      <span className="text-2xl font-mono font-bold text-[#00ff9d]">{formatUSD(startupTotal)}</span>
-                    </div>
+                    <div className="flex justify-between items-center"><span className="text-base text-[#d1d5db]">{formatUSD(startupPerBrand)} x {brandCount} brands</span><span className="text-base font-mono text-[#9ca3af]">{formatUSD(startupSubtotal)}</span></div>
+                    <div className="flex justify-between items-center text-[#00ff9d]"><span className="text-base">Portfolio discount ({startupDiscountPct}% off)</span><span className="text-base font-mono font-semibold">-{formatUSD(startupSavings)}</span></div>
+                    <div className="flex justify-between items-center pt-3 border-t border-[#2a3347]"><span className="text-lg font-bold text-white">Total Startup</span><span className="text-2xl font-mono font-bold text-[#00ff9d]">{formatUSD(startupTotal)}</span></div>
                   </div>
                 </div>
               )}
@@ -234,6 +194,69 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </Fade>
         )}
 
+        {/* ── Program Timeline ── */}
+        <Fade delay={0.05}>
+          <div className="mb-14">
+            <div className="flex items-center gap-2.5 mb-6">
+              <Clock className="w-5 h-5 text-[#00ff9d]" />
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">How the Program Unfolds</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0">
+              {/* Phase 1 */}
+              <div className="relative bg-[#1a1f2e] border border-[#2a3347] rounded-t-xl md:rounded-l-xl md:rounded-tr-none p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-[#00ff9d] text-[#0f1217] flex items-center justify-center text-sm font-bold shrink-0">1</div>
+                  <div>
+                    <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d]">14-30 Days</p>
+                    <h4 className="text-base font-bold text-white">Sweepstakes Live</h4>
+                  </div>
+                </div>
+                <p className="text-sm text-[#9ca3af] leading-6">Campaign runs across the GolfN ecosystem. Captures attention, generates entries, and builds behavioral profiles of every golfer who engages.</p>
+                <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00ff9d]/10 border border-[#00ff9d]/30">
+                  <span className="text-xs font-mono font-bold text-[#00ff9d]">INCLUDED IN STARTUP</span>
+                </div>
+                <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-6 h-6 rounded-full bg-[#0f1217] border border-[#2a3347] items-center justify-center">
+                  <ArrowRight className="w-3 h-3 text-[#00ff9d]" />
+                </div>
+              </div>
+
+              {/* Phase 2 */}
+              <div className="relative bg-[#1a1f2e] border border-[#2a3347] border-t-0 md:border-t md:border-l-0 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-[#00ff9d] text-[#0f1217] flex items-center justify-center text-sm font-bold shrink-0">2</div>
+                  <div>
+                    <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d]">30 Days Post-Campaign</p>
+                    <h4 className="text-base font-bold text-white">Aggressive Follow-Up</h4>
+                  </div>
+                </div>
+                <p className="text-sm text-[#9ca3af] leading-6">GolfN actively markets to the qualified cohort with targeted offers, Learn & Earn education, social activation, and commerce pathways. This is where sweepstakes entrants become real prospects.</p>
+                <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00ff9d]/10 border border-[#00ff9d]/30">
+                  <Megaphone className="w-3 h-3 text-[#00ff9d]" />
+                  <span className="text-xs font-mono font-bold text-[#00ff9d]">INCLUDED IN STARTUP</span>
+                </div>
+                <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-6 h-6 rounded-full bg-[#0f1217] border border-[#2a3347] items-center justify-center">
+                  <ArrowRight className="w-3 h-3 text-[#00ff9d]" />
+                </div>
+              </div>
+
+              {/* Phase 3 */}
+              <div className="bg-[#1a1f2e] border border-[#2a3347] border-t-0 md:border-t md:border-l-0 rounded-b-xl md:rounded-r-xl md:rounded-bl-none p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-[#2a3347] text-[#9ca3af] flex items-center justify-center text-sm font-bold shrink-0">3</div>
+                  <div>
+                    <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280]">Monthly, Optional</p>
+                    <h4 className="text-base font-bold text-white">Ongoing Growth</h4>
+                  </div>
+                </div>
+                <p className="text-sm text-[#9ca3af] leading-6">Choose to continue activating and expanding the cohort. Per-user pricing kicks in only if you decide to go beyond the included 30-day window. Scale at your pace.</p>
+                <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2a3347]/60 border border-[#2a3347]">
+                  <span className="text-xs font-mono font-bold text-[#9ca3af]">OPTIONAL &mdash; PER-USER PRICING BELOW</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Fade>
+
         {/* Startup Fee */}
         <Fade delay={0.06}>
           <div className="mb-12">
@@ -243,12 +266,16 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
             </div>
 
             <div className="bg-[#1a1f2e] border-2 border-[#00ff9d]/40 rounded-2xl p-8 mb-8">
-              <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+              <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
                 <div>
                   <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217] mr-3">BASE</span>
                   <span className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">{formatUSD(startupPerBrand)}</span>
                   <span className="text-base text-[#6b7280] ml-2">per brand, one-time</span>
                 </div>
+              </div>
+              <div className="mb-5 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00ff9d]/10 border border-[#00ff9d]/30">
+                <Clock className="w-4 h-4 text-[#00ff9d]" />
+                <span className="text-sm font-semibold text-[#00ff9d]">Includes 30 days of post-campaign activation at no additional cost</span>
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5">
                 {baseIncludes.map((item) => (
@@ -272,9 +299,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                   return (
                     <div key={a.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
                       <div className="flex items-start gap-3 mb-3">
-                        <div className="w-9 h-9 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5">
-                          <a.Icon className="w-4.5 h-4.5 text-[#00ff9d]" />
-                        </div>
+                        <div className="w-9 h-9 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5"><a.Icon className="w-4.5 h-4.5 text-[#00ff9d]" /></div>
                         <div>
                           <h4 className="text-base font-bold text-white leading-snug">{a.title}</h4>
                           <div className="flex items-center gap-2 mt-0.5">
@@ -302,9 +327,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 return (
                   <div className="bg-[#1a1f2e] border border-[#00ff9d]/30 rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
                     <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
-                        <premiumAddOn.Icon className="w-5 h-5 text-[#00ff9d]" />
-                      </div>
+                      <div className="w-11 h-11 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5"><premiumAddOn.Icon className="w-5 h-5 text-[#00ff9d]" /></div>
                       <div className="flex-1">
                         <div className="flex items-center gap-3 flex-wrap">
                           <h4 className="text-lg font-bold text-white">{premiumAddOn.title}</h4>
@@ -331,16 +354,34 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
+        {/* Transition callout: what happens after the 30 days */}
+        <Fade delay={0.08}>
+          <div className="mb-12 bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 md:p-8">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-full bg-[#2a3347] flex items-center justify-center shrink-0 mt-0.5">
+                <ArrowRight className="w-5 h-5 text-[#00ff9d]" />
+              </div>
+              <div>
+                <h4 className="text-lg md:text-xl font-bold text-white mb-2">What happens after 30 days?</h4>
+                <p className="text-base text-[#d1d5db] leading-8">
+                  The sweepstakes campaign and 30-day activation window are covered by your startup fee. After that, <span className="text-white font-semibold">continuing is entirely optional</span>. If you see value in the cohort and want to keep growing it, the per-user pricing below applies. If not, you keep the data and audience you built with zero ongoing obligation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Fade>
+
         {/* Per-User Tiers */}
         <Fade delay={0.10}>
           <div className="mb-12">
-            <div className="flex items-center gap-2.5 mb-5">
+            <div className="flex items-center gap-2.5 mb-2">
               <TrendingDown className="w-5 h-5 text-[#00ff9d]" />
               <h3 className="text-2xl md:text-3xl font-semibold text-white">
                 Ongoing Per-User Pricing
                 {hasDiscount && <span className="text-[#00ff9d] text-lg ml-2">({perUserDiscountPct}% portfolio discount applied)</span>}
               </h3>
             </div>
+            <p className="text-base text-[#6b7280] mb-5">Only applies if you choose to continue beyond the included 30-day post-campaign window.</p>
             <div className="overflow-x-auto rounded-xl border border-[#2a3347]">
               <table className="w-full text-left">
                 <thead>
@@ -453,9 +494,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
         <Fade delay={0.22}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-8 md:p-10 mb-10">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
-                <Target className="w-5 h-5 text-[#00ff9d]" />
-              </div>
+              <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5"><Target className="w-5 h-5 text-[#00ff9d]" /></div>
               <div>
                 <h4 className="text-xl md:text-2xl font-bold text-white mb-3">Why this matters</h4>
                 <p className="text-lg md:text-xl text-[#d1d5db] leading-9">
@@ -472,7 +511,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
 
         <Fade delay={0.25}>
           <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8">
-            <p className="text-lg text-[#d1d5db] leading-9"><strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why a one-time startup fee ({formatUSD(startupPerBrand)} per brand) is required before launch.</p>
+            <p className="text-lg text-[#d1d5db] leading-9"><strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and 30 days of post-campaign follow-up and activation. That is why a one-time startup fee ({formatUSD(startupPerBrand)} per brand) is required before launch.</p>
           </div>
         </Fade>
 
