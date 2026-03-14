@@ -3,6 +3,7 @@
 // Sports Impact portfolio presentation from Mar 9, 2026 call
 
 import type { BrandCampaign, MarketData } from './template-types'
+import { galvinGreenCampaigns } from './galvin-green-campaigns'
 
 export interface PortfolioBrand {
   slug: string
@@ -121,16 +122,19 @@ export const partners: Record<string, PartnerConfig> = {
     secondaryColor: '#8DC54A',
     productCategory: 'Premium Golf Outerwear',
     productNames: ['GORE-TEX Jackets', 'Interface Layers', 'Base Layers', 'Accessories'],
-    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers -- built around Galvin Green\'s multi-layer system and seasonal capsule collections.',
+    heroHeadline: 'GolfN x Galvin Green: Three Premium Sweepstakes',
+    heroSubtitle: 'Prepared for Lou Delfino, Natalie Collard & Bryce Ritchie -- March 2026. Three high-impact sweepstakes showcasing the 2026 ARLO GORE-TEX system, Masters limited-edition capsule, and multi-layer education. Brand provides prize bundles only (under $5,000 total value per campaign). Low cost of entry with ability to scale.',
+    howItWorksIntro: 'We launch three coordinated Galvin Green sweepstakes as the perfect US awareness kickoff -- premium positioning without discounting, exactly what matters for the brand.',
+    pricingIntro: 'Brand provides prize bundles only (under $5,000 per campaign). GolfN charges a one-time startup fee, then bills monthly per qualified user added to your cohort.',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
     agencyName: 'Sports Impact',
     agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
-    agencyBrands: ['Wilson Golf', 'MotoCaddy'],
     defaultPath: 'pilot',
+    campaigns: galvinGreenCampaigns,
     commerceNotes: [
-      'Galvin Green\'s premium price point supports meaningful affiliate commission.',
-      'For capsule collection drops and limited-edition releases, exclusive early-access activations create urgency.',
-      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means campaigns reach golfers in climates where technical outerwear is essential.',
+      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy layers on top of existing affiliate partnerships -- users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
+      'For capsule collection drops and limited-edition releases, exclusive early-access activations create urgency and introduce the brand to golfers who may not know Galvin Green yet -- without discounting or competitions that compromise premium positioning.',
+      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means campaigns reach golfers in climates where technical outerwear is essential -- not wasted on golfers in perpetual sunshine.',
     ],
   },
 
