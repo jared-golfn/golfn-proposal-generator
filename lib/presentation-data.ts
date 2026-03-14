@@ -2,7 +2,7 @@
 // Platform stats updated Mar 11, 2026
 // Sports Impact portfolio presentation from Mar 9, 2026 call
 
-import type { BrandCampaign } from './template-types'
+import type { BrandCampaign, MarketData } from './template-types'
 
 export interface PortfolioBrand {
   slug: string
@@ -39,11 +39,11 @@ export interface PartnerConfig {
   isPortfolio?: boolean
   campaigns?: BrandCampaign[]
   portfolioDiscount?: { startupPct: number; perUserPct: number }
+  marketReach?: MarketData[]
 }
 
 const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/b0f6f787acc61119cc6e9796fd64b75979e5f75a-2741x635.png'
 
-// ---- Sports Impact campaign data ----
 const sportsImpactCampaigns: BrandCampaign[] = [
   {
     brandName: 'Galvin Green',
@@ -89,8 +89,16 @@ const sportsImpactCampaigns: BrandCampaign[] = [
   },
 ]
 
+const sportsImpactMarkets: MarketData[] = [
+  { country: 'United States', users: 46416, flag: '\ud83c\uddfa\ud83c\uddf8' },
+  { country: 'Australia', users: 2957, flag: '\ud83c\udde6\ud83c\uddfa' },
+  { country: 'South Africa', users: 2886, flag: '\ud83c\uddff\ud83c\udde6' },
+  { country: 'United Kingdom', users: 2892, flag: '\ud83c\uddec\ud83c\udde7' },
+  { country: 'Canada', users: 1341, flag: '\ud83c\udde8\ud83c\udde6' },
+  { country: 'New Zealand', users: 1186, flag: '\ud83c\uddf3\ud83c\uddff' },
+]
+
 export const partners: Record<string, PartnerConfig> = {
-  // -- Generic template (clean, no Sports Impact content) --------------
   'template': {
     slug: 'template',
     partnerName: '[Brand Name]',
@@ -104,7 +112,6 @@ export const partners: Record<string, PartnerConfig> = {
     defaultPath: 'pilot',
   },
 
-  // -- Galvin Green ----------------------------------------------------
   'galvin-green': {
     slug: 'galvin-green',
     partnerName: 'Galvin Green',
@@ -121,13 +128,12 @@ export const partners: Record<string, PartnerConfig> = {
     agencyBrands: ['Wilson Golf', 'MotoCaddy'],
     defaultPath: 'pilot',
     commerceNotes: [
-      'Galvin Green\'s premium price point supports meaningful affiliate commission. GolfN\'s points economy layers on top of existing affiliate partnerships -- users earn points for purchases made through tracked links, creating dual incentive without replacing current structures.',
-      'For capsule collection drops and limited-edition releases, exclusive early-access activations create urgency and introduce the brand to golfers who may not know Galvin Green yet -- without discounting or competitions that compromise premium positioning.',
-      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means Galvin Green campaigns reach golfers in climates where technical outerwear is essential -- not wasted on golfers in perpetual sunshine.',
+      'Galvin Green\'s premium price point supports meaningful affiliate commission.',
+      'For capsule collection drops and limited-edition releases, exclusive early-access activations create urgency.',
+      'GolfN knows which golfers play in rain, wind, and cold. Regional and weather-based targeting means campaigns reach golfers in climates where technical outerwear is essential.',
     ],
   },
 
-  // -- Sports Impact (Portfolio) ---------------------------------------
   'sports-impact': {
     slug: 'sports-impact',
     partnerName: 'Sports Impact',
@@ -142,13 +148,14 @@ export const partners: Record<string, PartnerConfig> = {
     howItWorksIntro: 'We launch three coordinated brand-specific sweepstakes as the perfect awareness kickoff, exactly as discussed with Lou and Natalie.',
     pricingIntro: 'Brand provides prize bundles only (under $5,000 per campaign). GolfN charges a one-time startup fee per brand, then bills monthly per qualified user added to your cohort. Sports Impact portfolio pricing applies across all three brands.',
     pricingNote: 'Sports Impact Shared Advantage: 10% off startup fees + 15% off per-user rates for 12 months when running all three together.',
-    keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
+    keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada', 'South Africa', 'New Zealand'],
     agencyName: 'Sports Impact',
     agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     defaultPath: 'pilot',
     isPortfolio: true,
     campaigns: sportsImpactCampaigns,
     portfolioDiscount: { startupPct: 10, perUserPct: 15 },
+    marketReach: sportsImpactMarkets,
     portfolioBrands: [
       {
         slug: 'galvin-green',
@@ -182,13 +189,12 @@ export const partners: Record<string, PartnerConfig> = {
       },
     ],
     commerceNotes: [
-      'All three brands have existing affiliate partnerships. GolfN\'s points economy layers on top -- users earn points for purchases through tracked links, creating dual incentive without replacing current affiliate structures.',
-      'Consolidated agency pricing applies across the portfolio. Campaign architecture, audience intelligence, and infrastructure are shared -- reducing per-brand costs significantly compared to activating each brand independently.',
-      'Each brand gets distinct targeting: weather-based for Galvin Green, walk-vs-ride for MotoCaddy, equipment-readiness for Wilson. Shared infrastructure, differentiated activation.',
+      'All three brands have existing affiliate partnerships. GolfN\'s points economy layers on top.',
+      'Consolidated agency pricing applies across the portfolio -- reducing per-brand costs significantly.',
+      'Each brand gets distinct targeting: weather-based for Galvin Green, walk-vs-ride for MotoCaddy, equipment-readiness for Wilson.',
     ],
   },
 
-  // -- Wilson Golf -----------------------------------------------------
   'wilson-golf': {
     slug: 'wilson-golf',
     partnerName: 'Wilson Golf',
@@ -203,7 +209,6 @@ export const partners: Record<string, PartnerConfig> = {
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
 
-  // -- MotoCaddy -------------------------------------------------------
   'motocaddy': {
     slug: 'motocaddy',
     partnerName: 'MotoCaddy',
@@ -218,7 +223,6 @@ export const partners: Record<string, PartnerConfig> = {
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   },
 
-  // -- Demo ------------------------------------------------------------
   demo: {
     slug: 'demo',
     partnerName: 'Your Brand',
@@ -245,76 +249,13 @@ export const platformStats = {
 }
 
 export const commercialModel = {
-  setup: {
-    title: 'Program Setup',
-    subtitle: 'One-Time Investment',
-    description: 'A one-time investment covering the strategic, creative, and operational infrastructure required to launch a full-funnel golfer activation program.',
-    tiers: [
-      { name: 'Focused Launch', range: '$7,500 - $12,500', description: 'Core audience build, initial Learn & Earn, single activation pathway' },
-      { name: 'Full Program', range: '$12,500 - $20,000', description: 'Multi-channel activation, Daily Grind integration, content production' },
-      { name: 'Enterprise', range: '$20,000 - $35,000+', description: 'Full eight-stage deployment, custom integrations, dedicated strategy' },
-    ],
-    extensions: [
-      { name: 'Executive Brand Storytelling', price: '$2,500/video' },
-      { name: 'Campaign Content Production', price: '$1,000/piece' },
-      { name: 'Platform Distribution Extension', price: '$750/platform' },
-    ],
-  },
-  management: {
-    title: 'Managed Program Delivery',
-    subtitle: 'Recurring Monthly',
-    description: 'The setup fee builds the system. The monthly management fee runs and optimizes it.',
-    functions: [
-      { name: 'Audience Intelligence & Lookalike Enrollment', description: 'Continuous refinement of the interest cohort and AI-driven lookalike model.' },
-      { name: 'Live Program Orchestration', description: 'Active management of Learn & Earn modules, exclusive offers and points-back incentives, Daily Grind check-in coordination.' },
-      { name: 'Creative Refresh & Optimization', description: 'Updating content, offers, and messaging based on performance data.' },
-      { name: 'Reporting & Strategic Management', description: 'Monthly performance reporting with audience composition, progression metrics, conversion data, and cohort growth.' },
-    ],
-    tiers: [
-      { name: 'Growth', price: '$2,500/mo' },
-      { name: 'Scale', price: '$4,500/mo' },
-      { name: 'Enterprise', price: '$6,500/mo' },
-    ],
-  },
-  media: {
-    title: 'Impression Banks',
-    subtitle: 'Billed as Served, No Expiration',
-    description: 'The management fee funds ongoing program operation. Media and impression spend funds audience delivery volume.',
-    tiers: [
-      { impressions: '50K', cost: '$3,500', cpm: '$70' },
-      { impressions: '100K', cost: '$7,000', cpm: '$70' },
-      { impressions: '250K', cost: '$15,750', cpm: '$63' },
-      { impressions: '500K+', cost: '$30,000+', cpm: '$60' },
-    ],
-  },
-  performance: {
-    title: 'Performance Economics',
-    subtitle: 'Variable -- Attributed Commerce',
-    description: 'This layer is realized only when GolfN drives qualifying downstream actions.',
-    preferred: {
-      name: 'Wholesale & Marketplace Participation',
-      range: '20-40%',
-      preferredRange: '30-40%',
-      floor: '20%',
-      description: 'The partner provides wholesale account access or wholesale-equivalent pricing.',
-      whyNotAffiliate: 'Standard affiliate rates of 3-5% are not sufficient.',
-    },
-    alternatives: [
-      { name: 'Revenue Share', range: '12-25%' },
-      { name: 'Fixed CPA', range: '$10-$75+' },
-      { name: 'Hybrid', range: 'Custom structure' },
-    ],
-  },
+  setup: { title: 'Program Setup', subtitle: 'One-Time Investment', description: 'A one-time investment covering the strategic, creative, and operational infrastructure required to launch a full-funnel golfer activation program.', tiers: [{ name: 'Focused Launch', range: '$7,500 - $12,500', description: 'Core audience build, initial Learn & Earn, single activation pathway' }, { name: 'Full Program', range: '$12,500 - $20,000', description: 'Multi-channel activation, Daily Grind integration, content production' }, { name: 'Enterprise', range: '$20,000 - $35,000+', description: 'Full eight-stage deployment, custom integrations, dedicated strategy' }], extensions: [{ name: 'Executive Brand Storytelling', price: '$2,500/video' }, { name: 'Campaign Content Production', price: '$1,000/piece' }, { name: 'Platform Distribution Extension', price: '$750/platform' }] },
+  management: { title: 'Managed Program Delivery', subtitle: 'Recurring Monthly', description: 'The setup fee builds the system. The monthly management fee runs and optimizes it.', functions: [{ name: 'Audience Intelligence & Lookalike Enrollment', description: 'Continuous refinement of the interest cohort and AI-driven lookalike model.' }, { name: 'Live Program Orchestration', description: 'Active management of Learn & Earn modules, exclusive offers and points-back incentives, Daily Grind check-in coordination.' }, { name: 'Creative Refresh & Optimization', description: 'Updating content, offers, and messaging based on performance data.' }, { name: 'Reporting & Strategic Management', description: 'Monthly performance reporting with audience composition, progression metrics, conversion data, and cohort growth.' }], tiers: [{ name: 'Growth', price: '$2,500/mo' }, { name: 'Scale', price: '$4,500/mo' }, { name: 'Enterprise', price: '$6,500/mo' }] },
+  media: { title: 'Impression Banks', subtitle: 'Billed as Served, No Expiration', description: 'The management fee funds ongoing program operation. Media and impression spend funds audience delivery volume.', tiers: [{ impressions: '50K', cost: '$3,500', cpm: '$70' }, { impressions: '100K', cost: '$7,000', cpm: '$70' }, { impressions: '250K', cost: '$15,750', cpm: '$63' }, { impressions: '500K+', cost: '$30,000+', cpm: '$60' }] },
+  performance: { title: 'Performance Economics', subtitle: 'Variable -- Attributed Commerce', description: 'This layer is realized only when GolfN drives qualifying downstream actions.', preferred: { name: 'Wholesale & Marketplace Participation', range: '20-40%', preferredRange: '30-40%', floor: '20%', description: 'The partner provides wholesale account access or wholesale-equivalent pricing.', whyNotAffiliate: 'Standard affiliate rates of 3-5% are not sufficient.' }, alternatives: [{ name: 'Revenue Share', range: '12-25%' }, { name: 'Fixed CPA', range: '$10-$75+' }, { name: 'Hybrid', range: 'Custom structure' }] },
 }
 
-export const budgetPositioning = {
-  headline: 'Where GolfN Fits in a Brand\'s Budget',
-  paragraphs: [
-    'Brands already allocate spend across paid social, paid search, affiliate and performance marketing, audience retargeting, activation programs, and partner growth initiatives. GolfN does not require a new budget category.',
-    'GolfN should not replace broad paid media. It should earn a share of that spend where the objective is to reach verified golfers in a golf-native environment.',
-    'Meta and Google help brands find likely buyers. GolfN helps brands activate verified golfers with context, qualification, incentive, education, and post-purchase progression that broad platforms do not provide.',
-  ],
-}
+export const budgetPositioning = { headline: 'Where GolfN Fits in a Brand\'s Budget', paragraphs: ['Brands already allocate spend across paid social, paid search, affiliate and performance marketing, audience retargeting, activation programs, and partner growth initiatives. GolfN does not require a new budget category.', 'GolfN should not replace broad paid media. It should earn a share of that spend where the objective is to reach verified golfers in a golf-native environment.', 'Meta and Google help brands find likely buyers. GolfN helps brands activate verified golfers with context, qualification, incentive, education, and post-purchase progression that broad platforms do not provide.'] }
 
 export const progressionStages = [
   { number: 1, name: 'Awareness', short: 'Full ecosystem distribution.', detail: '', channels: ['Email', 'In-App', 'Push', 'Banners', 'Social', 'Daily Grind', 'Blog/SEO'] },
@@ -339,12 +280,7 @@ export const dailyGrindPhases = [
   { phase: 'Mature', name: 'Performance-Led', description: 'Platform minimum plus per-verified-check-in billing with volume tiers.', model: 'Per Check-in + Tiers' },
 ]
 
-export const thresholds = {
-  setup: '$7,500 minimum',
-  recurring: '$5,000/month absolute floor',
-  duration: '3 months minimum',
-  commerce: '20% minimum margin, 30-40% preferred',
-}
+export const thresholds = { setup: '$7,500 minimum', recurring: '$5,000/month absolute floor', duration: '3 months minimum', commerce: '20% minimum margin, 30-40% preferred' }
 
 export const strategicSummary = [
   { lead: 'Brands deserve more than impressions.', body: 'They deserve measurable progression. GolfN delivers all eight stages.' },
