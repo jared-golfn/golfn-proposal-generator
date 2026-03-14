@@ -19,6 +19,8 @@ const prepayOptions = [
   { term: '12 months', discount: '22% off', factor: 0.78 },
 ]
 
+const STARTUP_PER_BRAND = 2500
+
 const baseIncludes = [
   'Strategy session + campaign brief',
   'Portal setup & brand onboarding',
@@ -30,14 +32,14 @@ const baseIncludes = [
 ]
 
 const launchAddOns = [
-  { title: 'Custom Creative Package', price: '+$1,500', desc: 'Full custom production: 3-5 variant emails/in-app/banners/social + blog draft with backlink', value: 'Higher engagement than templates', Icon: Sparkles },
-  { title: 'Social Video Takeover', price: '+$1,500', desc: 'Brandon creates 15-30s social video pushed on GolfN channels + in-app', value: 'Drives external traffic & virality', Icon: Video },
-  { title: 'In-App Banner Network Takeover', price: '+$1,000 - $2,000', desc: 'Rotating/persistent banners throughout app experience during campaign', value: 'Extends visibility beyond sweepstakes', Icon: LayoutGrid },
+  { title: 'Custom Creative Package', price: 1500, desc: 'Full custom production: 3-5 variant emails/in-app/banners/social + blog draft with backlink', value: 'Higher engagement than templates', Icon: Sparkles },
+  { title: 'Social Video Takeover', price: 1500, desc: 'Brandon creates 15-30s social video pushed on GolfN channels + in-app', value: 'Drives external traffic & virality', Icon: Video },
+  { title: 'In-App Banner Network Takeover', price: 1500, desc: 'Rotating/persistent banners throughout app experience during campaign', value: 'Extends visibility beyond sweepstakes', Icon: LayoutGrid },
 ]
 
 const premiumAddOn = {
   title: 'Executive / Founder Endorsement',
-  price: '+$2,500',
+  price: 2500,
   desc: 'Produce + embed 30-45s founder video in sweepstakes pre-roll and app touchpoints',
   value: 'Highest trust signal, lifts entries 25-40%',
   Icon: UserCheck,
@@ -48,14 +50,16 @@ function isOpaqueImage(url: string): boolean {
   return lower.endsWith('.jpg') || lower.endsWith('.jpeg')
 }
 
-function calcBuckets(users: number) {
-  const buckets: { tierLabel: string; usersInBucket: number; rate: number; subtotal: number }[] = []
+function calcBuckets(users: number, discountPct: number) {
+  const factor = 1 - discountPct / 100
+  const buckets: { tierLabel: string; usersInBucket: number; standardRate: number; rate: number; subtotal: number }[] = []
   let remaining = users
   for (const tier of perUserTiers) {
     if (remaining <= 0) break
     const bucketSize = tier.max === Infinity ? remaining : Math.min(remaining, tier.max - tier.min + 1)
     const maxLabel = tier.max === Infinity ? users.toLocaleString() + '+' : tier.max.toLocaleString()
-    buckets.push({ tierLabel: tier.min.toLocaleString() + '\u2013' + maxLabel, usersInBucket: bucketSize, rate: tier.rate, subtotal: bucketSize * tier.rate })
+    const discountedRate = Math.round(tier.rate * factor * 100) / 100
+    buckets.push({ tierLabel: tier.min.toLocaleString() + '\u2013' + maxLabel, usersInBucket: bucketSize, standardRate: tier.rate, rate: discountedRate, subtotal: bucketSize * discountedRate })
     remaining -= bucketSize
   }
   return buckets
@@ -65,15 +69,32 @@ function formatUSD(n: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
 }
 
+function formatUSD2(n: number): string {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n)
+}
+
 export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
   const [cohortSize, setCohortSize] = useState(1000)
   const [prepayIdx, setPrepayIdx] = useState(0)
   const [expandedCampaign, setExpandedCampaign] = useState<number | null>(null)
-  const buckets = calcBuckets(cohortSize)
+
+  const discount = partner.portfolioDiscount
+  const perUserDiscountPct = discount?.perUserPct || 0
+  const startupDiscountPct = discount?.startupPct || 0
+  const brandCount = partner.campaigns?.length || 1
+  const hasDiscount = !!discount
+
+  const buckets = calcBuckets(cohortSize, perUserDiscountPct)
   const baseCost = buckets.reduce((s, b) => s + b.subtotal, 0)
   const factor = prepayOptions[prepayIdx].factor
   const finalCost = Math.round(baseCost * factor)
   const effectiveRate = cohortSize > 0 ? (finalCost / cohortSize) : 0
+
+  // Startup math
+  const startupPerBrand = STARTUP_PER_BRAND
+  const startupSubtotal = startupPerBrand * brandCount
+  const startupSavings = Math.round(startupSubtotal * startupDiscountPct / 100)
+  const startupTotal = startupSubtotal - startupSavings
 
   const campaigns = partner.campaigns
   const pricingIntro = partner.pricingIntro
@@ -137,9 +158,15 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
 
                       <h4 className="text-lg font-bold text-white mb-1">{c.title}</h4>
                       <p className="text-sm text-[#9ca3af] leading-6 mb-3">{c.description}</p>
-                      <div className="flex items-center gap-2 mb-4">
+
+                      <div className="flex items-center gap-2 mb-2">
                         <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217]">PRIZE POOL</span>
                         <span className="text-xl font-mono font-bold text-[#00ff9d]">{c.prizePool}</span>
+                      </div>
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#2a3347] text-[#9ca3af]">STARTUP</span>
+                        <span className="text-lg font-mono font-bold text-white">{formatUSD(startupPerBrand)}</span>
+                        <span className="text-sm text-[#6b7280]">per brand</span>
                       </div>
 
                       {/* Expandable prize breakdown */}
@@ -168,9 +195,32 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 })}
               </div>
 
+              {/* Portfolio Startup Summary */}
+              {hasDiscount && (
+                <div className="mt-6 bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden">
+                  <div className="px-6 py-4 border-b border-[#2a3347] bg-[#0f1217]">
+                    <h4 className="text-lg font-bold text-white">Portfolio Startup Summary</h4>
+                  </div>
+                  <div className="px-6 py-4 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-base text-[#d1d5db]">{formatUSD(startupPerBrand)} x {brandCount} brands</span>
+                      <span className="text-base font-mono text-[#9ca3af]">{formatUSD(startupSubtotal)}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-[#00ff9d]">
+                      <span className="text-base">Portfolio discount ({startupDiscountPct}% off)</span>
+                      <span className="text-base font-mono font-semibold">-{formatUSD(startupSavings)}</span>
+                    </div>
+                    <div className="flex justify-between items-center pt-3 border-t border-[#2a3347]">
+                      <span className="text-lg font-bold text-white">Total Startup</span>
+                      <span className="text-2xl font-mono font-bold text-[#00ff9d]">{formatUSD(startupTotal)}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Portfolio discount note */}
               {pricingNote && (
-                <div className="mt-6 bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-5">
+                <div className="mt-4 bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-5">
                   <p className="text-base md:text-lg text-[#00ff9d] font-semibold">{pricingNote}</p>
                 </div>
               )}
@@ -178,12 +228,12 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </Fade>
         )}
 
-        {/* A La Carte Startup Fee */}
+        {/* A La Carte Startup Fee (non-portfolio or additional context) */}
         <Fade delay={0.06}>
           <div className="mb-12">
             <div className="flex items-center gap-2.5 mb-6">
               <DollarSign className="w-5 h-5 text-[#00ff9d]" />
-              <h3 className="text-2xl md:text-3xl font-semibold text-white">One-Time Startup Fee: Starts at $2,500&nbsp;&mdash;&nbsp;Add What You Want</h3>
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">{hasDiscount ? 'What Each Startup Fee Includes' : 'One-Time Startup Fee: Starts at $2,500 \u2014 Add What You Want'}</h3>
             </div>
 
             {/* Base Card */}
@@ -191,8 +241,8 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
                 <div>
                   <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217] mr-3">BASE</span>
-                  <span className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">$2,500</span>
-                  <span className="text-base text-[#6b7280] ml-2">one-time</span>
+                  <span className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">{formatUSD(startupPerBrand)}</span>
+                  <span className="text-base text-[#6b7280] ml-2">per brand, one-time</span>
                 </div>
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5">
@@ -213,21 +263,32 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217] ml-2">1 FREE WITH FIRST CAMPAIGN</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {launchAddOns.map((a) => (
-                  <div key={a.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className="w-9 h-9 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5">
-                        <a.Icon className="w-4.5 h-4.5 text-[#00ff9d]" />
+                {launchAddOns.map((a) => {
+                  const discountedPrice = hasDiscount ? Math.round(a.price * (1 - startupDiscountPct / 100)) : a.price
+                  return (
+                    <div key={a.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="w-9 h-9 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5">
+                          <a.Icon className="w-4.5 h-4.5 text-[#00ff9d]" />
+                        </div>
+                        <div>
+                          <h4 className="text-base font-bold text-white leading-snug">{a.title}</h4>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            {hasDiscount && (
+                              <span className="text-base font-mono text-[#6b7280] line-through">+{formatUSD(a.price)}</span>
+                            )}
+                            <span className="text-lg font-mono font-bold text-[#00ff9d]">+{formatUSD(discountedPrice)}</span>
+                            {hasDiscount && (
+                              <span className="text-xs font-mono text-[#00ff9d]">per brand</span>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="text-base font-bold text-white leading-snug">{a.title}</h4>
-                        <p className="text-lg font-mono font-bold text-[#00ff9d] mt-0.5">{a.price}</p>
-                      </div>
+                      <p className="text-sm text-[#9ca3af] leading-6 mb-2">{a.desc}</p>
+                      <p className="text-sm text-[#00ff9d]/80 italic">{a.value}</p>
                     </div>
-                    <p className="text-sm text-[#9ca3af] leading-6 mb-2">{a.desc}</p>
-                    <p className="text-sm text-[#00ff9d]/80 italic">{a.value}</p>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
 
@@ -237,27 +298,38 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 <Star className="w-4 h-4 text-[#00ff9d]" />
                 <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280]">Premium Add-On</p>
               </div>
-              <div className="bg-[#1a1f2e] border border-[#00ff9d]/30 rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
-                    <premiumAddOn.Icon className="w-5 h-5 text-[#00ff9d]" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <h4 className="text-lg font-bold text-white">{premiumAddOn.title}</h4>
-                      <span className="text-xl font-mono font-bold text-[#00ff9d]">{premiumAddOn.price}</span>
+              {(() => {
+                const discountedPrem = hasDiscount ? Math.round(premiumAddOn.price * (1 - startupDiscountPct / 100)) : premiumAddOn.price
+                return (
+                  <div className="bg-[#1a1f2e] border border-[#00ff9d]/30 rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
+                        <premiumAddOn.Icon className="w-5 h-5 text-[#00ff9d]" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <h4 className="text-lg font-bold text-white">{premiumAddOn.title}</h4>
+                          <div className="flex items-center gap-2">
+                            {hasDiscount && (
+                              <span className="text-base font-mono text-[#6b7280] line-through">+{formatUSD(premiumAddOn.price)}</span>
+                            )}
+                            <span className="text-xl font-mono font-bold text-[#00ff9d]">+{formatUSD(discountedPrem)}</span>
+                            {hasDiscount && <span className="text-xs font-mono text-[#00ff9d]">per brand</span>}
+                          </div>
+                        </div>
+                        <p className="text-base text-[#9ca3af] leading-7 mt-1">{premiumAddOn.desc}</p>
+                        <p className="text-sm text-[#00ff9d]/80 italic mt-1">{premiumAddOn.value}</p>
+                      </div>
                     </div>
-                    <p className="text-base text-[#9ca3af] leading-7 mt-1">{premiumAddOn.desc}</p>
-                    <p className="text-sm text-[#00ff9d]/80 italic mt-1">{premiumAddOn.value}</p>
                   </div>
-                </div>
-              </div>
+                )
+              })()}
             </div>
 
             {/* A la carte callout */}
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-6">
               <p className="text-base md:text-lg text-[#d1d5db] leading-8">
-                Build your launch exactly how you want it. Start at <span className="text-[#00ff9d] font-semibold">$2,500</span> and add only the extras that drive results. <strong className="text-white">For your first campaign, we'll include one Launch Add-On free to prove the impact.</strong>
+                Build your launch exactly how you want it. Start at <span className="text-[#00ff9d] font-semibold">{formatUSD(startupPerBrand)}</span>{hasDiscount ? ' per brand' : ''} and add only the extras that drive results. <strong className="text-white">For your first campaign, we'll include one Launch Add-On free to prove the impact.</strong>
               </p>
             </div>
           </div>
@@ -268,25 +340,35 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           <div className="mb-12">
             <div className="flex items-center gap-2.5 mb-5">
               <TrendingDown className="w-5 h-5 text-[#00ff9d]" />
-              <h3 className="text-2xl md:text-3xl font-semibold text-white">Ongoing Per-User Pricing</h3>
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">
+                Ongoing Per-User Pricing
+                {hasDiscount && <span className="text-[#00ff9d] text-lg ml-2">({perUserDiscountPct}% portfolio discount applied)</span>}
+              </h3>
             </div>
             <div className="overflow-x-auto rounded-xl border border-[#2a3347]">
               <table className="w-full text-left">
                 <thead>
                   <tr className="bg-[#1a1f2e]">
                     <th className="px-6 py-4 text-sm font-mono tracking-wider uppercase text-[#6b7280]">Qualified Users</th>
-                    <th className="px-6 py-4 text-sm font-mono tracking-wider uppercase text-[#6b7280]">Per User / Month</th>
+                    {hasDiscount && <th className="px-6 py-4 text-sm font-mono tracking-wider uppercase text-[#6b7280]">Standard</th>}
+                    <th className="px-6 py-4 text-sm font-mono tracking-wider uppercase text-[#6b7280]">{hasDiscount ? 'Your Rate' : 'Per User / Month'}</th>
                     <th className="px-6 py-4 text-sm font-mono tracking-wider uppercase text-[#6b7280]">Stage</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {perUserTiers.map((row, i) => (
-                    <tr key={row.min} className={`border-t border-[#2a3347]/60 transition-all duration-200 hover:bg-[#1a1f2e]/80 ${i >= 2 ? 'bg-[#00ff9d]/[0.04]' : 'bg-transparent'}`}>
-                      <td className="px-6 py-5 text-lg text-white font-medium">{row.min === 10001 ? '10,001+' : row.min.toLocaleString() + '\u2013' + row.max.toLocaleString()}</td>
-                      <td className="px-6 py-5"><span className="text-2xl font-mono font-bold text-[#00ff9d]">${row.rate.toFixed(2)}</span></td>
-                      <td className="px-6 py-5 text-base text-[#9ca3af]"><span className="mr-2">{row.icon}</span>{row.label}</td>
-                    </tr>
-                  ))}
+                  {perUserTiers.map((row, i) => {
+                    const discountedRate = Math.round(row.rate * (1 - perUserDiscountPct / 100) * 100) / 100
+                    return (
+                      <tr key={row.min} className={`border-t border-[#2a3347]/60 transition-all duration-200 hover:bg-[#1a1f2e]/80 ${i >= 2 ? 'bg-[#00ff9d]/[0.04]' : 'bg-transparent'}`}>
+                        <td className="px-6 py-5 text-lg text-white font-medium">{row.min === 10001 ? '10,001+' : row.min.toLocaleString() + '\u2013' + row.max.toLocaleString()}</td>
+                        {hasDiscount && (
+                          <td className="px-6 py-5"><span className="text-lg font-mono text-[#6b7280] line-through">{formatUSD2(row.rate)}</span></td>
+                        )}
+                        <td className="px-6 py-5"><span className="text-2xl font-mono font-bold text-[#00ff9d]">{formatUSD2(hasDiscount ? discountedRate : row.rate)}</span></td>
+                        <td className="px-6 py-5 text-base text-[#9ca3af]"><span className="mr-2">{row.icon}</span>{row.label}</td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
@@ -309,10 +391,13 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
         {/* Interactive Calculator */}
         <Fade delay={0.18}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10 mb-12">
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-2">
               <Calculator className="w-6 h-6 text-[#00ff9d]" />
               <h3 className="text-2xl md:text-3xl font-bold text-white">Pricing Calculator</h3>
             </div>
+            {hasDiscount && (
+              <p className="text-sm text-[#00ff9d] font-mono mb-6">{perUserDiscountPct}% portfolio discount applied to all rates</p>
+            )}
 
             <div className="mb-8">
               <label className="block text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">Expected monthly qualified users added to your cohort</label>
@@ -353,7 +438,10 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                     <tr key={i} className={`border-t border-[#2a3347]/60 ${i >= 2 ? 'bg-[#00ff9d]/[0.04]' : ''}`}>
                       <td className="px-5 py-3 text-base text-[#9ca3af]">{b.tierLabel}</td>
                       <td className="px-5 py-3 text-base text-white font-medium">{b.usersInBucket.toLocaleString()}</td>
-                      <td className="px-5 py-3 text-base font-mono text-[#00ff9d]">${b.rate.toFixed(2)}</td>
+                      <td className="px-5 py-3">
+                        {hasDiscount && <span className="text-sm font-mono text-[#6b7280] line-through mr-2">{formatUSD2(b.standardRate)}</span>}
+                        <span className="text-base font-mono text-[#00ff9d]">{formatUSD2(b.rate)}</span>
+                      </td>
                       <td className="px-5 py-3 text-base font-mono font-bold text-white">{formatUSD(b.subtotal)}</td>
                     </tr>
                   ))}
@@ -400,8 +488,8 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 <p className="text-lg md:text-xl text-[#d1d5db] leading-9">
                   Most premium golf and DTC brands pay <span className="text-white font-semibold">$65&ndash;$115+</span> per qualified
                   consumer lead via Google, Meta, or agencies (2025&ndash;2026 DTC benchmarks).
-                  With GolfN you control your prize investment and pay just <span className="text-[#00ff9d] font-bold">$5 per qualified user</span> (dropping
-                  to <span className="text-[#00ff9d] font-bold">$1</span>) &mdash; often <span className="text-white font-semibold">10&ndash;20x cheaper</span> &mdash; while
+                  With GolfN you control your prize investment and pay just <span className="text-[#00ff9d] font-bold">{hasDiscount ? formatUSD2(5 * (1 - perUserDiscountPct / 100)) : '$5.00'} per qualified user</span> (dropping
+                  to <span className="text-[#00ff9d] font-bold">{hasDiscount ? formatUSD2(1 * (1 - perUserDiscountPct / 100)) : '$1.00'}</span>) &mdash; often <span className="text-white font-semibold">10&ndash;20x cheaper</span> &mdash; while
                   building an owned audience you activate forever.
                 </p>
               </div>
@@ -412,7 +500,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
         {/* Setup Band */}
         <Fade delay={0.25}>
           <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8">
-            <p className="text-lg text-[#d1d5db] leading-9"><strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why a one-time startup fee (starts at $2,500) is required before launch.</p>
+            <p className="text-lg text-[#d1d5db] leading-9"><strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why a one-time startup fee ({formatUSD(startupPerBrand)} per brand) is required before launch.</p>
           </div>
         </Fade>
 
