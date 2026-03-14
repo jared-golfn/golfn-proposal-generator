@@ -11,6 +11,7 @@ const defaultKPIs: PlatformKPI[] = [
   { label: 'Peak Monthly Active', value: '28,060' },
   { label: 'Under 34', value: '56%' },
   { label: 'Countries', value: '57' },
+  { label: 'Avg MoM Growth', value: '~53%', subtitle: 'Power user cohort, 10 months' },
 ]
 
 export function S01_Hero({ partner }: { partner: PartnerData }) {
@@ -60,7 +61,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             )}
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-base md:text-xl text-[#9ca3af] max-w-3xl leading-7 md:leading-8 mb-8">{subtitle}</motion.p>
 
-            {/* Large partner logo for single-brand proposals with campaigns */}
             {showPartnerLogo && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
                 <div className="inline-flex items-center justify-center h-20 md:h-24 px-8 md:px-10 rounded-xl bg-[#1a1f2e] border border-[#2a3347]">
@@ -69,7 +69,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
               </motion.div>
             )}
 
-            {/* Portfolio brand logos */}
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
                 <div className="hidden sm:inline-flex flex-col items-center">
@@ -136,11 +135,12 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
         </div>
 
         {/* KPIs */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-14">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
               <span className="text-xl md:text-2xl lg:text-3xl font-bold font-mono text-[#00ff9d]">{kpi.value}</span>
               <span className="block text-sm md:text-base text-[#6b7280] mt-1">{kpi.label}</span>
+              {kpi.subtitle && <span className="block text-xs text-[#4b5563] mt-0.5">{kpi.subtitle}</span>}
             </div>
           ))}
         </motion.div>
