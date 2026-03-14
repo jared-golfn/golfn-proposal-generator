@@ -15,7 +15,7 @@ const steps = [
 ]
 
 export function S03_HowItWorks({ partner }: { partner: PartnerData }) {
-  const [expanded, setExpanded] = useState<number | null>(null)
+  const [expanded, setExpanded] = useState<number | null>(1)
 
   const introText = partner.howItWorksIntro || 'GolfN programs begin with a premium campaign, use real behavior to identify qualified interest, and then continue activating that audience over time.'
 
@@ -87,6 +87,7 @@ export function S03_HowItWorks({ partner }: { partner: PartnerData }) {
         <AnimatePresence>
           {expanded && (
             <motion.div
+              key={expanded}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
