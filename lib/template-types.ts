@@ -15,12 +15,16 @@ export interface BrandCampaign {
   prizePool: string
   description: string
   heroImageUrl?: string
+  /** CSS object-position value, e.g. 'center 60%' */
+  heroImagePosition?: string
+  /** CSS transform scale, e.g. '1.4' to zoom in */
+  heroImageScale?: string
   prizes: CampaignPrize[]
 }
 
 export interface PortfolioDiscount {
-  startupPct: number   // e.g. 10 = 10% off startup fees
-  perUserPct: number   // e.g. 15 = 15% off per-user rates
+  startupPct: number
+  perUserPct: number
 }
 
 export interface PartnerData {
