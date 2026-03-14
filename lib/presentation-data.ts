@@ -52,6 +52,7 @@ const sportsImpactCampaigns: BrandCampaign[] = [
     title: 'Never Compromise Weather Challenge',
     prizePool: '$4,800',
     description: 'Showcases the full 2026 ARLO GORE-TEX + INSULA layering system.',
+    heroImageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/84e495b038eb2da153901ce46f657c397e50cf2d-832x832.webp',
     prizes: [
       { place: '1st', description: 'Full ARLO waterproof system + INSULA kit + fitting', value: '$2,800' },
       { place: '2nd', description: 'LUIS windproof + midlayer set', value: '$1,200' },
@@ -65,6 +66,7 @@ const sportsImpactCampaigns: BrandCampaign[] = [
     title: 'Effortless Round Upgrade',
     prizePool: '$4,700',
     description: 'Highlights the 2026 M7 GPS Remote and walk-vs-ride targeting data.',
+    heroImageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/6cd4eb8506d2c17fa0171cbc8f2fe63a4b0ebac7-1000x729.webp',
     prizes: [
       { place: '1st', description: 'M7 GPS Remote trolley + Elite bag + accessories', value: '$2,700' },
       { place: '2nd', description: 'M1 DHC trolley + bag', value: '$1,200' },
@@ -78,6 +80,7 @@ const sportsImpactCampaigns: BrandCampaign[] = [
     title: 'Play Original Experience',
     prizePool: '$4,850',
     description: 'Ties into the 2026 Staff Model XB and DYNAPWR lineup.',
+    heroImageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/2b9eb1bb7dd40738e9d82bb4f547df755cecf695-640x800.webp',
     prizes: [
       { place: '1st', description: 'Staff Model XB irons + DYNAPWR driver + bag', value: '$2,900' },
       { place: '2nd', description: 'DYNAPWR Forged irons + bag', value: '$1,200' },

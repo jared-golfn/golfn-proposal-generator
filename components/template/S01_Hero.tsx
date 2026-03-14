@@ -55,9 +55,9 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
             {/* Portfolio brand logos with agency bracket */}
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="inline-flex flex-col items-center mb-8">
                 {/* Three brand logos in a row */}
-                <div className="flex flex-wrap items-center gap-3 mb-2">
+                <div className="flex items-center gap-3">
                   {partner.portfolioBrands.map((b) => (
                     b.brandLogoUrl && (
                       <div
@@ -74,26 +74,23 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
                     )
                   ))}
                 </div>
-                {/* Bracket line connecting to agency */}
-                <div className="flex items-center gap-0 ml-1">
-                  <div className="w-px h-4 bg-[#2a3347]" />
-                  <div className="flex-1 max-w-[280px] h-px bg-[#2a3347]" />
-                  <div className="w-px h-4 bg-[#2a3347]" />
-                </div>
-                <div className="flex justify-center max-w-[282px] -mt-px">
-                  <div className="w-px h-3 bg-[#2a3347]" />
-                </div>
-                {/* Agency logo centered below, slightly larger */}
+                {/* SVG bracket connecting brands to agency */}
+                <svg width="100%" height="24" viewBox="0 0 400 24" preserveAspectRatio="xMidYMid meet" className="mt-1 mb-1" style={{ maxWidth: '100%' }}>
+                  <line x1="60" y1="0" x2="60" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                  <line x1="200" y1="0" x2="200" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                  <line x1="340" y1="0" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                  <line x1="60" y1="8" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                  <line x1="200" y1="8" x2="200" y2="24" stroke="#2a3347" strokeWidth="1.5" />
+                </svg>
+                {/* Agency logo centered, slightly larger */}
                 {partner.agencyLogoUrl && (
-                  <div className="flex justify-center max-w-[282px]">
-                    <div className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
-                      <img
-                        src={partner.agencyLogoUrl}
-                        alt={partner.agencyName || 'Agency'}
-                        className="h-8 md:h-10 w-auto max-w-[180px] object-contain"
-                        style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }}
-                      />
-                    </div>
+                  <div className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
+                    <img
+                      src={partner.agencyLogoUrl}
+                      alt={partner.agencyName || 'Agency'}
+                      className="h-9 md:h-10 w-auto max-w-[200px] object-contain"
+                      style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }}
+                    />
                   </div>
                 )}
               </motion.div>
