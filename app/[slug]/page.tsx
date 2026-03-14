@@ -3,13 +3,23 @@ import { partners, type PartnerConfig } from '@/lib/presentation-data'
 import { wilsonMotocaddyConfig } from '@/lib/wilson-motocaddy-config'
 import { TemplateClient } from '@/components/template/TemplateClient'
 import { PasswordGate } from '@/components/template/PasswordGate'
-import type { PartnerData } from '@/lib/template-types'
+import type { PartnerData, MarketData } from '@/lib/template-types'
 import { partnerScenarioOverrides } from '@/lib/partnership-paths'
 import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
 const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
+
+// Default market reach data -- shown on ALL proposals unless overridden
+const defaultMarketReach: MarketData[] = [
+  { country: 'United States', users: 46416, flag: '\ud83c\uddfa\ud83c\uddf8' },
+  { country: 'Australia', users: 2957, flag: '\ud83c\udde6\ud83c\uddfa' },
+  { country: 'South Africa', users: 2886, flag: '\ud83c\uddff\ud83c\udde6' },
+  { country: 'United Kingdom', users: 2892, flag: '\ud83c\uddec\ud83c\udde7' },
+  { country: 'Canada', users: 1341, flag: '\ud83c\udde8\ud83c\udde6' },
+  { country: 'New Zealand', users: 1186, flag: '\ud83c\uddf3\ud83c\uddff' },
+]
 
 function toPartnerData(config: PartnerConfig): PartnerData {
   const scenarios = partnerScenarioOverrides[config.slug]
@@ -43,7 +53,7 @@ function toPartnerData(config: PartnerConfig): PartnerData {
     agencyLogoUrl: config.agencyLogoUrl,
     campaigns: config.campaigns,
     portfolioDiscount: config.portfolioDiscount,
-    marketReach: config.marketReach,
+    marketReach: config.marketReach || defaultMarketReach,
     portfolioBrands: config.portfolioBrands?.map(b => ({
       brandName: b.name,
       brandLogoUrl: b.logoUrl,
