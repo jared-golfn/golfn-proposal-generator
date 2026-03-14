@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Zap, Globe, ChevronDown, ChevronUp } from 'lucide-react'
 import type { PartnerData, PlatformKPI } from '@/lib/template-types'
@@ -17,55 +17,68 @@ const defaultKPIs: PlatformKPI[] = [
 function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { brandName: string; brandLogoUrl?: string }[]; agencyLogoUrl?: string; agencyName?: string }) {
   const validBrands = brands.filter(b => b.brandLogoUrl)
   const n = validBrands.length
+  const containerRef = useRef<HTMLDivElement>(null)
+  const pillRefs = useRef<(HTMLDivElement | null)[]>([])
+  const agencyRef = useRef<HTMLDivElement>(null)
+  const [lines, setLines] = useState<{ pillCenters: number[]; barLeft: number; barRight: number; agencyCenter: number; containerWidth: number } | null>(null)
+
+  useEffect(() => {
+    function measure() {
+      const container = containerRef.current
+      if (!container) return
+      const rect = container.getBoundingClientRect()
+      const centers: number[] = []
+      pillRefs.current.forEach((el) => {
+        if (el) {
+          const r = el.getBoundingClientRect()
+          centers.push(r.left + r.width / 2 - rect.left)
+        }
+      })
+      let ac = rect.width / 2
+      if (agencyRef.current) {
+        const ar = agencyRef.current.getBoundingClientRect()
+        ac = ar.left + ar.width / 2 - rect.left
+      }
+      if (centers.length > 0) {
+        setLines({ pillCenters: centers, barLeft: centers[0], barRight: centers[centers.length - 1], agencyCenter: ac, containerWidth: rect.width })
+      }
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [n])
+
   if (n === 0) return null
 
-  // For n equal columns with gap g, center of column i = (i * (colW + g)) + colW/2
-  // colW = (100% - (n-1)*g) / n
-  // Simplify: center of col i as % = ((2*i + 1) / (2*n)) * 100%  (ignoring gap adjustment)
-  // With gap correction: left offset = calc( (2*i+1) / (2*n) * (100% - (n-1)*12px) + i*12px )
-  // But simpler: use the same grid for the connector row
-
   return (
-    <div className="flex flex-col items-center" style={{ maxWidth: '620px' }}>
+    <div ref={containerRef} className="flex flex-col items-center relative" style={{ maxWidth: '620px' }}>
       {/* Brand pills */}
       <div className="grid w-full gap-3" style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
-        {validBrands.map((b) => (
-          <div key={b.brandName} className="flex items-center justify-center h-14 px-3 rounded-lg bg-[#1a1f2e] border border-[#2a3347]">
+        {validBrands.map((b, i) => (
+          <div key={b.brandName} ref={(el) => { pillRefs.current[i] = el }} className="flex items-center justify-center h-14 px-3 rounded-lg bg-[#1a1f2e] border border-[#2a3347]">
             <img src={b.brandLogoUrl} alt={b.brandName} className="h-7 md:h-8 w-auto max-w-[160px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
           </div>
         ))}
       </div>
 
-      {/* Connector: ticks + horizontal bar using the same grid */}
-      <div className="relative w-full" style={{ height: '12px' }}>
-        {/* Same grid for vertical ticks */}
-        <div className="grid w-full gap-3 absolute inset-0" style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
-          {validBrands.map((b) => (
-            <div key={b.brandName + '-tick'} className="flex justify-center">
-              <div className="w-px h-full" style={{ backgroundColor: '#2a3347' }} />
-            </div>
+      {/* SVG connector lines - measured from actual DOM positions */}
+      {lines && (
+        <svg width={lines.containerWidth} height="28" className="block" style={{ overflow: 'visible' }}>
+          {/* Vertical ticks down from each pill center */}
+          {lines.pillCenters.map((cx, i) => (
+            <line key={i} x1={cx} y1="0" x2={cx} y2="10" stroke="#2a3347" strokeWidth="1.5" />
           ))}
-        </div>
-        {/* Horizontal bar: position at vertical center, span from center of first col to center of last col */}
-        {/* For n cols with 12px gap: first center = 50%/n, last center = 100% - 50%/n */}
-        {/* With gap: left = calc( (100% - (n-1)*12px) / (2*n) ), right = same */}
-        <div className="absolute w-full" style={{ top: '50%' }}>
-          <div className="h-px" style={{
-            backgroundColor: '#2a3347',
-            marginLeft: `calc((100% - ${(n - 1) * 12}px) / ${2 * n})`,
-            marginRight: `calc((100% - ${(n - 1) * 12}px) / ${2 * n})`,
-          }} />
-        </div>
-      </div>
-
-      {/* Vertical line down to agency */}
-      <div className="flex justify-center">
-        <div className="w-px h-3" style={{ backgroundColor: '#2a3347' }} />
-      </div>
+          {/* Horizontal bar connecting first to last pill center */}
+          <line x1={lines.barLeft} y1="10" x2={lines.barRight} y2="10" stroke="#2a3347" strokeWidth="1.5" />
+          {/* Vertical line down from center to agency */}
+          <line x1={lines.agencyCenter} y1="10" x2={lines.agencyCenter} y2="28" stroke="#2a3347" strokeWidth="1.5" />
+        </svg>
+      )}
+      {!lines && <div style={{ height: '28px' }} />}
 
       {/* Agency logo */}
       {agencyLogoUrl && (
-        <div className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
+        <div ref={agencyRef} className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
           <img src={agencyLogoUrl} alt={agencyName || 'Agency'} className="h-9 md:h-10 w-auto max-w-[200px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }} />
         </div>
       )}
@@ -173,7 +186,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           </motion.div>
         </div>
 
-        {/* KPIs */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
@@ -184,42 +196,29 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           ))}
         </motion.div>
 
-        {/* Market Reach expandable */}
         {markets && markets.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="mt-8">
-            <button
-              onClick={() => setShowMarkets(!showMarkets)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1a1f2e] border border-[#2a3347] hover:border-[#00ff9d]/40 transition-all group"
-            >
+            <button onClick={() => setShowMarkets(!showMarkets)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1a1f2e] border border-[#2a3347] hover:border-[#00ff9d]/40 transition-all group">
               <Globe className="w-4 h-4 text-[#00ff9d]" />
               <span className="text-sm md:text-base font-semibold text-white">Market Reach by Country</span>
               <span className="text-xs font-mono text-[#6b7280] ml-1">As of Mar 11, 2026</span>
               {showMarkets ? <ChevronUp className="w-4 h-4 text-[#6b7280] group-hover:text-[#00ff9d] transition-colors" /> : <ChevronDown className="w-4 h-4 text-[#6b7280] group-hover:text-[#00ff9d] transition-colors" />}
             </button>
-
             {showMarkets && (
               <div className="mt-4 bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden max-w-2xl">
                 <div className="divide-y divide-[#2a3347]/60">
-                  {markets.map((m) => {
-                    const maxUsers = Math.max(...markets.map(x => x.users))
-                    const pct = (m.users / maxUsers) * 100
-                    return (
-                      <div key={m.country} className="px-5 py-3 flex items-center gap-4">
-                        {m.flag && <span className="text-lg shrink-0">{m.flag}</span>}
-                        <span className="text-sm md:text-base text-white font-medium w-32 md:w-40 shrink-0">{m.country}</span>
-                        <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden">
-                          <div className="h-full rounded-full" style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #00ff9d, #17A455)' }} />
-                        </div>
-                        <span className="text-sm md:text-base font-mono font-bold text-[#00ff9d] w-16 text-right shrink-0">{m.users.toLocaleString()}</span>
-                      </div>
-                    )
-                  })}
+                  {markets.map((m) => { const maxUsers = Math.max(...markets.map(x => x.users)); const pct = (m.users / maxUsers) * 100; return (
+                    <div key={m.country} className="px-5 py-3 flex items-center gap-4">
+                      {m.flag && <span className="text-lg shrink-0">{m.flag}</span>}
+                      <span className="text-sm md:text-base text-white font-medium w-32 md:w-40 shrink-0">{m.country}</span>
+                      <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #00ff9d, #17A455)' }} /></div>
+                      <span className="text-sm md:text-base font-mono font-bold text-[#00ff9d] w-16 text-right shrink-0">{m.users.toLocaleString()}</span>
+                    </div>
+                  ) })}
                   <div className="px-5 py-3 flex items-center gap-4">
                     <span className="text-lg shrink-0">{'\ud83c\udf0d'}</span>
                     <span className="text-sm md:text-base text-[#9ca3af] font-medium w-32 md:w-40 shrink-0">Others (51 markets)</span>
-                    <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: `${(othersCount / Math.max(...markets.map(x => x.users))) * 100}%`, background: 'linear-gradient(90deg, rgba(0,255,157,0.3), rgba(23,164,85,0.3))' }} />
-                    </div>
+                    <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(othersCount / Math.max(...markets.map(x => x.users))) * 100}%`, background: 'linear-gradient(90deg, rgba(0,255,157,0.3), rgba(23,164,85,0.3))' }} /></div>
                     <span className="text-sm md:text-base font-mono font-bold text-[#9ca3af] w-16 text-right shrink-0">{othersCount.toLocaleString()}</span>
                   </div>
                 </div>
