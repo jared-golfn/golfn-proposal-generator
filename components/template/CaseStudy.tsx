@@ -1,0 +1,111 @@
+'use client'
+
+import { useState } from 'react'
+import { Play, TrendingUp, DollarSign, Package, Clock, X } from 'lucide-react'
+import { Fade } from './Fade'
+
+const metrics = [
+  { label: 'Total Revenue', value: '$44,692', sub: '8 months', Icon: DollarSign },
+  { label: 'Units Sold', value: '90', sub: '~$497 avg order', Icon: Package },
+  { label: 'Time to #1', value: '90 days', sub: '#1 distributor in Indiana', Icon: Clock },
+  { label: 'Monthly Recurring', value: '$3,500+', sub: 'Sustained post-campaign', Icon: TrendingUp },
+]
+
+export function CaseStudy() {
+  const [showVideo, setShowVideo] = useState(false)
+
+  return (
+    <section className="py-20 md:py-28">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <Fade>
+          <div className="flex items-center gap-3 mb-4">
+            <Play className="w-5 h-5 text-[#00ff9d]" />
+            <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Case Study</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">
+            From brand film to<br /><span className="text-gradient">#1 distributor in 90 days</span>
+          </h2>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-10">
+            GolfN produced a world-class brand film experience with L.A.B. Golf, launched a sweepstakes campaign, and activated the resulting cohort through commerce. The result: #1 distributor status in Indiana from a standing start.
+          </p>
+        </Fade>
+
+        <Fade delay={0.06}>
+          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
+            {/* Video section */}
+            <div className="relative">
+              {showVideo ? (
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    src="https://www.youtube.com/embed/e8YaanzP9oQ?autoplay=1&start=30&rel=0&modestbranding=1"
+                    title="GolfN x L.A.B. Golf Brand Film"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                  />
+                  <button
+                    onClick={() => setShowVideo(false)}
+                    className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/70 flex items-center justify-center hover:bg-black transition-colors"
+                  >
+                    <X className="w-4 h-4 text-white" />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowVideo(true)}
+                  className="relative w-full group cursor-pointer"
+                  style={{ paddingBottom: '56.25%' }}
+                >
+                  <img
+                    src="https://img.youtube.com/vi/e8YaanzP9oQ/maxresdefault.jpg"
+                    alt="GolfN x L.A.B. Golf Brand Film"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#00ff9d] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                      <Play className="w-8 h-8 md:w-10 md:h-10 text-[#0f1217] ml-1" fill="#0f1217" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+                    <p className="text-white font-bold text-lg md:text-xl">GolfN x L.A.B. Golf</p>
+                    <p className="text-[#9ca3af] text-sm md:text-base">Brand Film Experience -- Watch the full production</p>
+                  </div>
+                </button>
+              )}
+            </div>
+
+            {/* Metrics row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#2a3347] border-t border-[#2a3347]">
+              {metrics.map((m) => (
+                <div key={m.label} className="px-5 md:px-6 py-5 md:py-6 text-center">
+                  <m.Icon className="w-5 h-5 text-[#00ff9d] mx-auto mb-2" />
+                  <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">{m.value}</p>
+                  <p className="text-sm text-white font-semibold mt-1">{m.label}</p>
+                  <p className="text-xs text-[#6b7280] mt-0.5">{m.sub}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Details */}
+            <div className="px-6 md:px-8 py-6 border-t border-[#2a3347] bg-[#0f1217]">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Activation</h4>
+                  <p className="text-sm text-[#d1d5db] leading-6">Full production brand film shot on location. Sweepstakes campaign distributed across the entire GolfN ecosystem. 30-day post-campaign cohort activation with targeted commerce.</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Result</h4>
+                  <p className="text-sm text-[#d1d5db] leading-6">Zero to $20K in a single month. 90 premium putters moved at full price (~$497 avg). GolfN became L.A.B.'s #1 distributor in Indiana within 90 days of launch.</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Takeaway</h4>
+                  <p className="text-sm text-[#d1d5db] leading-6">The campaign ended. The commerce didn't. Sustained $3,500+/month in ongoing revenue through the cohort -- proving GolfN builds permanent commerce channels, not one-time spikes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Fade>
+      </div>
+    </section>
+  )
+}
