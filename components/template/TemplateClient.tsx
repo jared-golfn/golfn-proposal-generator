@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-import { Download, Loader2 } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { images } from '@/lib/images'
 import { S01_Hero } from './S01_Hero'
@@ -26,73 +24,6 @@ const navSections = [
 ]
 
 export function TemplateClient({ partner }: { partner: PartnerData }) {
-  const [generating, setGenerating] = useState(false)
-
-  const downloadPDF = async () => {
-    if (generating) return
-    setGenerating(true)
-
-    try {
-      const html2pdf = (await import('html2pdf.js')).default
-
-      const element = document.getElementById('proposal-content')
-      if (!element) {
-        setGenerating(false)
-        return
-      }
-
-      const opt = {
-        margin: [10, 10, 10, 10],
-        filename: `GolfN-${partner.partnerName.replace(/\s+/g, '-')}-Partnership-Proposal.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-          scale: 3,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#0f1217',
-          logging: false,
-          letterRendering: true,
-          scrollX: 0,
-          scrollY: 0,
-          windowWidth: element.scrollWidth,
-          onclone: (clonedDoc: Document) => {
-            const clonedEl = clonedDoc.getElementById('proposal-content')
-            if (clonedEl) clonedEl.style.background = '#0f1217'
-            const pdfBtn = clonedDoc.getElementById('pdf-download-btn')
-            if (pdfBtn) pdfBtn.style.display = 'none'
-            const nav = clonedDoc.querySelector('nav[class*="fixed"]') as HTMLElement
-            if (nav) nav.style.display = 'none'
-            const accentLine = clonedDoc.querySelector('.accent-line') as HTMLElement
-            if (accentLine) accentLine.style.display = 'none'
-            const allEls = clonedDoc.querySelectorAll('*') as NodeListOf<HTMLElement>
-            allEls.forEach(el => {
-              const style = window.getComputedStyle(el)
-              if (parseFloat(style.opacity) < 1) el.style.opacity = '1'
-              el.style.transform = 'none'
-              el.style.transition = 'none'
-              el.style.animation = 'none'
-            })
-            const gradientEls = clonedDoc.querySelectorAll('.text-gradient') as NodeListOf<HTMLElement>
-            gradientEls.forEach(el => {
-              el.style.background = 'none'
-              el.style.webkitBackgroundClip = 'unset'
-              el.style.webkitTextFillColor = '#00ff9d'
-              el.style.color = '#00ff9d'
-            })
-          },
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
-      }
-
-      await html2pdf().from(element).set(opt).save()
-    } catch (err) {
-      console.error('PDF generation failed:', err)
-    } finally {
-      setGenerating(false)
-    }
-  }
-
   return (
     <main className="relative bg-[#0f1217]">
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
@@ -138,26 +69,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
         </footer>
       </div>
-
-      {/* PDF button - icon only on mobile, full text on md+ */}
-      <button
-        id="pdf-download-btn"
-        onClick={downloadPDF}
-        disabled={generating}
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-[#00ff9d] text-black font-semibold rounded-full shadow-2xl hover:bg-[#00e08a] transition z-50 flex items-center gap-2 disabled:opacity-70 disabled:cursor-wait px-4 py-3 md:px-6 md:py-3"
-      >
-        {generating ? (
-          <>
-            <Loader2 className="w-5 h-5 animate-spin" />
-            <span className="hidden md:inline">Generating PDF...</span>
-          </>
-        ) : (
-          <>
-            <Download className="w-5 h-5" />
-            <span className="hidden md:inline">Download Proposal as PDF</span>
-          </>
-        )}
-      </button>
     </main>
   )
 }

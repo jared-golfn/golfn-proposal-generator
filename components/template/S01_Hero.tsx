@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Flag, Users, Zap } from 'lucide-react'
+import { Zap } from 'lucide-react'
 import type { PartnerData, PlatformKPI } from '@/lib/template-types'
 import { images } from '@/lib/images'
 
@@ -13,7 +13,6 @@ const defaultKPIs: PlatformKPI[] = [
 ]
 
 export function S01_Hero({ partner }: { partner: PartnerData }) {
-  const email = partner.contactEmail || 'jared@golfn.com'
   const subtitle = partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.'
   const headline = partner.heroHeadline
 
@@ -106,12 +105,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             )}
 
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-3 md:gap-4 mb-10">
-              <a href={`mailto:${email}?subject=Partnership%20Proposal%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`} className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.03] glow-green" style={{ background: 'linear-gradient(135deg, #00ff9d, #17A455)', color: '#0f1217' }}>
-                <Flag className="w-5 h-5" /> Request a Proposal
-              </a>
-              {partner.bookingUrl && (
-                <a href={partner.bookingUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg border border-[#2a3347] text-white hover:bg-[#1a1f2e] transition-all"><Users className="w-5 h-5" /> Book a Walkthrough</a>
-              )}
               <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-sm md:text-base font-medium hover:underline transition-colors text-[#00ff9d]"><Zap className="w-4 h-4" /> See How It Works</button>
             </motion.div>
           </div>
