@@ -12,11 +12,6 @@ const defaultKPIs: PlatformKPI[] = [
   { label: 'Countries', value: '57' },
 ]
 
-function isOpaqueImage(url: string): boolean {
-  const lower = url.toLowerCase()
-  return lower.endsWith('.jpg') || lower.endsWith('.jpeg')
-}
-
 export function S01_Hero({ partner }: { partner: PartnerData }) {
   const email = partner.contactEmail || 'jared@golfn.com'
   const subtitle = partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.'
@@ -58,34 +53,47 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             )}
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-8">{subtitle}</motion.p>
 
-            {/* Portfolio brand logos in pill containers */}
+            {/* Portfolio brand logos with agency bracket */}
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="flex flex-wrap items-center gap-3 mb-8">
-                {partner.portfolioBrands.map((b) => {
-                  if (!b.brandLogoUrl) return null
-                  const opaque = isOpaqueImage(b.brandLogoUrl)
-                  return (
-                    <div
-                      key={b.brandName}
-                      className={`flex items-center justify-center h-14 px-5 rounded-lg border ${opaque ? 'bg-white border-[#d1d5db]' : 'bg-[#1a1f2e] border-[#2a3347]'}`}
-                    >
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
+                {/* Three brand logos in a row */}
+                <div className="flex flex-wrap items-center gap-3 mb-2">
+                  {partner.portfolioBrands.map((b) => (
+                    b.brandLogoUrl && (
+                      <div
+                        key={b.brandName}
+                        className="flex items-center justify-center h-14 px-5 rounded-lg bg-[#1a1f2e] border border-[#2a3347]"
+                      >
+                        <img
+                          src={b.brandLogoUrl}
+                          alt={b.brandName}
+                          className="h-7 md:h-8 w-auto max-w-[160px] object-contain"
+                          style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }}
+                        />
+                      </div>
+                    )
+                  ))}
+                </div>
+                {/* Bracket line connecting to agency */}
+                <div className="flex items-center gap-0 ml-1">
+                  <div className="w-px h-4 bg-[#2a3347]" />
+                  <div className="flex-1 max-w-[280px] h-px bg-[#2a3347]" />
+                  <div className="w-px h-4 bg-[#2a3347]" />
+                </div>
+                <div className="flex justify-center max-w-[282px] -mt-px">
+                  <div className="w-px h-3 bg-[#2a3347]" />
+                </div>
+                {/* Agency logo centered below, slightly larger */}
+                {partner.agencyLogoUrl && (
+                  <div className="flex justify-center max-w-[282px]">
+                    <div className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
                       <img
-                        src={b.brandLogoUrl}
-                        alt={b.brandName}
-                        className="h-7 md:h-8 w-auto max-w-[160px] object-contain"
-                        style={opaque ? {} : { filter: 'brightness(0) invert(1)', opacity: 0.85 }}
+                        src={partner.agencyLogoUrl}
+                        alt={partner.agencyName || 'Agency'}
+                        className="h-8 md:h-10 w-auto max-w-[180px] object-contain"
+                        style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }}
                       />
                     </div>
-                  )
-                })}
-                {partner.agencyLogoUrl && (
-                  <div className="flex items-center justify-center h-14 px-5 rounded-lg bg-[#1a1f2e]/50 border border-[#2a3347]/50">
-                    <img
-                      src={partner.agencyLogoUrl}
-                      alt={partner.agencyName || 'Agency'}
-                      className="h-7 md:h-8 w-auto max-w-[160px] object-contain"
-                      style={{ filter: 'brightness(0) invert(1)', opacity: 0.6 }}
-                    />
                   </div>
                 )}
               </motion.div>

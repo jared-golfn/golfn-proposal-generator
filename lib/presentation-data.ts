@@ -41,7 +41,7 @@ export interface PartnerConfig {
   portfolioDiscount?: { startupPct: number; perUserPct: number }
 }
 
-const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/65b95d60c4a53a225fe144757365f8b70de14d2f-840x212.jpg'
+const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/b0f6f787acc61119cc6e9796fd64b75979e5f75a-2741x635.png'
 
 // ---- Sports Impact campaign data ----
 const sportsImpactCampaigns: BrandCampaign[] = [
