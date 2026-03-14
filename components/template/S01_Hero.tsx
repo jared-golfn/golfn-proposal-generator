@@ -22,6 +22,8 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
   const othersCount = markets ? Math.max(0, 100000 - namedTotal) : 0
   const grandTotal = markets ? namedTotal + othersCount : 0
 
+  const showPartnerLogo = !partner.isPortfolio && partner.partnerLogoUrl && partner.campaigns && partner.campaigns.length > 0
+
   return (
     <section className="relative min-h-[85vh] flex flex-col justify-center overflow-hidden">
       <div className="absolute inset-0 opacity-[0.07]" style={{ background: 'radial-gradient(ellipse 60% 50% at 15% 50%, #001a14, transparent)' }} />
@@ -57,6 +59,15 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
               </motion.h1>
             )}
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-base md:text-xl text-[#9ca3af] max-w-3xl leading-7 md:leading-8 mb-8">{subtitle}</motion.p>
+
+            {/* Large partner logo for single-brand proposals with campaigns */}
+            {showPartnerLogo && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
+                <div className="inline-flex items-center justify-center h-20 md:h-24 px-8 md:px-10 rounded-xl bg-[#1a1f2e] border border-[#2a3347]">
+                  <img src={partner.partnerLogoUrl} alt={partner.partnerName} className="h-10 md:h-14 w-auto max-w-[280px] md:max-w-[360px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
+                </div>
+              </motion.div>
+            )}
 
             {/* Portfolio brand logos */}
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
@@ -134,7 +145,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           ))}
         </motion.div>
 
-        {/* Market Reach expandable (only when marketReach data exists) */}
+        {/* Market Reach expandable */}
         {markets && markets.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="mt-8">
             <button
@@ -164,9 +175,8 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
                       </div>
                     )
                   })}
-                  {/* Others row */}
                   <div className="px-5 py-3 flex items-center gap-4">
-                    <span className="text-lg shrink-0">\ud83c\udf0d</span>
+                    <span className="text-lg shrink-0">{'\ud83c\udf0d'}</span>
                     <span className="text-sm md:text-base text-[#9ca3af] font-medium w-32 md:w-40 shrink-0">Others (51 markets)</span>
                     <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden">
                       <div className="h-full rounded-full" style={{ width: `${(othersCount / Math.max(...markets.map(x => x.users))) * 100}%`, background: 'linear-gradient(90deg, rgba(0,255,157,0.3), rgba(23,164,85,0.3))' }} />
@@ -174,7 +184,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
                     <span className="text-sm md:text-base font-mono font-bold text-[#9ca3af] w-16 text-right shrink-0">{othersCount.toLocaleString()}</span>
                   </div>
                 </div>
-                {/* Total footer */}
                 <div className="px-5 py-3 bg-[#0f1217] border-t border-[#2a3347] flex items-center justify-between">
                   <span className="text-sm font-bold text-white">Total (57 countries)</span>
                   <span className="text-lg md:text-xl font-mono font-bold text-[#00ff9d]">{grandTotal.toLocaleString()}+</span>
