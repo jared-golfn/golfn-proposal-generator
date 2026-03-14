@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Play, TrendingUp, DollarSign, Package, Clock, ExternalLink, Pause } from 'lucide-react'
+import { Play, TrendingUp, DollarSign, Package, Clock, ExternalLink } from 'lucide-react'
 import { Fade } from './Fade'
 
 const VIDEO_MP4 = 'https://cdn.sanity.io/files/e3wja34v/production/bf78e2998073f2b7ccdc798d8f68a5cb8d601ae1.mp4'
@@ -16,24 +16,13 @@ const metrics = [
 
 export function CaseStudy() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [playing, setPlaying] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
 
   function handlePlay() {
     const v = videoRef.current
     if (!v) return
-    if (playing) {
-      v.pause()
-      setPlaying(false)
-    } else {
-      v.play()
-      setPlaying(true)
-      setHasStarted(true)
-    }
-  }
-
-  function handleEnded() {
-    setPlaying(false)
+    v.play()
+    setHasStarted(true)
   }
 
   return (
@@ -54,40 +43,33 @@ export function CaseStudy() {
 
         <Fade delay={0.06}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
-            {/* Native video player - 16:9 container */}
-            <div className="relative cursor-pointer group" onClick={handlePlay}>
+            {/* Video player */}
+            <div className="relative bg-black">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <video
                   ref={videoRef}
                   src={VIDEO_MP4}
-                  onEnded={handleEnded}
+                  controls
                   playsInline
                   preload="metadata"
-                  className="absolute inset-0 w-full h-full object-contain bg-black"
+                  controlsList="nodownload"
+                  className="absolute inset-0 w-full h-full object-contain"
+                  onPlay={() => setHasStarted(true)}
                 />
 
-                {/* Play/pause overlay */}
-                {!playing && (
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#00ff9d] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                {/* Custom play overlay - only before first play, sits above video but below controls */}
+                {!hasStarted && (
+                  <div
+                    className="absolute inset-0 bg-black/40 hover:bg-black/30 transition-colors flex items-center justify-center cursor-pointer"
+                    style={{ pointerEvents: 'auto' }}
+                    onClick={handlePlay}
+                  >
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#00ff9d] flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
                       <Play className="w-8 h-8 md:w-10 md:h-10 text-[#0f1217] ml-1" fill="#0f1217" />
                     </div>
-                  </div>
-                )}
-
-                {/* Title overlay - only before first play */}
-                {!hasStarted && (
-                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-                    <p className="text-white font-bold text-lg md:text-xl">GolfN x L.A.B. Golf</p>
-                    <p className="text-[#9ca3af] text-sm md:text-base">Brand Film Experience &mdash; 60 second cut</p>
-                  </div>
-                )}
-
-                {/* Pause indicator on hover while playing */}
-                {playing && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-16 h-16 rounded-full bg-black/50 flex items-center justify-center">
-                      <Pause className="w-7 h-7 text-white" fill="white" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+                      <p className="text-white font-bold text-lg md:text-xl">GolfN x L.A.B. Golf</p>
+                      <p className="text-[#9ca3af] text-sm md:text-base">Brand Film Experience &mdash; 60 second cut</p>
                     </div>
                   </div>
                 )}
