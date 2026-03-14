@@ -14,6 +14,7 @@ import { S09_WhatWeNeed } from './S09_WhatWeNeed'
 import { S10_DataDifference } from './S10_DataDifference'
 import { S11_FAQ } from './S11_FAQ'
 import { S12_FinalCTA } from './S12_FinalCTA'
+import { MarketReach } from './MarketReach'
 import { SectionDivider } from './SectionDivider'
 
 const navSections = [
@@ -28,7 +29,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
     <main className="relative bg-[#0f1217]">
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-      {/* Right-side nav (desktop only) */}
       <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8">
         {navSections.map((s) => (
           <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-5 justify-end">
@@ -59,6 +59,9 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         <SectionDivider />
         <S10_DataDifference partner={partner} />
         <SectionDivider />
+        {/* Market Reach (only renders when marketReach data exists) */}
+        <MarketReach partner={partner} />
+        {partner.marketReach && partner.marketReach.length > 0 && <SectionDivider />}
         <div id="faq-section"><S11_FAQ partner={partner} /></div>
         <SectionDivider />
         <S12_FinalCTA partner={partner} />

@@ -15,9 +15,7 @@ export interface BrandCampaign {
   prizePool: string
   description: string
   heroImageUrl?: string
-  /** CSS object-position value, e.g. 'center 60%' */
   heroImagePosition?: string
-  /** CSS transform scale, e.g. '1.4' to zoom in */
   heroImageScale?: string
   prizes: CampaignPrize[]
 }
@@ -25,6 +23,12 @@ export interface BrandCampaign {
 export interface PortfolioDiscount {
   startupPct: number
   perUserPct: number
+}
+
+export interface MarketData {
+  country: string
+  users: number
+  flag?: string
 }
 
 export interface PartnerData {
@@ -38,7 +42,6 @@ export interface PartnerData {
   recommendedPath?: 'pilot' | 'growth' | 'strategic'
   keyMarkets?: string[]
 
-  // Campaign customization
   heroSubtitle?: string
   heroHeadline?: string
   recommendedPathRationale?: string
@@ -56,11 +59,10 @@ export interface PartnerData {
   highlightedActivations?: string[]
   customFAQ?: { question: string; answer: string }[]
 
-  // Portfolio campaigns (sweepstakes cards)
   campaigns?: BrandCampaign[]
   portfolioDiscount?: PortfolioDiscount
+  marketReach?: MarketData[]
 
-  // Agency / Portfolio
   isPortfolio?: boolean
   agencyName?: string
   agencyLogoUrl?: string
@@ -74,12 +76,10 @@ export interface PartnerData {
     targetingEdge?: string
   }[]
 
-  // Commerce
   commerceModel?: 'affiliate' | 'wholesale' | 'hybrid' | 'undecided'
   commerceNotes?: string[]
   hasExistingAffiliate?: boolean
 
-  // Admin
   contactEmail?: string
   bookingUrl?: string
 }
