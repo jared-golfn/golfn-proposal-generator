@@ -60,23 +60,23 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
                   b.brandLogoUrl && (
                     <div
                       key={b.brandName}
-                      className="flex items-center justify-center h-10 px-4 rounded-lg bg-[#1a1f2e] border border-[#2a3347]"
+                      className="flex items-center justify-center h-14 px-5 rounded-lg bg-[#1a1f2e] border border-[#2a3347]"
                     >
                       <img
                         src={b.brandLogoUrl}
                         alt={b.brandName}
-                        className="h-5 md:h-6 w-auto max-w-[120px] object-contain"
+                        className="h-7 md:h-8 w-auto max-w-[160px] object-contain"
                         style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }}
                       />
                     </div>
                   )
                 ))}
                 {partner.agencyLogoUrl && (
-                  <div className="flex items-center justify-center h-10 px-4 rounded-lg bg-[#1a1f2e]/50 border border-[#2a3347]/50">
+                  <div className="flex items-center justify-center h-14 px-5 rounded-lg bg-[#1a1f2e]/50 border border-[#2a3347]/50">
                     <img
                       src={partner.agencyLogoUrl}
                       alt={partner.agencyName || 'Agency'}
-                      className="h-5 md:h-6 w-auto max-w-[120px] object-contain"
+                      className="h-7 md:h-8 w-auto max-w-[160px] object-contain"
                       style={{ filter: 'brightness(0) invert(1)', opacity: 0.6 }}
                     />
                   </div>
