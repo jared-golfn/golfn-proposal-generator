@@ -7,13 +7,10 @@ import type { PartnerData } from '@/lib/template-types'
 import { partnerScenarioOverrides } from '@/lib/partnership-paths'
 import { notFound } from 'next/navigation'
 
-// Force dynamic rendering (cookies need request-time evaluation)
 export const dynamic = 'force-dynamic'
 
-// All known partner configs
 const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
 
-// Convert PartnerConfig to PartnerData for the template
 function toPartnerData(config: PartnerConfig): PartnerData {
   const scenarios = partnerScenarioOverrides[config.slug]
 
@@ -28,6 +25,10 @@ function toPartnerData(config: PartnerConfig): PartnerData {
     recommendedPath: config.defaultPath,
     keyMarkets: config.keyMarkets,
     heroSubtitle: config.heroSubtitle,
+    heroHeadline: config.heroHeadline,
+    howItWorksIntro: config.howItWorksIntro,
+    pricingIntro: config.pricingIntro,
+    pricingNote: config.pricingNote,
     recommendedPathRationale: undefined,
     customScenarios: scenarios ? {
       pilotTitle: scenarios.pilot?.title,
@@ -40,6 +41,7 @@ function toPartnerData(config: PartnerConfig): PartnerData {
     isPortfolio: config.isPortfolio,
     agencyName: config.agencyName,
     agencyLogoUrl: config.agencyLogoUrl,
+    campaigns: config.campaigns,
     portfolioBrands: config.portfolioBrands?.map(b => ({
       brandName: b.name,
       brandLogoUrl: b.logoUrl,
@@ -62,7 +64,6 @@ export default async function BrandPage({ params }: PageProps) {
   const config = allPartners[slug]
   if (!config) notFound()
 
-  // If this partner has a password, check for auth cookie
   if (config.password) {
     const cookieStore = await cookies()
     const authCookie = cookieStore.get(`golfn-auth-${slug}`)

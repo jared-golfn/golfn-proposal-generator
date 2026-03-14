@@ -15,6 +15,7 @@ const defaultKPIs: PlatformKPI[] = [
 export function S01_Hero({ partner }: { partner: PartnerData }) {
   const email = partner.contactEmail || 'jared@golfn.com'
   const subtitle = partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.'
+  const headline = partner.heroHeadline
 
   return (
     <section className="relative min-h-[85vh] flex flex-col justify-center overflow-hidden">
@@ -41,10 +42,42 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
           <div className="lg:col-span-3">
-            <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-5xl md:text-7xl font-extrabold leading-[0.92] tracking-tight mb-6">
-              Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
-            </motion.h1>
+            {headline ? (
+              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-4xl md:text-6xl font-extrabold leading-[0.95] tracking-tight mb-6">
+                {headline}
+              </motion.h1>
+            ) : (
+              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-5xl md:text-7xl font-extrabold leading-[0.92] tracking-tight mb-6">
+                Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
+              </motion.h1>
+            )}
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-8">{subtitle}</motion.p>
+
+            {/* Portfolio brand logos */}
+            {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="flex flex-wrap items-center gap-6 mb-8">
+                {partner.portfolioBrands.map((b) => (
+                  b.brandLogoUrl && (
+                    <img
+                      key={b.brandName}
+                      src={b.brandLogoUrl}
+                      alt={b.brandName}
+                      className="h-6 md:h-8 w-auto"
+                      style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }}
+                    />
+                  )
+                ))}
+                {partner.agencyLogoUrl && (
+                  <img
+                    src={partner.agencyLogoUrl}
+                    alt={partner.agencyName || 'Agency'}
+                    className="h-6 md:h-8 w-auto"
+                    style={{ filter: 'brightness(0) invert(1)', opacity: 0.5 }}
+                  />
+                )}
+              </motion.div>
+            )}
+
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-4 mb-10">
               <a href={`mailto:${email}?subject=Partnership%20Proposal%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`} className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.03] glow-green" style={{ background: 'linear-gradient(135deg, #00ff9d, #17A455)', color: '#0f1217' }}>
                 <Flag className="w-5 h-5" /> Request a Proposal
@@ -56,7 +89,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             </motion.div>
           </div>
 
-          {/* Campaign creative mockup area -- populated per partner */}
+          {/* Campaign creative mockup area */}
           <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 flex justify-center">
             <div className="relative">
               <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: 'radial-gradient(circle, #00ff9d, #001a14, transparent)' }} />

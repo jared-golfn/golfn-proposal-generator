@@ -1,6 +1,23 @@
 // Type definitions for the design brief template
 // Compatible with both static data and Sanity CMS
 
+export interface CampaignPrize {
+  place: string
+  description: string
+  value: string
+}
+
+export interface BrandCampaign {
+  brandName: string
+  brandLogoUrl?: string
+  brandColor?: string
+  title: string
+  prizePool: string
+  description: string
+  heroImageUrl?: string
+  prizes: CampaignPrize[]
+}
+
 export interface PartnerData {
   partnerName: string
   slug: string
@@ -14,7 +31,11 @@ export interface PartnerData {
 
   // Campaign customization
   heroSubtitle?: string
+  heroHeadline?: string
   recommendedPathRationale?: string
+  howItWorksIntro?: string
+  pricingIntro?: string
+  pricingNote?: string
   customScenarios?: {
     pilotTitle?: string
     pilotDescription?: string
@@ -25,6 +46,9 @@ export interface PartnerData {
   }
   highlightedActivations?: string[]
   customFAQ?: { question: string; answer: string }[]
+
+  // Portfolio campaigns (sweepstakes cards)
+  campaigns?: BrandCampaign[]
 
   // Agency / Portfolio
   isPortfolio?: boolean

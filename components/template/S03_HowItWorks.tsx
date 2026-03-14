@@ -17,6 +17,8 @@ const steps = [
 export function S03_HowItWorks({ partner }: { partner: PartnerData }) {
   const [expanded, setExpanded] = useState<number | null>(null)
 
+  const introText = partner.howItWorksIntro || 'GolfN programs begin with a premium campaign, use real behavior to identify qualified interest, and then continue activating that audience over time.'
+
   return (
     <section id="how-it-works" className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -24,7 +26,7 @@ export function S03_HowItWorks({ partner }: { partner: PartnerData }) {
           <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase mb-4 text-[#00ff9d]">How It Works</p>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">Five steps from launch<br />to <span className="text-gradient">compounding value</span></h2>
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-14">
-            GolfN programs begin with a premium campaign, use real behavior to identify qualified interest, and then continue activating that audience over time.
+            {introText}
           </p>
         </Fade>
 

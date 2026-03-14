@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star } from 'lucide-react'
+import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star, Trophy, ChevronDown, ChevronUp } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { Fade } from './Fade'
 
@@ -81,11 +81,16 @@ function formatUSD(n: number): string {
 export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
   const [cohortSize, setCohortSize] = useState(1000)
   const [prepayIdx, setPrepayIdx] = useState(0)
+  const [expandedCampaign, setExpandedCampaign] = useState<number | null>(null)
   const buckets = calcBuckets(cohortSize)
   const baseCost = buckets.reduce((s, b) => s + b.subtotal, 0)
   const factor = prepayOptions[prepayIdx].factor
   const finalCost = Math.round(baseCost * factor)
   const effectiveRate = cohortSize > 0 ? (finalCost / cohortSize) : 0
+
+  const campaigns = partner.campaigns
+  const pricingIntro = partner.pricingIntro
+  const pricingNote = partner.pricingNote
 
   return (
     <section id="ways-to-work" className="py-20 md:py-28">
@@ -102,10 +107,81 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
             Pay for Execution&nbsp;+&nbsp;<span className="text-[#00ff9d]">Real Qualified Golfers</span>
           </h2>
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-4xl leading-9 mb-14">
-            You provide the prize budget (recommended <span className="text-white font-semibold">$5,000</span> for best cohort).
-            GolfN charges a one-time startup fee, then bills monthly per qualified user added to your cohort.
+            {pricingIntro || (<>You provide the prize budget (recommended <span className="text-white font-semibold">$5,000</span> for best cohort). GolfN charges a one-time startup fee, then bills monthly per qualified user added to your cohort.</>)}
           </p>
         </Fade>
+
+        {/* ── Campaign Sweepstakes Cards (portfolio only) ── */}
+        {campaigns && campaigns.length > 0 && (
+          <Fade delay={0.04}>
+            <div className="mb-14">
+              <div className="flex items-center gap-2.5 mb-6">
+                <Trophy className="w-5 h-5 text-[#00ff9d]" />
+                <h3 className="text-2xl md:text-3xl font-semibold text-white">Recommended Campaigns</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {campaigns.map((c, ci) => (
+                  <div
+                    key={c.brandName}
+                    className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col"
+                  >
+                    {/* Brand logo */}
+                    {c.brandLogoUrl && (
+                      <div className="mb-4 h-8 flex items-center">
+                        <img src={c.brandLogoUrl} alt={c.brandName} className="h-6 md:h-7 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.8 }} />
+                      </div>
+                    )}
+
+                    {/* Hero image placeholder */}
+                    <div className="w-full h-40 rounded-lg bg-[#0f1217] border border-[#2a3347] mb-4 flex items-center justify-center overflow-hidden">
+                      {c.heroImageUrl ? (
+                        <img src={c.heroImageUrl} alt={c.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-sm text-[#4b5563] font-mono">Product image</span>
+                      )}
+                    </div>
+
+                    <h4 className="text-lg font-bold text-white mb-1">{c.title}</h4>
+                    <p className="text-sm text-[#9ca3af] leading-6 mb-3">{c.description}</p>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217]">PRIZE POOL</span>
+                      <span className="text-xl font-mono font-bold text-[#00ff9d]">{c.prizePool}</span>
+                    </div>
+
+                    {/* Expandable prize breakdown */}
+                    <button
+                      onClick={() => setExpandedCampaign(expandedCampaign === ci ? null : ci)}
+                      className="flex items-center gap-1.5 text-sm font-semibold text-[#00ff9d] hover:underline mt-auto"
+                    >
+                      {expandedCampaign === ci ? 'Hide prizes' : 'View prizes'}
+                      {expandedCampaign === ci ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                    </button>
+                    {expandedCampaign === ci && (
+                      <div className="mt-3 space-y-2">
+                        {c.prizes.map((p, pi) => (
+                          <div key={pi} className="flex justify-between items-start text-sm border-t border-[#2a3347]/50 pt-2">
+                            <div>
+                              <span className="text-[#00ff9d] font-mono font-bold mr-2">{p.place}</span>
+                              <span className="text-[#d1d5db]">{p.description}</span>
+                            </div>
+                            <span className="text-white font-mono font-semibold shrink-0 ml-3">{p.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Portfolio discount note */}
+              {pricingNote && (
+                <div className="mt-6 bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-5">
+                  <p className="text-base md:text-lg text-[#00ff9d] font-semibold">{pricingNote}</p>
+                </div>
+              )}
+            </div>
+          </Fade>
+        )}
 
         {/* A La Carte Startup Fee */}
         <Fade delay={0.06}>
@@ -134,7 +210,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               </ul>
             </div>
 
-            {/* Launch Add-Ons (Tier 1) - one free with first campaign */}
+            {/* Launch Add-Ons */}
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-[#00ff9d]" />
@@ -160,7 +236,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               </div>
             </div>
 
-            {/* Premium Add-On (Tier 2) - never free */}
+            {/* Premium Add-On */}
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-4">
                 <Star className="w-4 h-4 text-[#00ff9d]" />
@@ -235,7 +311,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
-        {/* Interactive Calculator with Progressive Breakdown */}
+        {/* Interactive Calculator */}
         <Fade delay={0.18}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10 mb-12">
             <div className="flex items-center gap-3 mb-8">
@@ -243,7 +319,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               <h3 className="text-2xl md:text-3xl font-bold text-white">Pricing Calculator</h3>
             </div>
 
-            {/* Input */}
             <div className="mb-8">
               <label className="block text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">Expected monthly qualified users added to your cohort</label>
               <div className="flex items-center gap-4">
@@ -268,7 +343,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               </div>
             </div>
 
-            {/* Breakdown Table */}
             <div className="overflow-x-auto rounded-xl border border-[#2a3347] mb-6">
               <table className="w-full text-left">
                 <thead>
@@ -296,7 +370,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               </table>
             </div>
 
-            {/* Prepay selector + final output */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">Prepay Discount</label>
