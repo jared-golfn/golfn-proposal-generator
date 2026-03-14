@@ -1,7 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Zap } from 'lucide-react'
+import { Zap, Globe, ChevronDown, ChevronUp } from 'lucide-react'
 import type { PartnerData, PlatformKPI } from '@/lib/template-types'
 import { images } from '@/lib/images'
 
@@ -13,8 +14,13 @@ const defaultKPIs: PlatformKPI[] = [
 ]
 
 export function S01_Hero({ partner }: { partner: PartnerData }) {
+  const [showMarkets, setShowMarkets] = useState(false)
   const subtitle = partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.'
   const headline = partner.heroHeadline
+  const markets = partner.marketReach
+  const namedTotal = markets ? markets.reduce((s, m) => s + m.users, 0) : 0
+  const othersCount = markets ? Math.max(0, 100000 - namedTotal) : 0
+  const grandTotal = markets ? namedTotal + othersCount : 0
 
   return (
     <section className="relative min-h-[85vh] flex flex-col justify-center overflow-hidden">
@@ -22,7 +28,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
       <div className="absolute inset-0 opacity-[0.04]" style={{ background: 'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 py-12 md:py-16">
-        {/* Top bar: GolfN logo + Prepared for */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex items-center justify-between mb-12 md:mb-20 gap-4">
           <img src={images.logo} alt="GolfN" className="h-8 md:h-12 w-auto shrink-0" />
           {partner.agencyLogoUrl ? (
@@ -53,10 +58,9 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             )}
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-base md:text-xl text-[#9ca3af] max-w-3xl leading-7 md:leading-8 mb-8">{subtitle}</motion.p>
 
-            {/* Portfolio brand logos with agency bracket */}
+            {/* Portfolio brand logos */}
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
-                {/* Desktop: horizontal row + bracket */}
                 <div className="hidden sm:inline-flex flex-col items-center">
                   <div className="flex items-center gap-3">
                     {partner.portfolioBrands.map((b) => (
@@ -80,8 +84,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
                     </div>
                   )}
                 </div>
-
-                {/* Mobile: vertical stack, no bracket */}
                 <div className="sm:hidden flex flex-col gap-2">
                   <div className="flex flex-wrap gap-2">
                     {partner.portfolioBrands.map((b) => (
@@ -109,7 +111,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             </motion.div>
           </div>
 
-          {/* Campaign creative mockup (hidden on small mobile) */}
           <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 hidden md:flex justify-center">
             <div className="relative">
               <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: 'radial-gradient(circle, #00ff9d, #001a14, transparent)' }} />
@@ -123,6 +124,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           </motion.div>
         </div>
 
+        {/* KPIs */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-14">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
@@ -131,6 +133,56 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             </div>
           ))}
         </motion.div>
+
+        {/* Market Reach expandable (only when marketReach data exists) */}
+        {markets && markets.length > 0 && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="mt-8">
+            <button
+              onClick={() => setShowMarkets(!showMarkets)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1a1f2e] border border-[#2a3347] hover:border-[#00ff9d]/40 transition-all group"
+            >
+              <Globe className="w-4 h-4 text-[#00ff9d]" />
+              <span className="text-sm md:text-base font-semibold text-white">Market Reach by Country</span>
+              <span className="text-xs font-mono text-[#6b7280] ml-1">As of Mar 11, 2026</span>
+              {showMarkets ? <ChevronUp className="w-4 h-4 text-[#6b7280] group-hover:text-[#00ff9d] transition-colors" /> : <ChevronDown className="w-4 h-4 text-[#6b7280] group-hover:text-[#00ff9d] transition-colors" />}
+            </button>
+
+            {showMarkets && (
+              <div className="mt-4 bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden max-w-2xl">
+                <div className="divide-y divide-[#2a3347]/60">
+                  {markets.map((m) => {
+                    const maxUsers = Math.max(...markets.map(x => x.users))
+                    const pct = (m.users / maxUsers) * 100
+                    return (
+                      <div key={m.country} className="px-5 py-3 flex items-center gap-4">
+                        {m.flag && <span className="text-lg shrink-0">{m.flag}</span>}
+                        <span className="text-sm md:text-base text-white font-medium w-32 md:w-40 shrink-0">{m.country}</span>
+                        <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden">
+                          <div className="h-full rounded-full" style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #00ff9d, #17A455)' }} />
+                        </div>
+                        <span className="text-sm md:text-base font-mono font-bold text-[#00ff9d] w-16 text-right shrink-0">{m.users.toLocaleString()}</span>
+                      </div>
+                    )
+                  })}
+                  {/* Others row */}
+                  <div className="px-5 py-3 flex items-center gap-4">
+                    <span className="text-lg shrink-0">\ud83c\udf0d</span>
+                    <span className="text-sm md:text-base text-[#9ca3af] font-medium w-32 md:w-40 shrink-0">Others (51 markets)</span>
+                    <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden">
+                      <div className="h-full rounded-full" style={{ width: `${(othersCount / Math.max(...markets.map(x => x.users))) * 100}%`, background: 'linear-gradient(90deg, rgba(0,255,157,0.3), rgba(23,164,85,0.3))' }} />
+                    </div>
+                    <span className="text-sm md:text-base font-mono font-bold text-[#9ca3af] w-16 text-right shrink-0">{othersCount.toLocaleString()}</span>
+                  </div>
+                </div>
+                {/* Total footer */}
+                <div className="px-5 py-3 bg-[#0f1217] border-t border-[#2a3347] flex items-center justify-between">
+                  <span className="text-sm font-bold text-white">Total (57 countries)</span>
+                  <span className="text-lg md:text-xl font-mono font-bold text-[#00ff9d]">{grandTotal.toLocaleString()}+</span>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        )}
       </div>
     </section>
   )

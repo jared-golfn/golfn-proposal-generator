@@ -14,7 +14,6 @@ import { S09_WhatWeNeed } from './S09_WhatWeNeed'
 import { S10_DataDifference } from './S10_DataDifference'
 import { S11_FAQ } from './S11_FAQ'
 import { S12_FinalCTA } from './S12_FinalCTA'
-import { MarketReach } from './MarketReach'
 import { SectionDivider } from './SectionDivider'
 
 const navSections = [
@@ -59,9 +58,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         <SectionDivider />
         <S10_DataDifference partner={partner} />
         <SectionDivider />
-        {/* Market Reach (only renders when marketReach data exists) */}
-        <MarketReach partner={partner} />
-        {partner.marketReach && partner.marketReach.length > 0 && <SectionDivider />}
         <div id="faq-section"><S11_FAQ partner={partner} /></div>
         <SectionDivider />
         <S12_FinalCTA partner={partner} />
