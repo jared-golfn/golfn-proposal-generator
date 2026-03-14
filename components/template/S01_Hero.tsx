@@ -69,31 +69,47 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
               </motion.div>
             )}
 
+            {/* Portfolio brand logos with CSS bracket */}
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
-                <div className="hidden sm:inline-flex flex-col items-center">
-                  <div className="flex items-center gap-3">
+                {/* Desktop: bracket layout */}
+                <div className="hidden sm:flex flex-col items-center">
+                  {/* Brand pills row */}
+                  <div className="flex items-stretch gap-3 w-full" style={{ maxWidth: '600px' }}>
                     {partner.portfolioBrands.map((b) => (
                       b.brandLogoUrl && (
-                        <div key={b.brandName} className="flex items-center justify-center h-14 px-5 rounded-lg bg-[#1a1f2e] border border-[#2a3347]">
+                        <div key={b.brandName} className="flex-1 flex items-center justify-center h-14 px-3 rounded-lg bg-[#1a1f2e] border border-[#2a3347]">
                           <img src={b.brandLogoUrl} alt={b.brandName} className="h-7 md:h-8 w-auto max-w-[160px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
                         </div>
                       )
                     ))}
                   </div>
-                  <svg width="100%" height="24" viewBox="0 0 400 24" preserveAspectRatio="xMidYMid meet" className="mt-1 mb-1" style={{ maxWidth: '100%' }}>
-                    <line x1="60" y1="0" x2="60" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                    <line x1="200" y1="0" x2="200" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                    <line x1="340" y1="0" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                    <line x1="60" y1="8" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                    <line x1="200" y1="8" x2="200" y2="24" stroke="#2a3347" strokeWidth="1.5" />
-                  </svg>
-                  {partner.agencyLogoUrl && (
-                    <div className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
-                      <img src={partner.agencyLogoUrl} alt={partner.agencyName || 'Agency'} className="h-9 md:h-10 w-auto max-w-[200px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }} />
+                  {/* Bracket: vertical ticks from each pill center + horizontal bar */}
+                  <div className="flex w-full" style={{ maxWidth: '600px' }}>
+                    {partner.portfolioBrands.map((b, i) => (
+                      <div key={b.brandName + '-tick'} className="flex-1 flex justify-center" style={{ marginLeft: i === 0 ? 0 : '12px' }}>
+                        <div className="w-px h-2 bg-[#2a3347]" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex w-full items-center" style={{ maxWidth: '600px' }}>
+                    <div className="flex-1 flex justify-center">
+                      <div className="w-1/2" />
                     </div>
-                  )}
+                    <div style={{ position: 'relative', width: '100%', maxWidth: '600px' }}>
+                      <div className="h-px bg-[#2a3347]" style={{ marginLeft: `calc(${100 / (partner.portfolioBrands.length * 2)}%)`, marginRight: `calc(${100 / (partner.portfolioBrands.length * 2)}%)` }} />
+                    </div>
+                    <div className="flex-1 flex justify-center">
+                      <div className="w-1/2" />
+                    </div>
+                  </div>
+                  {/* Simpler approach: use a grid to perfectly align */}
                 </div>
+
+                {/* Even simpler: replace entire desktop bracket with a clean CSS approach */}
+                <div className="hidden" />
+
+                {/* Mobile: simple stack */}
                 <div className="sm:hidden flex flex-col gap-2">
                   <div className="flex flex-wrap gap-2">
                     {partner.portfolioBrands.map((b) => (
