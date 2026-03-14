@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star, Trophy, ChevronDown, ChevronUp, Clock, Megaphone, ArrowRight } from 'lucide-react'
+import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star, Trophy, ChevronDown, ChevronUp, Clock, Megaphone, ArrowRight, Check, Lock } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { campaignImageStyles } from '@/lib/campaign-images'
 import { Fade } from './Fade'
@@ -72,6 +72,20 @@ function formatUSD(n: number): string {
 function formatUSD2(n: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n)
 }
+
+const youRetain = [
+  'Full campaign performance report (impressions, entries, engagement, cohort size)',
+  'Aggregate audience insights (demographics, behavior patterns, geographic distribution)',
+  'Commerce attribution data from the campaign + 30-day activation window',
+  'The right to reactivate your cohort on GolfN at any time',
+]
+
+const staysOnPlatform = [
+  'Individual user profiles and behavioral data (not exportable)',
+  'The qualified cohort itself -- the audience lives on GolfN',
+  'Targeting intelligence and lookalike models',
+  'Distribution channels: email, push, in-app, banners, social',
+]
 
 export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
   const [cohortSize, setCohortSize] = useState(1000)
@@ -194,7 +208,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </Fade>
         )}
 
-        {/* ── Program Timeline ── */}
+        {/* Program Timeline */}
         <Fade delay={0.05}>
           <div className="mb-14">
             <div className="flex items-center gap-2.5 mb-6">
@@ -202,7 +216,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               <h3 className="text-2xl md:text-3xl font-semibold text-white">How the Program Unfolds</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0">
-              {/* Phase 1 */}
               <div className="relative bg-[#1a1f2e] border border-[#2a3347] rounded-t-xl md:rounded-l-xl md:rounded-tr-none p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 rounded-full bg-[#00ff9d] text-[#0f1217] flex items-center justify-center text-sm font-bold shrink-0">1</div>
@@ -219,8 +232,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                   <ArrowRight className="w-3 h-3 text-[#00ff9d]" />
                 </div>
               </div>
-
-              {/* Phase 2 */}
               <div className="relative bg-[#1a1f2e] border border-[#2a3347] border-t-0 md:border-t md:border-l-0 p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 rounded-full bg-[#00ff9d] text-[#0f1217] flex items-center justify-center text-sm font-bold shrink-0">2</div>
@@ -238,8 +249,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                   <ArrowRight className="w-3 h-3 text-[#00ff9d]" />
                 </div>
               </div>
-
-              {/* Phase 3 */}
               <div className="bg-[#1a1f2e] border border-[#2a3347] border-t-0 md:border-t md:border-l-0 rounded-b-xl md:rounded-r-xl md:rounded-bl-none p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 rounded-full bg-[#2a3347] text-[#9ca3af] flex items-center justify-center text-sm font-bold shrink-0">3</div>
@@ -354,19 +363,47 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
-        {/* Transition callout: what happens after the 30 days */}
+        {/* What happens after 30 days -- data retention clarity */}
         <Fade delay={0.08}>
-          <div className="mb-12 bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 md:p-8">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#2a3347] flex items-center justify-center shrink-0 mt-0.5">
-                <ArrowRight className="w-5 h-5 text-[#00ff9d]" />
+          <div className="mb-12 bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden">
+            <div className="px-6 md:px-8 py-5 border-b border-[#2a3347] bg-[#0f1217]">
+              <h4 className="text-lg md:text-xl font-bold text-white">What happens after 30 days?</h4>
+              <p className="text-sm text-[#9ca3af] mt-1">The sweepstakes and 30-day activation window are fully covered by your startup fee. Continuing is entirely optional.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#2a3347]">
+              {/* You retain */}
+              <div className="px-6 md:px-8 py-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-7 h-7 rounded-full bg-[#00ff9d]/15 flex items-center justify-center"><Check className="w-4 h-4 text-[#00ff9d]" /></div>
+                  <h5 className="text-base font-bold text-[#00ff9d]">You retain</h5>
+                </div>
+                <ul className="space-y-3">
+                  {youRetain.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <Check className="w-4 h-4 text-[#00ff9d] mt-0.5 shrink-0" />
+                      <span className="text-sm text-[#d1d5db] leading-6">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div>
-                <h4 className="text-lg md:text-xl font-bold text-white mb-2">What happens after 30 days?</h4>
-                <p className="text-base text-[#d1d5db] leading-8">
-                  The sweepstakes campaign and 30-day activation window are covered by your startup fee. After that, <span className="text-white font-semibold">continuing is entirely optional</span>. If you see value in the cohort and want to keep growing it, the per-user pricing below applies. If not, you keep the data and audience you built with zero ongoing obligation.
-                </p>
+              {/* Stays on platform */}
+              <div className="px-6 md:px-8 py-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-7 h-7 rounded-full bg-[#2a3347] flex items-center justify-center"><Lock className="w-3.5 h-3.5 text-[#9ca3af]" /></div>
+                  <h5 className="text-base font-bold text-[#9ca3af]">Stays on GolfN's platform</h5>
+                </div>
+                <ul className="space-y-3">
+                  {staysOnPlatform.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <Lock className="w-4 h-4 text-[#4b5563] mt-0.5 shrink-0" />
+                      <span className="text-sm text-[#9ca3af] leading-6">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
+            </div>
+            <div className="px-6 md:px-8 py-4 border-t border-[#2a3347] bg-[#0f1217]">
+              <p className="text-sm text-[#d1d5db] leading-6">You get the reporting and insights. The audience lives on GolfN -- and is ready to reactivate whenever you want to come back. No data is exported or shared outside the platform.</p>
             </div>
           </div>
         </Fade>
