@@ -32,12 +32,11 @@ export function CaseStudy() {
 
         <Fade delay={0.06}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
-            {/* Video section */}
             <div className="relative">
               {showVideo ? (
                 <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                   <iframe
-                    src="https://www.youtube.com/embed/e8YaanzP9oQ?autoplay=1&start=30&rel=0&modestbranding=1"
+                    src="https://www.youtube.com/embed/e8YaanzP9oQ?autoplay=1&rel=0&modestbranding=1"
                     title="GolfN x L.A.B. Golf Brand Film"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -74,7 +73,6 @@ export function CaseStudy() {
               )}
             </div>
 
-            {/* Metrics row */}
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#2a3347] border-t border-[#2a3347]">
               {metrics.map((m) => (
                 <div key={m.label} className="px-5 md:px-6 py-5 md:py-6 text-center">
@@ -86,7 +84,6 @@ export function CaseStudy() {
               ))}
             </div>
 
-            {/* Details */}
             <div className="px-6 md:px-8 py-6 border-t border-[#2a3347] bg-[#0f1217]">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
