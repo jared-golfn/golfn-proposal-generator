@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Target, TrendingDown, Zap, Calculator, DollarSign, Plus, Sparkles, Video, LayoutGrid, UserCheck, Star, Trophy, ChevronDown, ChevronUp } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
+import { campaignImageStyles } from '@/lib/campaign-images'
 import { Fade } from './Fade'
 
 const perUserTiers = [
@@ -90,7 +91,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
   const finalCost = Math.round(baseCost * factor)
   const effectiveRate = cohortSize > 0 ? (finalCost / cohortSize) : 0
 
-  // Startup math
   const startupPerBrand = STARTUP_PER_BRAND
   const startupSubtotal = startupPerBrand * brandCount
   const startupSavings = Math.round(startupSubtotal * startupDiscountPct / 100)
@@ -119,7 +119,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </p>
         </Fade>
 
-        {/* Campaign Sweepstakes Cards (portfolio only) */}
+        {/* Campaign Sweepstakes Cards */}
         {campaigns && campaigns.length > 0 && (
           <Fade delay={0.04}>
             <div className="mb-14">
@@ -130,12 +130,12 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {campaigns.map((c, ci) => {
                   const opaqueLogo = c.brandLogoUrl ? isOpaqueImage(c.brandLogoUrl) : false
+                  const imgStyle = campaignImageStyles[c.brandName]
                   return (
                     <div
                       key={c.brandName}
                       className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col"
                     >
-                      {/* Brand logo */}
                       {c.brandLogoUrl && (
                         <div className={`mb-4 h-10 flex items-center ${opaqueLogo ? 'bg-white rounded-lg px-3 w-fit' : ''}`}>
                           <img
@@ -147,12 +147,21 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                         </div>
                       )}
 
-                      {/* Hero image placeholder */}
-                      <div className="w-full h-40 rounded-lg bg-[#0f1217] border border-[#2a3347] mb-4 flex items-center justify-center overflow-hidden">
+                      <div className="w-full h-44 rounded-lg bg-[#0f1217] border border-[#2a3347] mb-4 overflow-hidden">
                         {c.heroImageUrl ? (
-                          <img src={c.heroImageUrl} alt={c.title} className="w-full h-full object-cover" />
+                          <img
+                            src={c.heroImageUrl}
+                            alt={c.title}
+                            className="w-full h-full object-cover"
+                            style={{
+                              objectPosition: imgStyle?.position || 'center center',
+                              transform: `scale(${imgStyle?.scale || '1'})`,
+                            }}
+                          />
                         ) : (
-                          <span className="text-sm text-[#4b5563] font-mono">Product image</span>
+                          <div className="w-full h-full flex items-center justify-center">
+                            <span className="text-sm text-[#4b5563] font-mono">Product image</span>
+                          </div>
                         )}
                       </div>
 
@@ -169,7 +178,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                         <span className="text-sm text-[#6b7280]">per brand</span>
                       </div>
 
-                      {/* Expandable prize breakdown */}
                       <button
                         onClick={() => setExpandedCampaign(expandedCampaign === ci ? null : ci)}
                         className="flex items-center gap-1.5 text-sm font-semibold text-[#00ff9d] hover:underline mt-auto"
@@ -195,7 +203,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 })}
               </div>
 
-              {/* Portfolio Startup Summary */}
               {hasDiscount && (
                 <div className="mt-6 bg-[#1a1f2e] border border-[#2a3347] rounded-xl overflow-hidden">
                   <div className="px-6 py-4 border-b border-[#2a3347] bg-[#0f1217]">
@@ -218,7 +225,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 </div>
               )}
 
-              {/* Portfolio discount note */}
               {pricingNote && (
                 <div className="mt-4 bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-5">
                   <p className="text-base md:text-lg text-[#00ff9d] font-semibold">{pricingNote}</p>
@@ -228,7 +234,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </Fade>
         )}
 
-        {/* A La Carte Startup Fee (non-portfolio or additional context) */}
+        {/* Startup Fee */}
         <Fade delay={0.06}>
           <div className="mb-12">
             <div className="flex items-center gap-2.5 mb-6">
@@ -236,7 +242,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               <h3 className="text-2xl md:text-3xl font-semibold text-white">{hasDiscount ? 'What Each Startup Fee Includes' : 'One-Time Startup Fee: Starts at $2,500 \u2014 Add What You Want'}</h3>
             </div>
 
-            {/* Base Card */}
             <div className="bg-[#1a1f2e] border-2 border-[#00ff9d]/40 rounded-2xl p-8 mb-8">
               <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
                 <div>
@@ -255,7 +260,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               </ul>
             </div>
 
-            {/* Launch Add-Ons */}
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-4">
                 <Plus className="w-4 h-4 text-[#00ff9d]" />
@@ -274,13 +278,9 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                         <div>
                           <h4 className="text-base font-bold text-white leading-snug">{a.title}</h4>
                           <div className="flex items-center gap-2 mt-0.5">
-                            {hasDiscount && (
-                              <span className="text-base font-mono text-[#6b7280] line-through">+{formatUSD(a.price)}</span>
-                            )}
+                            {hasDiscount && <span className="text-base font-mono text-[#6b7280] line-through">+{formatUSD(a.price)}</span>}
                             <span className="text-lg font-mono font-bold text-[#00ff9d]">+{formatUSD(discountedPrice)}</span>
-                            {hasDiscount && (
-                              <span className="text-xs font-mono text-[#00ff9d]">per brand</span>
-                            )}
+                            {hasDiscount && <span className="text-xs font-mono text-[#00ff9d]">per brand</span>}
                           </div>
                         </div>
                       </div>
@@ -292,7 +292,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               </div>
             </div>
 
-            {/* Premium Add-On */}
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-4">
                 <Star className="w-4 h-4 text-[#00ff9d]" />
@@ -310,9 +309,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                         <div className="flex items-center gap-3 flex-wrap">
                           <h4 className="text-lg font-bold text-white">{premiumAddOn.title}</h4>
                           <div className="flex items-center gap-2">
-                            {hasDiscount && (
-                              <span className="text-base font-mono text-[#6b7280] line-through">+{formatUSD(premiumAddOn.price)}</span>
-                            )}
+                            {hasDiscount && <span className="text-base font-mono text-[#6b7280] line-through">+{formatUSD(premiumAddOn.price)}</span>}
                             <span className="text-xl font-mono font-bold text-[#00ff9d]">+{formatUSD(discountedPrem)}</span>
                             {hasDiscount && <span className="text-xs font-mono text-[#00ff9d]">per brand</span>}
                           </div>
@@ -326,7 +323,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
               })()}
             </div>
 
-            {/* A la carte callout */}
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-6">
               <p className="text-base md:text-lg text-[#d1d5db] leading-8">
                 Build your launch exactly how you want it. Start at <span className="text-[#00ff9d] font-semibold">{formatUSD(startupPerBrand)}</span>{hasDiscount ? ' per brand' : ''} and add only the extras that drive results. <strong className="text-white">For your first campaign, we'll include one Launch Add-On free to prove the impact.</strong>
@@ -335,7 +331,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
-        {/* Per-User Tiers Table */}
+        {/* Per-User Tiers */}
         <Fade delay={0.10}>
           <div className="mb-12">
             <div className="flex items-center gap-2.5 mb-5">
@@ -361,9 +357,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                     return (
                       <tr key={row.min} className={`border-t border-[#2a3347]/60 transition-all duration-200 hover:bg-[#1a1f2e]/80 ${i >= 2 ? 'bg-[#00ff9d]/[0.04]' : 'bg-transparent'}`}>
                         <td className="px-6 py-5 text-lg text-white font-medium">{row.min === 10001 ? '10,001+' : row.min.toLocaleString() + '\u2013' + row.max.toLocaleString()}</td>
-                        {hasDiscount && (
-                          <td className="px-6 py-5"><span className="text-lg font-mono text-[#6b7280] line-through">{formatUSD2(row.rate)}</span></td>
-                        )}
+                        {hasDiscount && <td className="px-6 py-5"><span className="text-lg font-mono text-[#6b7280] line-through">{formatUSD2(row.rate)}</span></td>}
                         <td className="px-6 py-5"><span className="text-2xl font-mono font-bold text-[#00ff9d]">{formatUSD2(hasDiscount ? discountedRate : row.rate)}</span></td>
                         <td className="px-6 py-5 text-base text-[#9ca3af]"><span className="mr-2">{row.icon}</span>{row.label}</td>
                       </tr>
@@ -375,7 +369,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
-        {/* Prepay Discount Pills */}
+        {/* Prepay */}
         <Fade delay={0.14}>
           <div className="flex flex-wrap gap-3 mb-12">
             <span className="text-base text-[#6b7280] font-medium self-center mr-2">Prepay discounts (credit balance):</span>
@@ -388,38 +382,20 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
-        {/* Interactive Calculator */}
+        {/* Calculator */}
         <Fade delay={0.18}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10 mb-12">
             <div className="flex items-center gap-3 mb-2">
               <Calculator className="w-6 h-6 text-[#00ff9d]" />
               <h3 className="text-2xl md:text-3xl font-bold text-white">Pricing Calculator</h3>
             </div>
-            {hasDiscount && (
-              <p className="text-sm text-[#00ff9d] font-mono mb-6">{perUserDiscountPct}% portfolio discount applied to all rates</p>
-            )}
+            {hasDiscount && <p className="text-sm text-[#00ff9d] font-mono mb-6">{perUserDiscountPct}% portfolio discount applied to all rates</p>}
 
             <div className="mb-8">
               <label className="block text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">Expected monthly qualified users added to your cohort</label>
               <div className="flex items-center gap-4">
-                <input
-                  type="number"
-                  min={100}
-                  max={50000}
-                  value={cohortSize}
-                  onChange={(e) => { const v = Math.max(100, Math.min(50000, Number(e.target.value) || 100)); setCohortSize(v) }}
-                  className="bg-[#0f1217] border border-[#2a3347] rounded-xl px-5 py-3 text-2xl font-mono font-bold text-[#00ff9d] w-48 focus:border-[#00ff9d]/60 focus:outline-none transition-colors"
-                />
-                <input
-                  type="range"
-                  min={100}
-                  max={50000}
-                  step={100}
-                  value={cohortSize}
-                  onChange={(e) => setCohortSize(Number(e.target.value))}
-                  className="flex-1 h-2 rounded-full appearance-none cursor-pointer"
-                  style={{ background: `linear-gradient(to right, #00ff9d ${((cohortSize - 100) / 49900) * 100}%, #2a3347 ${((cohortSize - 100) / 49900) * 100}%)` }}
-                />
+                <input type="number" min={100} max={50000} value={cohortSize} onChange={(e) => { const v = Math.max(100, Math.min(50000, Number(e.target.value) || 100)); setCohortSize(v) }} className="bg-[#0f1217] border border-[#2a3347] rounded-xl px-5 py-3 text-2xl font-mono font-bold text-[#00ff9d] w-48 focus:border-[#00ff9d]/60 focus:outline-none transition-colors" />
+                <input type="range" min={100} max={50000} step={100} value={cohortSize} onChange={(e) => setCohortSize(Number(e.target.value))} className="flex-1 h-2 rounded-full appearance-none cursor-pointer" style={{ background: `linear-gradient(to right, #00ff9d ${((cohortSize - 100) / 49900) * 100}%, #2a3347 ${((cohortSize - 100) / 49900) * 100}%)` }} />
               </div>
             </div>
 
@@ -466,17 +442,14 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-1">Your Monthly Cost</p>
                 <p className="text-4xl md:text-5xl font-mono font-bold text-[#00ff9d] mb-3">{formatUSD(finalCost)}<span className="text-lg text-[#6b7280]">/mo</span></p>
                 <p className="text-lg font-semibold">Avg <span className="text-[#00ff9d] font-mono">${effectiveRate.toFixed(2)}</span> <span className="text-[#6b7280]">per qualified user</span></p>
-                {prepayIdx > 0 && (
-                  <p className="text-base text-[#00ff9d] mt-1">You save {formatUSD(baseCost - finalCost)}/mo with {prepayOptions[prepayIdx].term} prepay</p>
-                )}
+                {prepayIdx > 0 && <p className="text-base text-[#00ff9d] mt-1">You save {formatUSD(baseCost - finalCost)}/mo with {prepayOptions[prepayIdx].term} prepay</p>}
               </div>
             </div>
-
             <p className="text-base text-[#6b7280] mt-6 text-center italic">The more qualified golfers added, the lower your average cost per user &mdash; rewards for growth.</p>
           </div>
         </Fade>
 
-        {/* Comparison Callout */}
+        {/* Why this matters */}
         <Fade delay={0.22}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-8 md:p-10 mb-10">
             <div className="flex items-start gap-4">
@@ -497,7 +470,6 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </div>
         </Fade>
 
-        {/* Setup Band */}
         <Fade delay={0.25}>
           <div className="bg-[#1a1f2e] border-l-2 border-[#00ff9d] rounded-r-xl p-6 md:p-8">
             <p className="text-lg text-[#d1d5db] leading-9"><strong className="text-white">Every program includes real upfront work:</strong> strategy, offer design, audience definition, tracking logic, campaign implementation, asset creation, and the first 30 days of post-campaign follow-up. That is why a one-time startup fee ({formatUSD(startupPerBrand)} per brand) is required before launch.</p>
