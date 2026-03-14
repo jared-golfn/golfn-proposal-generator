@@ -30,27 +30,9 @@ const baseIncludes = [
 ]
 
 const launchAddOns = [
-  {
-    title: 'Custom Creative Package',
-    price: '+$1,500',
-    desc: 'Full custom production: 3-5 variant emails/in-app/banners/social + blog draft with backlink',
-    value: 'Higher engagement than templates',
-    Icon: Sparkles,
-  },
-  {
-    title: 'Social Video Takeover',
-    price: '+$1,500',
-    desc: 'Brandon creates 15-30s social video pushed on GolfN channels + in-app',
-    value: 'Drives external traffic & virality',
-    Icon: Video,
-  },
-  {
-    title: 'In-App Banner Network Takeover',
-    price: '+$1,000 - $2,000',
-    desc: 'Rotating/persistent banners throughout app experience during campaign',
-    value: 'Extends visibility beyond sweepstakes',
-    Icon: LayoutGrid,
-  },
+  { title: 'Custom Creative Package', price: '+$1,500', desc: 'Full custom production: 3-5 variant emails/in-app/banners/social + blog draft with backlink', value: 'Higher engagement than templates', Icon: Sparkles },
+  { title: 'Social Video Takeover', price: '+$1,500', desc: 'Brandon creates 15-30s social video pushed on GolfN channels + in-app', value: 'Drives external traffic & virality', Icon: Video },
+  { title: 'In-App Banner Network Takeover', price: '+$1,000 - $2,000', desc: 'Rotating/persistent banners throughout app experience during campaign', value: 'Extends visibility beyond sweepstakes', Icon: LayoutGrid },
 ]
 
 const premiumAddOn = {
@@ -59,6 +41,11 @@ const premiumAddOn = {
   desc: 'Produce + embed 30-45s founder video in sweepstakes pre-roll and app touchpoints',
   value: 'Highest trust signal, lifts entries 25-40%',
   Icon: UserCheck,
+}
+
+function isOpaqueImage(url: string): boolean {
+  const lower = url.toLowerCase()
+  return lower.endsWith('.jpg') || lower.endsWith('.jpeg')
 }
 
 function calcBuckets(users: number) {
@@ -111,7 +98,7 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
           </p>
         </Fade>
 
-        {/* ── Campaign Sweepstakes Cards (portfolio only) ── */}
+        {/* Campaign Sweepstakes Cards (portfolio only) */}
         {campaigns && campaigns.length > 0 && (
           <Fade delay={0.04}>
             <div className="mb-14">
@@ -120,57 +107,65 @@ export function S08_WaysToWork({ partner }: { partner: PartnerData }) {
                 <h3 className="text-2xl md:text-3xl font-semibold text-white">Recommended Campaigns</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {campaigns.map((c, ci) => (
-                  <div
-                    key={c.brandName}
-                    className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col"
-                  >
-                    {/* Brand logo */}
-                    {c.brandLogoUrl && (
-                      <div className="mb-4 h-8 flex items-center">
-                        <img src={c.brandLogoUrl} alt={c.brandName} className="h-6 md:h-7 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.8 }} />
-                      </div>
-                    )}
+                {campaigns.map((c, ci) => {
+                  const opaqueLogo = c.brandLogoUrl ? isOpaqueImage(c.brandLogoUrl) : false
+                  return (
+                    <div
+                      key={c.brandName}
+                      className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 hover:border-[#00ff9d]/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col"
+                    >
+                      {/* Brand logo */}
+                      {c.brandLogoUrl && (
+                        <div className={`mb-4 h-10 flex items-center ${opaqueLogo ? 'bg-white rounded-lg px-3 w-fit' : ''}`}>
+                          <img
+                            src={c.brandLogoUrl}
+                            alt={c.brandName}
+                            className="h-6 md:h-7 w-auto max-w-[140px] object-contain"
+                            style={opaqueLogo ? {} : { filter: 'brightness(0) invert(1)', opacity: 0.8 }}
+                          />
+                        </div>
+                      )}
 
-                    {/* Hero image placeholder */}
-                    <div className="w-full h-40 rounded-lg bg-[#0f1217] border border-[#2a3347] mb-4 flex items-center justify-center overflow-hidden">
-                      {c.heroImageUrl ? (
-                        <img src={c.heroImageUrl} alt={c.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-sm text-[#4b5563] font-mono">Product image</span>
+                      {/* Hero image placeholder */}
+                      <div className="w-full h-40 rounded-lg bg-[#0f1217] border border-[#2a3347] mb-4 flex items-center justify-center overflow-hidden">
+                        {c.heroImageUrl ? (
+                          <img src={c.heroImageUrl} alt={c.title} className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="text-sm text-[#4b5563] font-mono">Product image</span>
+                        )}
+                      </div>
+
+                      <h4 className="text-lg font-bold text-white mb-1">{c.title}</h4>
+                      <p className="text-sm text-[#9ca3af] leading-6 mb-3">{c.description}</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217]">PRIZE POOL</span>
+                        <span className="text-xl font-mono font-bold text-[#00ff9d]">{c.prizePool}</span>
+                      </div>
+
+                      {/* Expandable prize breakdown */}
+                      <button
+                        onClick={() => setExpandedCampaign(expandedCampaign === ci ? null : ci)}
+                        className="flex items-center gap-1.5 text-sm font-semibold text-[#00ff9d] hover:underline mt-auto"
+                      >
+                        {expandedCampaign === ci ? 'Hide prizes' : 'View prizes'}
+                        {expandedCampaign === ci ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                      </button>
+                      {expandedCampaign === ci && (
+                        <div className="mt-3 space-y-2">
+                          {c.prizes.map((p, pi) => (
+                            <div key={pi} className="flex justify-between items-start text-sm border-t border-[#2a3347]/50 pt-2">
+                              <div>
+                                <span className="text-[#00ff9d] font-mono font-bold mr-2">{p.place}</span>
+                                <span className="text-[#d1d5db]">{p.description}</span>
+                              </div>
+                              <span className="text-white font-mono font-semibold shrink-0 ml-3">{p.value}</span>
+                            </div>
+                          ))}
+                        </div>
                       )}
                     </div>
-
-                    <h4 className="text-lg font-bold text-white mb-1">{c.title}</h4>
-                    <p className="text-sm text-[#9ca3af] leading-6 mb-3">{c.description}</p>
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217]">PRIZE POOL</span>
-                      <span className="text-xl font-mono font-bold text-[#00ff9d]">{c.prizePool}</span>
-                    </div>
-
-                    {/* Expandable prize breakdown */}
-                    <button
-                      onClick={() => setExpandedCampaign(expandedCampaign === ci ? null : ci)}
-                      className="flex items-center gap-1.5 text-sm font-semibold text-[#00ff9d] hover:underline mt-auto"
-                    >
-                      {expandedCampaign === ci ? 'Hide prizes' : 'View prizes'}
-                      {expandedCampaign === ci ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                    </button>
-                    {expandedCampaign === ci && (
-                      <div className="mt-3 space-y-2">
-                        {c.prizes.map((p, pi) => (
-                          <div key={pi} className="flex justify-between items-start text-sm border-t border-[#2a3347]/50 pt-2">
-                            <div>
-                              <span className="text-[#00ff9d] font-mono font-bold mr-2">{p.place}</span>
-                              <span className="text-[#d1d5db]">{p.description}</span>
-                            </div>
-                            <span className="text-white font-mono font-semibold shrink-0 ml-3">{p.value}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  )
+                })}
               </div>
 
               {/* Portfolio discount note */}
