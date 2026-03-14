@@ -23,92 +23,101 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
       <div className="absolute inset-0 opacity-[0.04]" style={{ background: 'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 py-12 md:py-16">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex items-center justify-between mb-16 md:mb-20">
-          <img src={images.logo} alt="GolfN" className="h-9 md:h-12 w-auto" />
+        {/* Top bar: GolfN logo + Prepared for */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex items-center justify-between mb-12 md:mb-20 gap-4">
+          <img src={images.logo} alt="GolfN" className="h-8 md:h-12 w-auto shrink-0" />
           {partner.agencyLogoUrl ? (
-            <div className="flex items-center gap-3">
-              <span className="text-[#6b7280] text-base">Prepared for</span>
-              <img src={partner.agencyLogoUrl} alt={partner.agencyName || ''} className="h-7 md:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+            <div className="flex items-center gap-2 md:gap-3 shrink-0">
+              <span className="text-[#6b7280] text-sm md:text-base hidden sm:inline">Prepared for</span>
+              <img src={partner.agencyLogoUrl} alt={partner.agencyName || ''} className="h-6 md:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
             </div>
           ) : partner.partnerLogoUrl ? (
-            <div className="flex items-center gap-3">
-              <span className="text-[#6b7280] text-base">Prepared for</span>
-              <img src={partner.partnerLogoUrl} alt={partner.partnerName} className="h-7 md:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+            <div className="flex items-center gap-2 md:gap-3 shrink-0">
+              <span className="text-[#6b7280] text-sm md:text-base hidden sm:inline">Prepared for</span>
+              <img src={partner.partnerLogoUrl} alt={partner.partnerName} className="h-6 md:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
             </div>
           ) : (
-            <span className="text-[#6b7280] text-base">Prepared for <span className="text-white font-medium">{partner.partnerName}</span></span>
+            <span className="text-[#6b7280] text-sm md:text-base">Prepared for <span className="text-white font-medium">{partner.partnerName}</span></span>
           )}
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-10 items-center">
           <div className="lg:col-span-3">
             {headline ? (
-              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-4xl md:text-6xl font-extrabold leading-[0.95] tracking-tight mb-6">
+              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-[0.95] tracking-tight mb-6">
                 {headline}
               </motion.h1>
             ) : (
-              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-5xl md:text-7xl font-extrabold leading-[0.92] tracking-tight mb-6">
+              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[0.92] tracking-tight mb-6">
                 Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
               </motion.h1>
             )}
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-8">{subtitle}</motion.p>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-base md:text-xl text-[#9ca3af] max-w-3xl leading-7 md:leading-8 mb-8">{subtitle}</motion.p>
 
             {/* Portfolio brand logos with agency bracket */}
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="inline-flex flex-col items-center mb-8">
-                {/* Three brand logos in a row */}
-                <div className="flex items-center gap-3">
-                  {partner.portfolioBrands.map((b) => (
-                    b.brandLogoUrl && (
-                      <div
-                        key={b.brandName}
-                        className="flex items-center justify-center h-14 px-5 rounded-lg bg-[#1a1f2e] border border-[#2a3347]"
-                      >
-                        <img
-                          src={b.brandLogoUrl}
-                          alt={b.brandName}
-                          className="h-7 md:h-8 w-auto max-w-[160px] object-contain"
-                          style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }}
-                        />
-                      </div>
-                    )
-                  ))}
-                </div>
-                {/* SVG bracket connecting brands to agency */}
-                <svg width="100%" height="24" viewBox="0 0 400 24" preserveAspectRatio="xMidYMid meet" className="mt-1 mb-1" style={{ maxWidth: '100%' }}>
-                  <line x1="60" y1="0" x2="60" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                  <line x1="200" y1="0" x2="200" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                  <line x1="340" y1="0" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                  <line x1="60" y1="8" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
-                  <line x1="200" y1="8" x2="200" y2="24" stroke="#2a3347" strokeWidth="1.5" />
-                </svg>
-                {/* Agency logo centered, slightly larger */}
-                {partner.agencyLogoUrl && (
-                  <div className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
-                    <img
-                      src={partner.agencyLogoUrl}
-                      alt={partner.agencyName || 'Agency'}
-                      className="h-9 md:h-10 w-auto max-w-[200px] object-contain"
-                      style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }}
-                    />
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
+                {/* Desktop: horizontal row + bracket */}
+                <div className="hidden sm:inline-flex flex-col items-center">
+                  <div className="flex items-center gap-3">
+                    {partner.portfolioBrands.map((b) => (
+                      b.brandLogoUrl && (
+                        <div key={b.brandName} className="flex items-center justify-center h-14 px-5 rounded-lg bg-[#1a1f2e] border border-[#2a3347]">
+                          <img src={b.brandLogoUrl} alt={b.brandName} className="h-7 md:h-8 w-auto max-w-[160px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+                        </div>
+                      )
+                    ))}
                   </div>
-                )}
+                  <svg width="100%" height="24" viewBox="0 0 400 24" preserveAspectRatio="xMidYMid meet" className="mt-1 mb-1" style={{ maxWidth: '100%' }}>
+                    <line x1="60" y1="0" x2="60" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                    <line x1="200" y1="0" x2="200" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                    <line x1="340" y1="0" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                    <line x1="60" y1="8" x2="340" y2="8" stroke="#2a3347" strokeWidth="1.5" />
+                    <line x1="200" y1="8" x2="200" y2="24" stroke="#2a3347" strokeWidth="1.5" />
+                  </svg>
+                  {partner.agencyLogoUrl && (
+                    <div className="flex items-center justify-center h-16 px-6 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
+                      <img src={partner.agencyLogoUrl} alt={partner.agencyName || 'Agency'} className="h-9 md:h-10 w-auto max-w-[200px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }} />
+                    </div>
+                  )}
+                </div>
+
+                {/* Mobile: vertical stack, no bracket */}
+                <div className="sm:hidden flex flex-col gap-2">
+                  <div className="flex flex-wrap gap-2">
+                    {partner.portfolioBrands.map((b) => (
+                      b.brandLogoUrl && (
+                        <div key={b.brandName} className="flex items-center justify-center h-11 px-4 rounded-lg bg-[#1a1f2e] border border-[#2a3347]">
+                          <img src={b.brandLogoUrl} alt={b.brandName} className="h-5 w-auto max-w-[120px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+                        </div>
+                      )
+                    ))}
+                  </div>
+                  {partner.agencyLogoUrl && (
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-px bg-[#2a3347]" />
+                      <div className="flex items-center justify-center h-11 px-4 rounded-lg bg-[#1a1f2e]/70 border border-[#2a3347]/70">
+                        <img src={partner.agencyLogoUrl} alt={partner.agencyName || 'Agency'} className="h-6 w-auto max-w-[140px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }} />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </motion.div>
             )}
 
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-4 mb-10">
-              <a href={`mailto:${email}?subject=Partnership%20Proposal%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`} className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.03] glow-green" style={{ background: 'linear-gradient(135deg, #00ff9d, #17A455)', color: '#0f1217' }}>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-3 md:gap-4 mb-10">
+              <a href={`mailto:${email}?subject=Partnership%20Proposal%20%E2%80%94%20${encodeURIComponent(partner.partnerName)}`} className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-[1.03] glow-green" style={{ background: 'linear-gradient(135deg, #00ff9d, #17A455)', color: '#0f1217' }}>
                 <Flag className="w-5 h-5" /> Request a Proposal
               </a>
               {partner.bookingUrl && (
-                <a href={partner.bookingUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-lg border border-[#2a3347] text-white hover:bg-[#1a1f2e] transition-all"><Users className="w-5 h-5" /> Book a Walkthrough</a>
+                <a href={partner.bookingUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg border border-[#2a3347] text-white hover:bg-[#1a1f2e] transition-all"><Users className="w-5 h-5" /> Book a Walkthrough</a>
               )}
-              <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-base font-medium hover:underline transition-colors text-[#00ff9d]"><Zap className="w-4 h-4" /> See How It Works</button>
+              <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-sm md:text-base font-medium hover:underline transition-colors text-[#00ff9d]"><Zap className="w-4 h-4" /> See How It Works</button>
             </motion.div>
           </div>
 
-          {/* Campaign creative mockup area */}
-          <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 flex justify-center">
+          {/* Campaign creative mockup (hidden on small mobile) */}
+          <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 hidden md:flex justify-center">
             <div className="relative">
               <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: 'radial-gradient(circle, #00ff9d, #001a14, transparent)' }} />
               <img src={images.cobraSweeps} alt="Campaign creative" className="relative w-48 md:w-60 lg:w-68 rounded-[24px] glow-green" style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }} />
@@ -121,11 +130,11 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 flex flex-wrap gap-8 md:gap-14">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-14">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
-              <span className="text-2xl md:text-3xl font-bold font-mono text-[#00ff9d]">{kpi.value}</span>
-              <span className="block text-base text-[#6b7280] mt-1">{kpi.label}</span>
+              <span className="text-xl md:text-2xl lg:text-3xl font-bold font-mono text-[#00ff9d]">{kpi.value}</span>
+              <span className="block text-sm md:text-base text-[#6b7280] mt-1">{kpi.label}</span>
             </div>
           ))}
         </motion.div>
