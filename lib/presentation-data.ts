@@ -40,6 +40,8 @@ export interface PartnerConfig {
   campaigns?: BrandCampaign[]
 }
 
+const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/65b95d60c4a53a225fe144757365f8b70de14d2f-840x212.jpg'
+
 // ---- Sports Impact campaign data ----
 const sportsImpactCampaigns: BrandCampaign[] = [
   {
@@ -57,7 +59,7 @@ const sportsImpactCampaigns: BrandCampaign[] = [
   },
   {
     brandName: 'MotoCaddy',
-    brandLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
+    brandLogoUrl: MOTOCADDY_LOGO,
     brandColor: '#0066CC',
     title: 'Effortless Round Upgrade',
     prizePool: '$4,700',
@@ -119,7 +121,7 @@ export const partners: Record<string, PartnerConfig> = {
       {
         slug: 'motocaddy',
         name: 'MotoCaddy',
-        logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
+        logoUrl: MOTOCADDY_LOGO,
         color: '#0066CC',
         category: 'Electric Golf Trolleys',
         products: ['M7 GPS', 'M5 GPS', 'S1 DHC', 'Cube Push Trolley'],
@@ -202,7 +204,7 @@ export const partners: Record<string, PartnerConfig> = {
       {
         slug: 'motocaddy',
         name: 'MotoCaddy',
-        logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
+        logoUrl: MOTOCADDY_LOGO,
         color: '#0066CC',
         category: 'Electric Golf Trolleys',
         products: ['M7 GPS', 'M5 GPS', 'S1 DHC', 'Cube Push Trolley'],
@@ -247,7 +249,7 @@ export const partners: Record<string, PartnerConfig> = {
     slug: 'motocaddy',
     partnerName: 'MotoCaddy',
     password: 'motocaddy2026',
-    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
+    logoUrl: MOTOCADDY_LOGO,
     primaryColor: '#0066CC',
     secondaryColor: '#3399FF',
     productCategory: 'Electric Golf Trolleys',
