@@ -18,6 +18,11 @@ export interface BrandCampaign {
   prizes: CampaignPrize[]
 }
 
+export interface PortfolioDiscount {
+  startupPct: number   // e.g. 10 = 10% off startup fees
+  perUserPct: number   // e.g. 15 = 15% off per-user rates
+}
+
 export interface PartnerData {
   partnerName: string
   slug: string
@@ -49,6 +54,7 @@ export interface PartnerData {
 
   // Portfolio campaigns (sweepstakes cards)
   campaigns?: BrandCampaign[]
+  portfolioDiscount?: PortfolioDiscount
 
   // Agency / Portfolio
   isPortfolio?: boolean

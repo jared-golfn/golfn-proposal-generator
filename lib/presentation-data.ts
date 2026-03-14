@@ -38,6 +38,7 @@ export interface PartnerConfig {
   defaultPath?: 'pilot' | 'growth' | 'strategic'
   isPortfolio?: boolean
   campaigns?: BrandCampaign[]
+  portfolioDiscount?: { startupPct: number; perUserPct: number }
 }
 
 const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/65b95d60c4a53a225fe144757365f8b70de14d2f-840x212.jpg'
@@ -86,64 +87,18 @@ const sportsImpactCampaigns: BrandCampaign[] = [
 ]
 
 export const partners: Record<string, PartnerConfig> = {
-  // -- Generic template -> Sports Impact proposal ----------------------
+  // -- Generic template (clean, no Sports Impact content) --------------
   'template': {
     slug: 'template',
-    partnerName: 'Sports Impact',
+    partnerName: '[Brand Name]',
     password: 'golfnpartners',
-    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     primaryColor: '#17A455',
     secondaryColor: '#8DC54A',
-    productCategory: 'Multi-Brand Golf Portfolio',
-    productNames: ['Galvin Green', 'MotoCaddy', 'Wilson Golf'],
-    heroHeadline: 'GolfN x Sports Impact: Three Brand Kickoff Sweepstakes',
-    heroSubtitle: 'Prepared for Natalie Collard & Bryce Ritchie -- March 2026. Three separate, high-impact sweepstakes -- one for each of your clients -- with multiple winners and full product showcasing. Brand provides prize bundles only (under $5,000 total value per campaign). Low cost of entry with ability to scale.',
-    howItWorksIntro: 'We launch three coordinated brand-specific sweepstakes as the perfect awareness kickoff, exactly as discussed with Lou and Natalie.',
-    pricingIntro: 'Brand provides prize bundles only. GolfN fees start at $2,500-$7,500 per brand (10% Sports Impact discount when running all three). 30 days free follow-up + per-qualified-user ongoing ($5 to $1 tiers, 15% discount across all three).',
-    pricingNote: 'Sports Impact Shared Advantage: 10% off startup + 15% off per-user rates when running all three together.',
+    productCategory: '[Brand Category]',
+    productNames: ['[Product Line 1]', '[Product Line 2]', '[Product Line 3]'],
+    heroSubtitle: 'Brand awareness, technical education, and premium positioning for verified golfers -- built around [Brand Name]\'s [Key Product Feature] and [Product Strategy / Seasonal Focus].',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
-    agencyName: 'Sports Impact',
-    agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     defaultPath: 'pilot',
-    isPortfolio: true,
-    campaigns: sportsImpactCampaigns,
-    portfolioBrands: [
-      {
-        slug: 'galvin-green',
-        name: 'Galvin Green',
-        logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/6bbe863fced77a5f36904db460f7ed06a3a0e782-230x46.webp',
-        color: '#17A455',
-        category: 'Premium Golf Outerwear',
-        products: ['GORE-TEX Jackets', 'Interface Layers', 'Base Layers', 'Accessories'],
-        pitch: 'Brand awareness and technical education for a premium Swedish outerwear brand expanding US recognition.',
-        targetingEdge: 'GolfN knows which golfers play in rain, wind, and cold -- and targets only climates where technical outerwear matters.',
-      },
-      {
-        slug: 'motocaddy',
-        name: 'MotoCaddy',
-        logoUrl: MOTOCADDY_LOGO,
-        color: '#0066CC',
-        category: 'Electric Golf Trolleys',
-        products: ['M7 GPS', 'M5 GPS', 'S1 DHC', 'Cube Push Trolley'],
-        pitch: 'Precision targeting for a high-ticket product. Walk-vs-ride data means every impression goes to a verified walker.',
-        targetingEdge: 'GolfN is the only platform that knows which golfers walk. Every MotoCaddy impression goes to a verified walker -- zero waste.',
-      },
-      {
-        slug: 'wilson-golf',
-        name: 'Wilson Golf',
-        logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/dea5a3da06394dc9f1d779c94d3d75e847ba623f-807x200.svg',
-        color: '#C41E3A',
-        category: 'Golf Equipment',
-        products: ['Dynapower Drivers', 'Staff Model Irons', 'Triad Golf Balls', 'Quiver Stand Bags'],
-        pitch: 'Full-funnel activation for equipment launches. GolfN tracks what clubs users play and when they last upgraded.',
-        targetingEdge: 'GolfN tracks what clubs users play, when they last upgraded, and their handicap range -- so Wilson campaigns reach golfers ready to switch.',
-      },
-    ],
-    commerceNotes: [
-      'All three brands have existing affiliate partnerships. GolfN\'s points economy layers on top -- users earn points for purchases through tracked links, creating dual incentive without replacing current affiliate structures.',
-      'Consolidated agency pricing applies across the portfolio. Campaign architecture, audience intelligence, and infrastructure are shared -- reducing per-brand costs significantly compared to activating each brand independently.',
-      'Each brand gets distinct targeting: weather-based for Galvin Green, walk-vs-ride for MotoCaddy, equipment-readiness for Wilson. Shared infrastructure, differentiated activation.',
-    ],
   },
 
   // -- Galvin Green ----------------------------------------------------
@@ -182,14 +137,15 @@ export const partners: Record<string, PartnerConfig> = {
     heroHeadline: 'GolfN x Sports Impact: Three Brand Kickoff Sweepstakes',
     heroSubtitle: 'Prepared for Natalie Collard & Bryce Ritchie -- March 2026. Three separate, high-impact sweepstakes -- one for each of your clients -- with multiple winners and full product showcasing. Brand provides prize bundles only (under $5,000 total value per campaign). Low cost of entry with ability to scale.',
     howItWorksIntro: 'We launch three coordinated brand-specific sweepstakes as the perfect awareness kickoff, exactly as discussed with Lou and Natalie.',
-    pricingIntro: 'Brand provides prize bundles only. GolfN fees start at $2,500-$7,500 per brand (10% Sports Impact discount when running all three). 30 days free follow-up + per-qualified-user ongoing ($5 to $1 tiers, 15% discount across all three).',
-    pricingNote: 'Sports Impact Shared Advantage: 10% off startup + 15% off per-user rates when running all three together.',
+    pricingIntro: 'Brand provides prize bundles only (under $5,000 per campaign). GolfN charges a one-time startup fee per brand, then bills monthly per qualified user added to your cohort. Sports Impact portfolio pricing applies across all three brands.',
+    pricingNote: 'Sports Impact Shared Advantage: 10% off startup fees + 15% off per-user rates for 12 months when running all three together.',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
     agencyName: 'Sports Impact',
     agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png',
     defaultPath: 'pilot',
     isPortfolio: true,
     campaigns: sportsImpactCampaigns,
+    portfolioDiscount: { startupPct: 10, perUserPct: 15 },
     portfolioBrands: [
       {
         slug: 'galvin-green',
