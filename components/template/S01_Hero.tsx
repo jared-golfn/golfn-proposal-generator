@@ -16,13 +16,19 @@ const defaultKPIs: PlatformKPI[] = [
 
 function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { brandName: string; brandLogoUrl?: string }[]; agencyLogoUrl?: string; agencyName?: string }) {
   const validBrands = brands.filter(b => b.brandLogoUrl)
-  const count = validBrands.length
-  if (count === 0) return null
+  const n = validBrands.length
+  if (n === 0) return null
+
+  // For n equal columns with gap g, center of column i = (i * (colW + g)) + colW/2
+  // colW = (100% - (n-1)*g) / n
+  // Simplify: center of col i as % = ((2*i + 1) / (2*n)) * 100%  (ignoring gap adjustment)
+  // With gap correction: left offset = calc( (2*i+1) / (2*n) * (100% - (n-1)*12px) + i*12px )
+  // But simpler: use the same grid for the connector row
 
   return (
     <div className="flex flex-col items-center" style={{ maxWidth: '620px' }}>
-      {/* Brand pills in equal-width grid */}
-      <div className="grid w-full gap-3" style={{ gridTemplateColumns: `repeat(${count}, 1fr)` }}>
+      {/* Brand pills */}
+      <div className="grid w-full gap-3" style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
         {validBrands.map((b) => (
           <div key={b.brandName} className="flex items-center justify-center h-14 px-3 rounded-lg bg-[#1a1f2e] border border-[#2a3347]">
             <img src={b.brandLogoUrl} alt={b.brandName} className="h-7 md:h-8 w-auto max-w-[160px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
@@ -30,35 +36,29 @@ function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { bra
         ))}
       </div>
 
-      {/* Vertical ticks down from center of each pill */}
-      <div className="grid w-full gap-3" style={{ gridTemplateColumns: `repeat(${count}, 1fr)` }}>
-        {validBrands.map((b) => (
-          <div key={b.brandName + '-tick'} className="flex justify-center">
-            <div className="w-px h-2.5" style={{ backgroundColor: '#2a3347' }} />
-          </div>
-        ))}
-      </div>
-
-      {/* Horizontal bar spanning from center of first pill to center of last pill */}
-      <div className="grid w-full gap-3" style={{ gridTemplateColumns: `repeat(${count}, 1fr)` }}>
-        {validBrands.map((b, i) => (
-          <div key={b.brandName + '-bar'} className="flex justify-center">
-            <div className="w-full h-px relative" style={{ backgroundColor: i > 0 && i < count ? '#2a3347' : 'transparent' }}>
-              {i === 0 && (
-                <div className="absolute h-px right-0" style={{ left: '50%', backgroundColor: '#2a3347' }} />
-              )}
-              {i === count - 1 && (
-                <div className="absolute h-px left-0" style={{ right: '50%', backgroundColor: '#2a3347' }} />
-              )}
-              {i > 0 && i < count - 1 && (
-                <div className="absolute h-px left-0 right-0" style={{ backgroundColor: '#2a3347' }} />
-              )}
+      {/* Connector: ticks + horizontal bar using the same grid */}
+      <div className="relative w-full" style={{ height: '12px' }}>
+        {/* Same grid for vertical ticks */}
+        <div className="grid w-full gap-3 absolute inset-0" style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+          {validBrands.map((b) => (
+            <div key={b.brandName + '-tick'} className="flex justify-center">
+              <div className="w-px h-full" style={{ backgroundColor: '#2a3347' }} />
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        {/* Horizontal bar: position at vertical center, span from center of first col to center of last col */}
+        {/* For n cols with 12px gap: first center = 50%/n, last center = 100% - 50%/n */}
+        {/* With gap: left = calc( (100% - (n-1)*12px) / (2*n) ), right = same */}
+        <div className="absolute w-full" style={{ top: '50%' }}>
+          <div className="h-px" style={{
+            backgroundColor: '#2a3347',
+            marginLeft: `calc((100% - ${(n - 1) * 12}px) / ${2 * n})`,
+            marginRight: `calc((100% - ${(n - 1) * 12}px) / ${2 * n})`,
+          }} />
+        </div>
       </div>
 
-      {/* Vertical line down from center of middle pill */}
+      {/* Vertical line down to agency */}
       <div className="flex justify-center">
         <div className="w-px h-3" style={{ backgroundColor: '#2a3347' }} />
       </div>
@@ -130,11 +130,9 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
             {partner.isPortfolio && partner.portfolioBrands && partner.portfolioBrands.length > 0 && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
-                {/* Desktop */}
                 <div className="hidden sm:block">
                   <PortfolioBracket brands={partner.portfolioBrands} agencyLogoUrl={partner.agencyLogoUrl} agencyName={partner.agencyName} />
                 </div>
-                {/* Mobile */}
                 <div className="sm:hidden flex flex-col gap-2">
                   <div className="flex flex-wrap gap-2">
                     {partner.portfolioBrands.map((b) => (
