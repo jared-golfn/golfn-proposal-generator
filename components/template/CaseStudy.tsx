@@ -7,7 +7,7 @@ import { Fade } from './Fade'
 const metrics = [
   { label: 'Total Revenue', value: '$44,692', sub: '8 months', Icon: DollarSign },
   { label: 'Units Sold', value: '90', sub: '~$497 avg order', Icon: Package },
-  { label: 'Time to #1', value: '90 days', sub: '#1 distributor in Indiana', Icon: Clock },
+  { label: 'Time to #1', value: '90 days', sub: '#1 sales channel in Indiana', Icon: Clock },
   { label: 'Monthly Recurring', value: '$3,500+', sub: 'Sustained post-campaign', Icon: TrendingUp },
 ]
 
@@ -23,10 +23,10 @@ export function CaseStudy() {
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Case Study</p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">
-            From brand film to<br /><span className="text-gradient">#1 distributor in 90 days</span>
+            From brand film to<br /><span className="text-gradient">#1 sales channel in 90 days</span>
           </h2>
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-10">
-            GolfN produced a world-class brand film experience with L.A.B. Golf, launched a sweepstakes campaign, and activated the resulting cohort through commerce. The result: #1 distributor status in Indiana from a standing start.
+            GolfN produced a world-class brand film experience with L.A.B. Golf, launched a sweepstakes campaign, and activated the resulting cohort through commerce. The result: the #1 sales channel for L.A.B. Golf in Indiana from a standing start.
           </p>
         </Fade>
 
@@ -95,7 +95,7 @@ export function CaseStudy() {
                 </div>
                 <div>
                   <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Result</h4>
-                  <p className="text-sm text-[#d1d5db] leading-6">Zero to $20K in a single month. 90 premium putters moved at full price (~$497 avg). GolfN became L.A.B.'s #1 distributor in Indiana within 90 days of launch.</p>
+                  <p className="text-sm text-[#d1d5db] leading-6">Zero to $20K in a single month. 90 premium putters moved at full price (~$497 avg). GolfN became the #1 sales channel for L.A.B. Golf in Indiana within 90 days of launch.</p>
                 </div>
                 <div>
                   <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Takeaway</h4>
