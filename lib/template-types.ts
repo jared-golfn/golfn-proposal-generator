@@ -44,6 +44,7 @@ export interface PartnerData {
 
   heroSubtitle?: string
   heroHeadline?: string
+  heroVideoUrl?: string
   recommendedPathRationale?: string
   howItWorksIntro?: string
   pricingIntro?: string
