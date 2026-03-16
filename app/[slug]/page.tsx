@@ -11,7 +11,6 @@ export const dynamic = 'force-dynamic'
 
 const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
 
-// Default market reach data -- shown on ALL proposals unless overridden
 const defaultMarketReach: MarketData[] = [
   { country: 'United States', users: 46416, flag: '\ud83c\uddfa\ud83c\uddf8' },
   { country: 'Australia', users: 2957, flag: '\ud83c\udde6\ud83c\uddfa' },
@@ -36,6 +35,7 @@ function toPartnerData(config: PartnerConfig): PartnerData {
     keyMarkets: config.keyMarkets,
     heroSubtitle: config.heroSubtitle,
     heroHeadline: config.heroHeadline,
+    heroVideoUrl: config.heroVideoUrl,
     howItWorksIntro: config.howItWorksIntro,
     pricingIntro: config.pricingIntro,
     pricingNote: config.pricingNote,
