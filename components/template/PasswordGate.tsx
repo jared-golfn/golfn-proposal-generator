@@ -1,17 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { Lock, Loader2, ArrowRight } from 'lucide-react'
+import { Lock, Loader2, ArrowRight, Mail } from 'lucide-react'
 import { images } from '@/lib/images'
 
 export function PasswordGate({ slug, partnerName }: { slug: string; partnerName: string }) {
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!password.trim() || loading) return
+    if (!password.trim() || !email.trim() || loading) return
     setLoading(true)
     setError('')
 
@@ -19,14 +20,14 @@ export function PasswordGate({ slug, partnerName }: { slug: string; partnerName:
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug, password: password.trim() }),
+        body: JSON.stringify({ slug, password: password.trim(), email: email.trim() }),
       })
 
       if (res.ok) {
-        // Cookie is set -- reload to show the proposal
         window.location.reload()
       } else {
-        setError('Incorrect password. Please try again.')
+        const data = await res.json().catch(() => ({}))
+        setError(data.error === 'Invalid password' ? 'Incorrect password. Please try again.' : 'Something went wrong. Please try again.')
         setPassword('')
       }
     } catch {
@@ -57,13 +58,27 @@ export function PasswordGate({ slug, partnerName }: { slug: string; partnerName:
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#4b5563]" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your email"
+              autoFocus
+              required
+              className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#1a1f2e] border border-[#2a3347] text-white text-lg placeholder:text-[#4b5563] focus:outline-none focus:border-[#00ff9d]/50 focus:ring-1 focus:ring-[#00ff9d]/30 transition-all"
+            />
+          </div>
+
+          <div className="relative">
+            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#4b5563]" />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              autoFocus
-              className="w-full px-5 py-4 rounded-xl bg-[#1a1f2e] border border-[#2a3347] text-white text-lg placeholder:text-[#4b5563] focus:outline-none focus:border-[#00ff9d]/50 focus:ring-1 focus:ring-[#00ff9d]/30 transition-all"
+              placeholder="Password"
+              required
+              className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#1a1f2e] border border-[#2a3347] text-white text-lg placeholder:text-[#4b5563] focus:outline-none focus:border-[#00ff9d]/50 focus:ring-1 focus:ring-[#00ff9d]/30 transition-all"
             />
           </div>
 
@@ -73,7 +88,7 @@ export function PasswordGate({ slug, partnerName }: { slug: string; partnerName:
 
           <button
             type="submit"
-            disabled={loading || !password.trim()}
+            disabled={loading || !password.trim() || !email.trim()}
             className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed glow-green"
             style={{ background: 'linear-gradient(135deg, #00ff9d, #17A455)', color: '#0f1217' }}
           >
