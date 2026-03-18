@@ -48,7 +48,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
   // Pitch mode: streamlined scroll path matching how you actually pitch on a call
   if (isPitch) {
     const startupCost = 2500
-    const cohortSize = partner.defaultCohortSize || 250
     return (
       <main className="relative bg-[#0f1217]">
         <SessionTracker slug={partner.slug} />
@@ -120,15 +119,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
               <Fade delay={0.2}>
                 <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-8 md:p-10 mb-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/15 flex items-center justify-center shrink-0 mt-0.5">
-                      <Target className="w-5 h-5 text-[#00ff9d]" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl md:text-2xl font-bold text-white mb-3">Our commitment</h4>
-                      <p className="text-lg md:text-xl text-[#d1d5db] leading-9">It's on us to demonstrate a meaningful return within <span className="text-white font-semibold">60 days</span>. If the results aren't there, we'll tell you. We have a vested interest in making this the best-performing channel you have — because if we can do it for you, we can do it for anyone.</p>
-                    </div>
-                  </div>
+                  <p className="text-lg md:text-xl text-[#d1d5db] leading-9">You're in for some product and <span className="text-white font-semibold">{formatUSD(startupCost)}</span>. It's on us to show a <span className="text-[#00ff9d] font-bold">meaningful return within 60 days</span>. If the results aren't there, we'll be the first to tell you. We want this to be the best-performing channel you have — and we'll earn that by proving it, not promising it.</p>
                 </div>
               </Fade>
 
@@ -174,7 +165,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       </nav>
 
       <div id="proposal-content">
-        {/* ALWAYS VISIBLE: Hero + Why Brands + How It Works */}
         <div id="top"><S01_Hero partner={partner} /></div>
         <SectionDivider />
         <S02_WhyBrands partner={partner} />
@@ -182,45 +172,26 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         <div id="how-it-works"><S03_HowItWorks partner={partner} /></div>
         <SectionDivider />
 
-        {/* COLLAPSIBLE PROGRAM SECTIONS */}
-        <CollapsibleSection
-          number="01"
-          label="Campaign"
-          title="Launch a Premium Campaign"
-        >
+        <CollapsibleSection number="01" label="Campaign" title="Launch a Premium Campaign">
           <S04_LaunchCampaign partner={partner} />
         </CollapsibleSection>
 
-        <CollapsibleSection
-          number="02"
-          label="Qualification"
-          title="From Attention to Qualified Interest"
-        >
+        <CollapsibleSection number="02" label="Qualification" title="From Attention to Qualified Interest">
           <S05_QualifiedInterest partner={partner} />
         </CollapsibleSection>
 
-        <CollapsibleSection
-          number="03"
-          label="Activation"
-          title="Post-Campaign Activation Paths"
-        >
+        <CollapsibleSection number="03" label="Activation" title="Post-Campaign Activation Paths">
           <S06_PostCampaign partner={partner} />
         </CollapsibleSection>
 
-        <CollapsibleSection
-          number="04"
-          label="Reporting"
-          title="What You'll See Each Month"
-        >
+        <CollapsibleSection number="04" label="Reporting" title="What You'll See Each Month">
           <S07_MonthlyReporting partner={partner} />
         </CollapsibleSection>
 
-        {/* ALWAYS VISIBLE: Case Study */}
         <SectionDivider />
         <CaseStudy />
         <SectionDivider />
 
-        {/* GETTING STARTED SECTION */}
         <div id="getting-started" className="pt-12 md:pt-16">
           <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">Getting Started</p>
@@ -229,31 +200,17 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
           <S08_WaysToWork partner={partner} section="campaigns" />
 
-          <CollapsibleSection
-            label="Requirements"
-            title="What We Need From You"
-            subtitle="What GolfN handles vs. what the partner provides"
-          >
+          <CollapsibleSection label="Requirements" title="What We Need From You" subtitle="What GolfN handles vs. what the partner provides">
             <S09_WhatWeNeed partner={partner} />
           </CollapsibleSection>
         </div>
 
-        {/* PRICING */}
         <div id="ways-to-work">
-          <CollapsibleSection
-            label="Pricing"
-            title="How the Program Unfolds"
-            subtitle="Timeline, startup fee, add-ons, and what's included"
-          >
+          <CollapsibleSection label="Pricing" title="How the Program Unfolds" subtitle="Timeline, startup fee, add-ons, and what's included">
             <S08_WaysToWork partner={partner} section="timeline" />
           </CollapsibleSection>
 
-          <CollapsibleSection
-            label="Optional"
-            labelColor="#f59e0b"
-            title="Post-Campaign Audience Nurturing & Expansion"
-            subtitle="The initial campaign does more than drive awareness. It helps GolfN identify the golfer profiles most likely to engage with your brand, so we can continue nurturing that audience and adding newly qualified users into the activation flow over time."
-          >
+          <CollapsibleSection label="Optional" labelColor="#f59e0b" title="Post-Campaign Audience Nurturing & Expansion" subtitle="The initial campaign does more than drive awareness. It helps GolfN identify the golfer profiles most likely to engage with your brand, so we can continue nurturing that audience and adding newly qualified users into the activation flow over time.">
             <S08_WaysToWork partner={partner} section="peruser" />
           </CollapsibleSection>
         </div>
@@ -262,10 +219,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         <SectionDivider />
 
         <div id="faq-section">
-          <CollapsibleSection
-            title="Frequently Asked Questions"
-            subtitle="Common questions about GolfN partnerships"
-          >
+          <CollapsibleSection title="Frequently Asked Questions" subtitle="Common questions about GolfN partnerships">
             <S11_FAQ partner={partner} />
           </CollapsibleSection>
         </div>
