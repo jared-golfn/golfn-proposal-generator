@@ -14,5 +14,11 @@ export const sub70Campaigns: BrandCampaign[] = [
       { place: '3rd', description: 'TAIII 3D-Printed Driver + remote fitting consultation', value: '$750' },
       { place: '4th-8th', description: 'Sub 70 shop credit toward any custom build (x5)', value: '$150 each' },
     ],
+    learnEarnSteps: [
+      { label: 'Browse More Ways to Earn', imageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/0e33fb6ef5a675ee59dff8c6a2405f98366147a0-750x1624.png' },
+      { label: 'Tap Sub 70', imageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/7613b8822be1dd1ec97c4038f7db1e46c2d4e9ae-750x1624.png' },
+      { label: 'Watch the Video', imageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/5cb4db7cbbbf2339ad2c9bdd0183fc4ae9d47f36-750x1624.png' },
+      { label: 'Pass Quiz & Unlock Offer', imageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/a89decd0f66f83abc18c1272a518dd4017a13651-750x1624.png' },
+    ],
   },
 ]

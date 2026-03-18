@@ -7,6 +7,11 @@ export interface CampaignPrize {
   value: string
 }
 
+export interface LearnEarnStep {
+  label: string
+  imageUrl: string
+}
+
 export interface BrandCampaign {
   brandName: string
   brandLogoUrl?: string
@@ -18,6 +23,7 @@ export interface BrandCampaign {
   heroImagePosition?: string
   heroImageScale?: string
   prizes: CampaignPrize[]
+  learnEarnSteps?: LearnEarnStep[]
 }
 
 export interface PortfolioDiscount {
