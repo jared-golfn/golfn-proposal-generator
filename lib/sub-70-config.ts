@@ -9,7 +9,7 @@ const TIMELAPSE_VIDEO = 'https://cdn.sanity.io/files/e3wja34v/production/44254c3
 export const sub70Config: PartnerConfig = {
   slug: 'sub-70',
   partnerName: 'Sub 70',
-  password: 'sub702026',
+  // password removed temporarily for review
   logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/df468f0d2f3c35c20c835d71dceaad9df734746c-340x100.webp',
   primaryColor: '#1a1a1a',
   secondaryColor: '#4a4a4a',
