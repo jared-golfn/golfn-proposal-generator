@@ -24,6 +24,7 @@ export interface BrandCampaign {
   heroImageScale?: string
   prizes: CampaignPrize[]
   learnEarnSteps?: LearnEarnStep[]
+  hideBrandCount?: boolean
 }
 
 export interface PortfolioDiscount {
