@@ -22,7 +22,7 @@ export function CollapsibleSection({ number, label, labelColor, title, subtitle,
     <div id={id} className="border-b border-[#2a3347]/50">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full py-8 md:py-10 flex items-center justify-between gap-4 group text-left max-w-7xl mx-auto px-6 md:px-12"
+        className={`w-full flex items-center justify-between gap-4 group text-left max-w-7xl mx-auto px-6 md:px-12 pt-6 md:pt-8 ${open ? 'pb-3 md:pb-4' : 'pb-6 md:pb-8'}`}
       >
         <div className="flex items-center gap-5 min-w-0">
           {number && (
@@ -41,7 +41,7 @@ export function CollapsibleSection({ number, label, labelColor, title, subtitle,
       <div
         className={`overflow-hidden transition-all duration-500 ease-in-out ${open ? 'max-h-[8000px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
-        <div className="pb-4">
+        <div className="pb-6">
           {children}
         </div>
       </div>
