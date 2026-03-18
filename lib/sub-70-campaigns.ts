@@ -20,5 +20,6 @@ export const sub70Campaigns: BrandCampaign[] = [
       { label: 'Watch the Video', imageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/5cb4db7cbbbf2339ad2c9bdd0183fc4ae9d47f36-750x1624.png' },
       { label: 'Pass Quiz & Unlock Offer', imageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/a89decd0f66f83abc18c1272a518dd4017a13651-750x1624.png' },
     ],
+    hideBrandCount: true,
   },
 ]
