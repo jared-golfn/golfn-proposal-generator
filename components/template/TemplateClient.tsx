@@ -120,6 +120,8 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           </CollapsibleSection>
 
           <CollapsibleSection
+            label="Optional"
+            labelColor="#f59e0b"
             title="Ongoing Per-User Pricing"
             subtitle="Only applies if you choose to continue beyond the included 30-day post-campaign window"
           >
@@ -127,18 +129,21 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           </CollapsibleSection>
         </div>
 
-        {/* DATA ADVANTAGE */}
-        <CollapsibleSection
-          label="Data"
-          title="GolfN Data Advantage"
-          subtitle="Why GolfN audience data is fundamentally different from broad media"
-        >
-          <S10_DataDifference partner={partner} />
-        </CollapsibleSection>
-
-        {/* FAQ -- always visible as accordion */}
+        {/* DATA ADVANTAGE -- always visible */}
         <SectionDivider />
-        <div id="faq-section"><S11_FAQ partner={partner} /></div>
+        <S10_DataDifference partner={partner} />
+        <SectionDivider />
+
+        {/* FAQ -- collapsible */}
+        <div id="faq-section">
+          <CollapsibleSection
+            title="Frequently Asked Questions"
+            subtitle="Common questions about GolfN partnerships"
+          >
+            <S11_FAQ partner={partner} />
+          </CollapsibleSection>
+        </div>
+
         <SectionDivider />
         <S12_FinalCTA partner={partner} />
 
