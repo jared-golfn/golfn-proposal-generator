@@ -17,10 +17,12 @@ import { S12_FinalCTA } from './S12_FinalCTA'
 import { CaseStudy } from './CaseStudy'
 import { SectionDivider } from './SectionDivider'
 import { SessionTracker } from './SessionTracker'
+import { CollapsibleSection } from './CollapsibleSection'
 
 const navSections = [
   { id: 'top', label: 'Overview' },
   { id: 'how-it-works', label: 'How It Works' },
+  { id: 'getting-started', label: 'Getting Started' },
   { id: 'ways-to-work', label: 'Pricing' },
   { id: 'faq-section', label: 'FAQ' },
 ]
@@ -41,27 +43,100 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       </nav>
 
       <div id="proposal-content">
+        {/* ALWAYS VISIBLE: Hero + Why Brands + How It Works */}
         <div id="top"><S01_Hero partner={partner} /></div>
         <SectionDivider />
         <S02_WhyBrands partner={partner} />
         <SectionDivider label="See the process" targetId="how-it-works" />
-        <S03_HowItWorks partner={partner} />
+        <div id="how-it-works"><S03_HowItWorks partner={partner} /></div>
         <SectionDivider />
-        <S04_LaunchCampaign partner={partner} />
-        <SectionDivider />
-        <S05_QualifiedInterest partner={partner} />
-        <SectionDivider />
-        <S06_PostCampaign partner={partner} />
-        <SectionDivider />
-        <S07_MonthlyReporting partner={partner} />
+
+        {/* COLLAPSIBLE PROGRAM SECTIONS */}
+        <CollapsibleSection
+          number="01"
+          label="Campaign"
+          title="Launch a Premium Campaign"
+        >
+          <S04_LaunchCampaign partner={partner} />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          number="02"
+          label="Qualification"
+          title="From Attention to Qualified Interest"
+        >
+          <S05_QualifiedInterest partner={partner} />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          number="03"
+          label="Activation"
+          title="Post-Campaign Activation Paths"
+        >
+          <S06_PostCampaign partner={partner} />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          number="04"
+          label="Reporting"
+          title="What You'll See Each Month"
+        >
+          <S07_MonthlyReporting partner={partner} />
+        </CollapsibleSection>
+
+        {/* ALWAYS VISIBLE: Case Study */}
         <SectionDivider />
         <CaseStudy />
         <SectionDivider />
-        <S09_WhatWeNeed partner={partner} />
-        <SectionDivider label="See pricing" targetId="ways-to-work" />
-        <S08_WaysToWork partner={partner} />
-        <SectionDivider />
-        <S10_DataDifference partner={partner} />
+
+        {/* GETTING STARTED SECTION */}
+        <div id="getting-started" className="py-12 md:py-16">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
+            <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">Getting Started</p>
+            <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight">Everything you need<br /><span className="text-[#00ff9d]">to launch</span></h2>
+          </div>
+
+          {/* Recommended Campaign -- showpiece, always visible */}
+          <S08_WaysToWork partner={partner} section="campaigns" />
+
+          {/* Requirements -- header visible, details in toggle */}
+          <CollapsibleSection
+            label="Requirements"
+            title="What We Need From You"
+            subtitle="What GolfN handles vs. what the partner provides"
+          >
+            <S09_WhatWeNeed partner={partner} />
+          </CollapsibleSection>
+        </div>
+
+        {/* PRICING: How the Program Unfolds */}
+        <div id="ways-to-work">
+          <CollapsibleSection
+            label="Pricing"
+            title="How the Program Unfolds"
+            subtitle="Timeline, startup fee, add-ons, and what's included"
+          >
+            <S08_WaysToWork partner={partner} section="timeline" />
+          </CollapsibleSection>
+
+          <CollapsibleSection
+            title="Ongoing Per-User Pricing"
+            subtitle="Only applies if you choose to continue beyond the included 30-day post-campaign window"
+          >
+            <S08_WaysToWork partner={partner} section="peruser" />
+          </CollapsibleSection>
+        </div>
+
+        {/* DATA ADVANTAGE */}
+        <CollapsibleSection
+          label="Data"
+          title="GolfN Data Advantage"
+          subtitle="Why GolfN audience data is fundamentally different from broad media"
+        >
+          <S10_DataDifference partner={partner} />
+        </CollapsibleSection>
+
+        {/* FAQ -- always visible as accordion */}
         <SectionDivider />
         <div id="faq-section"><S11_FAQ partner={partner} /></div>
         <SectionDivider />
