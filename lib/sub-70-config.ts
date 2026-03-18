@@ -1,5 +1,6 @@
 // Sub 70 partner configuration
 // Based on call with Jay Armour (Dir. Marketing) -- March 4, 2026
+// Copy refined for Sub 70's DTC equipment buyer profile
 
 import { sub70Campaigns } from './sub-70-campaigns'
 import type { PartnerConfig } from './presentation-data'
@@ -15,18 +16,18 @@ export const sub70Config: PartnerConfig = {
   secondaryColor: '#4a4a4a',
   productCategory: 'Direct-to-Consumer Golf Equipment',
   productNames: ['Drivers', 'Iron Sets', 'Wedges', 'Putters', 'Fairway Woods', 'Hybrids'],
-  heroHeadline: 'GolfN x Sub 70: Reach the Golfers Already Looking for You',
-  heroSubtitle: 'Prepared for Jay Armour -- March 2026. Sub 70 builds premium golf equipment for the research-driven golfer who wants big-brand performance without big-brand pricing. GolfN puts Sub 70 in front of 100,000+ verified golfers who fit that exact profile -- with first-party data targeting that replaces spray-and-pray with precision. Every arrow hits the target.',
+  heroHeadline: 'Help Sub 70 Reach the Golfers Most Likely to Care',
+  heroSubtitle: 'Prepared for Jay Armour -- March 2026. GolfN gives Sub 70 access to verified, golf-native audiences inside an intent-rich environment built around real golfer behavior -- helping you reach research-driven players who care about performance, fitting, and value. Not broad impressions. Qualified demand from serious golfers.',
   heroVideoUrl: TIMELAPSE_VIDEO,
-  howItWorksIntro: 'Sub 70 already earns trust through product quality, reviews, and word of mouth. GolfN accelerates that flywheel by putting Sub 70 in front of verified golfers who are actively engaged, research-driven, and ready to discover their next equipment brand -- with education, incentives, and attribution built in.',
-  pricingIntro: 'Sub 70 provides prize product for the sweepstakes (recommended ~$4,500 total value). GolfN charges a one-time startup fee that covers the campaign AND 30 days of aggressive post-campaign follow-up. After that, ongoing activation is optional and billed per qualified user.',
+  howItWorksIntro: 'Golfers don\'t buy custom equipment on impulse. They research, compare, and need trust before committing. GolfN creates a path from discovery to consideration to conversion inside a golf-native ecosystem -- giving Sub 70 repeated, meaningful touchpoints with the kind of golfer who actually buys direct-to-consumer clubs.',
+  pricingIntro: 'Sub 70 provides prize product for the campaign (recommended ~$4,500 total value). GolfN charges a one-time startup fee that covers the campaign and 30 days of post-campaign follow-up. After that, ongoing activation is optional and billed per qualified user added to your cohort.',
   keyMarkets: ['United States'],
   defaultPath: 'pilot',
   defaultCohortSize: 250,
   campaigns: sub70Campaigns,
   commerceNotes: [
-    'Sub 70\'s direct-to-consumer model means every GolfN-driven purchase goes straight to golfsub70.com -- no middleman, no channel conflict. GolfN\'s UID tracking captures attribution cleanly regardless of backend, which means it works today on Magento and will work seamlessly after the Shopify migration.',
-    'GolfN\'s points-back mechanic creates a dual incentive: golfers earn rewards for purchasing through Sub 70, and Sub 70 gets trackable, attributable sales from verified golfers. This replaces the broken affiliate plugin with a system that actually works.',
-    'Over 58% of GolfN users are under 35 -- the exact demographic Sub 70 targets. These are not five-year customers. They are 30-year lifetime value relationships. GolfN knows what clubs they play, when they last upgraded, and what content they engage with.',
+    'Sub 70\'s direct-to-consumer model means every GolfN-driven purchase goes straight to golfsub70.com -- no middleman, no channel conflict. GolfN\'s UID tracking captures attribution regardless of backend, so it works on Magento today and will carry over cleanly after the Shopify migration.',
+    'GolfN\'s points-back mechanic gives golfers a reason to purchase through tracked links -- earning rewards while Sub 70 gets measurable, attributable sales from verified golfers. This sidesteps current affiliate tracking limitations with a system built for reliable attribution.',
+    'GolfN\'s audience skews toward younger, engaged golfers building their bags -- the kind of players who represent long-term customer value for a brand that earns loyalty through product quality and service. GolfN knows what clubs they play, when they last upgraded, and what content they engage with.',
   ],
 }

@@ -7,20 +7,20 @@ import { Fade } from './Fade'
 
 const proofCards = [
   { label: 'Verified Identity', desc: 'Every user is a real, verified golfer.' },
-  { label: 'Verified Equipment', desc: 'GolfN knows what clubs users carry.' },
-  { label: 'Verified Spend', desc: 'Real purchase behavior and price sensitivity.' },
-  { label: 'Verified Behavior', desc: 'Rounds, courses, handicap changes, check-ins.' },
-  { label: '100% First-Party', desc: 'All data collected directly inside GolfN.' },
-  { label: 'Guaranteed Delivery', desc: 'Real golfers, golf-native environment. No fraud.' },
+  { label: 'Verified Equipment', desc: 'GolfN knows what clubs users carry and when they last upgraded.' },
+  { label: 'Verified Behavior', desc: 'Rounds played, courses visited, handicap progression, check-ins.' },
+  { label: 'Purchase Context', desc: 'Real purchase behavior, price sensitivity, and brand affinity signals.' },
+  { label: '100% First-Party', desc: 'All data collected directly inside GolfN. No modeled audiences.' },
+  { label: 'Privacy-Safe Environment', desc: 'Verified golfers in a golf-native context. Higher-intent, lower waste.' },
 ]
 
 const differentiators = [
-  { label: 'Verified Golfers', golfn: 'Every user is a verified golfer on the course.', broad: 'Inferred from modeled interests.' },
-  { label: 'Behavioral Signal', golfn: 'Rounds, equipment, courses, handicap changes.', broad: 'Click and impression data only.' },
-  { label: 'Context', golfn: 'Golf-native. Users engaged in golf.', broad: 'Mixed feed. Golf competes with everything.' },
-  { label: 'Education', golfn: 'Learn & Earn with verified comprehension.', broad: 'Not available.' },
-  { label: 'Post-Purchase', golfn: 'Course use, check-ins, ongoing measurement.', broad: 'Retargeting only.' },
-  { label: 'Attribution', golfn: 'Impression to education to conversion to use.', broad: 'Stops at click.' },
+  { label: 'Verified Golfers', golfn: 'Every user is a verified golfer with real course activity.', broad: 'Inferred from modeled interests.' },
+  { label: 'Behavioral Signal', golfn: 'Rounds, equipment, courses, handicap, upgrade timing.', broad: 'Click and impression data only.' },
+  { label: 'Context', golfn: 'Golf-native. Users are engaged in golf when reached.', broad: 'Mixed feed. Golf competes with everything else.' },
+  { label: 'Education', golfn: 'Learn & Earn with verified comprehension before conversion.', broad: 'Not available.' },
+  { label: 'Post-Purchase', golfn: 'Course use, check-ins, ongoing engagement measurement.', broad: 'Retargeting only.' },
+  { label: 'Attribution', golfn: 'Awareness to education to conversion to real-world use.', broad: 'Stops at click or impression.' },
 ]
 
 export function S10_DataDifference({ partner }: { partner: PartnerData }) {
@@ -33,7 +33,7 @@ export function S10_DataDifference({ partner }: { partner: PartnerData }) {
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Data Advantage</p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">Why GolfN data<br />is <span className="text-gradient">different</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-9 mb-14">GolfN audience intelligence is built from verified golf behavior, not broad assumptions or purchased audience models.</p>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-9 mb-14">GolfN audience intelligence is built from verified golf behavior -- not broad assumptions, purchased audience models, or inferred interest graphs. The result is a more relevant, more efficient way to reach serious golfers.</p>
         </Fade>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-14">
@@ -50,7 +50,7 @@ export function S10_DataDifference({ partner }: { partner: PartnerData }) {
           ))}
         </div>
 
-        {/* Enlarged comparison table with GolfN logo */}
+        {/* Comparison table */}
         <Fade delay={0.25}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
             <div className="grid grid-cols-[1fr_1.5fr_1.5fr] gap-6 px-8 md:px-12 py-7 border-b border-[#2a3347] items-center">
