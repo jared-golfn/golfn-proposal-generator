@@ -43,7 +43,6 @@ export function CaseStudy() {
 
         <Fade delay={0.06}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
-            {/* Video player */}
             <div className="relative bg-black">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <video
@@ -56,10 +55,9 @@ export function CaseStudy() {
                   className="absolute inset-0 w-full h-full object-contain"
                   onPlay={() => setHasStarted(true)}
                 />
-
-                {/* Custom play overlay - only before first play, sits above video but below controls */}
                 {!hasStarted && (
                   <div
+                    data-track="video-play"
                     className="absolute inset-0 bg-black/40 hover:bg-black/30 transition-colors flex items-center justify-center cursor-pointer"
                     style={{ pointerEvents: 'auto' }}
                     onClick={handlePlay}
@@ -76,7 +74,6 @@ export function CaseStudy() {
               </div>
             </div>
 
-            {/* Watch full version link */}
             <div className="px-6 md:px-8 py-3 border-t border-[#2a3347] flex items-center justify-between">
               <span className="text-sm text-[#6b7280]">60 second cut</span>
               <a href={YOUTUBE_FULL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[#00ff9d] hover:underline transition-colors">
@@ -84,7 +81,6 @@ export function CaseStudy() {
               </a>
             </div>
 
-            {/* Metrics row */}
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#2a3347] border-t border-[#2a3347]">
               {metrics.map((m) => (
                 <div key={m.label} className="px-5 md:px-6 py-5 md:py-6 text-center">
@@ -96,7 +92,6 @@ export function CaseStudy() {
               ))}
             </div>
 
-            {/* Details */}
             <div className="px-6 md:px-8 py-6 border-t border-[#2a3347] bg-[#0f1217]">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
