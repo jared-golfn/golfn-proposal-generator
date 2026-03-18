@@ -7,7 +7,7 @@ export const sub70Campaigns: BrandCampaign[] = [
     title: 'Sub 70 Equipment Experience',
     prizePool: '$4,500',
     description: 'A full-funnel activation built around a high-impact equipment giveaway. The sweepstakes generates the qualified cohort. Then GolfN runs 30 days of aggressive follow-up included in your startup fee: Learn & Earn video education where users watch Sub 70 content and pass a quiz to unlock exclusive offers, plus points-back shopping links that drive trackable purchases to golfsub70.com. Every participant is a verified golfer who provably engaged with Sub 70.',
-    heroImageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/7613b8822be1dd1ec97c4038f7db1e46c2d4e9ae-750x1624.png',
+    heroImageUrl: 'https://cdn.sanity.io/images/e3wja34v/production/0e1575f6acd4444b468bbef751d8ae0f2c2f8776-2560x600.webp',
     prizes: [
       { place: '1st', description: '699 Pro v3 Iron Set (5-PW) -- custom built to winner\'s specs', value: '$2,100' },
       { place: '2nd', description: 'TAIII Wedge Set (50/54/58) -- custom ground', value: '$900' },
