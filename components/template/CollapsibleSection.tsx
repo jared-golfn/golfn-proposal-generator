@@ -34,7 +34,7 @@ export function CollapsibleSection({ number, label, labelColor, title, subtitle,
             {subtitle && <p className="text-base text-[#6b7280] mt-1">{subtitle}</p>}
           </div>
         </div>
-        <div className={`w-10 h-10 rounded-full border border-[#2a3347] flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-[#00ff9d]/50 ${open ? 'bg-[#00ff9d]/10 border-[#00ff9d]/30' : ''}`}>
+        <div className={`w-10 h-10 rounded-full border border-[#2a3347] flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-[#00ff9d]/50 relative z-10 ${open ? 'bg-[#00ff9d]/10 border-[#00ff9d]/30' : ''}`}>
           <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${open ? 'rotate-180 text-[#00ff9d]' : 'text-[#6b7280]'}`} />
         </div>
       </button>

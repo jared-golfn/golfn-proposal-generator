@@ -33,11 +33,12 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       <SessionTracker slug={partner.slug} />
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-      <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8">
+      {/* Floating nav -- pointer-events-none on container so clicks pass through to content below, pointer-events-auto on each link */}
+      <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8 pointer-events-none">
         {navSections.map((s) => (
-          <a key={s.id} href={`#${s.id}`} className="group flex items-center gap-5 justify-end">
+          <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
             <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
-            <img src={images.logoIcon} alt="" className="block w-7 h-7 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
+            <img src={images.logoIcon} alt="" className="block w-6 h-6 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
           </a>
         ))}
       </nav>
