@@ -90,8 +90,8 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
         <CaseStudy />
         <SectionDivider />
 
-        {/* GETTING STARTED SECTION */}
-        <div id="getting-started" className="py-12 md:py-16">
+        {/* GETTING STARTED SECTION -- pt only, no bottom padding so it flows into pricing */}
+        <div id="getting-started" className="pt-12 md:pt-16">
           <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">Getting Started</p>
             <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight">Everything you need<br /><span className="text-[#00ff9d]">to launch</span></h2>
@@ -130,8 +130,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           </CollapsibleSection>
         </div>
 
-        {/* DATA ADVANTAGE -- always visible */}
-        <SectionDivider />
+        {/* DATA ADVANTAGE -- always visible, no extra divider needed (collapsible border-b handles separation) */}
         <S10_DataDifference partner={partner} />
         <SectionDivider />
 
