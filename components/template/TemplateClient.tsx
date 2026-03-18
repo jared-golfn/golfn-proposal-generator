@@ -16,6 +16,7 @@ import { S11_FAQ } from './S11_FAQ'
 import { S12_FinalCTA } from './S12_FinalCTA'
 import { CaseStudy } from './CaseStudy'
 import { SectionDivider } from './SectionDivider'
+import { SessionTracker } from './SessionTracker'
 
 const navSections = [
   { id: 'top', label: 'Overview' },
@@ -27,6 +28,7 @@ const navSections = [
 export function TemplateClient({ partner }: { partner: PartnerData }) {
   return (
     <main className="relative bg-[#0f1217]">
+      <SessionTracker slug={partner.slug} />
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
       <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8">
