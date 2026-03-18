@@ -91,28 +91,14 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
   return (
     <section className="relative min-h-[85vh] flex flex-col justify-center overflow-hidden">
-      {/* Background video -- only on pages with heroVideoUrl */}
       {hasVideo && (
         <>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ zIndex: 0 }}
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
-          {/* Dark overlay over the video */}
+          <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover" style={{ zIndex: 0 }}><source src={heroVideo} type="video/mp4" /></video>
           <div className="absolute inset-0 bg-[#0f1217]/80" style={{ zIndex: 1 }} />
-          {/* Green tint overlay */}
           <div className="absolute inset-0 opacity-[0.08]" style={{ zIndex: 1, background: 'radial-gradient(ellipse 80% 60% at 50% 60%, #00ff9d, transparent)' }} />
         </>
       )}
 
-      {/* Standard gradient overlays -- only when no video */}
       {!hasVideo && (
         <>
           <div className="absolute inset-0 opacity-[0.07]" style={{ background: 'radial-gradient(ellipse 60% 50% at 15% 50%, #001a14, transparent)' }} />
@@ -153,9 +139,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
             {showPartnerLogo && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
-                <div className="inline-flex items-center justify-center h-24 md:h-28 px-10 md:px-14 rounded-xl bg-[#1a1f2e] border border-[#2a3347]">
-                  <img src={partner.partnerLogoUrl} alt={partner.partnerName} className="h-14 md:h-20 w-auto max-w-[320px] md:max-w-[420px] object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
-                </div>
+                <img src={partner.partnerLogoUrl} alt={partner.partnerName} className="h-16 md:h-20 w-auto object-contain object-left" style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
               </motion.div>
             )}
 
@@ -191,7 +175,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
             </motion.div>
           </div>
 
-          {/* Floating mockup -- hidden when hero has background video */}
           {!hasVideo && (
             <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 hidden md:flex justify-center">
               <div className="relative">
@@ -207,7 +190,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           )}
         </div>
 
-        {/* KPIs */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
@@ -218,7 +200,6 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           ))}
         </motion.div>
 
-        {/* Market Reach expandable */}
         {markets && markets.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="mt-8">
             <button onClick={() => setShowMarkets(!showMarkets)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] hover:border-[#00ff9d]/40 transition-all group">
