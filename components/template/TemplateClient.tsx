@@ -33,7 +33,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       <SessionTracker slug={partner.slug} />
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-      {/* Floating nav -- pointer-events-none on container so clicks pass through to content below, pointer-events-auto on each link */}
+      {/* Floating nav -- pointer-events-none on container so clicks pass through */}
       <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8 pointer-events-none">
         {navSections.map((s) => (
           <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
@@ -123,8 +123,8 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           <CollapsibleSection
             label="Optional"
             labelColor="#f59e0b"
-            title="Ongoing Per-User Pricing"
-            subtitle="Only applies if you choose to continue beyond the included 30-day post-campaign window"
+            title="Post-Campaign Audience Nurturing & Expansion"
+            subtitle="The initial campaign does more than drive awareness. It helps GolfN identify the golfer profiles most likely to engage with your brand, so we can continue nurturing that audience and adding newly qualified users into the activation flow over time."
           >
             <S08_WaysToWork partner={partner} section="peruser" />
           </CollapsibleSection>
