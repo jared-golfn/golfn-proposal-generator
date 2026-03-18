@@ -4,6 +4,8 @@
 import { sub70Campaigns } from './sub-70-campaigns'
 import type { PartnerConfig } from './presentation-data'
 
+const TIMELAPSE_VIDEO = 'https://cdn.sanity.io/files/e3wja34v/production/44254c3ed5b70a03c02f5b64556d3b247781f86e.mp4'
+
 export const sub70Config: PartnerConfig = {
   slug: 'sub-70',
   partnerName: 'Sub 70',
@@ -15,6 +17,7 @@ export const sub70Config: PartnerConfig = {
   productNames: ['Drivers', 'Iron Sets', 'Wedges', 'Putters', 'Fairway Woods', 'Hybrids'],
   heroHeadline: 'GolfN x Sub 70: Reach the Golfers Already Looking for You',
   heroSubtitle: 'Prepared for Jay Armour -- March 2026. Sub 70 builds premium golf equipment for the research-driven golfer who wants big-brand performance without big-brand pricing. GolfN puts Sub 70 in front of 100,000+ verified golfers who fit that exact profile -- with first-party data targeting that replaces spray-and-pray with precision. Every arrow hits the target.',
+  heroVideoUrl: TIMELAPSE_VIDEO,
   howItWorksIntro: 'Sub 70 already earns trust through product quality, reviews, and word of mouth. GolfN accelerates that flywheel by putting Sub 70 in front of verified golfers who are actively engaged, research-driven, and ready to discover their next equipment brand -- with education, incentives, and attribution built in.',
   pricingIntro: 'Sub 70 provides prize product for the sweepstakes (recommended ~$4,500 total value). GolfN charges a one-time startup fee that covers the campaign AND 30 days of aggressive post-campaign follow-up. After that, ongoing activation is optional and billed per qualified user.',
   keyMarkets: ['United States'],
