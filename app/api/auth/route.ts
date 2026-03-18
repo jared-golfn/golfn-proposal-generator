@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { partners, type PartnerConfig } from '@/lib/presentation-data'
 import { wilsonMotocaddyConfig } from '@/lib/wilson-motocaddy-config'
+import { sub70Config } from '@/lib/sub-70-config'
 
-const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
+const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config }
 
 const SLACK_WEBHOOK_URL = process.env.SLACK_PARTNER_LOGIN_WEBHOOK || ''
 
