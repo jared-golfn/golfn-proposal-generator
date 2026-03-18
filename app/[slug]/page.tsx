@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import { partners, type PartnerConfig } from '@/lib/presentation-data'
 import { wilsonMotocaddyConfig } from '@/lib/wilson-motocaddy-config'
+import { sub70Config } from '@/lib/sub-70-config'
 import { TemplateClient } from '@/components/template/TemplateClient'
 import { PasswordGate } from '@/components/template/PasswordGate'
 import type { PartnerData, MarketData } from '@/lib/template-types'
@@ -9,7 +10,7 @@ import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
-const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig }
+const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config }
 
 const defaultMarketReach: MarketData[] = [
   { country: 'United States', users: 46416, flag: '\ud83c\uddfa\ud83c\uddf8' },
