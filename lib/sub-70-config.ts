@@ -1,7 +1,6 @@
 // Sub 70 partner configuration
 // Based on call with Jay Armour (Dir. Marketing) -- March 4, 2026
 
-import type { BrandCampaign } from './template-types'
 import { sub70Campaigns } from './sub-70-campaigns'
 import type { PartnerConfig } from './presentation-data'
 
@@ -17,9 +16,10 @@ export const sub70Config: PartnerConfig = {
   heroHeadline: 'GolfN x Sub 70: Reach the Golfers Already Looking for You',
   heroSubtitle: 'Prepared for Jay Armour -- March 2026. Sub 70 builds premium golf equipment for the research-driven golfer who wants big-brand performance without big-brand pricing. GolfN puts Sub 70 in front of 100,000+ verified golfers who fit that exact profile -- with first-party data targeting that replaces spray-and-pray with precision. Every arrow hits the target.',
   howItWorksIntro: 'Sub 70 already earns trust through product quality, reviews, and word of mouth. GolfN accelerates that flywheel by putting Sub 70 in front of verified golfers who are actively engaged, research-driven, and ready to discover their next equipment brand -- with education, incentives, and attribution built in.',
-  pricingIntro: 'Sub 70 provides prize product for the sweepstakes (recommended ~$4,500 total value). GolfN charges a one-time startup fee, then bills monthly per qualified user added to your cohort. No wasted spend -- every dollar reaches a verified golfer.',
+  pricingIntro: 'Sub 70 provides prize product for the sweepstakes (recommended ~$4,500 total value). GolfN charges a one-time startup fee that covers the campaign AND 30 days of aggressive post-campaign follow-up. After that, ongoing activation is optional and billed per qualified user.',
   keyMarkets: ['United States'],
   defaultPath: 'pilot',
+  defaultCohortSize: 250,
   campaigns: sub70Campaigns,
   commerceNotes: [
     'Sub 70\'s direct-to-consumer model means every GolfN-driven purchase goes straight to golfsub70.com -- no middleman, no channel conflict. GolfN\'s UID tracking captures attribution cleanly regardless of backend, which means it works today on Magento and will work seamlessly after the Shopify migration.',

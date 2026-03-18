@@ -40,6 +40,7 @@ function toPartnerData(config: PartnerConfig): PartnerData {
     howItWorksIntro: config.howItWorksIntro,
     pricingIntro: config.pricingIntro,
     pricingNote: config.pricingNote,
+    defaultCohortSize: config.defaultCohortSize,
     recommendedPathRationale: undefined,
     customScenarios: scenarios ? {
       pilotTitle: scenarios.pilot?.title,

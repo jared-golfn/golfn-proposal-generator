@@ -42,6 +42,7 @@ export interface PartnerConfig {
   campaigns?: BrandCampaign[]
   portfolioDiscount?: { startupPct: number; perUserPct: number }
   marketReach?: MarketData[]
+  defaultCohortSize?: number
 }
 
 const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/b0f6f787acc61119cc6e9796fd64b75979e5f75a-2741x635.png'

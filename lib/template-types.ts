@@ -63,6 +63,7 @@ export interface PartnerData {
   campaigns?: BrandCampaign[]
   portfolioDiscount?: PortfolioDiscount
   marketReach?: MarketData[]
+  defaultCohortSize?: number
 
   isPortfolio?: boolean
   agencyName?: string
