@@ -21,7 +21,7 @@ const managementTiers = [
 
 export function S07_MonthlyReporting({ partner }: { partner: PartnerData }) {
   return (
-    <section className="py-20 md:py-28">
+    <section className="pt-2 pb-10 md:pb-14">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <div className="flex items-center gap-3 mb-4">

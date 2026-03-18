@@ -34,7 +34,7 @@ export function S06_PostCampaign({ partner }: { partner: PartnerData }) {
   const visiblePaths = activeGoal ? activationPaths.filter(p => p.goals.includes(activeGoal)) : activationPaths
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="pt-2 pb-10 md:pb-14">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <div className="flex items-center gap-3 mb-4">
