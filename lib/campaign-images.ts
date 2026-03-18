@@ -7,6 +7,6 @@ export const campaignImageStyles: Record<string, { position: string; scale: stri
   'Galvin Green Layering': { position: 'center 35%', scale: '1.1' },
   'MotoCaddy': { position: 'center center', scale: '1.0' },
   'Wilson Golf': { position: 'center 25%', scale: '1.5' },
-  // Sub 70 -- single campaign with phone mockup screenshot (750x1624 portrait)
-  'Sub 70': { position: 'center 15%', scale: '1.0' },
+  // Sub 70 -- wide product banner (2560x600), center and scale up to fill
+  'Sub 70': { position: 'center center', scale: '1.3' },
 }
