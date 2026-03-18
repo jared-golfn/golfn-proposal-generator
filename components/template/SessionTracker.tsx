@@ -9,13 +9,6 @@ const TRACKED_SECTIONS = [
   { id: 'faq-section', label: 'FAQ' },
 ]
 
-const TRACKED_INTERACTIONS = [
-  { selector: '[data-track="video-play"]', label: 'Played L.A.B. video' },
-  { selector: '[data-track="campaign-expand"]', label: 'Expanded campaign card' },
-  { selector: '[data-track="calculator"]', label: 'Used pricing calculator' },
-  { selector: '[data-track="market-reach"]', label: 'Opened market reach' },
-]
-
 export function SessionTracker({ slug }: { slug: string }) {
   const startTime = useRef(Date.now())
   const sectionsViewed = useRef<Set<string>>(new Set())
@@ -30,7 +23,6 @@ export function SessionTracker({ slug }: { slug: string }) {
     hasSent.current = true
 
     const duration = Math.round((Date.now() - startTime.current) / 1000)
-    // Don't report sessions under 3 seconds (bot/accidental)
     if (duration < 3) return
 
     const minutes = Math.floor(duration / 60)
@@ -47,13 +39,12 @@ export function SessionTracker({ slug }: { slug: string }) {
       interactions: Array.from(interactions.current),
     }
 
-    // Use sendBeacon for reliability on page close
     const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' })
     navigator.sendBeacon('/api/session-end', blob)
   }, [slug])
 
   useEffect(() => {
-    // Track section visibility with IntersectionObserver
+    // Track section visibility
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -70,7 +61,6 @@ export function SessionTracker({ slug }: { slug: string }) {
       { threshold: 0.3 }
     )
 
-    // Observe all tracked sections
     TRACKED_SECTIONS.forEach(({ id }) => {
       const el = document.getElementById(id)
       if (el) observer.observe(el)
@@ -84,7 +74,6 @@ export function SessionTracker({ slug }: { slug: string }) {
         const pct = Math.round((scrollTop / docHeight) * 100)
         if (pct > maxScrollPct.current) {
           maxScrollPct.current = pct
-          // Determine deepest section
           const allSections = TRACKED_SECTIONS.slice().reverse()
           for (const s of allSections) {
             const el = document.getElementById(s.id)
@@ -97,21 +86,65 @@ export function SessionTracker({ slug }: { slug: string }) {
       }
     }
 
-    // Track click interactions via event delegation
+    // Track interactions via event delegation
+    // Uses data-track attributes AND smart DOM heuristics
     function handleClick(e: MouseEvent) {
       const target = e.target as HTMLElement
-      TRACKED_INTERACTIONS.forEach(({ selector, label }) => {
-        if (target.closest(selector)) {
-          interactions.current.add(label)
+
+      // Explicit data-track attributes
+      if (target.closest('[data-track="video-play"]')) {
+        interactions.current.add('Played L.A.B. video')
+      }
+      if (target.closest('[data-track="campaign-expand"]')) {
+        interactions.current.add('Expanded campaign card')
+      }
+      if (target.closest('[data-track="calculator"]')) {
+        interactions.current.add('Used pricing calculator')
+      }
+      if (target.closest('[data-track="market-reach"]')) {
+        interactions.current.add('Opened market reach')
+      }
+
+      // Smart heuristic: detect "View prizes" / "Hide prizes" buttons
+      const btn = target.closest('button')
+      if (btn) {
+        const text = btn.textContent?.toLowerCase() || ''
+        if (text.includes('view prizes') || text.includes('hide prizes')) {
+          interactions.current.add('Expanded campaign card')
         }
-      })
+      }
+
+      // Detect video play via native controls (user clicks play on the <video> element)
+      if (target.tagName === 'VIDEO' || target.closest('video')) {
+        interactions.current.add('Played L.A.B. video')
+      }
+
+      // Detect "Watch the full version" link click
+      const link = target.closest('a')
+      if (link && link.textContent?.toLowerCase().includes('full version')) {
+        interactions.current.add('Clicked full version link')
+      }
+
+      // Detect How It Works step clicks
+      if (btn) {
+        const stepParent = btn.closest('#how-it-works')
+        if (stepParent) {
+          interactions.current.add('Explored How It Works steps')
+        }
+      }
     }
 
-    // Track calculator input changes
+    // Track calculator slider/input changes
     function handleInput(e: Event) {
       const target = e.target as HTMLElement
       if (target.closest('[data-track="calculator"]')) {
         interactions.current.add('Used pricing calculator')
+      }
+      // Heuristic: detect range input or number input inside #ways-to-work
+      if (target.closest('#ways-to-work') && (target instanceof HTMLInputElement)) {
+        if (target.type === 'range' || target.type === 'number') {
+          interactions.current.add('Used pricing calculator')
+        }
       }
     }
 
@@ -119,7 +152,6 @@ export function SessionTracker({ slug }: { slug: string }) {
     document.addEventListener('click', handleClick, true)
     document.addEventListener('input', handleInput, true)
 
-    // Send on page close
     function handleVisibilityChange() {
       if (document.visibilityState === 'hidden') {
         sendSessionData()
