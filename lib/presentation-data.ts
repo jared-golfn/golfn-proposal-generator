@@ -119,9 +119,6 @@ export const partners: Record<string, PartnerConfig> = {
     pricingIntro: 'You provide the prize budget (recommended $5,000 for best cohort). GolfN charges a one-time startup fee, then bills monthly per qualified user added to your cohort. Here is how our pricing works.',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
     defaultPath: 'pilot',
-    // Sub 70 campaigns used as example content for template/pitch mode demo
-    campaigns: sub70Campaigns,
-    defaultCohortSize: 250,
   },
 
   'galvin-green': {
