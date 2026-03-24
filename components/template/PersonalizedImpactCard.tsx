@@ -28,51 +28,75 @@ interface Tier {
   icon: React.ElementType
   label: string
   color: string
-  text: string
+  metric: string
+  context: string
 }
 
 function buildTiers(goal: SuccessGoal, cpm: number, cac: number, ltv: number, budget: number): Tier[] {
+  const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
+  const theirCustomers = Math.round(GOLFN_ASK / cac)
+
   switch (goal) {
-    case 'reach': {
-      const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
+    case 'reach':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: `GolfN delivers impressions to verified golfers at a lower CPM than your current $${cpm} -- and every impression reaches someone who actually plays golf` },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `CPM comes in meaningfully lower, delivering significantly more qualified impressions than the ${theirImpressions} that ${fmtUSD(GOLFN_ASK)} buys you on paid social` },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `The reach efficiency is so clear that reallocating a portion of your ${fmtUSD(budget)}/mo paid social budget to GolfN becomes an obvious decision` },
+        { icon: Check, label: 'Win', color: '#00ff9d',
+          metric: `CPM below $${cpm}`,
+          context: 'Lower cost per impression than paid social, and every one reaches a verified golfer' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+          metric: `More than ${theirImpressions} impressions`,
+          context: `That is what ${fmtUSD(GOLFN_ASK)} currently buys you on paid social -- to a general audience` },
+        { icon: Rocket, label: 'Home run', color: '#ef4444',
+          metric: 'Clear case to reallocate budget',
+          context: `The efficiency gap is large enough that shifting spend from your ${fmtUSD(budget)}/mo becomes obvious` },
       ]
-    }
-    case 'education': {
+    case 'education':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: '150+ golfers complete Learn & Earn about your product -- watched your content, passed a quiz, opted in' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: '300+ completions with 80%+ quiz pass rate -- provably educated, ready for conversion offers' },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: '500+ educated golfers in your cohort, with measurable re-engagement when follow-up content is delivered' },
+        { icon: Check, label: 'Win', color: '#00ff9d',
+          metric: '150+ Learn & Earn completions',
+          context: 'Golfers who watched your content, passed a quiz, and opted in -- provably educated' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+          metric: '300+ completions, 80%+ pass rate',
+          context: 'A qualified cohort that understands your product before they ever see a purchase offer' },
+        { icon: Rocket, label: 'Home run', color: '#ef4444',
+          metric: '500+ educated golfers',
+          context: 'Measurable re-engagement when follow-up content is delivered to the cohort' },
       ]
-    }
-    case 'sales': {
-      const theirCustomers = Math.round(GOLFN_ASK / cac)
-      const ltvCacRatio = ltv > 0 ? (ltv / cac).toFixed(1) : null
-      const strongCustomers = Math.max(theirCustomers + 5, Math.round(GOLFN_ASK / (cac * 0.7)))
-      const strongLtvValue = ltv > 0 ? fmtUSD(strongCustomers * ltv) : null
+    case 'sales':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: `Attributed conversions trending at a lower CAC than your current ${fmtUSD(cac)} -- any improvement on a pre-qualified audience is a clear signal${ltvCacRatio ? ` (your LTV:CAC today is ${ltvCacRatio}x)` : ''}` },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `More customers than the ~${theirCustomers} that ${fmtUSD(GOLFN_ASK)} would buy on paid social${strongLtvValue ? ` -- at your ${fmtUSD(ltv)} LTV, ${strongCustomers} customers represents ${strongLtvValue} in lifetime value` : ''}` },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds the ${fmtUSD(GOLFN_ASK)} investment within 60 days -- the program pays for itself and the cohort keeps converting` },
+        { icon: Check, label: 'Win', color: '#00ff9d',
+          metric: `CAC trending below ${fmtUSD(cac)}`,
+          context: `Any improvement over your current acquisition cost on a pre-qualified audience is signal${ltv > 0 ? ` (your LTV:CAC today is ${(ltv / cac).toFixed(1)}x)` : ''}` },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+          metric: `More than ${theirCustomers} customers`,
+          context: `That is what ${fmtUSD(GOLFN_ASK)} buys you at your current ${fmtUSD(cac)} CAC on paid social` },
+        { icon: Rocket, label: 'Home run', color: '#ef4444',
+          metric: `Cohort revenue covers the ${fmtUSD(GOLFN_ASK)}`,
+          context: 'The initial investment pays for itself within 60 days and the cohort keeps converting' },
       ]
-    }
-    case 'audience': {
+    case 'audience':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: '200+ qualified golfers in your permanent cohort -- people you can re-activate without paying to reach them again' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: '400+ cohort members with demonstrated re-engagement on follow-up campaigns' },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: 'Cohort grows organically via AI lookalike enrollment -- GolfN keeps finding more golfers like your best ones' },
+        { icon: Check, label: 'Win', color: '#00ff9d',
+          metric: '200+ golfers in your cohort',
+          context: 'Qualified people you can re-activate without paying to find them again' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+          metric: '400+ with demonstrated re-engagement',
+          context: 'The cohort responds to follow-up campaigns -- not a dead list' },
+        { icon: Rocket, label: 'Home run', color: '#ef4444',
+          metric: 'Organic cohort growth',
+          context: 'AI lookalike enrollment keeps adding qualified golfers without additional spend' },
       ]
-    }
-    case 'awareness': {
+    case 'awareness':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: 'Your brand visible across the GolfN ecosystem -- email, in-app, push, Daily Grind, social -- to verified golfers in your target markets' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: 'Measurable lift in brand recognition within the GolfN cohort -- repeat engagement on your content without additional spend' },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: 'Organic social proof: golfers sharing your sweepstakes, tagging your brand, creating UGC without being asked' },
+        { icon: Check, label: 'Win', color: '#00ff9d',
+          metric: 'Visible across the GolfN ecosystem',
+          context: 'Email, in-app, push, Daily Grind, social -- to verified golfers in your target markets' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+          metric: 'Repeat engagement without additional spend',
+          context: 'Golfers coming back to your content organically within the cohort' },
+        { icon: Rocket, label: 'Home run', color: '#ef4444',
+          metric: 'Organic social proof',
+          context: 'Golfers sharing your sweepstakes, tagging your brand, creating UGC unprompted' },
       ]
-    }
   }
 }
 
@@ -91,17 +115,18 @@ function GoalCard({ goal, cpm, cac, ltv, budget }: { goal: SuccessGoal; cpm: num
         <Icon className="w-5 h-5 text-[#00ff9d]" />
         <span className="text-base font-semibold text-white">{GOAL_LABELS[goal]}</span>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-5">
         {tiers.map((tier) => {
           const TierIcon = tier.icon
           return (
             <div key={tier.label} className="flex gap-3">
-              <div className="shrink-0 mt-0.5">
+              <div className="shrink-0 mt-1">
                 <TierIcon className="w-5 h-5" style={{ color: tier.color }} />
               </div>
               <div>
-                <span className="text-sm font-bold" style={{ color: tier.color }}>{tier.label}</span>
-                <p className="text-sm text-[#9ca3af] mt-0.5 leading-relaxed">{tier.text}</p>
+                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tier.color }}>{tier.label}</span>
+                <p className="text-lg font-bold text-white mt-0.5">{tier.metric}</p>
+                <p className="text-sm text-[#6b7280] mt-0.5 leading-relaxed">{tier.context}</p>
               </div>
             </div>
           )
@@ -174,10 +199,10 @@ export function PersonalizedImpactCard() {
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 md:p-8 mb-6">
               <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
                 {checkedCount === 1 && (
-                  <>Hit the <span className="text-[#00ff9d] font-bold">Win</span> level and the {fmtUSD(GOLFN_ASK)} was a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>Strong win</span> and {"you're"} outperforming what most brands get from significantly more spend on paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>Home run</span> -- {"that's"} when we talk about scaling.</>
+                  <>The bar is simple: do better than what {"you're"} currently getting. Hit <span className="text-[#00ff9d] font-bold">Win</span> and the {fmtUSD(GOLFN_ASK)} was worth it. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>Strong win</span> and {"you're"} getting more from GolfN than from paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>Home run</span> -- {"that's"} when we talk about what month 3 looks like.</>
                 )}
                 {checkedCount >= 2 && (
-                  <>Any <span className="font-bold">one</span> of these at the <span className="text-[#00ff9d] font-bold">Win</span> level makes the {fmtUSD(GOLFN_ASK)} a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>Strong win</span> on two or more and {"you're"} outperforming what most brands get from significantly more spend on paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>Home run</span> on anything -- {"that's"} when we talk about scaling.</>
+                  <>The bar is simple: do better than what {"you're"} currently getting. Any <span className="font-bold">one</span> of these at <span className="text-[#00ff9d] font-bold">Win</span> and the {fmtUSD(GOLFN_ASK)} was worth it. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>Strong win</span> on two or more and {"you're"} getting more from GolfN than from paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>Home run</span> on anything -- {"that's"} when we talk about what month 3 looks like.</>
                 )}
               </p>
             </div>
