@@ -61,7 +61,6 @@ function buildMetrics(cpm: number, cac: number, ltv: number, budget: number): Me
 function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; cac: number; ltv: number; budget: number; isExample: boolean }) {
   const metrics = buildMetrics(cpm, cac, ltv, budget)
   const theirCustomers = cac > 0 ? Math.round(GOLFN_ASK / cac) : 0
-  const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
 
   return (
     <div>
@@ -74,7 +73,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
           <p className="text-2xl md:text-3xl font-bold text-white leading-tight">{"Here's what we'd need to beat"}<br /><span className="text-[#00ff9d]">for this to be worth your time</span></p>
         )}
         <p className="text-base text-[#9ca3af] mt-3 max-w-3xl">
-          {"You're investing"} {fmtUSD(GOLFN_ASK)} upfront (sweepstakes product + startup fee). We run the sweepstakes, then an aggressive 30-day follow-up campaign. At the 60-day mark, we schedule a review and bring the data.{isExample ? ' Here is what that review would look like for a typical premium golf brand:' : ''}
+          {"You're investing"} {fmtUSD(GOLFN_ASK)} upfront (sweepstakes product + startup fee). We run the sweepstakes, then an aggressive 30-day follow-up campaign across email, push, in-app messaging, and social. At the 60-day mark, we schedule a review and bring the data.{isExample ? ' Here is what that review would look like for a typical premium golf brand:' : ''}
         </p>
       </div>
 
@@ -93,42 +92,42 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
       <div className="mb-10">
         <p className="text-lg font-semibold text-white mb-6">At the 60-day review, we would show you:</p>
 
-        <div className="space-y-4">
-          {/* Reach */}
+        <div className="space-y-5">
+          {/* CPM efficiency */}
           <div className="flex gap-4 items-start">
             <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
             <div>
-              <p className="text-lg font-bold text-white">{"Did we deliver impressions at a lower CPM than your"} ${cpm}?</p>
-              <p className="text-sm text-[#6b7280]">Every GolfN impression reaches a verified golfer -- not a lookalike. If the CPM is lower and the audience is better, {"that's"} a clear improvement over paid social.</p>
+              <p className="text-lg font-bold text-white">{"Did we reach your target audience more efficiently than your"} ${cpm} CPM?</p>
+              <p className="text-sm text-[#6b7280]">Your brand gets exposure across sweepstakes pages, email, push notifications, in-app messaging, and social -- all reaching verified golfers with known handicaps, equipment preferences, and playing frequency. Not lookalikes. Not {"\"interested in golf.\""} Actual golfers. From a pure CPM perspective, this should be the most efficient money {"you've"} ever spent reaching your exact target demographic.</p>
             </div>
           </div>
 
-          {/* Cohort */}
+          {/* Audience quality */}
           <div className="flex gap-4 items-start">
             <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
             <div>
-              <p className="text-lg font-bold text-white">How many golfers are in your qualified cohort?</p>
-              <p className="text-sm text-[#6b7280]">Golfers who completed Learn & Earn about your product -- watched your content, passed a quiz, opted in. These are people who provably understand what you make. You own this cohort and can re-activate them without paying to find them again.</p>
+              <p className="text-lg font-bold text-white">How many verified golfers engaged with your brand?</p>
+              <p className="text-sm text-[#6b7280]">{"We'd"} show you the total impressions, unique golfers reached, engagement rates, and how many entered your sweepstakes. Every person in that data set is a real golfer -- we know that because {"they're"} active on our platform. You own this audience data and can re-activate them without paying to find them again.</p>
             </div>
           </div>
 
-          {/* Conversion */}
+          {/* Conversion signal */}
           {cac > 0 && (
             <div className="flex gap-4 items-start">
               <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
               <div>
                 <p className="text-lg font-bold text-white">{"Are conversions trending below your"} {fmtUSD(cac)} CAC?</p>
-                <p className="text-sm text-[#6b7280]">The cohort is pre-educated about your product before they ever see a purchase offer. If that pre-qualification produces conversions at a lower cost than cold paid social, the channel is working.{theirCustomers > 0 ? ` For reference, ${fmtUSD(GOLFN_ASK)} buys ~${theirCustomers} customers at your current CAC.` : ''}</p>
+                <p className="text-sm text-[#6b7280]">{"You're"} reaching people who already know they want golf products -- {"they're"} not cold. If that audience converts at a lower cost than paid social, the channel is working.{theirCustomers > 0 ? ` For reference, ${fmtUSD(GOLFN_ASK)} buys ~${theirCustomers} customers at your current CAC.` : ''}</p>
               </div>
             </div>
           )}
 
-          {/* Re-engagement */}
+          {/* What happens next */}
           <div className="flex gap-4 items-start">
             <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
             <div>
-              <p className="text-lg font-bold text-white">Is the cohort responding to follow-up campaigns?</p>
-              <p className="text-sm text-[#6b7280]">On paid social, you stop spending, you stop existing. On GolfN, we can keep activating the cohort. If re-engagement rates are strong, the value compounds over time.</p>
+              <p className="text-lg font-bold text-white">Is there a clear path to keep going?</p>
+              <p className="text-sm text-[#6b7280]">On paid social, you stop spending, you stop existing. With GolfN, the audience you built is yours -- and there are ways to keep activating and expanding that cohort that we would walk you through at the review. {"That's"} where it gets interesting. But {"let's"} prove the basics first.</p>
             </div>
           </div>
         </div>
@@ -143,7 +142,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
 
       {/* Footnote */}
       <p className="text-xs text-[#4b5563] text-center max-w-3xl mx-auto">
-        GolfN ~$3.50 effective CPM reaches verified, active golfers across email, in-app, push, Daily Grind, and social channels. All metrics reviewed collaboratively at the 60-day mark with full transparency.
+        GolfN reaches verified, active golfers across email, push, in-app messaging, sweepstakes pages, Daily Grind, and social channels. All metrics reviewed collaboratively at the 60-day mark with full transparency.
       </p>
     </div>
   )
