@@ -2,13 +2,11 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { DollarSign, ChevronDown, Check } from 'lucide-react'
-import { useBrandSpend, GOAL_LABELS, GOAL_DESCRIPTIONS, type SuccessGoal } from '@/lib/brand-context'
-
-const ALL_GOALS: SuccessGoal[] = ['reach', 'education', 'sales', 'audience', 'awareness']
+import { DollarSign, Check } from 'lucide-react'
+import { useBrandSpend } from '@/lib/brand-context'
 
 export function BrandSpendInput() {
-  const { cpm, cac, ltv, monthlyBudget, successGoals, setCpm, setCac, setLtv, setMonthlyBudget, toggleGoal } = useBrandSpend()
+  const { cpm, cac, ltv, monthlyBudget, setCpm, setCac, setLtv, setMonthlyBudget } = useBrandSpend()
   const [cpmInput, setCpmInput] = useState('')
   const [cacInput, setCacInput] = useState('')
   const [ltvInput, setLtvInput] = useState('')
@@ -47,8 +45,7 @@ export function BrandSpendInput() {
     setMonthlyBudget(isNaN(n) || n <= 0 ? null : n)
   }
 
-  const numbersSet = cpm && cpm > 0 && cac && cac > 0 && monthlyBudget && monthlyBudget > 0
-  const allReady = numbersSet && successGoals.size > 0
+  const allSet = cpm && cpm > 0 && monthlyBudget && monthlyBudget > 0
 
   return (
     <motion.div
@@ -61,7 +58,7 @@ export function BrandSpendInput() {
       <div className="bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] rounded-2xl p-6 md:p-8 max-w-5xl">
         <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-5">Personalize this walkthrough</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label className="block text-sm text-[#9ca3af] mb-2">Your CPM <span className="text-[#4b5563]">(paid social)</span></label>
             <div className="relative">
@@ -128,36 +125,8 @@ export function BrandSpendInput() {
           </div>
         </div>
 
-        <div className="border-t border-[#2a3347]/60 pt-5">
-          <p className="text-sm text-[#9ca3af] mb-3">What does success look like for you?</p>
-          <div className="flex flex-wrap gap-2">
-            {ALL_GOALS.map((goal) => {
-              const active = successGoals.has(goal)
-              return (
-                <button
-                  key={goal}
-                  onClick={() => toggleGoal(goal)}
-                  className={`group relative px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                    active
-                      ? 'bg-[#00ff9d]/15 border border-[#00ff9d]/40 text-[#00ff9d]'
-                      : 'bg-[#0f1217] border border-[#2a3347] text-[#9ca3af] hover:border-[#00ff9d]/30 hover:text-white'
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    {active && <Check className="w-3.5 h-3.5" />}
-                    {GOAL_LABELS[goal]}
-                  </span>
-                  <span className="absolute left-1/2 -translate-x-1/2 -bottom-8 px-3 py-1 rounded-lg bg-[#0f1217] border border-[#2a3347] text-xs text-[#6b7280] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                    {GOAL_DESCRIPTIONS[goal]}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
         <AnimatePresence>
-          {allReady && (
+          {allSet && (
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -166,7 +135,7 @@ export function BrandSpendInput() {
               className="flex items-center gap-2 mt-5 text-sm text-[#6b7280]"
             >
               <Check className="w-4 h-4 text-[#00ff9d]" />
-              <span>Your numbers are set. The success framework is below, after the walkthrough.</span>
+              <span>{"Your numbers are locked in. Scroll down to see your full GolfN impact calculation."}</span>
             </motion.div>
           )}
         </AnimatePresence>
