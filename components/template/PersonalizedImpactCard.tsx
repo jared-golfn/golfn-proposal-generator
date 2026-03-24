@@ -14,48 +14,11 @@ function fmt(n: number): string {
   return `${Math.round(n)}`
 }
 
-interface Metric {
-  label: string
-  value: string
-  sub: string
-}
-
-function buildMetrics(cpm: number, cac: number, ltv: number, budget: number): Metric[] {
-  const metrics: Metric[] = []
-
-  metrics.push({
-    label: 'Your current CPM',
-    value: `$${cpm}`,
-    sub: 'What you pay per 1,000 impressions on paid social',
-  })
-
-  if (cac > 0) {
-    metrics.push({
-      label: 'Your current CAC',
-      value: fmtUSD(cac),
-      sub: 'What it costs you to acquire one customer',
-    })
-  }
-
-  if (ltv > 0 && cac > 0) {
-    metrics.push({
-      label: 'Your LTV:CAC',
-      value: `${(ltv / cac).toFixed(1)}x`,
-      sub: `${fmtUSD(ltv)} lifetime value per customer`,
-    })
-  }
-
-  metrics.push({
-    label: 'Monthly budget',
-    value: fmtUSD(budget),
-    sub: 'Current paid social spend',
-  })
-
-  return metrics
-}
-
 function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; cac: number; ltv: number; budget: number; isExample: boolean }) {
-  const metrics = buildMetrics(cpm, cac, ltv, budget)
+  const totalInvestment = 7500
+  const theirImpressions = fmt(Math.round(totalInvestment / cpm * 1000))
+  const theirCustomers = cac > 0 ? Math.round(totalInvestment / cac) : 0
+  const ltvCacRatio = ltv > 0 && cac > 0 ? (ltv / cac).toFixed(1) : null
 
   return (
     <div>
@@ -63,81 +26,102 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
       <div className="mb-10">
         <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">60-Day Review Framework</p>
         {isExample ? (
-          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">What would make this<br /><span className="text-[#00ff9d]">worth continuing?</span></p>
+          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Multiple ways this can be<br /><span className="text-[#00ff9d]">a huge win for your brand</span></p>
         ) : (
-          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">{"Here's what we'd need to beat"}<br /><span className="text-[#00ff9d]">for this to be worth your time</span></p>
+          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Multiple ways this can be<br /><span className="text-[#00ff9d]">a huge win for your brand</span></p>
         )}
         <p className="text-base text-[#9ca3af] mt-3 max-w-3xl">
-          {"You're"} putting up ~$5,000 in product for the sweepstakes and a $2,500 startup fee. We run the sweepstakes, then an aggressive 30-day follow-up campaign across email, push, in-app messaging, and social. At the 60-day mark, we schedule a review and bring the data.{isExample ? ' Here is what that review would look like for a typical premium golf brand:' : ''}
+          {"You're"} putting up ~$5,000 in product for the sweepstakes and a $2,500 startup fee. If you spent the same $7,500 on paid social, {"here's"} what {"you'd"} get. Each of these is an independent way GolfN can outperform that spend{isExample ? ' (shown for a typical premium golf brand)' : ''}:
         </p>
       </div>
 
-      {/* Your current numbers - what we need to beat */}
-      <div className={`grid gap-4 mb-10 ${metrics.length <= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'}`}>
-        {metrics.map((m) => (
-          <div key={m.label} className="bg-[#0f1217] rounded-xl p-5 border border-[#2a3347]">
-            <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-2">{m.label}</p>
-            <p className="text-3xl font-mono font-bold text-white">{m.value}</p>
-            <p className="text-sm text-[#4b5563] mt-1">{m.sub}</p>
+      {/* The benchmarks -- what paid social gets them */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+        {/* Reach benchmark */}
+        <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
+          <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">What $7,500 buys on paid social</p>
+          <p className="text-4xl font-mono font-bold text-white mb-1">{theirImpressions}</p>
+          <p className="text-base text-[#6b7280]">impressions at ${cpm} CPM</p>
+          <p className="text-sm text-[#4b5563] mt-3">to a general audience based on self-reported interests and lookalikes</p>
+        </div>
+
+        {/* Customer benchmark */}
+        {cac > 0 && (
+          <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
+            <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">What $7,500 buys on paid social</p>
+            <p className="text-4xl font-mono font-bold text-white mb-1">~{theirCustomers}</p>
+            <p className="text-base text-[#6b7280]">customers at {fmtUSD(cac)} CAC</p>
+            {ltvCacRatio && (
+              <p className="text-sm text-[#4b5563] mt-3">your LTV:CAC is {ltvCacRatio}x ({fmtUSD(ltv)} per customer)</p>
+            )}
           </div>
-        ))}
+        )}
+
+        {/* Audience benchmark */}
+        <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
+          <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">What $7,500 buys on paid social</p>
+          <p className="text-4xl font-mono font-bold text-white mb-1">0</p>
+          <p className="text-base text-[#6b7280]">owned audience members</p>
+          <p className="text-sm text-[#4b5563] mt-3">when you stop spending, every impression disappears</p>
+        </div>
       </div>
 
-      {/* The success criteria */}
+      {/* The independent wins */}
       <div className="mb-10">
-        <p className="text-lg font-semibold text-white mb-6">At the 60-day review, we would show you:</p>
+        <p className="text-lg font-semibold text-white mb-2">Any one of these beating your current numbers is a win.</p>
+        <p className="text-base text-[#9ca3af] mb-6">Hit two or more and you just found a channel that outperforms paid social across the board.</p>
 
         <div className="space-y-5">
-          {/* CPM efficiency */}
-          <div className="flex gap-4 items-start">
-            <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
-            <div>
-              <p className="text-lg font-bold text-white">{"Did we reach your target audience more efficiently than your"} ${cpm} CPM?</p>
-              <p className="text-sm text-[#6b7280]">Your brand gets exposure across sweepstakes pages, email, push notifications, in-app messaging, and social -- all reaching verified golfers with known handicaps, equipment preferences, and playing frequency. Not lookalikes. Not {"\"interested in golf.\""} Actual golfers. From a pure CPM perspective, this should be the most efficient money {"you've"} ever spent reaching your exact target demographic.</p>
-            </div>
-          </div>
-
-          {/* Audience quality */}
-          <div className="flex gap-4 items-start">
-            <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
-            <div>
-              <p className="text-lg font-bold text-white">How many verified golfers engaged with your brand?</p>
-              <p className="text-sm text-[#6b7280]">{"We'd"} show you the total impressions, unique golfers reached, engagement rates, and how many entered your sweepstakes. Every person in that data set is a real golfer -- we know that because {"they're"} active on our platform. You own this audience data and can re-activate them without paying to find them again.</p>
-            </div>
-          </div>
-
-          {/* Conversion signal */}
-          {cac > 0 && (
+          {/* Win 1: Reach */}
+          <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
             <div className="flex gap-4 items-start">
               <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
               <div>
-                <p className="text-lg font-bold text-white">{"Are conversions trending below your"} {fmtUSD(cac)} CAC?</p>
-                <p className="text-sm text-[#6b7280]">{"You're"} reaching people who already know they want golf products -- {"they're"} not cold. If that audience converts at a lower cost than paid social, the channel is working.</p>
+                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #1: Reach</p>
+                <p className="text-xl font-bold text-white">More than {theirImpressions} impressions -- to verified golfers</p>
+                <p className="text-sm text-[#6b7280] mt-2">Your brand gets exposure across sweepstakes pages, email, push, in-app messaging, and social. Every impression reaches a golfer with a known handicap, equipment preferences, and playing frequency. Not {"\"interested in golf.\""} Actual golfers. If we beat {theirImpressions} impressions, you got more efficient reach to a better audience than paid social -- and the $2,500 fee paid for itself on reach alone.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Win 2: Conversions */}
+          {cac > 0 && (
+            <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
+              <div className="flex gap-4 items-start">
+                <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
+                <div>
+                  <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #2: Conversions</p>
+                  <p className="text-xl font-bold text-white">More than {theirCustomers} customers -- or a lower CAC than {fmtUSD(cac)}</p>
+                  <p className="text-sm text-[#6b7280] mt-2">{"You're"} putting your brand in front of people who already play golf and already buy golf products. {"They're"} not cold. If conversions come in at a lower CAC than paid social, or you simply get more customers than the ~{theirCustomers} that $7,500 would buy you elsewhere, {"that's"} a separate, independent win -- even if nothing else changes.</p>
+                </div>
               </div>
             </div>
           )}
 
-          {/* What happens next */}
-          <div className="flex gap-4 items-start">
-            <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
-            <div>
-              <p className="text-lg font-bold text-white">Is there a clear path to keep going?</p>
-              <p className="text-sm text-[#6b7280]">On paid social, you stop spending, you stop existing. With GolfN, the audience you built is yours -- and there are ways to keep activating and expanding that cohort that we would walk you through at the review. {"That's"} where it gets interesting. But {"let's"} prove the basics first.</p>
+          {/* Win 3: Audience */}
+          <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
+            <div className="flex gap-4 items-start">
+              <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
+              <div>
+                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #3: Audience you own</p>
+                <p className="text-xl font-bold text-white">Verified golfers you can re-activate without paying to find them again</p>
+                <p className="text-sm text-[#6b7280] mt-2">On paid social, $7,500 buys you zero owned audience. When you stop spending, every impression disappears. With GolfN, the golfers who engaged with your brand are yours. You can reach them again. {"That's"} something paid social literally cannot do -- and there are ways to keep expanding that audience that we would walk through at the review.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Punchline */}
+      {/* The compounding effect */}
       <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 md:p-8 mb-6">
         <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
-          The bar is simple: do better than what {"you're"} currently getting. We {"don't"} set the targets -- you do. We schedule a review at 60 days. We bring the data. You tell us if the numbers justify month 3.
+          Each of these is worth it on its own. But if GolfN beats your numbers on reach <span className="font-bold text-white">and</span> conversions <span className="font-bold text-white">and</span> gives you an audience you own -- {"you've"} found a channel {"that's"} outperforming your entire current strategy. {"That's"} what the 60-day review is for. We bring the data. You tell us if the numbers justify month 3.
         </p>
       </div>
 
       {/* Footnote */}
       <p className="text-xs text-[#4b5563] text-center max-w-3xl mx-auto">
-        GolfN reaches verified, active golfers across email, push, in-app messaging, sweepstakes pages, Daily Grind, and social channels. All metrics reviewed collaboratively at the 60-day mark with full transparency.
+        Benchmarks calculated from your inputs: $7,500 / ${cpm} CPM x 1,000 = {theirImpressions} impressions.{cac > 0 ? ` $7,500 / ${fmtUSD(cac)} CAC = ~${theirCustomers} customers.` : ''} GolfN reaches verified, active golfers across email, push, in-app messaging, sweepstakes pages, Daily Grind, and social channels.
       </p>
     </div>
   )
