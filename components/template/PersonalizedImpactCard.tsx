@@ -1,7 +1,7 @@
 {'use client'}
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, Flame, Rocket, ArrowUp, Target, GraduationCap, ShoppingCart, Users, Eye } from 'lucide-react'
+import { ArrowUp, Target, GraduationCap, ShoppingCart, Users, Eye } from 'lucide-react'
 import { useBrandSpend, GOAL_LABELS, type SuccessGoal } from '@/lib/brand-context'
 
 const GOLFN_ASK = 7500
@@ -25,7 +25,6 @@ const GOAL_ICONS: Record<SuccessGoal, React.ElementType> = {
 }
 
 interface Tier {
-  icon: React.ElementType
   label: string
   color: string
   metric: string
@@ -39,61 +38,61 @@ function buildTiers(goal: SuccessGoal, cpm: number, cac: number, ltv: number, bu
   switch (goal) {
     case 'reach':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d',
+        { label: 'Win', color: '#00ff9d',
           metric: `CPM below $${cpm}`,
           context: 'Lower cost per impression than paid social, and every one reaches a verified golfer' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+        { label: 'Strong win', color: '#f59e0b',
           metric: `More than ${theirImpressions} impressions`,
           context: `That is what ${fmtUSD(GOLFN_ASK)} currently buys you on paid social -- to a general audience` },
-        { icon: Rocket, label: 'Home run', color: '#ef4444',
+        { label: 'Home run', color: '#ef4444',
           metric: 'Clear case to reallocate budget',
           context: `The efficiency gap is large enough that shifting spend from your ${fmtUSD(budget)}/mo becomes obvious` },
       ]
     case 'education':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d',
+        { label: 'Win', color: '#00ff9d',
           metric: '150+ Learn & Earn completions',
           context: 'Golfers who watched your content, passed a quiz, and opted in -- provably educated' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+        { label: 'Strong win', color: '#f59e0b',
           metric: '300+ completions, 80%+ pass rate',
           context: 'A qualified cohort that understands your product before they ever see a purchase offer' },
-        { icon: Rocket, label: 'Home run', color: '#ef4444',
+        { label: 'Home run', color: '#ef4444',
           metric: '500+ educated golfers',
           context: 'Measurable re-engagement when follow-up content is delivered to the cohort' },
       ]
     case 'sales':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d',
+        { label: 'Win', color: '#00ff9d',
           metric: `CAC trending below ${fmtUSD(cac)}`,
           context: `Any improvement over your current acquisition cost on a pre-qualified audience is signal${ltv > 0 ? ` (your LTV:CAC today is ${(ltv / cac).toFixed(1)}x)` : ''}` },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+        { label: 'Strong win', color: '#f59e0b',
           metric: `More than ${theirCustomers} customers`,
           context: `That is what ${fmtUSD(GOLFN_ASK)} buys you at your current ${fmtUSD(cac)} CAC on paid social` },
-        { icon: Rocket, label: 'Home run', color: '#ef4444',
+        { label: 'Home run', color: '#ef4444',
           metric: `Cohort revenue covers the ${fmtUSD(GOLFN_ASK)}`,
           context: 'The initial investment pays for itself within 60 days and the cohort keeps converting' },
       ]
     case 'audience':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d',
+        { label: 'Win', color: '#00ff9d',
           metric: '200+ golfers in your cohort',
           context: 'Qualified people you can re-activate without paying to find them again' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+        { label: 'Strong win', color: '#f59e0b',
           metric: '400+ with demonstrated re-engagement',
           context: 'The cohort responds to follow-up campaigns -- not a dead list' },
-        { icon: Rocket, label: 'Home run', color: '#ef4444',
+        { label: 'Home run', color: '#ef4444',
           metric: 'Organic cohort growth',
           context: 'AI lookalike enrollment keeps adding qualified golfers without additional spend' },
       ]
     case 'awareness':
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d',
+        { label: 'Win', color: '#00ff9d',
           metric: 'Visible across the GolfN ecosystem',
           context: 'Email, in-app, push, Daily Grind, social -- to verified golfers in your target markets' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b',
+        { label: 'Strong win', color: '#f59e0b',
           metric: 'Repeat engagement without additional spend',
           context: 'Golfers coming back to your content organically within the cohort' },
-        { icon: Rocket, label: 'Home run', color: '#ef4444',
+        { label: 'Home run', color: '#ef4444',
           metric: 'Organic social proof',
           context: 'Golfers sharing your sweepstakes, tagging your brand, creating UGC unprompted' },
       ]
@@ -111,26 +110,23 @@ function GoalCard({ goal, cpm, cac, ltv, budget }: { goal: SuccessGoal; cpm: num
       transition={{ duration: 0.4 }}
       className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]"
     >
-      <div className="flex items-center gap-2.5 mb-5">
+      <div className="flex items-center gap-2.5 mb-6">
         <Icon className="w-5 h-5 text-[#00ff9d]" />
         <span className="text-base font-semibold text-white">{GOAL_LABELS[goal]}</span>
       </div>
-      <div className="space-y-5">
-        {tiers.map((tier) => {
-          const TierIcon = tier.icon
-          return (
-            <div key={tier.label} className="flex gap-3">
-              <div className="shrink-0 mt-1">
-                <TierIcon className="w-5 h-5" style={{ color: tier.color }} />
-              </div>
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tier.color }}>{tier.label}</span>
-                <p className="text-lg font-bold text-white mt-0.5">{tier.metric}</p>
-                <p className="text-sm text-[#6b7280] mt-0.5 leading-relaxed">{tier.context}</p>
-              </div>
+      <div className="space-y-6">
+        {tiers.map((tier) => (
+          <div key={tier.label} className="flex gap-3.5">
+            <div className="shrink-0 mt-2">
+              <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: tier.color }} />
             </div>
-          )
-        })}
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tier.color }}>{tier.label}</span>
+              <p className="text-lg font-bold text-white mt-0.5">{tier.metric}</p>
+              <p className="text-sm text-[#6b7280] mt-0.5 leading-relaxed">{tier.context}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </motion.div>
   )
