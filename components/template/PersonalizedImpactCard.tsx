@@ -32,7 +32,9 @@ interface Tier {
   text: string
 }
 
-function buildTiers(goal: SuccessGoal, cpm: number, cac: number): Tier[] {
+function buildTiers(goal: SuccessGoal, cpm: number, cac: number, ltv: number): Tier[] {
+  const ltvCacRatio = ltv > 0 && cac > 0 ? (ltv / cac).toFixed(1) : null
+
   switch (goal) {
     case 'reach': {
       const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
@@ -51,10 +53,13 @@ function buildTiers(goal: SuccessGoal, cpm: number, cac: number): Tier[] {
     }
     case 'sales': {
       const theirCustomers = Math.round(GOLFN_ASK / cac)
+      const reducedCac = Math.round(cac * 0.7)
+      const strongWinCustomers = Math.max(20, Math.round(GOLFN_ASK / reducedCac))
+      const strongWinLtv = ltv > 0 ? fmtUSD(strongWinCustomers * ltv) : null
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: `CAC trending below your current ${fmtUSD(cac)} within 60 days -- any improvement on a pre-qualified audience is signal` },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `20+ attributed sales at under ${fmtUSD(Math.round(cac * 0.7))} CAC -- significantly better than the ~${theirCustomers} customers ${fmtUSD(GOLFN_ASK)} would buy you on paid social` },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds your ${fmtUSD(GOLFN_ASK)} investment within 60 days -- the program pays for itself` },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: `CAC trending below your current ${fmtUSD(cac)} within 60 days -- any improvement on a pre-qualified audience is signal${ltvCacRatio ? ` (your current LTV:CAC is ${ltvCacRatio}x)` : ''}` },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `${strongWinCustomers}+ attributed sales at under ${fmtUSD(reducedCac)} CAC${strongWinLtv ? ` -- at your ${fmtUSD(ltv)} LTV, that is ${strongWinLtv} in lifetime value from a ${fmtUSD(GOLFN_ASK)} investment` : ` -- significantly better than the ~${theirCustomers} customers ${fmtUSD(GOLFN_ASK)} would buy on paid social`}` },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds your ${fmtUSD(GOLFN_ASK)} investment within 60 days -- the program pays for itself and the cohort keeps converting` },
       ]
     }
     case 'audience': {
@@ -74,9 +79,9 @@ function buildTiers(goal: SuccessGoal, cpm: number, cac: number): Tier[] {
   }
 }
 
-function GoalCard({ goal, cpm, cac, budget }: { goal: SuccessGoal; cpm: number; cac: number; budget: number }) {
+function GoalCard({ goal, cpm, cac, ltv }: { goal: SuccessGoal; cpm: number; cac: number; ltv: number }) {
   const Icon = GOAL_ICONS[goal]
-  const tiers = buildTiers(goal, cpm, cac)
+  const tiers = buildTiers(goal, cpm, cac, ltv)
 
   return (
     <motion.div
@@ -110,7 +115,7 @@ function GoalCard({ goal, cpm, cac, budget }: { goal: SuccessGoal; cpm: number; 
 }
 
 export function PersonalizedImpactCard() {
-  const { cpm, cac, monthlyBudget, successGoals } = useBrandSpend()
+  const { cpm, cac, ltv, monthlyBudget, successGoals } = useBrandSpend()
 
   const hasNumbers = cpm && cpm > 0 && cac && cac > 0 && monthlyBudget && monthlyBudget > 0
   const hasGoals = successGoals.size > 0
@@ -118,11 +123,13 @@ export function PersonalizedImpactCard() {
 
   const exCpm = 72
   const exCac = 180
+  const exLtv = 800
   const exBudget = 25000
   const exGoals: SuccessGoal[] = ['reach', 'education', 'sales']
 
   const activeCpm = hasNumbers ? cpm! : exCpm
   const activeCac = hasNumbers ? cac! : exCac
+  const activeLtv = (ltv && ltv > 0) ? ltv : (hasNumbers ? 0 : exLtv)
   const activeBudget = hasNumbers ? monthlyBudget! : exBudget
   const activeGoals = hasGoals ? Array.from(successGoals) : exGoals
   const isExample = !isReady
@@ -163,7 +170,7 @@ export function PersonalizedImpactCard() {
               activeGoals.length >= 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : ''
             }`}>
               {activeGoals.map((goal) => (
-                <GoalCard key={goal} goal={goal} cpm={activeCpm} cac={activeCac} budget={activeBudget} />
+                <GoalCard key={goal} goal={goal} cpm={activeCpm} cac={activeCac} ltv={activeLtv} />
               ))}
             </div>
 
@@ -202,7 +209,7 @@ export function PersonalizedImpactCard() {
             </div>
 
             {isExample && (
-              <p className="text-xs text-[#4b5563] text-center mt-4">Example shown: $72 CPM, $180 CAC, $25,000/mo budget</p>
+              <p className="text-xs text-[#4b5563] text-center mt-4">Example shown: $72 CPM, $180 CAC, $800 LTV, $25,000/mo budget</p>
             )}
           </motion.div>
         </AnimatePresence>
