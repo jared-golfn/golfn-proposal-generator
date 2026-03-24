@@ -57,8 +57,8 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
         <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
           <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">Same $7,500 on paid social</p>
           <p className="text-4xl font-mono font-bold text-white mb-1">0</p>
-          <p className="text-base text-[#6b7280]">owned audience members</p>
-          <p className="text-sm text-[#4b5563] mt-3">when you stop spending, every impression disappears</p>
+          <p className="text-base text-[#6b7280]">ability to keep going</p>
+          <p className="text-sm text-[#4b5563] mt-3">when you stop spending, every impression disappears and the audience is gone</p>
         </div>
       </div>
 
@@ -94,14 +94,14 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
             </div>
           )}
 
-          {/* Win 3: Audience */}
+          {/* Win 3: Qualified cohort + ability to keep growing */}
           <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
             <div className="flex gap-4 items-start">
               <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #3: Audience you own</p>
-                <p className="text-xl font-bold text-white">Verified golfers you can re-activate without paying to find them again</p>
-                <p className="text-sm text-[#6b7280] mt-2">The same $7,500 on paid social buys you zero owned audience. When you stop spending, every impression disappears. With GolfN, the golfers who engaged with your brand are yours. You can reach them again. {"That's"} something paid social literally cannot do -- and there are ways to keep expanding that audience that we would walk through at the review.</p>
+                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #3: A qualified cohort you can keep growing</p>
+                <p className="text-xl font-bold text-white">Verified golfers who responded to your brand -- and the ability to find more like them</p>
+                <p className="text-sm text-[#6b7280] mt-2">The sweepstakes generates signal about which types of golfers engage with your brand. {"GolfN's"} AI lookalike engine uses that signal to identify more qualified users who match the profile of your best responders -- even people who never entered the original sweepstakes. Paid social gives you none of this. When you stop spending, the audience is gone. With GolfN, you walk away with a qualified cohort and the option to keep activating and expanding it. {"That's"} what {"we'd"} walk through at the 60-day review.</p>
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
       {/* The compounding effect */}
       <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 md:p-8 mb-6">
         <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
-          Each of these is worth it on its own. But if GolfN beats your numbers on reach <span className="font-bold text-white">and</span> conversions <span className="font-bold text-white">and</span> gives you an audience you own -- {"you've"} found a channel {"that's"} outperforming your entire current strategy. {"That's"} what the 60-day review is for. We bring the data. You tell us if the numbers justify month 3.
+          Each of these is worth it on its own. But if GolfN beats your numbers on reach <span className="font-bold text-white">and</span> conversions <span className="font-bold text-white">and</span> gives you a qualified cohort you can keep growing -- {"you've"} found something paid social {"can't"} offer at any price. {"That's"} what the 60-day review is for. We bring the data. You tell us if the numbers justify month 3.
         </p>
       </div>
 
