@@ -23,22 +23,25 @@ export const GOAL_DESCRIPTIONS: Record<SuccessGoal, string> = {
 interface BrandSpendData {
   cpm: number | null
   cac: number | null
+  ltv: number | null
   monthlyBudget: number | null
   successGoals: Set<SuccessGoal>
   setCpm: (v: number | null) => void
   setCac: (v: number | null) => void
+  setLtv: (v: number | null) => void
   setMonthlyBudget: (v: number | null) => void
   toggleGoal: (g: SuccessGoal) => void
 }
 
 const BrandSpendContext = createContext<BrandSpendData>({
-  cpm: null, cac: null, monthlyBudget: null, successGoals: new Set(),
-  setCpm: () => {}, setCac: () => {}, setMonthlyBudget: () => {}, toggleGoal: () => {},
+  cpm: null, cac: null, ltv: null, monthlyBudget: null, successGoals: new Set(),
+  setCpm: () => {}, setCac: () => {}, setLtv: () => {}, setMonthlyBudget: () => {}, toggleGoal: () => {},
 })
 
 export function BrandSpendProvider({ children }: { children: ReactNode }) {
   const [cpm, setCpm] = useState<number | null>(null)
   const [cac, setCac] = useState<number | null>(null)
+  const [ltv, setLtv] = useState<number | null>(null)
   const [monthlyBudget, setMonthlyBudget] = useState<number | null>(null)
   const [successGoals, setSuccessGoals] = useState<Set<SuccessGoal>>(new Set())
 
@@ -51,7 +54,7 @@ export function BrandSpendProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <BrandSpendContext.Provider value={{ cpm, cac, monthlyBudget, successGoals, setCpm, setCac, setMonthlyBudget, toggleGoal }}>
+    <BrandSpendContext.Provider value={{ cpm, cac, ltv, monthlyBudget, successGoals, setCpm, setCac, setLtv, setMonthlyBudget, toggleGoal }}>
       {children}
     </BrandSpendContext.Provider>
   )

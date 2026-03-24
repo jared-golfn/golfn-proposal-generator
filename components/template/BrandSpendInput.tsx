@@ -8,9 +8,10 @@ import { useBrandSpend, GOAL_LABELS, GOAL_DESCRIPTIONS, type SuccessGoal } from 
 const ALL_GOALS: SuccessGoal[] = ['reach', 'education', 'sales', 'audience', 'awareness']
 
 export function BrandSpendInput() {
-  const { cpm, cac, monthlyBudget, successGoals, setCpm, setCac, setMonthlyBudget, toggleGoal } = useBrandSpend()
+  const { cpm, cac, ltv, monthlyBudget, successGoals, setCpm, setCac, setLtv, setMonthlyBudget, toggleGoal } = useBrandSpend()
   const [cpmInput, setCpmInput] = useState('')
   const [cacInput, setCacInput] = useState('')
+  const [ltvInput, setLtvInput] = useState('')
   const [budgetInput, setBudgetInput] = useState('')
   const cpmRef = useRef<HTMLInputElement>(null)
 
@@ -30,6 +31,13 @@ export function BrandSpendInput() {
     setCacInput(clean)
     const n = parseFloat(clean)
     setCac(isNaN(n) || n <= 0 ? null : n)
+  }
+
+  function handleLtvChange(val: string) {
+    const clean = val.replace(/[^0-9.]/g, '')
+    setLtvInput(clean)
+    const n = parseFloat(clean)
+    setLtv(isNaN(n) || n <= 0 ? null : n)
   }
 
   function handleBudgetChange(val: string) {
@@ -53,7 +61,7 @@ export function BrandSpendInput() {
       <div className="bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] rounded-2xl p-6 md:p-8 max-w-5xl">
         <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-5">Personalize this walkthrough</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div>
             <label className="block text-sm text-[#9ca3af] mb-2">Your CPM <span className="text-[#4b5563]">(paid social)</span></label>
             <div className="relative">
@@ -84,6 +92,22 @@ export function BrandSpendInput() {
                 className="w-full pl-10 pr-16 py-3.5 rounded-xl bg-[#0f1217] border border-[#2a3347] text-white text-lg font-mono placeholder:text-[#4b5563] focus:outline-none focus:border-[#00ff9d]/50 focus:ring-1 focus:ring-[#00ff9d]/30 transition-all"
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#6b7280] font-mono">CAC</span>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm text-[#9ca3af] mb-2">Customer LTV <span className="text-[#4b5563]">(lifetime value)</span></label>
+            <div className="relative">
+              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#4b5563]" />
+              <input
+                type="text"
+                inputMode="decimal"
+                value={ltvInput}
+                onChange={(e) => handleLtvChange(e.target.value)}
+                placeholder="e.g. 800"
+                className="w-full pl-10 pr-16 py-3.5 rounded-xl bg-[#0f1217] border border-[#2a3347] text-white text-lg font-mono placeholder:text-[#4b5563] focus:outline-none focus:border-[#00ff9d]/50 focus:ring-1 focus:ring-[#00ff9d]/30 transition-all"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#6b7280] font-mono">LTV</span>
             </div>
           </div>
 
@@ -142,8 +166,7 @@ export function BrandSpendInput() {
               className="flex items-center gap-2 mt-5 text-sm text-[#6b7280]"
             >
               <Check className="w-4 h-4 text-[#00ff9d]" />
-              <span>Scroll down to see what a win looks like at 60 days</span>
-              <ChevronDown className="w-4 h-4 text-[#00ff9d] animate-bounce" />
+              <span>Your numbers are set. The success framework is below, after the walkthrough.</span>
             </motion.div>
           )}
         </AnimatePresence>

@@ -67,9 +67,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
           <div id="proposal-content">
             <div id="top"><S01_Hero partner={partner} /></div>
-
-            {isWalkthrough && <PersonalizedImpactCard />}
-
             <SectionDivider />
             <S02_WhyBrands partner={partner} />
             <SectionDivider label="See the process" targetId="how-it-works" />
@@ -79,7 +76,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             <div id="getting-started" className="pt-12 md:pt-16">
               <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
                 <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">The Campaign</p>
-                <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight">Here&apos;s what we&apos;d<br /><span className="text-[#00ff9d]">build for you</span></h2>
+                <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight">{"Here's what we'd"}<br /><span className="text-[#00ff9d]">build for you</span></h2>
               </div>
               <S08_WaysToWork partner={partner} section="campaigns" />
             </div>
@@ -120,7 +117,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
                 <Fade delay={0.2}>
                   <div className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-xl p-8 md:p-10 mb-6">
-                    <p className="text-lg md:text-xl text-[#d1d5db] leading-9">You&apos;re in for some product and <span className="text-white font-semibold">{formatUSD(startupCost)}</span>. It&apos;s on us to show a <span className="text-[#00ff9d] font-bold">meaningful return within 60 days</span>. If the results aren&apos;t there, we&apos;ll be the first to tell you. We want this to be the best-performing channel you have &mdash; and we&apos;ll earn that by proving it, not promising it.</p>
+                    <p className="text-lg md:text-xl text-[#d1d5db] leading-9">{"You're in for some product and "}<span className="text-white font-semibold">{formatUSD(startupCost)}</span>{'. '}{"It's on us to show a "}<span className="text-[#00ff9d] font-bold">meaningful return within 60 days</span>{'. '}{"If the results aren't there, we'll be the first to tell you. We want this to be the best-performing channel you have -- and we'll earn that by proving it, not promising it."}</p>
                   </div>
                 </Fade>
 
@@ -132,6 +129,15 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
             <SectionDivider />
             <CaseStudy />
+
+            {/* Success Framework -- after they've seen everything */}
+            {isWalkthrough && (
+              <>
+                <SectionDivider />
+                <PersonalizedImpactCard />
+              </>
+            )}
+
             <SectionDivider />
 
             <div id="next-steps">
@@ -140,7 +146,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
             <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
               <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-              <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
+              <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
               <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
             </footer>
           </div>
@@ -149,6 +155,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
     )
   }
 
+  // NORMAL MODE
   return (
     <BrandSpendProvider>
       <main className="relative bg-[#0f1217]">
@@ -166,9 +173,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
         <div id="proposal-content">
           <div id="top"><S01_Hero partner={partner} /></div>
-
-          {isWalkthrough && <PersonalizedImpactCard />}
-
           <SectionDivider />
           <S02_WhyBrands partner={partner} />
           <SectionDivider label="See the process" targetId="how-it-works" />
@@ -187,7 +191,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             <S06_PostCampaign partner={partner} />
           </CollapsibleSection>
 
-          <CollapsibleSection number="04" label="Reporting" title="What You'll See Each Month">
+          <CollapsibleSection number="04" label="Reporting" title={"What You'll See Each Month"}>
             <S07_MonthlyReporting partner={partner} />
           </CollapsibleSection>
 
@@ -219,6 +223,15 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           </div>
 
           <S10_DataDifference partner={partner} />
+
+          {/* Success Framework -- after pricing, case study, data difference */}
+          {isWalkthrough && (
+            <>
+              <SectionDivider />
+              <PersonalizedImpactCard />
+            </>
+          )}
+
           <SectionDivider />
 
           <div id="faq-section">
@@ -232,7 +245,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
           <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
             <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-            <p className="text-[#4b5563] text-base">Confidential &mdash; Prepared for {partner.partnerName} by GolfN</p>
+            <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
             <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
           </footer>
         </div>
