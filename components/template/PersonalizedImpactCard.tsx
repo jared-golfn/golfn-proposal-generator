@@ -1,11 +1,11 @@
-'use client'
+{'use client'}
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Flame, Rocket, ArrowUp, Target, GraduationCap, ShoppingCart, Users, Eye } from 'lucide-react'
 import { useBrandSpend, GOAL_LABELS, type SuccessGoal } from '@/lib/brand-context'
 
 const GOLFN_CPM = 3.5
-const GOLFN_ASK = 7500 // $5K sweeps + $2.5K startup
+const GOLFN_ASK = 7500
 
 function fmtUSD(n: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
@@ -26,49 +26,49 @@ const GOAL_ICONS: Record<SuccessGoal, React.ElementType> = {
 }
 
 interface Tier {
-  emoji: React.ElementType
+  icon: React.ElementType
   label: string
   color: string
   text: string
 }
 
-function buildTiers(goal: SuccessGoal, cpm: number, cac: number, budget: number): Tier[] {
+function buildTiers(goal: SuccessGoal, cpm: number, cac: number): Tier[] {
   switch (goal) {
     case 'reach': {
       const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
       return [
-        { emoji: Check, label: 'Win', color: '#00ff9d', text: `GolfN delivers impressions under $10 CPM to verified golfers (you currently pay $${cpm})` },
-        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: `GolfN CPM comes in under $5 \u2014 more than ${Math.floor(cpm / 5)}x your current efficiency` },
-        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: `GolfN CPM under $3.50 \u2014 for the same ${fmtUSD(GOLFN_ASK)}, that\u2019s ${fmt(Math.round(GOLFN_ASK / GOLFN_CPM * 1000))} impressions vs your ${theirImpressions}` },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: `GolfN delivers impressions under $10 CPM to verified golfers (you currently pay $${cpm})` },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `GolfN CPM comes in under $5 -- more than ${Math.floor(cpm / 5)}x your current efficiency` },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `GolfN CPM under $3.50 -- for the same ${fmtUSD(GOLFN_ASK)}, that is ${fmt(Math.round(GOLFN_ASK / GOLFN_CPM * 1000))} impressions vs your ${theirImpressions}` },
       ]
     }
     case 'education': {
       return [
-        { emoji: Check, label: 'Win', color: '#00ff9d', text: '150+ golfers complete Learn & Earn about your product \u2014 watched your content, passed a quiz, opted in' },
-        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: '300+ completions with 80%+ quiz pass rate \u2014 provably educated, ready for offers' },
-        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: '500+ educated golfers in your cohort, with measurable re-engagement on follow-up content' },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: '150+ golfers complete Learn & Earn about your product -- watched your content, passed a quiz, opted in' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: '300+ completions with 80%+ quiz pass rate -- provably educated, ready for offers' },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: '500+ educated golfers in your cohort, with measurable re-engagement on follow-up content' },
       ]
     }
     case 'sales': {
       const theirCustomers = Math.round(GOLFN_ASK / cac)
       return [
-        { emoji: Check, label: 'Win', color: '#00ff9d', text: `CAC trending below your current ${fmtUSD(cac)} within 60 days \u2014 any improvement on a pre-qualified audience is signal` },
-        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: `20+ attributed sales at under ${fmtUSD(Math.round(cac * 0.7))} CAC \u2014 that\u2019s significantly better than the ~${theirCustomers} customers ${fmtUSD(GOLFN_ASK)} would buy you on paid social` },
-        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds your ${fmtUSD(GOLFN_ASK)} investment within 60 days \u2014 the program pays for itself` },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: `CAC trending below your current ${fmtUSD(cac)} within 60 days -- any improvement on a pre-qualified audience is signal` },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `20+ attributed sales at under ${fmtUSD(Math.round(cac * 0.7))} CAC -- significantly better than the ~${theirCustomers} customers ${fmtUSD(GOLFN_ASK)} would buy you on paid social` },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds your ${fmtUSD(GOLFN_ASK)} investment within 60 days -- the program pays for itself` },
       ]
     }
     case 'audience': {
       return [
-        { emoji: Check, label: 'Win', color: '#00ff9d', text: '200+ qualified golfers in your permanent cohort \u2014 people you can re-activate without paying to find them again' },
-        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: '400+ cohort members with demonstrated re-engagement on follow-up campaigns' },
-        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: 'Cohort grows organically via AI lookalike enrollment \u2014 GolfN keeps finding more golfers like your best ones' },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: '200+ qualified golfers in your permanent cohort -- people you can re-activate without paying to find them again' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: '400+ cohort members with demonstrated re-engagement on follow-up campaigns' },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: 'Cohort grows organically via AI lookalike enrollment -- GolfN keeps finding more golfers like your best ones' },
       ]
     }
     case 'awareness': {
       return [
-        { emoji: Check, label: 'Win', color: '#00ff9d', text: 'Your brand visible across the GolfN ecosystem \u2014 email, in-app, push, Daily Grind, social \u2014 to verified golfers in your target markets' },
-        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: 'Measurable lift in brand recognition within the GolfN cohort \u2014 repeat engagement on your content without additional spend' },
-        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: 'Organic social proof: golfers sharing your sweepstakes, tagging your brand, creating UGC without being asked' },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: 'Your brand visible across the GolfN ecosystem -- email, in-app, push, Daily Grind, social -- to verified golfers in your target markets' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: 'Measurable lift in brand recognition within the GolfN cohort -- repeat engagement on your content without additional spend' },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: 'Organic social proof: golfers sharing your sweepstakes, tagging your brand, creating UGC without being asked' },
       ]
     }
   }
@@ -76,7 +76,7 @@ function buildTiers(goal: SuccessGoal, cpm: number, cac: number, budget: number)
 
 function GoalCard({ goal, cpm, cac, budget }: { goal: SuccessGoal; cpm: number; cac: number; budget: number }) {
   const Icon = GOAL_ICONS[goal]
-  const tiers = buildTiers(goal, cpm, cac, budget)
+  const tiers = buildTiers(goal, cpm, cac)
 
   return (
     <motion.div
@@ -91,7 +91,7 @@ function GoalCard({ goal, cpm, cac, budget }: { goal: SuccessGoal; cpm: number; 
       </div>
       <div className="space-y-4">
         {tiers.map((tier) => {
-          const TierIcon = tier.emoji
+          const TierIcon = tier.icon
           return (
             <div key={tier.label} className="flex gap-3">
               <div className="shrink-0 mt-0.5">
@@ -116,7 +116,6 @@ export function PersonalizedImpactCard() {
   const hasGoals = successGoals.size > 0
   const isReady = hasNumbers && hasGoals
 
-  // Example state -- realistic premium golf brand numbers
   const exCpm = 72
   const exCac = 180
   const exBudget = 25000
@@ -146,20 +145,18 @@ export function PersonalizedImpactCard() {
                 : 'bg-[#1a1f2e]/50 border border-[#2a3347]/60'
             }`}
           >
-            {/* Header */}
             <div className="mb-8">
               <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">60-Day Review Framework</p>
               {isExample ? (
                 <p className="text-2xl md:text-3xl font-bold text-white leading-tight">What would make this<br /><span className="text-[#00ff9d]">worth continuing?</span></p>
               ) : (
-                <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Based on your numbers, here\u2019s what a win<br /><span className="text-[#00ff9d]">looks like at 60 days</span></p>
+                <p className="text-2xl md:text-3xl font-bold text-white leading-tight">{"Based on your numbers, here's what a win"}<br /><span className="text-[#00ff9d]">looks like at 60 days</span></p>
               )}
               <p className="text-base text-[#9ca3af] mt-3 max-w-3xl">
-                You\u2019re investing {fmtUSD(GOLFN_ASK)} upfront (sweepstakes product + startup fee). We run the sweepstakes, then an aggressive 30-day follow-up campaign. At the 60-day mark, we schedule a review and bring the data. Here\u2019s what we\u2019d be measuring against{isExample ? ' for a typical premium golf brand' : ''}:
+                {"You're investing"} {fmtUSD(GOLFN_ASK)} upfront (sweepstakes product + startup fee). We run the sweepstakes, then an aggressive 30-day follow-up campaign. At the 60-day mark, we schedule a review and bring the data. {"Here's what we'd be measuring against"}{isExample ? ' for a typical premium golf brand' : ''}:
               </p>
             </div>
 
-            {/* Goal cards */}
             <div className={`grid gap-5 mb-8 ${
               activeGoals.length === 1 ? 'grid-cols-1 max-w-2xl' :
               activeGoals.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
@@ -170,24 +167,21 @@ export function PersonalizedImpactCard() {
               ))}
             </div>
 
-            {/* Punchline */}
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 md:p-8 mb-6">
               <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
                 {checkedCount === 1 && (
-                  <>Hit the <span className="text-[#00ff9d] font-bold">\u2705 Win</span> level and the {fmtUSD(GOLFN_ASK)} was a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>\ud83d\udd25 Strong win</span> and you\u2019re outperforming what most brands get from significantly more spend on paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>\ud83d\ude80 Home run</span> \u2014 that\u2019s when we talk about scaling.</>
+                  <>Hit the <span className="text-[#00ff9d] font-bold">Win</span> level and the {fmtUSD(GOLFN_ASK)} was a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>Strong win</span> and {"you're"} outperforming what most brands get from significantly more spend on paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>Home run</span> -- {"that's"} when we talk about scaling.</>
                 )}
                 {checkedCount >= 2 && (
-                  <>Any <span className="font-bold">one</span> of these at the <span className="text-[#00ff9d] font-bold">\u2705 Win</span> level makes the {fmtUSD(GOLFN_ASK)} a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>\ud83d\udd25 Strong win</span> on two or more and you\u2019re outperforming what most brands get from significantly more spend on paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>\ud83d\ude80 Home run</span> on anything \u2014 that\u2019s when we talk about scaling.</>
+                  <>Any <span className="font-bold">one</span> of these at the <span className="text-[#00ff9d] font-bold">Win</span> level makes the {fmtUSD(GOLFN_ASK)} a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>Strong win</span> on two or more and {"you're"} outperforming what most brands get from significantly more spend on paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>Home run</span> on anything -- {"that's"} when we talk about scaling.</>
                 )}
               </p>
             </div>
 
-            {/* Closing */}
             <p className="text-base text-center text-[#9ca3af] max-w-2xl mx-auto">
               We schedule a review at 60 days. We bring the data. You tell us if the numbers justify month 3.
             </p>
 
-            {/* Actions */}
             <div className="flex justify-center mt-6 gap-4">
               {isExample && (
                 <button
