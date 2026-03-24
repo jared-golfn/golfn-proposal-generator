@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 import { useBrandSpend } from '@/lib/brand-context'
 
-const GOLFN_ASK = 7500
-
 function fmtUSD(n: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
 }
@@ -24,20 +22,18 @@ interface Metric {
 
 function buildMetrics(cpm: number, cac: number, ltv: number, budget: number): Metric[] {
   const metrics: Metric[] = []
-  const theirCustomers = cac > 0 ? Math.round(GOLFN_ASK / cac) : 0
-  const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
 
   metrics.push({
     label: 'Your current CPM',
     value: `$${cpm}`,
-    sub: `${fmtUSD(GOLFN_ASK)} buys ${theirImpressions} impressions on paid social`,
+    sub: 'What you pay per 1,000 impressions on paid social',
   })
 
   if (cac > 0) {
     metrics.push({
       label: 'Your current CAC',
       value: fmtUSD(cac),
-      sub: `${fmtUSD(GOLFN_ASK)} buys ~${theirCustomers} customers on paid social`,
+      sub: 'What it costs you to acquire one customer',
     })
   }
 
@@ -60,7 +56,6 @@ function buildMetrics(cpm: number, cac: number, ltv: number, budget: number): Me
 
 function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; cac: number; ltv: number; budget: number; isExample: boolean }) {
   const metrics = buildMetrics(cpm, cac, ltv, budget)
-  const theirCustomers = cac > 0 ? Math.round(GOLFN_ASK / cac) : 0
 
   return (
     <div>
@@ -73,7 +68,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
           <p className="text-2xl md:text-3xl font-bold text-white leading-tight">{"Here's what we'd need to beat"}<br /><span className="text-[#00ff9d]">for this to be worth your time</span></p>
         )}
         <p className="text-base text-[#9ca3af] mt-3 max-w-3xl">
-          {"You're investing"} {fmtUSD(GOLFN_ASK)} upfront (sweepstakes product + startup fee). We run the sweepstakes, then an aggressive 30-day follow-up campaign across email, push, in-app messaging, and social. At the 60-day mark, we schedule a review and bring the data.{isExample ? ' Here is what that review would look like for a typical premium golf brand:' : ''}
+          {"You're"} putting up ~$5,000 in product for the sweepstakes and a $2,500 startup fee. We run the sweepstakes, then an aggressive 30-day follow-up campaign across email, push, in-app messaging, and social. At the 60-day mark, we schedule a review and bring the data.{isExample ? ' Here is what that review would look like for a typical premium golf brand:' : ''}
         </p>
       </div>
 
@@ -117,7 +112,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
               <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
               <div>
                 <p className="text-lg font-bold text-white">{"Are conversions trending below your"} {fmtUSD(cac)} CAC?</p>
-                <p className="text-sm text-[#6b7280]">{"You're"} reaching people who already know they want golf products -- {"they're"} not cold. If that audience converts at a lower cost than paid social, the channel is working.{theirCustomers > 0 ? ` For reference, ${fmtUSD(GOLFN_ASK)} buys ~${theirCustomers} customers at your current CAC.` : ''}</p>
+                <p className="text-sm text-[#6b7280]">{"You're"} reaching people who already know they want golf products -- {"they're"} not cold. If that audience converts at a lower cost than paid social, the channel is working.</p>
               </div>
             </div>
           )}
