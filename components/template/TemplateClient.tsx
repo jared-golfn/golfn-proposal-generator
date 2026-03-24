@@ -20,6 +20,7 @@ import { CaseStudy } from './CaseStudy'
 import { SectionDivider } from './SectionDivider'
 import { SessionTracker } from './SessionTracker'
 import { CollapsibleSection } from './CollapsibleSection'
+import { PersonalizedImpactCard } from './PersonalizedImpactCard'
 import { Fade } from './Fade'
 import { Target } from 'lucide-react'
 
@@ -45,6 +46,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
   const searchParams = useSearchParams()
   const isPitch = searchParams.has('pitch')
   const activeNav = isPitch ? pitchNavSections : navSections
+  const isWalkthrough = !!partner.heroVideoUrl
 
   if (isPitch) {
     const startupCost = 2500
@@ -65,6 +67,9 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
           <div id="proposal-content">
             <div id="top"><S01_Hero partner={partner} /></div>
+
+            {isWalkthrough && <PersonalizedImpactCard />}
+
             <SectionDivider />
             <S02_WhyBrands partner={partner} />
             <SectionDivider label="See the process" targetId="how-it-works" />
@@ -161,6 +166,9 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
         <div id="proposal-content">
           <div id="top"><S01_Hero partner={partner} /></div>
+
+          {isWalkthrough && <PersonalizedImpactCard />}
+
           <SectionDivider />
           <S02_WhyBrands partner={partner} />
           <SectionDivider label="See the process" targetId="how-it-works" />
