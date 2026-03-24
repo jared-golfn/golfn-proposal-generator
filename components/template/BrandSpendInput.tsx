@@ -53,7 +53,6 @@ export function BrandSpendInput() {
       <div className="bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] rounded-2xl p-6 md:p-8 max-w-5xl">
         <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-5">Personalize this walkthrough</p>
 
-        {/* Number inputs */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div>
             <label className="block text-sm text-[#9ca3af] mb-2">Your CPM <span className="text-[#4b5563]">(paid social)</span></label>
@@ -65,7 +64,7 @@ export function BrandSpendInput() {
                 inputMode="decimal"
                 value={cpmInput}
                 onChange={(e) => handleCpmChange(e.target.value)}
-                placeholder="e.g. 42"
+                placeholder="e.g. 72"
                 className="w-full pl-10 pr-16 py-3.5 rounded-xl bg-[#0f1217] border border-[#2a3347] text-white text-lg font-mono placeholder:text-[#4b5563] focus:outline-none focus:border-[#00ff9d]/50 focus:ring-1 focus:ring-[#00ff9d]/30 transition-all"
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#6b7280] font-mono">CPM</span>
@@ -105,7 +104,6 @@ export function BrandSpendInput() {
           </div>
         </div>
 
-        {/* Success goals checkboxes */}
         <div className="border-t border-[#2a3347]/60 pt-5">
           <p className="text-sm text-[#9ca3af] mb-3">What does success look like for you?</p>
           <div className="flex flex-wrap gap-2">
@@ -134,7 +132,6 @@ export function BrandSpendInput() {
           </div>
         </div>
 
-        {/* Scroll hint */}
         <AnimatePresence>
           {allReady && (
             <motion.div
@@ -145,7 +142,7 @@ export function BrandSpendInput() {
               className="flex items-center gap-2 mt-5 text-sm text-[#6b7280]"
             >
               <Check className="w-4 h-4 text-[#00ff9d]" />
-              <span>Scroll down to see what a win looks like at 90 days</span>
+              <span>Scroll down to see what a win looks like at 60 days</span>
               <ChevronDown className="w-4 h-4 text-[#00ff9d] animate-bounce" />
             </motion.div>
           )}
