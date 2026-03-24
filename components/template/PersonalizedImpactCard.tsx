@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Flame, Rocket, ArrowUp, Target, GraduationCap, ShoppingCart, Users, Eye } from 'lucide-react'
 import { useBrandSpend, GOAL_LABELS, type SuccessGoal } from '@/lib/brand-context'
 
-const GOLFN_CPM = 3.5
 const GOLFN_ASK = 7500
 
 function fmtUSD(n: number): string {
@@ -32,39 +31,37 @@ interface Tier {
   text: string
 }
 
-function buildTiers(goal: SuccessGoal, cpm: number, cac: number, ltv: number): Tier[] {
-  const ltvCacRatio = ltv > 0 && cac > 0 ? (ltv / cac).toFixed(1) : null
-
+function buildTiers(goal: SuccessGoal, cpm: number, cac: number, ltv: number, budget: number): Tier[] {
   switch (goal) {
     case 'reach': {
       const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: `GolfN delivers impressions under $10 CPM to verified golfers (you currently pay $${cpm})` },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `GolfN CPM comes in under $5 -- more than ${Math.floor(cpm / 5)}x your current efficiency` },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `GolfN CPM under $3.50 -- for the same ${fmtUSD(GOLFN_ASK)}, that is ${fmt(Math.round(GOLFN_ASK / GOLFN_CPM * 1000))} impressions vs your ${theirImpressions}` },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: `GolfN delivers impressions to verified golfers at a lower CPM than your current $${cpm} -- and every impression reaches someone who actually plays golf` },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `CPM comes in meaningfully lower, delivering significantly more qualified impressions than the ${theirImpressions} that ${fmtUSD(GOLFN_ASK)} buys you on paid social` },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `The reach efficiency is so clear that reallocating a portion of your ${fmtUSD(budget)}/mo paid social budget to GolfN becomes an obvious decision` },
       ]
     }
     case 'education': {
       return [
         { icon: Check, label: 'Win', color: '#00ff9d', text: '150+ golfers complete Learn & Earn about your product -- watched your content, passed a quiz, opted in' },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: '300+ completions with 80%+ quiz pass rate -- provably educated, ready for offers' },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: '500+ educated golfers in your cohort, with measurable re-engagement on follow-up content' },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: '300+ completions with 80%+ quiz pass rate -- provably educated, ready for conversion offers' },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: '500+ educated golfers in your cohort, with measurable re-engagement when follow-up content is delivered' },
       ]
     }
     case 'sales': {
       const theirCustomers = Math.round(GOLFN_ASK / cac)
-      const reducedCac = Math.round(cac * 0.7)
-      const strongWinCustomers = Math.max(20, Math.round(GOLFN_ASK / reducedCac))
-      const strongWinLtv = ltv > 0 ? fmtUSD(strongWinCustomers * ltv) : null
+      const ltvCacRatio = ltv > 0 ? (ltv / cac).toFixed(1) : null
+      const strongCustomers = Math.max(theirCustomers + 5, Math.round(GOLFN_ASK / (cac * 0.7)))
+      const strongLtvValue = ltv > 0 ? fmtUSD(strongCustomers * ltv) : null
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: `CAC trending below your current ${fmtUSD(cac)} within 60 days -- any improvement on a pre-qualified audience is signal${ltvCacRatio ? ` (your current LTV:CAC is ${ltvCacRatio}x)` : ''}` },
-        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `${strongWinCustomers}+ attributed sales at under ${fmtUSD(reducedCac)} CAC${strongWinLtv ? ` -- at your ${fmtUSD(ltv)} LTV, that is ${strongWinLtv} in lifetime value from a ${fmtUSD(GOLFN_ASK)} investment` : ` -- significantly better than the ~${theirCustomers} customers ${fmtUSD(GOLFN_ASK)} would buy on paid social`}` },
-        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds your ${fmtUSD(GOLFN_ASK)} investment within 60 days -- the program pays for itself and the cohort keeps converting` },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: `Attributed conversions trending at a lower CAC than your current ${fmtUSD(cac)} -- any improvement on a pre-qualified audience is a clear signal${ltvCacRatio ? ` (your LTV:CAC today is ${ltvCacRatio}x)` : ''}` },
+        { icon: Flame, label: 'Strong win', color: '#f59e0b', text: `More customers than the ~${theirCustomers} that ${fmtUSD(GOLFN_ASK)} would buy on paid social${strongLtvValue ? ` -- at your ${fmtUSD(ltv)} LTV, ${strongCustomers} customers represents ${strongLtvValue} in lifetime value` : ''}` },
+        { icon: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds the ${fmtUSD(GOLFN_ASK)} investment within 60 days -- the program pays for itself and the cohort keeps converting` },
       ]
     }
     case 'audience': {
       return [
-        { icon: Check, label: 'Win', color: '#00ff9d', text: '200+ qualified golfers in your permanent cohort -- people you can re-activate without paying to find them again' },
+        { icon: Check, label: 'Win', color: '#00ff9d', text: '200+ qualified golfers in your permanent cohort -- people you can re-activate without paying to reach them again' },
         { icon: Flame, label: 'Strong win', color: '#f59e0b', text: '400+ cohort members with demonstrated re-engagement on follow-up campaigns' },
         { icon: Rocket, label: 'Home run', color: '#ef4444', text: 'Cohort grows organically via AI lookalike enrollment -- GolfN keeps finding more golfers like your best ones' },
       ]
@@ -79,9 +76,9 @@ function buildTiers(goal: SuccessGoal, cpm: number, cac: number, ltv: number): T
   }
 }
 
-function GoalCard({ goal, cpm, cac, ltv }: { goal: SuccessGoal; cpm: number; cac: number; ltv: number }) {
+function GoalCard({ goal, cpm, cac, ltv, budget }: { goal: SuccessGoal; cpm: number; cac: number; ltv: number; budget: number }) {
   const Icon = GOAL_ICONS[goal]
-  const tiers = buildTiers(goal, cpm, cac, ltv)
+  const tiers = buildTiers(goal, cpm, cac, ltv, budget)
 
   return (
     <motion.div
@@ -170,7 +167,7 @@ export function PersonalizedImpactCard() {
               activeGoals.length >= 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : ''
             }`}>
               {activeGoals.map((goal) => (
-                <GoalCard key={goal} goal={goal} cpm={activeCpm} cac={activeCac} ltv={activeLtv} />
+                <GoalCard key={goal} goal={goal} cpm={activeCpm} cac={activeCac} ltv={activeLtv} budget={activeBudget} />
               ))}
             </div>
 
