@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Zap, Globe, ChevronDown, ChevronUp } from 'lucide-react'
 import type { PartnerData, PlatformKPI } from '@/lib/template-types'
 import { images } from '@/lib/images'
+import { BrandSpendInput } from './BrandSpendInput'
 
 const defaultKPIs: PlatformKPI[] = [
   { label: 'Registered Golfers', value: '100,000+' },
@@ -170,9 +171,14 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
               </motion.div>
             )}
 
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-3 md:gap-4 mb-10">
-              <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-sm md:text-base font-medium hover:underline transition-colors text-[#00ff9d]"><Zap className="w-4 h-4" /> See How It Works</button>
-            </motion.div>
+            {/* Brand spend input -- only on walkthrough pages with video hero */}
+            {hasVideo && <BrandSpendInput />}
+
+            {!hasVideo && (
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-3 md:gap-4 mb-10">
+                <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-sm md:text-base font-medium hover:underline transition-colors text-[#00ff9d]"><Zap className="w-4 h-4" /> See How It Works</button>
+              </motion.div>
+            )}
           </div>
 
           {!hasVideo && (
@@ -190,6 +196,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           )}
         </div>
 
+        {/* KPIs */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
@@ -200,6 +207,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
           ))}
         </motion.div>
 
+        {/* Market Reach expandable */}
         {markets && markets.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="mt-8">
             <button onClick={() => setShowMarkets(!showMarkets)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] hover:border-[#00ff9d]/40 transition-all group">
