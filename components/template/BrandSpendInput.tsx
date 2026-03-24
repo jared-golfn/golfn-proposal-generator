@@ -3,10 +3,12 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DollarSign, ChevronDown, Check } from 'lucide-react'
-import { useBrandSpend } from '@/lib/brand-context'
+import { useBrandSpend, GOAL_LABELS, GOAL_DESCRIPTIONS, type SuccessGoal } from '@/lib/brand-context'
+
+const ALL_GOALS: SuccessGoal[] = ['reach', 'education', 'sales', 'audience', 'awareness']
 
 export function BrandSpendInput() {
-  const { cpm, cac, monthlyBudget, setCpm, setCac, setMonthlyBudget } = useBrandSpend()
+  const { cpm, cac, monthlyBudget, successGoals, setCpm, setCac, setMonthlyBudget, toggleGoal } = useBrandSpend()
   const [cpmInput, setCpmInput] = useState('')
   const [cacInput, setCacInput] = useState('')
   const [budgetInput, setBudgetInput] = useState('')
@@ -37,7 +39,8 @@ export function BrandSpendInput() {
     setMonthlyBudget(isNaN(n) || n <= 0 ? null : n)
   }
 
-  const allSet = cpm && cpm > 0 && cac && cac > 0 && monthlyBudget && monthlyBudget > 0
+  const numbersSet = cpm && cpm > 0 && cac && cac > 0 && monthlyBudget && monthlyBudget > 0
+  const allReady = numbersSet && successGoals.size > 0
 
   return (
     <motion.div
@@ -47,10 +50,11 @@ export function BrandSpendInput() {
       className="mt-10 mb-4"
       id="brand-spend-input"
     >
-      <div className="bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] rounded-2xl p-6 md:p-8 max-w-4xl">
+      <div className="bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] rounded-2xl p-6 md:p-8 max-w-5xl">
         <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-5">Personalize this walkthrough</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Number inputs */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div>
             <label className="block text-sm text-[#9ca3af] mb-2">Your CPM <span className="text-[#4b5563]">(paid social)</span></label>
             <div className="relative">
@@ -101,8 +105,38 @@ export function BrandSpendInput() {
           </div>
         </div>
 
+        {/* Success goals checkboxes */}
+        <div className="border-t border-[#2a3347]/60 pt-5">
+          <p className="text-sm text-[#9ca3af] mb-3">What does success look like for you?</p>
+          <div className="flex flex-wrap gap-2">
+            {ALL_GOALS.map((goal) => {
+              const active = successGoals.has(goal)
+              return (
+                <button
+                  key={goal}
+                  onClick={() => toggleGoal(goal)}
+                  className={`group relative px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    active
+                      ? 'bg-[#00ff9d]/15 border border-[#00ff9d]/40 text-[#00ff9d]'
+                      : 'bg-[#0f1217] border border-[#2a3347] text-[#9ca3af] hover:border-[#00ff9d]/30 hover:text-white'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    {active && <Check className="w-3.5 h-3.5" />}
+                    {GOAL_LABELS[goal]}
+                  </span>
+                  <span className="absolute left-1/2 -translate-x-1/2 -bottom-8 px-3 py-1 rounded-lg bg-[#0f1217] border border-[#2a3347] text-xs text-[#6b7280] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    {GOAL_DESCRIPTIONS[goal]}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Scroll hint */}
         <AnimatePresence>
-          {allSet && (
+          {allReady && (
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -111,7 +145,7 @@ export function BrandSpendInput() {
               className="flex items-center gap-2 mt-5 text-sm text-[#6b7280]"
             >
               <Check className="w-4 h-4 text-[#00ff9d]" />
-              <span>Scroll down to see what GolfN would deliver for these numbers</span>
+              <span>Scroll down to see what a win looks like at 90 days</span>
               <ChevronDown className="w-4 h-4 text-[#00ff9d] animate-bounce" />
             </motion.div>
           )}

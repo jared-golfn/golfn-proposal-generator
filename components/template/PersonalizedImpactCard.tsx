@@ -1,185 +1,216 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, TrendingUp, Users, Target, ArrowUp } from 'lucide-react'
-import { useBrandSpend } from '@/lib/brand-context'
+import { Check, Flame, Rocket, ArrowUp, Target, GraduationCap, ShoppingCart, Users, Eye } from 'lucide-react'
+import { useBrandSpend, GOAL_LABELS, type SuccessGoal } from '@/lib/brand-context'
 
 const GOLFN_CPM = 3.5
-const CAC_REDUCTION = 0.40 // 40% conservative reduction
-
-function fmt(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
-  if (n >= 1_000) return `${Math.round(n).toLocaleString()}`
-  return `${n}`
-}
+const GOLFN_ASK = 7500 // $5K sweeps + $2.5K startup
 
 function fmtUSD(n: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
 }
 
-function ImpactContent({ cpm, cac, budget, isExample }: { cpm: number; cac: number; budget: number; isExample: boolean }) {
-  const theirImpressions = Math.round(budget / cpm * 1000)
-  const golfnImpressions = Math.round(budget / GOLFN_CPM * 1000)
-  const reachMultiplier = Math.round(cpm / GOLFN_CPM)
+function fmt(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
+  if (n >= 1_000) return `${Math.round(n).toLocaleString()}`
+  return `${Math.round(n)}`
+}
 
-  const theirCustomers = Math.round(budget / cac)
-  const golfnCac = Math.round(cac * (1 - CAC_REDUCTION))
-  const golfnCustomers = Math.round(budget / golfnCac)
-  const customerLift = golfnCustomers - theirCustomers
+const GOAL_ICONS: Record<SuccessGoal, React.ElementType> = {
+  reach: Target,
+  education: GraduationCap,
+  sales: ShoppingCart,
+  audience: Users,
+  awareness: Eye,
+}
+
+interface Tier {
+  emoji: React.ElementType
+  label: string
+  color: string
+  text: string
+}
+
+function buildTiers(goal: SuccessGoal, cpm: number, cac: number, budget: number): Tier[] {
+  switch (goal) {
+    case 'reach': {
+      const theirImpressions = fmt(Math.round(GOLFN_ASK / cpm * 1000))
+      return [
+        { emoji: Check, label: 'Win', color: '#00ff9d', text: `GolfN delivers impressions under $10 CPM to verified golfers (you currently pay $${cpm})` },
+        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: `GolfN CPM comes in under $5 — more than ${Math.floor(cpm / 5)}x your current efficiency` },
+        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: `GolfN CPM under $3.50 — for the same ${fmtUSD(GOLFN_ASK)}, that’s ${fmt(Math.round(GOLFN_ASK / GOLFN_CPM * 1000))} impressions vs your ${theirImpressions}` },
+      ]
+    }
+    case 'education': {
+      return [
+        { emoji: Check, label: 'Win', color: '#00ff9d', text: '150+ golfers complete Learn & Earn about your product — watched your content, passed a quiz, opted in' },
+        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: '300+ completions with 80%+ quiz pass rate — provably educated, ready for offers' },
+        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: '500+ educated golfers in your cohort, with measurable re-engagement on follow-up content' },
+      ]
+    }
+    case 'sales': {
+      const theirCustomers = Math.round(GOLFN_ASK / cac)
+      return [
+        { emoji: Check, label: 'Win', color: '#00ff9d', text: `CAC trending below your current ${fmtUSD(cac)} within 90 days — any improvement on a pre-qualified audience is signal` },
+        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: `20+ attributed sales at under ${fmtUSD(Math.round(cac * 0.7))} CAC — that’s significantly better than the ~${theirCustomers} customers ${fmtUSD(GOLFN_ASK)} would buy you on paid social` },
+        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: `Revenue from the cohort exceeds your ${fmtUSD(GOLFN_ASK)} investment within 90 days — the program pays for itself` },
+      ]
+    }
+    case 'audience': {
+      return [
+        { emoji: Check, label: 'Win', color: '#00ff9d', text: '200+ qualified golfers in your permanent cohort — people you can re-activate without paying to find them again' },
+        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: '400+ cohort members with demonstrated re-engagement on follow-up campaigns' },
+        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: 'Cohort grows organically via AI lookalike enrollment — GolfN keeps finding more golfers like your best ones' },
+      ]
+    }
+    case 'awareness': {
+      return [
+        { emoji: Check, label: 'Win', color: '#00ff9d', text: 'Your brand visible across the GolfN ecosystem — email, in-app, push, Daily Grind, social — to verified golfers in your target markets' },
+        { emoji: Flame, label: 'Strong win', color: '#f59e0b', text: 'Measurable lift in brand recognition within the GolfN cohort — repeat engagement on your content without additional spend' },
+        { emoji: Rocket, label: 'Home run', color: '#ef4444', text: 'Organic social proof: golfers sharing your sweepstakes, tagging your brand, creating UGC without being asked' },
+      ]
+    }
+  }
+}
+
+function GoalCard({ goal, cpm, cac, budget }: { goal: SuccessGoal; cpm: number; cac: number; budget: number }) {
+  const Icon = GOAL_ICONS[goal]
+  const tiers = buildTiers(goal, cpm, cac, budget)
 
   return (
-    <div>
-      {/* Headline */}
-      <div className="mb-8">
-        {isExample ? (
-          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">See what GolfN could deliver<br /><span className="text-[#00ff9d]">for a typical golf brand</span></p>
-        ) : (
-          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">For your <span className="text-[#00ff9d]">{fmtUSD(budget)}/mo</span> budget, GolfN would deliver<br /><span className="text-[#00ff9d]">{reachMultiplier}x more reach</span> and <span className="text-[#00ff9d]">{customerLift} more customers</span></p>
-        )}
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]"
+    >
+      <div className="flex items-center gap-2.5 mb-5">
+        <Icon className="w-5 h-5 text-[#00ff9d]" />
+        <span className="text-base font-semibold text-white">{GOAL_LABELS[goal]}</span>
       </div>
-
-      {/* Three-layer comparison */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-        {/* Layer 1: Reach */}
-        <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
-          <div className="flex items-center gap-2 mb-4">
-            <Target className="w-5 h-5 text-[#6b7280]" />
-            <span className="text-sm font-mono uppercase tracking-wider text-[#6b7280]">Reach</span>
-          </div>
-          <div className="mb-4">
-            <p className="text-xs text-[#6b7280] mb-1">Paid social ({isExample ? '$18' : `$${cpm}`} CPM)</p>
-            <p className="text-2xl font-mono font-bold text-[#9ca3af]">{fmt(theirImpressions)}</p>
-            <p className="text-xs text-[#6b7280]">impressions</p>
-          </div>
-          <div>
-            <p className="text-xs text-[#00ff9d] mb-1">GolfN (~$3.50 CPM)</p>
-            <p className="text-3xl font-mono font-bold text-[#00ff9d]">{fmt(golfnImpressions)}</p>
-            <p className="text-xs text-[#6b7280]">impressions to <span className="text-[#00ff9d]">verified golfers</span></p>
-          </div>
-        </div>
-
-        {/* Layer 2: Quality */}
-        <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
-          <div className="flex items-center gap-2 mb-4">
-            <Users className="w-5 h-5 text-[#6b7280]" />
-            <span className="text-sm font-mono uppercase tracking-wider text-[#6b7280]">Quality</span>
-          </div>
-          <div className="mb-4">
-            <p className="text-xs text-[#6b7280] mb-1">Paid social audience</p>
-            <p className="text-lg font-semibold text-[#9ca3af]">"Interested in golf"</p>
-            <p className="text-xs text-[#6b7280] mt-1">Self-reported interests, lookalikes, broad demo targeting</p>
-          </div>
-          <div>
-            <p className="text-xs text-[#00ff9d] mb-1">GolfN audience</p>
-            <p className="text-lg font-semibold text-[#00ff9d]">Verified golfers</p>
-            <p className="text-xs text-[#6b7280] mt-1">Known handicap, equipment, playing frequency, purchase history</p>
-          </div>
-        </div>
-
-        {/* Layer 3: Conversion -- the punchline */}
-        <div className="bg-[#001a14]/60 rounded-xl p-6 border-2 border-[#00ff9d]/30">
-          <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-5 h-5 text-[#00ff9d]" />
-            <span className="text-sm font-mono uppercase tracking-wider text-[#00ff9d]">Conversion</span>
-          </div>
-          <div className="mb-4">
-            <p className="text-xs text-[#6b7280] mb-1">At your {isExample ? '$180' : fmtUSD(cac)} CAC</p>
-            <p className="text-2xl font-mono font-bold text-[#9ca3af]">{theirCustomers}</p>
-            <p className="text-xs text-[#6b7280]">new customers / month</p>
-          </div>
-          <div>
-            <p className="text-xs text-[#00ff9d] mb-1">With GolfN (est. {fmtUSD(golfnCac)} CAC)</p>
-            <p className="text-4xl font-mono font-bold text-[#00ff9d]">{golfnCustomers}</p>
-            <p className="text-xs text-[#6b7280]">new customers / month</p>
-          </div>
-          <div className="mt-3 pt-3 border-t border-[#00ff9d]/20">
-            <p className="text-lg font-bold text-[#00ff9d]">+{customerLift} more customers</p>
-            <p className="text-xs text-[#6b7280]">same budget, every month</p>
-          </div>
-        </div>
+      <div className="space-y-4">
+        {tiers.map((tier) => {
+          const TierIcon = tier.emoji
+          return (
+            <div key={tier.label} className="flex gap-3">
+              <div className="shrink-0 mt-0.5">
+                <TierIcon className="w-5 h-5" style={{ color: tier.color }} />
+              </div>
+              <div>
+                <span className="text-sm font-bold" style={{ color: tier.color }}>{tier.label}</span>
+                <p className="text-sm text-[#9ca3af] mt-0.5 leading-relaxed">{tier.text}</p>
+              </div>
+            </div>
+          )
+        })}
       </div>
-
-      {/* Center multiplier pill */}
-      <div className="flex justify-center mb-6">
-        <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#00ff9d]/10 border border-[#00ff9d]/30">
-          <Sparkles className="w-5 h-5 text-[#00ff9d]" />
-          <span className="text-xl font-bold text-[#00ff9d]">{reachMultiplier}x more reach, pre-qualified audience, ~{Math.round(CAC_REDUCTION * 100)}% lower CAC</span>
-        </div>
-      </div>
-
-      {/* Context */}
-      <p className="text-base text-[#9ca3af] text-center max-w-3xl mx-auto mb-4">
-        GolfN users are educated about your product through Learn & Earn before they ever see a purchase offer. That pre-qualification is why acquisition costs drop — you’re not converting cold impressions, you’re converting informed golfers.
-      </p>
-
-      {/* Footnote */}
-      <p className="text-xs text-[#4b5563] text-center max-w-3xl mx-auto">
-        Based on GolfN’s average ~$3.50 CPM vs entered paid social CPM. CAC reduction estimated at ~40% based on L.A.B. Golf and early partner data where pre-qualified cohorts convert at significantly higher rates. Impressions = budget / CPM * 1000.
-      </p>
-    </div>
+    </motion.div>
   )
 }
 
 export function PersonalizedImpactCard() {
-  const { cpm, cac, monthlyBudget } = useBrandSpend()
+  const { cpm, cac, monthlyBudget, successGoals } = useBrandSpend()
 
-  const hasData = cpm && cpm > 0 && cac && cac > 0 && monthlyBudget && monthlyBudget > 0
+  const hasNumbers = cpm && cpm > 0 && cac && cac > 0 && monthlyBudget && monthlyBudget > 0
+  const hasGoals = successGoals.size > 0
+  const isReady = hasNumbers && hasGoals
 
-  // Example numbers for placeholder
+  // Example state
   const exCpm = 18
   const exCac = 180
   const exBudget = 25000
+  const exGoals: SuccessGoal[] = ['reach', 'education', 'sales']
+
+  const activeCpm = hasNumbers ? cpm! : exCpm
+  const activeCac = hasNumbers ? cac! : exCac
+  const activeBudget = hasNumbers ? monthlyBudget! : exBudget
+  const activeGoals = hasGoals ? Array.from(successGoals) : exGoals
+  const isExample = !isReady
+
+  const checkedCount = activeGoals.length
 
   return (
     <section className="py-16 md:py-20" id="personalized-impact">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <AnimatePresence mode="wait">
-          {hasData ? (
-            <motion.div
-              key="real"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] rounded-2xl p-8 md:p-12"
-            >
-              <ImpactContent cpm={cpm!} cac={cac!} budget={monthlyBudget!} isExample={false} />
+          <motion.div
+            key={isReady ? 'real' : 'example'}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className={`backdrop-blur-sm rounded-2xl p-8 md:p-12 ${
+              isReady
+                ? 'bg-[#1a1f2e]/80 border border-[#2a3347]'
+                : 'bg-[#1a1f2e]/50 border border-[#2a3347]/60'
+            }`}
+          >
+            {/* Header */}
+            <div className="mb-8">
+              <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">90-Day Review Framework</p>
+              {isExample ? (
+                <p className="text-2xl md:text-3xl font-bold text-white leading-tight">What would make this<br /><span className="text-[#00ff9d]">worth continuing?</span></p>
+              ) : (
+                <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Based on your numbers, here's what a win<br /><span className="text-[#00ff9d]">looks like at 90 days</span></p>
+              )}
+              <p className="text-base text-[#9ca3af] mt-3 max-w-3xl">
+                You're investing {fmtUSD(GOLFN_ASK)} upfront (sweepstakes product + startup fee). At the 90-day mark, we schedule a review and bring the data. Here's what we'd be measuring against{isExample ? ' for a typical golf brand' : ''}:
+              </p>
+            </div>
 
-              <div className="flex justify-center mt-6">
+            {/* Goal cards */}
+            <div className={`grid gap-5 mb-8 ${
+              activeGoals.length === 1 ? 'grid-cols-1 max-w-2xl' :
+              activeGoals.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
+              activeGoals.length >= 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : ''
+            }`}>
+              {activeGoals.map((goal) => (
+                <GoalCard key={goal} goal={goal} cpm={activeCpm} cac={activeCac} budget={activeBudget} />
+              ))}
+            </div>
+
+            {/* Punchline */}
+            <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 md:p-8 mb-6">
+              <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
+                {checkedCount === 1 && (
+                  <>Hit the <span className="text-[#00ff9d] font-bold">\u2705 Win</span> level and the {fmtUSD(GOLFN_ASK)} was a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>\ud83d\udd25 Strong win</span> and you're outperforming what most brands get from significantly more spend on paid social.  And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>\ud83d\ude80 Home run</span> — that's when we talk about scaling.</>
+                )}
+                {checkedCount >= 2 && (
+                  <>Any <span className="font-bold">one</span> of these at the <span className="text-[#00ff9d] font-bold">\u2705 Win</span> level makes the {fmtUSD(GOLFN_ASK)} a smart investment. Hit <span className="font-bold" style={{ color: '#f59e0b' }}>\ud83d\udd25 Strong win</span> on two or more and you're outperforming what most brands get from significantly more spend on paid social. And if we hit <span className="font-bold" style={{ color: '#ef4444' }}>\ud83d\ude80 Home run</span> on anything — that's when we talk about scaling.</>
+                )}
+              </p>
+            </div>
+
+            {/* Closing */}
+            <p className="text-base text-center text-[#9ca3af] max-w-2xl mx-auto">
+              We schedule a review at 90 days. We bring the data. You tell us if the numbers justify month 4.
+            </p>
+
+            {/* Actions */}
+            <div className="flex justify-center mt-6 gap-4">
+              {isExample && (
+                <button
+                  onClick={() => document.getElementById('brand-spend-input')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00ff9d]/10 border border-[#00ff9d]/30 text-base font-semibold text-[#00ff9d] hover:bg-[#00ff9d]/20 transition-all"
+                >
+                  <ArrowUp className="w-4 h-4" /> Use my numbers
+                </button>
+              )}
+              {!isExample && (
                 <button
                   onClick={() => document.getElementById('brand-spend-input')?.scrollIntoView({ behavior: 'smooth' })}
                   className="inline-flex items-center gap-2 text-sm text-[#6b7280] hover:text-[#00ff9d] transition-colors"
                 >
                   <ArrowUp className="w-4 h-4" /> Adjust numbers
                 </button>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="example"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-[#1a1f2e]/50 backdrop-blur-sm border border-[#2a3347]/60 rounded-2xl p-8 md:p-12 relative"
-            >
-              <div className="absolute inset-0 rounded-2xl" style={{ background: 'linear-gradient(135deg, rgba(0,255,157,0.02), transparent)' }} />
-              <div className="relative">
-                <ImpactContent cpm={exCpm} cac={exCac} budget={exBudget} isExample={true} />
+              )}
+            </div>
 
-                <div className="flex justify-center mt-6">
-                  <button
-                    onClick={() => document.getElementById('brand-spend-input')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00ff9d]/10 border border-[#00ff9d]/30 text-base font-semibold text-[#00ff9d] hover:bg-[#00ff9d]/20 transition-all"
-                  >
-                    <ArrowUp className="w-4 h-4" /> Use my numbers
-                  </button>
-                </div>
-
-                <p className="text-xs text-[#4b5563] text-center mt-4">Example shown: $18 CPM, $180 CAC, $25,000/mo budget</p>
-              </div>
-            </motion.div>
-          )}
+            {isExample && (
+              <p className="text-xs text-[#4b5563] text-center mt-4">Example shown: $18 CPM, $180 CAC, $25,000/mo budget</p>
+            )}
+          </motion.div>
         </AnimatePresence>
       </div>
     </section>
