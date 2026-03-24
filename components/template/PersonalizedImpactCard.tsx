@@ -15,9 +15,9 @@ function fmt(n: number): string {
 }
 
 function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; cac: number; ltv: number; budget: number; isExample: boolean }) {
-  const totalInvestment = 7500
-  const theirImpressions = fmt(Math.round(totalInvestment / cpm * 1000))
-  const theirCustomers = cac > 0 ? Math.round(totalInvestment / cac) : 0
+  const golfnInvestment = 7500
+  const theirImpressions = fmt(Math.round(golfnInvestment / cpm * 1000))
+  const theirCustomers = cac > 0 ? Math.round(golfnInvestment / cac) : 0
   const ltvCacRatio = ltv > 0 && cac > 0 ? (ltv / cac).toFixed(1) : null
 
   return (
@@ -25,32 +25,28 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
       {/* Header */}
       <div className="mb-10">
         <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">60-Day Review Framework</p>
-        {isExample ? (
-          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Multiple ways this can be<br /><span className="text-[#00ff9d]">a huge win for your brand</span></p>
-        ) : (
-          <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Multiple ways this can be<br /><span className="text-[#00ff9d]">a huge win for your brand</span></p>
-        )}
+        <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Multiple ways this can be<br /><span className="text-[#00ff9d]">a huge win for your brand</span></p>
         <p className="text-base text-[#9ca3af] mt-3 max-w-3xl">
-          {"You're"} putting up ~$5,000 in product for the sweepstakes and a $2,500 startup fee. If you spent the same $7,500 on paid social, {"here's"} what {"you'd"} get. Each of these is an independent way GolfN can outperform that spend{isExample ? ' (shown for a typical premium golf brand)' : ''}:
+          {"You're"} putting up ~$5,000 in product for the sweepstakes and a $2,500 startup fee. If you took that same $7,500 and spent it on paid social instead, {"here's"} what {"you'd"} get at your current rates{isExample ? ' (shown for a typical premium golf brand)' : ''}. Each of these is an independent way GolfN can outperform that spend:
         </p>
       </div>
 
-      {/* The benchmarks -- what paid social gets them */}
+      {/* The benchmarks -- what the same $7,500 gets on paid social */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
         {/* Reach benchmark */}
         <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
-          <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">What $7,500 buys on paid social</p>
+          <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">Same $7,500 on paid social</p>
           <p className="text-4xl font-mono font-bold text-white mb-1">{theirImpressions}</p>
-          <p className="text-base text-[#6b7280]">impressions at ${cpm} CPM</p>
+          <p className="text-base text-[#6b7280]">impressions at your ${cpm} CPM</p>
           <p className="text-sm text-[#4b5563] mt-3">to a general audience based on self-reported interests and lookalikes</p>
         </div>
 
         {/* Customer benchmark */}
         {cac > 0 && (
           <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
-            <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">What $7,500 buys on paid social</p>
+            <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">Same $7,500 on paid social</p>
             <p className="text-4xl font-mono font-bold text-white mb-1">~{theirCustomers}</p>
-            <p className="text-base text-[#6b7280]">customers at {fmtUSD(cac)} CAC</p>
+            <p className="text-base text-[#6b7280]">customers at your {fmtUSD(cac)} CAC</p>
             {ltvCacRatio && (
               <p className="text-sm text-[#4b5563] mt-3">your LTV:CAC is {ltvCacRatio}x ({fmtUSD(ltv)} per customer)</p>
             )}
@@ -59,7 +55,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
 
         {/* Audience benchmark */}
         <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
-          <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">What $7,500 buys on paid social</p>
+          <p className="text-xs font-mono uppercase tracking-wider text-[#6b7280] mb-3">Same $7,500 on paid social</p>
           <p className="text-4xl font-mono font-bold text-white mb-1">0</p>
           <p className="text-base text-[#6b7280]">owned audience members</p>
           <p className="text-sm text-[#4b5563] mt-3">when you stop spending, every impression disappears</p>
@@ -79,7 +75,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
               <div>
                 <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #1: Reach</p>
                 <p className="text-xl font-bold text-white">More than {theirImpressions} impressions -- to verified golfers</p>
-                <p className="text-sm text-[#6b7280] mt-2">Your brand gets exposure across sweepstakes pages, email, push, in-app messaging, and social. Every impression reaches a golfer with a known handicap, equipment preferences, and playing frequency. Not {"\"interested in golf.\""} Actual golfers. If we beat {theirImpressions} impressions, you got more efficient reach to a better audience than paid social -- and the $2,500 fee paid for itself on reach alone.</p>
+                <p className="text-sm text-[#6b7280] mt-2">Your brand gets exposure across sweepstakes pages, email, push, in-app messaging, and social. Every impression reaches a golfer with a known handicap, equipment preferences, and playing frequency. Not {"\"interested in golf.\""} Actual golfers. If we beat {theirImpressions} impressions, you got more efficient reach to a better audience than the same money on paid social.</p>
               </div>
             </div>
           </div>
@@ -92,7 +88,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
                 <div>
                   <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #2: Conversions</p>
                   <p className="text-xl font-bold text-white">More than {theirCustomers} customers -- or a lower CAC than {fmtUSD(cac)}</p>
-                  <p className="text-sm text-[#6b7280] mt-2">{"You're"} putting your brand in front of people who already play golf and already buy golf products. {"They're"} not cold. If conversions come in at a lower CAC than paid social, or you simply get more customers than the ~{theirCustomers} that $7,500 would buy you elsewhere, {"that's"} a separate, independent win -- even if nothing else changes.</p>
+                  <p className="text-sm text-[#6b7280] mt-2">{"You're"} putting your brand in front of people who already play golf and already buy golf products. {"They're"} not cold. If conversions come in at a lower CAC than paid social, or you get more customers than the ~{theirCustomers} that the same $7,500 would buy you elsewhere, {"that's"} a separate, independent win.</p>
                 </div>
               </div>
             </div>
@@ -105,7 +101,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
               <div>
                 <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #3: Audience you own</p>
                 <p className="text-xl font-bold text-white">Verified golfers you can re-activate without paying to find them again</p>
-                <p className="text-sm text-[#6b7280] mt-2">On paid social, $7,500 buys you zero owned audience. When you stop spending, every impression disappears. With GolfN, the golfers who engaged with your brand are yours. You can reach them again. {"That's"} something paid social literally cannot do -- and there are ways to keep expanding that audience that we would walk through at the review.</p>
+                <p className="text-sm text-[#6b7280] mt-2">The same $7,500 on paid social buys you zero owned audience. When you stop spending, every impression disappears. With GolfN, the golfers who engaged with your brand are yours. You can reach them again. {"That's"} something paid social literally cannot do -- and there are ways to keep expanding that audience that we would walk through at the review.</p>
               </div>
             </div>
           </div>
@@ -121,7 +117,7 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
 
       {/* Footnote */}
       <p className="text-xs text-[#4b5563] text-center max-w-3xl mx-auto">
-        Benchmarks calculated from your inputs: $7,500 / ${cpm} CPM x 1,000 = {theirImpressions} impressions.{cac > 0 ? ` $7,500 / ${fmtUSD(cac)} CAC = ~${theirCustomers} customers.` : ''} GolfN reaches verified, active golfers across email, push, in-app messaging, sweepstakes pages, Daily Grind, and social channels.
+        Benchmarks based on your inputs applied to the $7,500 GolfN investment (~$5,000 product + $2,500 startup fee): $7,500 / ${cpm} CPM x 1,000 = {theirImpressions} impressions.{cac > 0 ? ` $7,500 / ${fmtUSD(cac)} CAC = ~${theirCustomers} customers.` : ''} GolfN reaches verified, active golfers across email, push, in-app messaging, sweepstakes pages, Daily Grind, and social channels.
       </p>
     </div>
   )
@@ -135,7 +131,7 @@ export function PersonalizedImpactCard() {
   const exCpm = 72
   const exCac = 180
   const exLtv = 800
-  const exBudget = 25000
+  const exBudget = 15000
 
   return (
     <section className="py-16 md:py-20" id="personalized-impact">
@@ -183,7 +179,7 @@ export function PersonalizedImpactCard() {
                   </button>
                 </div>
 
-                <p className="text-xs text-[#4b5563] text-center mt-4">Example shown: $72 CPM, $180 CAC, $800 LTV, $25,000/mo budget</p>
+                <p className="text-xs text-[#4b5563] text-center mt-4">Example shown: $72 CPM, $180 CAC, $800 LTV, $15,000/mo budget</p>
               </div>
             </motion.div>
           )}
