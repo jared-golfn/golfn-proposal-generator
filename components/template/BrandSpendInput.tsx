@@ -135,7 +135,7 @@ export function BrandSpendInput() {
               className="flex items-center gap-2 mt-5 text-sm text-[#6b7280]"
             >
               <Check className="w-4 h-4 text-[#00ff9d]" />
-              <span>{"Your numbers are locked in. Scroll down to see your full GolfN impact calculation."}</span>
+              <span>Baseline locked in. Scroll down to review the 60-day success criteria we will measure together.</span>
             </motion.div>
           )}
         </AnimatePresence>

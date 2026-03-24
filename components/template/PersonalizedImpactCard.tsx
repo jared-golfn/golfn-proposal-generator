@@ -1,4 +1,4 @@
-{'use client'}
+'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
@@ -24,10 +24,10 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
     <div>
       {/* Header */}
       <div className="mb-10">
-        <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">60-Day Review Framework</p>
-        <p className="text-2xl md:text-3xl font-bold text-white leading-tight">Multiple ways this can be<br /><span className="text-[#00ff9d]">a huge win for your brand</span></p>
+        <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">60-Day Success Criteria Baseline</p>
+        <p className="text-2xl md:text-3xl font-bold text-white leading-tight">The numbers we will both<br /><span className="text-[#00ff9d]">look at again in 60 days</span></p>
         <p className="text-base text-[#9ca3af] mt-3 max-w-3xl">
-          {"You're"} putting up ~$5,000 in product for the sweepstakes and a $2,500 startup fee. If you took that same $7,500 and spent it on paid social instead, {"here's"} what {"you'd"} get at your current rates{isExample ? ' (shown for a typical premium golf brand)' : ''}. Each of these is an independent way GolfN can outperform that spend:
+          {"You're"} putting up ~$5,000 in product for the sweepstakes and a $2,500 startup fee. Below are the benchmarks that same $7,500 would produce on paid social at your current rates{isExample ? ' (shown for a typical premium golf brand)' : ''}. These are the objective numbers we measure against at the 60-day review. Each is an independent criterion -- beating any one of them means the program is working:
         </p>
       </div>
 
@@ -62,62 +62,66 @@ function FrameworkContent({ cpm, cac, ltv, budget, isExample }: { cpm: number; c
         </div>
       </div>
 
-      {/* The independent wins */}
+      {/* The independent success criteria */}
       <div className="mb-10">
         <p className="text-lg font-semibold text-white mb-2">Any one of these beating your current numbers is a win.</p>
-        <p className="text-base text-[#9ca3af] mb-6">Hit two or more and you just found a channel that outperforms paid social across the board.</p>
+        <p className="text-base text-[#9ca3af] mb-6">Two or more means the channel is outperforming paid social across multiple dimensions.</p>
 
         <div className="space-y-5">
-          {/* Win 1: Reach */}
+          {/* Criterion 1: Reach */}
           <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
             <div className="flex gap-4 items-start">
               <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #1: Reach</p>
+                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Criterion 1: Reach efficiency</p>
                 <p className="text-xl font-bold text-white">More than {theirImpressions} impressions -- to verified golfers</p>
-                <p className="text-sm text-[#6b7280] mt-2">Your brand gets exposure across sweepstakes pages, email, push, in-app messaging, and social. Every impression reaches a golfer with a known handicap, equipment preferences, and playing frequency. Not {"\"interested in golf.\""} Actual golfers. If we beat {theirImpressions} impressions, you got more efficient reach to a better audience than the same money on paid social.</p>
+                <p className="text-sm text-[#6b7280] mt-2">Your brand gets exposure across sweepstakes pages, email, push, in-app messaging, and social. Every impression reaches a golfer with a known handicap, equipment preferences, and playing frequency. Not a lookalike. Not someone who clicked "interested in golf" once. A real, active golfer. If we exceed {theirImpressions} impressions to this audience, the reach efficiency alone beats what the same dollars buy on paid social.</p>
               </div>
             </div>
           </div>
 
-          {/* Win 2: Conversions */}
+          {/* Criterion 2: Conversions */}
           {cac > 0 && (
             <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
               <div className="flex gap-4 items-start">
                 <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
                 <div>
-                  <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #2: Conversions</p>
+                  <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Criterion 2: Conversion efficiency</p>
                   <p className="text-xl font-bold text-white">More than {theirCustomers} customers -- or a lower CAC than {fmtUSD(cac)}</p>
-                  <p className="text-sm text-[#6b7280] mt-2">{"You're"} putting your brand in front of people who already play golf and already buy golf products. {"They're"} not cold. If conversions come in at a lower CAC than paid social, or you get more customers than the ~{theirCustomers} that the same $7,500 would buy you elsewhere, {"that's"} a separate, independent win.</p>
+                  <p className="text-sm text-[#6b7280] mt-2">The audience already plays golf and already buys golf products. If attributed conversions come in at a lower cost than your current paid social CAC, or you acquire more customers than the ~{theirCustomers} the same $7,500 would produce elsewhere, that is a separate, independent success criterion met.</p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Win 3: Qualified cohort + ability to keep growing */}
+          {/* Criterion 3: Qualified cohort */}
           <div className="bg-[#0f1217] rounded-xl p-6 border border-[#2a3347]">
             <div className="flex gap-4 items-start">
               <div className="shrink-0 mt-2"><div className="w-2.5 h-2.5 rounded-full bg-[#00ff9d]" /></div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Win #3: A qualified cohort you can keep growing</p>
-                <p className="text-xl font-bold text-white">Verified golfers who responded to your brand -- and the ability to find more like them</p>
-                <p className="text-sm text-[#6b7280] mt-2">The sweepstakes generates signal about which types of golfers engage with your brand. {"GolfN's"} AI lookalike engine uses that signal to identify more qualified users who match the profile of your best responders -- even people who never entered the original sweepstakes. Paid social gives you none of this. When you stop spending, the audience is gone. With GolfN, you walk away with a qualified cohort and the option to keep activating and expanding it. {"That's"} what {"we'd"} walk through at the 60-day review.</p>
+                <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-1">Criterion 3: Qualified cohort with expansion potential</p>
+                <p className="text-xl font-bold text-white">A qualified audience and the ability to keep growing it</p>
+                <p className="text-sm text-[#6b7280] mt-2">The sweepstakes generates signal about which types of golfers respond to your brand. Our AI lookalike engine uses that signal to identify more qualified users who match the profile of your best responders -- including golfers who never entered the original sweepstakes. Paid social produces none of this. When you stop spending, the audience is gone. With GolfN, you walk away with a qualified cohort and the option to keep activating and expanding it. That is what we would walk through together at the 60-day review.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* The compounding effect */}
-      <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 md:p-8 mb-6">
-        <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
-          Each of these is worth it on its own. But if GolfN beats your numbers on reach <span className="font-bold text-white">and</span> conversions <span className="font-bold text-white">and</span> gives you a qualified cohort you can keep growing -- {"you've"} found something paid social {"can't"} offer at any price. {"That's"} what the 60-day review is for. We bring the data. You tell us if the numbers justify month 3.
+      {/* The 60-day review -- MOST PROMINENT TEXT */}
+      <div className="bg-[#001a14]/60 border-2 border-[#00ff9d]/30 rounded-xl p-8 md:p-10 mb-6">
+        <p className="text-sm font-mono uppercase tracking-wider text-[#00ff9d] mb-4">The 60-Day Review</p>
+        <p className="text-xl md:text-2xl text-white font-bold leading-9">
+          We schedule a review at 60 days. We bring the data across every one of these criteria. No spin, no cherry-picking -- the objective numbers side by side with the baseline you set today. You tell us if the results justify month 3.
+        </p>
+        <p className="text-base text-[#9ca3af] mt-4">
+          If we beat one criterion, the investment was worth it. If we beat two, the channel is clearly working. If we beat all three, the question is not whether to continue -- it is how fast to scale.
         </p>
       </div>
 
       {/* Footnote */}
       <p className="text-xs text-[#4b5563] text-center max-w-3xl mx-auto">
-        Benchmarks based on your inputs applied to the $7,500 GolfN investment (~$5,000 product + $2,500 startup fee): $7,500 / ${cpm} CPM x 1,000 = {theirImpressions} impressions.{cac > 0 ? ` $7,500 / ${fmtUSD(cac)} CAC = ~${theirCustomers} customers.` : ''} GolfN reaches verified, active golfers across email, push, in-app messaging, sweepstakes pages, Daily Grind, and social channels.
+        Baseline benchmarks calculated from your inputs applied to the $7,500 GolfN investment (~$5,000 product + $2,500 startup fee): $7,500 / ${cpm} CPM x 1,000 = {theirImpressions} impressions.{cac > 0 ? ` $7,500 / ${fmtUSD(cac)} CAC = ~${theirCustomers} customers.` : ''} GolfN reaches verified, active golfers across email, push, in-app messaging, sweepstakes pages, Daily Grind, and social channels.
       </p>
     </div>
   )
