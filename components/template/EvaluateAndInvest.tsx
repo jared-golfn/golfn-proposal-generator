@@ -40,6 +40,7 @@ function BenchmarkRow({ label, value, golfnValue, isSelf, sublabel }: { label: s
 
 function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'roas' | 'audience' }) {
   const m = useSpendMetrics()
+  const { aov, setAov, conversionRate, setConversionRate } = useSpendModel()
   const { selectedNeed } = useBusinessNeed()
   const need = getNeedById(selectedNeed)
   const needBenchmarks = need?.benchmarks || []
@@ -70,14 +71,12 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
         <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">${gv < 1 ? gv.toFixed(2) : Math.round(gv)}</p>
         <p className="text-sm text-[#6b7280] mb-6">{m.estimatedImpressions.toLocaleString()} touchpoints to verified golfers from {fmt(m.totalInitial)}</p>
 
-        {/* Tier 1: Verified golfer audiences -- the real comparison */}
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-4">Verified Golfer Audiences</p>
         <BenchmarkRow label="GolfN (100% verified golfers)" value={gv} golfnValue={gv} isSelf />
         <BenchmarkRow label="Golf Digest / Endemic Media" value={65} golfnValue={gv} sublabel="Sponsorships, native, email to verified subscribers" />
 
-        {/* Tier 2: Inferred interest -- secondary */}
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-6">Inferred Golf Interest (Unverified)</p>
-        <BenchmarkRow label="Meta Golf Audiences" value={22} golfnValue={gv} sublabel="Algorithmic -- &quot;interested in golf&quot;" />
+        <BenchmarkRow label="Meta Golf Audiences" value={22} golfnValue={gv} sublabel='Algorithmic -- "interested in golf"' />
         <BenchmarkRow label="Google Display Golf" value={35} golfnValue={gv} sublabel="Affinity + keyword targeting" />
 
         <p className="text-[11px] text-[#4b5563] mt-6 italic">US golf-targeted audiences, 2025-26 benchmarks. GolfN and Golf Digest reach verified golfers. Meta and Google reach inferred interest.</p>
@@ -93,12 +92,10 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
         <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">{fmt(gv)}</p>
         <p className="text-sm text-[#6b7280] mb-6">{m.cohortSize.toLocaleString()} qualified golfers who engaged and matched your criteria</p>
 
-        {/* Tier 1: Verified golfer sources */}
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-4">Verified Golfer Audiences</p>
         <BenchmarkRow label="GolfN (behavioral qualification)" value={gv} golfnValue={gv} isSelf />
         <BenchmarkRow label="Endemic Sponsorship / Email" value={85} golfnValue={gv} sublabel="Golf Digest, PGA Tour partners, golf media" />
 
-        {/* Tier 2: Inferred interest */}
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-6">Inferred Golf Interest (Unverified)</p>
         <BenchmarkRow label="Meta Lead Gen Golf" value={28} golfnValue={gv} sublabel="Form fills from interest-based audiences" />
         <BenchmarkRow label="Google Ads Golf (optimized)" value={12} golfnValue={gv} sublabel="Best-case lower-funnel campaigns" />
@@ -113,12 +110,66 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
       <div>
         <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Projected First-Year ROAS</p>
         <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">{m.projectedROAS}:1</p>
-        <p className="text-sm text-[#6b7280] mb-6">{fmt(m.avgAOV)} AOV, 3% conversion of qualified cohort</p>
-        <div className="grid grid-cols-3 gap-3">
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Invested</p><p className="text-xl font-mono font-bold text-white">{fmt(m.totalInitial)}</p></div>
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center border border-[#00ff9d]/20"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Projected Rev</p><p className="text-xl font-mono font-bold text-[#00ff9d]">{fmt(m.projectedRevenue)}</p></div>
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Cohort</p><p className="text-xl font-mono font-bold text-white">{m.cohortSize.toLocaleString()}</p></div>
+        <p className="text-sm text-[#6b7280] mb-6">{m.cohortSize.toLocaleString()} qualified golfers at {conversionRate}% conversion</p>
+
+        {/* Editable AOV + Conversion Rate */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-2">Your Average Order Value</label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280] font-mono">$</span>
+              <input
+                type="number"
+                min={10}
+                max={5000}
+                value={aov}
+                onChange={(e) => setAov(Math.max(10, Math.min(5000, Number(e.target.value) || 10)))}
+                className="w-full bg-[#0f1217] border border-[#2a3347] rounded-lg pl-7 pr-4 py-3 text-lg font-mono font-bold text-[#00ff9d] focus:border-[#00ff9d]/60 focus:outline-none transition-colors"
+              />
+            </div>
+            <p className="text-[11px] text-[#4b5563] mt-1">GolfN platform avg: $493</p>
+          </div>
+          <div>
+            <label className="block text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-2">Expected Conversion Rate</label>
+            <div className="relative">
+              <input
+                type="number"
+                min={0.5}
+                max={20}
+                step={0.5}
+                value={conversionRate}
+                onChange={(e) => setConversionRate(Math.max(0.5, Math.min(20, Number(e.target.value) || 1)))}
+                className="w-full bg-[#0f1217] border border-[#2a3347] rounded-lg pl-4 pr-8 py-3 text-lg font-mono font-bold text-[#00ff9d] focus:border-[#00ff9d]/60 focus:outline-none transition-colors"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b7280] font-mono">%</span>
+            </div>
+            <p className="text-[11px] text-[#4b5563] mt-1">3% is conservative for qualified cohort</p>
+          </div>
         </div>
+
+        {/* Results */}
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center">
+            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Invested</p>
+            <p className="text-xl font-mono font-bold text-white">{fmt(m.totalInitial)}</p>
+          </div>
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center border border-[#00ff9d]/20">
+            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Projected Rev</p>
+            <p className="text-xl font-mono font-bold text-[#00ff9d]">{fmt(m.projectedRevenue)}</p>
+          </div>
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center">
+            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Customers</p>
+            <p className="text-xl font-mono font-bold text-white">{Math.round(m.cohortSize * (conversionRate / 100))}</p>
+          </div>
+        </div>
+
+        <div className="bg-[#0f1217] rounded-lg p-4">
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-[#9ca3af]">Math</span>
+            <span className="text-[#6b7280] font-mono">{m.cohortSize.toLocaleString()} golfers x {conversionRate}% x {fmt(aov)} = {fmt(m.projectedRevenue)}</span>
+          </div>
+        </div>
+
         <p className="text-[11px] text-[#4b5563] mt-6 italic">Conservative. Does not include repeat purchases, referrals, cohort expansion, or compounding effects beyond year 1.</p>
       </div>
     )
@@ -162,7 +213,6 @@ export function EvaluateAndInvest() {
   return (
     <section id="evaluate" className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Header */}
         <Fade>
           <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">Evaluate</p>
           <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-4">
@@ -176,7 +226,6 @@ export function EvaluateAndInvest() {
           </p>
         </Fade>
 
-        {/* Model selector */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {models.map((mid, i) => {
             const Icon = mid.icon
@@ -209,7 +258,6 @@ export function EvaluateAndInvest() {
           })}
         </div>
 
-        {/* Everything below animates in when a model is selected */}
         <AnimatePresence>
           {model && (
             <motion.div
@@ -218,7 +266,6 @@ export function EvaluateAndInvest() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
             >
-              {/* Cohort slider */}
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 max-w-2xl mb-10">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -235,9 +282,7 @@ export function EvaluateAndInvest() {
                 <div className="flex justify-between mt-2 text-xs font-mono text-[#4b5563]"><span>500</span><span>10,000</span></div>
               </div>
 
-              {/* Investment + benchmarks side by side */}
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
-                {/* Left: your commitment */}
                 <div className="lg:col-span-2 bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10">
                   <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-8">Your Commitment</p>
                   <div className="flex justify-between items-center py-4 border-b border-[#2a3347]/50">
@@ -267,14 +312,12 @@ export function EvaluateAndInvest() {
                   </div>
                 </div>
 
-                {/* Right: in your terms */}
                 <div className="lg:col-span-3 bg-[#1a1f2e] border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10">
                   <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-6">In Your Terms</p>
                   <ModelBenchmarks selectedModel={model} />
                 </div>
               </div>
 
-              {/* Accountability */}
               <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10">
                 <p className="text-lg md:text-xl text-[#d1d5db] leading-9">
                   {'You are in for some product and '}<span className="text-white font-semibold">{fmt(m.startupFee)}</span>
