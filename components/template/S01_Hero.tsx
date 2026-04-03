@@ -17,12 +17,14 @@ const defaultKPIs: PlatformKPI[] = [
 
 const PITCH_SUBTITLE = '100,000+ verified golfers who actually buy premium gear. Build an owned audience, activate it, and turn it into revenue.'
 
-const pitchPartnerLogos = [
-  { name: 'L.A.B. Golf', url: 'https://www.golfn.com/LAB.png' },
-  { name: 'Cobra Puma Golf', url: 'https://www.golfn.com/cobra.webp' },
-  { name: 'Bettinardi', url: 'https://www.golfn.com/bettinardi.webp' },
-  { name: 'Finn', url: 'https://cdn.sanity.io/images/e3wja34v/production/e325118a1a6270a4e7887a895cbf469cd211d40b-131x55.svg' },
-  { name: 'Hyperice', url: 'https://cdn.sanity.io/images/e3wja34v/production/36b4396feef4359c78c827dad89e3bc2c42929b2-3840x2160.png' },
+/* Per-logo heights (px) tuned so each logo has equal visual weight on screen.
+   Wider/thinner logos get more height; compact logos stay smaller. */
+const pitchPartnerLogos: { name: string; url: string; h: number }[] = [
+  { name: 'L.A.B. Golf', url: 'https://www.golfn.com/LAB.png', h: 28 },
+  { name: 'Cobra Puma Golf', url: 'https://www.golfn.com/cobra.webp', h: 28 },
+  { name: 'Bettinardi', url: 'https://www.golfn.com/bettinardi.webp', h: 28 },
+  { name: 'Finn', url: 'https://cdn.sanity.io/images/e3wja34v/production/e325118a1a6270a4e7887a895cbf469cd211d40b-131x55.svg', h: 32 },
+  { name: 'Hyperice', url: 'https://cdn.sanity.io/images/e3wja34v/production/36b4396feef4359c78c827dad89e3bc2c42929b2-3840x2160.png', h: 44 },
 ]
 
 function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { brandName: string; brandLogoUrl?: string }[]; agencyLogoUrl?: string; agencyName?: string }) {
@@ -156,7 +158,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
                 <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
                 <div className="flex items-center gap-6 md:gap-8 flex-wrap">
                   {pitchPartnerLogos.map((logo) => (
-                    <img key={logo.name} src={logo.url} alt={logo.name} className="h-6 md:h-8 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.5 }} />
+                    <img key={logo.name} src={logo.url} alt={logo.name} className="w-auto object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.5, height: logo.h }} />
                   ))}
                   <span className="text-sm font-mono text-[#4b5563]">& more</span>
                 </div>
