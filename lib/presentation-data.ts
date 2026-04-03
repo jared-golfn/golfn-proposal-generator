@@ -49,6 +49,23 @@ export interface PartnerConfig {
 const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/b0f6f787acc61119cc6e9796fd64b75979e5f75a-2741x635.png'
 const TIMELAPSE_VIDEO = 'https://cdn.sanity.io/files/e3wja34v/production/44254c3ed5b70a03c02f5b64556d3b247781f86e.mp4'
 
+// Example campaigns for the generic template/pitch page
+const templateCampaigns: BrandCampaign[] = [
+  {
+    brandName: 'Your Brand',
+    brandColor: '#00ff9d',
+    title: 'Premium Sweepstakes Campaign',
+    prizePool: '~$4,500',
+    description: 'A multi-winner sweepstakes showcasing your flagship products. Golfers enter by engaging with your brand inside the GolfN ecosystem. Every entry generates behavioral data. Multiple prize tiers maximize participation and create 6+ branded touchpoints per entrant.',
+    prizes: [
+      { place: '1st', description: 'Flagship product bundle (your hero SKUs)', value: '$2,000-3,000' },
+      { place: '2nd', description: 'Mid-tier product set', value: '$800-1,200' },
+      { place: '3rd-6th', description: 'Accessory bundles or entry products (x4)', value: '$200-400 each' },
+    ],
+    hideBrandCount: true,
+  },
+]
+
 const sportsImpactCampaigns: BrandCampaign[] = [
   {
     brandName: 'Galvin Green',
@@ -113,12 +130,13 @@ export const partners: Record<string, PartnerConfig> = {
     productCategory: 'Brand Partnerships',
     productNames: ['Sweepstakes', 'Commerce', 'Content'],
     heroHeadline: 'The golf brand activation platform',
-    heroSubtitle: 'GolfN builds qualified audiences for golf brands through premium sweepstakes, behavioral targeting, and full-funnel activation. 100,000+ verified golfers across 57 countries. Here is how it works and what a partnership looks like.',
+    heroSubtitle: '100,000+ verified golfers across 57 countries. Premium sweepstakes, behavioral targeting, and full-funnel activation.',
     heroVideoUrl: TIMELAPSE_VIDEO,
-    howItWorksIntro: 'Every GolfN brand program follows the same five-step framework. The specifics are tailored to your brand, product, and goals -- but the structure is proven and repeatable.',
+    howItWorksIntro: 'This is not a one-off campaign. It is a system that builds a qualified audience, activates it, and makes it more valuable every month.',
     pricingIntro: 'You provide the prize budget (recommended $5,000 for best cohort). GolfN charges a one-time startup fee, then bills monthly per qualified user added to your cohort. Here is how our pricing works.',
     keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
     defaultPath: 'pilot',
+    campaigns: templateCampaigns,
   },
 
   'galvin-green': {

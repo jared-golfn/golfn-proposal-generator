@@ -77,7 +77,7 @@ function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { bra
   )
 }
 
-export function S01_Hero({ partner }: { partner: PartnerData }) {
+export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hideBrandInput?: boolean }) {
   const [showMarkets, setShowMarkets] = useState(false)
   const subtitle = partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.'
   const headline = partner.heroHeadline
@@ -89,6 +89,7 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
 
   const showPartnerLogo = !partner.isPortfolio && partner.partnerLogoUrl && partner.campaigns && partner.campaigns.length > 0
   const hasVideo = !!heroVideo
+  const showBrandInput = hasVideo && !hideBrandInput
 
   return (
     <section className="relative min-h-[85vh] flex flex-col justify-center overflow-hidden">
@@ -171,8 +172,8 @@ export function S01_Hero({ partner }: { partner: PartnerData }) {
               </motion.div>
             )}
 
-            {/* Brand spend input -- only on walkthrough pages with video hero */}
-            {hasVideo && <BrandSpendInput />}
+            {/* Brand spend input -- only on walkthrough pages without hideBrandInput */}
+            {showBrandInput && <BrandSpendInput />}
 
             {!hasVideo && (
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-3 md:gap-4 mb-10">
