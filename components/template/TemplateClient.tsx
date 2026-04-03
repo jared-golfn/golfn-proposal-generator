@@ -8,6 +8,7 @@ import { SpendModelProvider } from '@/lib/spend-model-context'
 import { S01_Hero } from './S01_Hero'
 import { S02_WhyBrands } from './S02_WhyBrands'
 import { S03_HowItWorks } from './S03_HowItWorks'
+import { S03_PitchHowItWorks } from './S03_PitchHowItWorks'
 import { S04_LaunchCampaign } from './S04_LaunchCampaign'
 import { S05_QualifiedInterest } from './S05_QualifiedInterest'
 import { S06_PostCampaign } from './S06_PostCampaign'
@@ -26,7 +27,6 @@ import { SessionTracker } from './SessionTracker'
 import { CollapsibleSection } from './CollapsibleSection'
 import { PersonalizedImpactCard } from './PersonalizedImpactCard'
 import { Fade } from './Fade'
-import { Target } from 'lucide-react'
 
 const navSections = [
   { id: 'top', label: 'Overview' },
@@ -39,8 +39,9 @@ const navSections = [
 const pitchNavSections = [
   { id: 'top', label: 'Overview' },
   { id: 'getting-started', label: 'The Campaign' },
-  { id: 'ways-to-work', label: 'Investment' },
   { id: 'how-it-works', label: 'How It Works' },
+  { id: 'evaluate', label: 'Evaluate' },
+  { id: 'ways-to-work', label: 'Investment' },
   { id: 'next-steps', label: 'Next Steps' },
 ]
 
@@ -50,6 +51,11 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
   const activeNav = isPitch ? pitchNavSections : navSections
   const isWalkthrough = !!partner.heroVideoUrl
 
+  // ═══════════════════════════════════════════════════════════
+  // PITCH MODE
+  // Flow: Hero → Campaign → How It Works → Case Studies →
+  //       Spend Model → Investment → Checklist → Impact → CTA
+  // ═══════════════════════════════════════════════════════════
   if (isPitch) {
     return (
       <BrandSpendProvider>
@@ -58,7 +64,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             <SessionTracker slug={partner.slug} />
             <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-            <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8 pointer-events-none">
+            <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6 pointer-events-none">
               {activeNav.map((s) => (
                 <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
                   <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
@@ -68,17 +74,12 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             </nav>
 
             <div id="proposal-content">
-              {/* 1. Hero -- who we are, platform stats */}
+              {/* 1. Hero — who we are, platform stats */}
               <div id="top"><S01_Hero partner={partner} /></div>
 
               <SectionDivider />
 
-              {/* 2. Spend model selector -- "how do you evaluate spend?" */}
-              <SpendModelSelector />
-
-              <SectionDivider />
-
-              {/* 3. The campaign -- what you would get */}
+              {/* 2. The Campaign — what we would build for you */}
               <div id="getting-started" className="pt-12 md:pt-16">
                 <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
                   <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">The Campaign</p>
@@ -89,25 +90,32 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
               <SectionDivider />
 
-              {/* 4. Investment -- dynamic, speaks their language */}
-              <DynamicInvestment />
+              {/* 3. How It Works — expanded walkthrough showing why this is impactful */}
+              <S03_PitchHowItWorks partner={partner} />
 
               <SectionDivider />
 
-              {/* 5. How it works -- methodology proof (after they know the offer) */}
-              <div id="how-it-works"><S03_HowItWorks partner={partner} /></div>
-
-              <SectionDivider />
-
-              {/* 6. Case studies -- proof it works */}
+              {/* 4. Case Studies — proof it works */}
               <CaseStudy />
 
               <SectionDivider />
 
-              {/* 7. What we need -- interactive checklist */}
+              {/* 5. Spend Model Selector — now that they see the value, how do they evaluate? */}
+              <div id="evaluate">
+                <SpendModelSelector />
+              </div>
+
+              <SectionDivider />
+
+              {/* 6. Investment — dynamic based on their selection */}
+              <DynamicInvestment />
+
+              <SectionDivider />
+
+              {/* 7. What we need — interactive checklist */}
               <PitchChecklist partner={partner} />
 
-              {/* 8. Success framework -- the closer */}
+              {/* 8. Success framework — the closer */}
               {isWalkthrough && (
                 <>
                   <SectionDivider />
@@ -122,7 +130,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
               <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
                 <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-                <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
+                <p className="text-[#4b5563] text-base">{'Confidential — Prepared for '}{partner.partnerName}{' by GolfN'}</p>
                 <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
               </footer>
             </div>
@@ -132,9 +140,9 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
     )
   }
 
-  // ═══════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════
   // NORMAL MODE (unchanged)
-  // ═══════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════
   return (
     <BrandSpendProvider>
       <main className="relative bg-[#0f1217]">
@@ -223,7 +231,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
           <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
             <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-            <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
+            <p className="text-[#4b5563] text-base">{'Confidential — Prepared for '}{partner.partnerName}{' by GolfN'}</p>
             <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
           </footer>
         </div>
