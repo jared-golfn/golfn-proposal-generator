@@ -19,13 +19,16 @@ function fmt(n: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
 }
 
-function BenchmarkRow({ label, value, golfnValue, isSelf }: { label: string; value: number; golfnValue: number; isSelf?: boolean }) {
+function BenchmarkRow({ label, value, golfnValue, isSelf, sublabel }: { label: string; value: number; golfnValue: number; isSelf?: boolean; sublabel?: string }) {
   const savings = isSelf ? null : Math.round(((value - golfnValue) / value) * 100)
   return (
     <div className={`flex items-center justify-between py-3 ${isSelf ? '' : 'border-b border-[#2a3347]/30'}`}>
       <div className="flex items-center gap-3">
         <div className={`w-2 h-2 rounded-full ${isSelf ? 'bg-[#00ff9d]' : 'bg-[#2a3347]'}`} />
-        <span className={`text-base ${isSelf ? 'text-[#00ff9d] font-bold' : 'text-[#9ca3af]'}`}>{label}</span>
+        <div>
+          <span className={`text-base ${isSelf ? 'text-[#00ff9d] font-bold' : 'text-[#9ca3af]'}`}>{label}</span>
+          {sublabel && <p className="text-xs text-[#4b5563]">{sublabel}</p>}
+        </div>
       </div>
       <div className="flex items-center gap-4">
         <span className={`text-lg font-mono font-bold ${isSelf ? 'text-[#00ff9d]' : 'text-[#6b7280]'}`}>${value < 1 ? value.toFixed(2) : Math.round(value)}</span>
@@ -42,30 +45,65 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
   const needBenchmarks = need?.benchmarks || []
   const needLabel = need?.benchmarkLabel || ''
 
-  if (selectedModel === 'cpm') {
-    const gv = m.effectiveCPM
-    const items = needBenchmarks.length > 0 ? needBenchmarks : [{ label: 'Meta Golf Audiences', value: 22 }, { label: 'Google Display Golf', value: 35 }, { label: 'Golf Digest / Endemic', value: 65 }]
+  // If a business need is selected, use its custom benchmarks
+  if (needBenchmarks.length > 0 && (selectedModel === 'cpm' || selectedModel === 'cpa')) {
+    const gv = selectedModel === 'cpm' ? m.effectiveCPM : m.costPerQualifiedLead
+    const subline = selectedModel === 'cpm'
+      ? `${m.estimatedImpressions.toLocaleString()} touchpoints from ${fmt(m.totalInitial)}`
+      : `${m.cohortSize.toLocaleString()} qualified golfers who engaged and matched your criteria`
     return (
       <div>
-        <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">{needLabel || 'Your Effective CPM'}</p>
+        <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">{needLabel}</p>
         <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">${gv < 1 ? gv.toFixed(2) : Math.round(gv)}</p>
-        <p className="text-sm text-[#6b7280] mb-6">{m.estimatedImpressions.toLocaleString()} touchpoints from {fmt(m.totalInitial)}</p>
-        <BenchmarkRow label="GolfN (verified golfers)" value={gv} golfnValue={gv} isSelf />
-        {items.map(b => <BenchmarkRow key={b.label} label={b.label} value={b.value} golfnValue={gv} />)}
+        <p className="text-sm text-[#6b7280] mb-6">{subline}</p>
+        <BenchmarkRow label="GolfN (100% verified golfers)" value={gv} golfnValue={gv} isSelf />
+        {needBenchmarks.map(b => <BenchmarkRow key={b.label} label={b.label} value={b.value} golfnValue={gv} />)}
+      </div>
+    )
+  }
+
+  if (selectedModel === 'cpm') {
+    const gv = m.effectiveCPM
+    return (
+      <div>
+        <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Your Effective CPM</p>
+        <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">${gv < 1 ? gv.toFixed(2) : Math.round(gv)}</p>
+        <p className="text-sm text-[#6b7280] mb-6">{m.estimatedImpressions.toLocaleString()} touchpoints to verified golfers from {fmt(m.totalInitial)}</p>
+
+        {/* Tier 1: Verified golfer audiences -- the real comparison */}
+        <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-4">Verified Golfer Audiences</p>
+        <BenchmarkRow label="GolfN (100% verified golfers)" value={gv} golfnValue={gv} isSelf />
+        <BenchmarkRow label="Golf Digest / Endemic Media" value={65} golfnValue={gv} sublabel="Sponsorships, native, email to verified subscribers" />
+
+        {/* Tier 2: Inferred interest -- secondary */}
+        <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-6">Inferred Golf Interest (Unverified)</p>
+        <BenchmarkRow label="Meta Golf Audiences" value={22} golfnValue={gv} sublabel="Algorithmic -- &quot;interested in golf&quot;" />
+        <BenchmarkRow label="Google Display Golf" value={35} golfnValue={gv} sublabel="Affinity + keyword targeting" />
+
+        <p className="text-[11px] text-[#4b5563] mt-6 italic">US golf-targeted audiences, 2025-26 benchmarks. GolfN and Golf Digest reach verified golfers. Meta and Google reach inferred interest.</p>
       </div>
     )
   }
 
   if (selectedModel === 'cpa') {
     const gv = m.costPerQualifiedLead
-    const items = needBenchmarks.length > 0 ? needBenchmarks : [{ label: 'Meta Lead Gen Golf', value: 28 }, { label: 'Google Ads Golf', value: 12 }, { label: 'Endemic Sponsorship', value: 85 }]
     return (
       <div>
-        <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">{needLabel || 'Cost Per Qualified Lead'}</p>
+        <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Cost Per Qualified Lead</p>
         <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">{fmt(gv)}</p>
         <p className="text-sm text-[#6b7280] mb-6">{m.cohortSize.toLocaleString()} qualified golfers who engaged and matched your criteria</p>
-        <BenchmarkRow label="GolfN (behavioral)" value={gv} golfnValue={gv} isSelf />
-        {items.map(b => <BenchmarkRow key={b.label} label={b.label} value={b.value} golfnValue={gv} />)}
+
+        {/* Tier 1: Verified golfer sources */}
+        <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-4">Verified Golfer Audiences</p>
+        <BenchmarkRow label="GolfN (behavioral qualification)" value={gv} golfnValue={gv} isSelf />
+        <BenchmarkRow label="Endemic Sponsorship / Email" value={85} golfnValue={gv} sublabel="Golf Digest, PGA Tour partners, golf media" />
+
+        {/* Tier 2: Inferred interest */}
+        <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-6">Inferred Golf Interest (Unverified)</p>
+        <BenchmarkRow label="Meta Lead Gen Golf" value={28} golfnValue={gv} sublabel="Form fills from interest-based audiences" />
+        <BenchmarkRow label="Google Ads Golf (optimized)" value={12} golfnValue={gv} sublabel="Best-case lower-funnel campaigns" />
+
+        <p className="text-[11px] text-[#4b5563] mt-6 italic">US golf-targeted audiences, 2025-26 benchmarks. GolfN leads are qualified by behavior inside a golf-native environment, not a form fill.</p>
       </div>
     )
   }
@@ -81,6 +119,7 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
           <div className="bg-[#0f1217] rounded-xl p-4 text-center border border-[#00ff9d]/20"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Projected Rev</p><p className="text-xl font-mono font-bold text-[#00ff9d]">{fmt(m.projectedRevenue)}</p></div>
           <div className="bg-[#0f1217] rounded-xl p-4 text-center"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Cohort</p><p className="text-xl font-mono font-bold text-white">{m.cohortSize.toLocaleString()}</p></div>
         </div>
+        <p className="text-[11px] text-[#4b5563] mt-6 italic">Conservative. Does not include repeat purchases, referrals, cohort expansion, or compounding effects beyond year 1.</p>
       </div>
     )
   }
@@ -91,15 +130,19 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
     <div>
       <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">{needLabel || 'Cost Per Owned Golfer'}</p>
       <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">{fmt(costPerOwned)}<span className="text-xl text-[#6b7280]">/golfer</span></p>
-      <p className="text-sm text-[#6b7280] mb-6">First-party. Behavioral. Yours to reactivate.</p>
+      <p className="text-sm text-[#6b7280] mb-2">First-party. Behavioral. Yours to reactivate.</p>
+      <p className="text-sm text-[#9ca3af] mb-6">Typical first-party golfer acquisition cost on Meta/Google: <span className="text-white font-semibold">$8-25+</span></p>
+
       <div className="space-y-2">
-        {['Equipment profile: what they play, upgrade cycle', 'Behavioral data: rounds/month, walk vs ride, climate', 'Engagement history: what content drives action', 'Purchase intent: marketplace browsing, offer saves', 'Reactivation: seasonal re-engagement, AI expansion'].map(item => (
+        <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-1">What you get per golfer</p>
+        {['Equipment profile: what they play, when they last upgraded', 'Behavioral data: rounds/month, walk vs ride, spend per round', 'Engagement history: what content and offers drive action', 'Purchase intent: marketplace browsing, offer saves, click-throughs', 'Reactivation path: seasonal re-engagement, AI lookalike expansion'].map(item => (
           <div key={item} className="flex items-start gap-2 py-1.5">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="mt-1 shrink-0"><path d="M3 8l3.5 3.5L13 5" stroke="#00ff9d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             <span className="text-sm text-[#d1d5db]">{item}</span>
           </div>
         ))}
       </div>
+      <p className="text-[11px] text-[#4b5563] mt-6 italic">This audience compounds. New qualified users auto-enroll via lookalike modeling at no additional acquisition cost.</p>
     </div>
   )
 }
