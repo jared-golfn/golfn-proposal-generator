@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { BarChart3, Target, TrendingUp, Users, ChevronRight, Star, ChevronDown, ChevronUp } from 'lucide-react'
+import { BarChart3, Target, TrendingUp, Users, ChevronRight, Star, ChevronDown, ChevronUp, Layers } from 'lucide-react'
 import { useSpendModel, useSpendMetrics, type SpendModel } from '@/lib/spend-model-context'
 import { useBusinessNeed } from '@/lib/business-need-context'
 import { getNeedById } from '@/lib/business-needs'
@@ -38,6 +38,45 @@ function BenchmarkRow({ label, value, golfnValue, isSelf, sublabel }: { label: s
   )
 }
 
+// Shows the other 3 metrics the prospect is ALSO getting from the same investment
+function CombinedValue({ excludeModel }: { excludeModel: 'cpm' | 'cpa' | 'roas' | 'audience' }) {
+  const m = useSpendMetrics()
+  const costPerOwned = m.totalInitial / m.cohortSize
+  const customers = Math.round(m.cohortSize * (m.conversionRate / 100))
+
+  const allMetrics: { id: string; icon: typeof BarChart3; label: string; value: string; sub: string }[] = [
+    { id: 'cpm', icon: BarChart3, label: 'Effective CPM', value: `$${m.effectiveCPM < 1 ? m.effectiveCPM.toFixed(2) : Math.round(m.effectiveCPM)}`, sub: `${m.estimatedImpressions.toLocaleString()} touchpoints to verified golfers` },
+    { id: 'cpa', icon: Target, label: 'Cost Per Qualified Lead', value: fmt(m.costPerQualifiedLead), sub: `${m.cohortSize.toLocaleString()} qualified golfers in your cohort` },
+    { id: 'roas', icon: TrendingUp, label: 'Projected ROAS', value: `${m.projectedROAS}:1`, sub: `${fmt(m.projectedRevenue)} projected from ${customers} customers` },
+    { id: 'audience', icon: Users, label: 'Cost Per Owned Golfer', value: fmt(costPerOwned), sub: `${m.cohortSize.toLocaleString()} golfers you can reactivate anytime` },
+  ]
+
+  const others = allMetrics.filter(met => met.id !== excludeModel)
+
+  return (
+    <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10 mb-8">
+      <div className="flex items-center gap-3 mb-2">
+        <Layers className="w-5 h-5 text-[#00ff9d]" />
+        <p className="text-lg font-bold text-white">That same {fmt(m.totalInitial)} also delivers</p>
+      </div>
+      <p className="text-sm text-[#6b7280] mb-6">On paid social, you optimize for one metric. On GolfN, you get all of them from the same investment.</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {others.map((met) => (
+          <div key={met.id} className="bg-[#0f1217] rounded-xl p-5 border border-[#2a3347]/50">
+            <div className="flex items-center gap-2 mb-3">
+              <met.icon className="w-4 h-4 text-[#00ff9d]" />
+              <p className="text-xs font-mono text-[#6b7280] uppercase tracking-wider">{met.label}</p>
+            </div>
+            <p className="text-2xl font-mono font-bold text-[#00ff9d] mb-1">{met.value}</p>
+            <p className="text-xs text-[#9ca3af]">{met.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'roas' | 'audience' }) {
   const m = useSpendMetrics()
   const { aov, setAov, conversionRate, setConversionRate, cohortSize } = useSpendModel()
@@ -48,7 +87,6 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
   const prevAov = useRef(aov)
   const prevCohort = useRef(cohortSize)
 
-  // Auto-fill conversion rate to breakeven when AOV or cohort changes
   useEffect(() => {
     if (selectedModel === 'roas' && (prevAov.current !== aov || prevCohort.current !== cohortSize)) {
       prevAov.current = aov
@@ -57,7 +95,6 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
     }
   }, [aov, cohortSize, selectedModel, m.breakevenRate, setConversionRate])
 
-  // If a business need is selected, use its custom benchmarks
   if (needBenchmarks.length > 0 && (selectedModel === 'cpm' || selectedModel === 'cpa')) {
     const gv = selectedModel === 'cpm' ? m.effectiveCPM : m.costPerQualifiedLead
     const subline = selectedModel === 'cpm'
@@ -81,15 +118,12 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
         <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Your Effective CPM</p>
         <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">${gv < 1 ? gv.toFixed(2) : Math.round(gv)}</p>
         <p className="text-sm text-[#6b7280] mb-6">{m.estimatedImpressions.toLocaleString()} touchpoints to verified golfers from {fmt(m.totalInitial)}</p>
-
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-4">Verified Golfer Audiences</p>
         <BenchmarkRow label="GolfN (100% verified golfers)" value={gv} golfnValue={gv} isSelf />
         <BenchmarkRow label="Golf Digest / Endemic Media" value={65} golfnValue={gv} sublabel="Sponsorships, native, email to verified subscribers" />
-
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-6">Inferred Golf Interest (Unverified)</p>
         <BenchmarkRow label="Meta Golf Audiences" value={22} golfnValue={gv} sublabel='Algorithmic -- "interested in golf"' />
         <BenchmarkRow label="Google Display Golf" value={35} golfnValue={gv} sublabel="Affinity + keyword targeting" />
-
         <p className="text-[11px] text-[#4b5563] mt-6 italic">US golf-targeted audiences, 2025-26 benchmarks. GolfN and Golf Digest reach verified golfers. Meta and Google reach inferred interest.</p>
       </div>
     )
@@ -102,16 +136,13 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
         <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Cost Per Qualified Lead</p>
         <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">{fmt(gv)}</p>
         <p className="text-sm text-[#6b7280] mb-6">{m.cohortSize.toLocaleString()} qualified golfers who engaged and matched your criteria</p>
-
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-4">Verified Golfer Audiences</p>
         <BenchmarkRow label="GolfN (behavioral qualification)" value={gv} golfnValue={gv} isSelf />
         <BenchmarkRow label="Endemic Sponsorship / Email" value={85} golfnValue={gv} sublabel="Golf Digest, PGA Tour partners, golf media" />
-
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-2 mt-6">Inferred Golf Interest (Unverified)</p>
         <BenchmarkRow label="Meta Lead Gen Golf" value={28} golfnValue={gv} sublabel="Form fills from interest-based audiences" />
         <BenchmarkRow label="Google Ads Golf (optimized)" value={12} golfnValue={gv} sublabel="Best-case lower-funnel campaigns" />
-
-        <p className="text-[11px] text-[#4b5563] mt-6 italic">US golf-targeted audiences, 2025-26 benchmarks. GolfN leads are qualified by behavior inside a golf-native environment, not a form fill.</p>
+        <p className="text-[11px] text-[#4b5563] mt-6 italic">US golf-targeted audiences, 2025-26 benchmarks. GolfN leads are qualified by behavior, not a form fill.</p>
       </div>
     )
   }
@@ -119,7 +150,6 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
   if (selectedModel === 'roas') {
     const isAtBreakeven = Math.abs(conversionRate - m.breakevenRate) < 0.05
     const isAboveBreakeven = conversionRate > m.breakevenRate + 0.05
-
     return (
       <div>
         <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Projected First-Year ROAS</p>
@@ -129,84 +159,47 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
           {isAboveBreakeven && <span className="text-sm font-mono text-[#00ff9d] bg-[#00ff9d]/10 px-2 py-0.5 rounded-full">above breakeven</span>}
         </div>
         <p className="text-sm text-[#6b7280] mb-6">{m.cohortSize.toLocaleString()} qualified golfers at {conversionRate}% conversion</p>
-
-        {/* Editable AOV + Conversion Rate */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-2">Your Average Order Value</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280] font-mono">$</span>
-              <input
-                type="number"
-                min={10}
-                max={5000}
-                value={aov}
-                onChange={(e) => setAov(Math.max(10, Math.min(5000, Number(e.target.value) || 10)))}
-                className="w-full bg-[#0f1217] border border-[#2a3347] rounded-lg pl-7 pr-4 py-3 text-lg font-mono font-bold text-[#00ff9d] focus:border-[#00ff9d]/60 focus:outline-none transition-colors"
-              />
+              <input type="number" min={10} max={5000} value={aov} onChange={(e) => setAov(Math.max(10, Math.min(5000, Number(e.target.value) || 10)))} className="w-full bg-[#0f1217] border border-[#2a3347] rounded-lg pl-7 pr-4 py-3 text-lg font-mono font-bold text-[#00ff9d] focus:border-[#00ff9d]/60 focus:outline-none transition-colors" />
             </div>
             <p className="text-[11px] text-[#4b5563] mt-1">GolfN platform avg: $493</p>
           </div>
           <div>
             <label className="block text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-2">Conversion Rate</label>
             <div className="relative">
-              <input
-                type="number"
-                min={0.1}
-                max={20}
-                step={0.1}
-                value={conversionRate}
-                onChange={(e) => setConversionRate(Math.max(0.1, Math.min(20, Number(e.target.value) || 0.1)))}
-                className="w-full bg-[#0f1217] border border-[#2a3347] rounded-lg pl-4 pr-8 py-3 text-lg font-mono font-bold text-[#00ff9d] focus:border-[#00ff9d]/60 focus:outline-none transition-colors"
-              />
+              <input type="number" min={0.1} max={20} step={0.1} value={conversionRate} onChange={(e) => setConversionRate(Math.max(0.1, Math.min(20, Number(e.target.value) || 0.1)))} className="w-full bg-[#0f1217] border border-[#2a3347] rounded-lg pl-4 pr-8 py-3 text-lg font-mono font-bold text-[#00ff9d] focus:border-[#00ff9d]/60 focus:outline-none transition-colors" />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b7280] font-mono">%</span>
             </div>
             <div className="flex items-center justify-between mt-1">
               <p className="text-[11px] text-[#4b5563]">Breakeven: {m.breakevenRate}%</p>
-              {!isAtBreakeven && (
-                <button
-                  onClick={() => setConversionRate(m.breakevenRate)}
-                  className="text-[11px] text-[#00ff9d]/60 hover:text-[#00ff9d] transition-colors"
-                >Reset to breakeven</button>
-              )}
+              {!isAtBreakeven && <button onClick={() => setConversionRate(m.breakevenRate)} className="text-[11px] text-[#00ff9d]/60 hover:text-[#00ff9d] transition-colors">Reset to breakeven</button>}
             </div>
           </div>
         </div>
-
-        {/* Breakeven callout */}
         <div className={`rounded-lg p-4 mb-6 ${isAtBreakeven ? 'bg-[#f59e0b]/5 border border-[#f59e0b]/20' : 'bg-[#001a14]/40 border border-[#00ff9d]/10'}`}>
           <p className={`text-sm ${isAtBreakeven ? 'text-[#f59e0b]' : 'text-[#9ca3af]'}`}>
             {isAtBreakeven
-              ? `We only need ${m.breakevenRate}% of the cohort to convert at ${fmt(aov)} to break even on the ${fmt(m.totalInitial)} investment. That is ${Math.round(m.cohortSize * m.breakevenRate / 100)} customers. Adjust the rate above to see the upside.`
+              ? `We only need ${m.breakevenRate}% of the cohort to convert at ${fmt(aov)} to break even on ${fmt(m.totalInitial)}. That is ${Math.round(m.cohortSize * m.breakevenRate / 100)} customers. Adjust the rate to see the upside.`
               : `Breakeven floor: ${m.breakevenRate}% (${Math.round(m.cohortSize * m.breakevenRate / 100)} customers). You are modeling ${conversionRate}% which projects ${fmt(m.projectedRevenue)} in revenue.`
             }
           </p>
         </div>
-
-        {/* Results */}
         <div className="grid grid-cols-3 gap-3 mb-4">
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Invested</p>
-            <p className="text-xl font-mono font-bold text-white">{fmt(m.totalInitial)}</p>
-          </div>
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center border border-[#00ff9d]/20">
-            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Projected Rev</p>
-            <p className="text-xl font-mono font-bold text-[#00ff9d]">{fmt(m.projectedRevenue)}</p>
-          </div>
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Customers</p>
-            <p className="text-xl font-mono font-bold text-white">{Math.round(m.cohortSize * (conversionRate / 100))}</p>
-          </div>
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Invested</p><p className="text-xl font-mono font-bold text-white">{fmt(m.totalInitial)}</p></div>
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center border border-[#00ff9d]/20"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Projected Rev</p><p className="text-xl font-mono font-bold text-[#00ff9d]">{fmt(m.projectedRevenue)}</p></div>
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Customers</p><p className="text-xl font-mono font-bold text-white">{Math.round(m.cohortSize * (conversionRate / 100))}</p></div>
         </div>
-
         <div className="bg-[#0f1217] rounded-lg p-4">
           <div className="flex justify-between items-center text-sm">
             <span className="text-[#9ca3af]">Math</span>
             <span className="text-[#6b7280] font-mono">{m.cohortSize.toLocaleString()} x {conversionRate}% x {fmt(aov)} = {fmt(m.projectedRevenue)}</span>
           </div>
         </div>
-
-        <p className="text-[11px] text-[#4b5563] mt-6 italic">Does not include repeat purchases, referrals, cohort expansion, or compounding effects beyond year 1.</p>
+        <p className="text-[11px] text-[#4b5563] mt-6 italic">Does not include repeat purchases, referrals, cohort expansion, or compounding beyond year 1.</p>
       </div>
     )
   }
@@ -215,11 +208,10 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
   const costPerOwned = m.totalInitial / m.cohortSize
   return (
     <div>
-      <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">{needLabel || 'Cost Per Owned Golfer'}</p>
+      <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Cost Per Owned Golfer</p>
       <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">{fmt(costPerOwned)}<span className="text-xl text-[#6b7280]">/golfer</span></p>
       <p className="text-sm text-[#6b7280] mb-2">First-party. Behavioral. Yours to reactivate.</p>
       <p className="text-sm text-[#9ca3af] mb-6">Typical first-party golfer acquisition cost on Meta/Google: <span className="text-white font-semibold">$8-25+</span></p>
-
       <div className="space-y-2">
         <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-1">What you get per golfer</p>
         {['Equipment profile: what they play, when they last upgraded', 'Behavioral data: rounds/month, walk vs ride, spend per round', 'Engagement history: what content and offers drive action', 'Purchase intent: marketplace browsing, offer saves, click-throughs', 'Reactivation path: seasonal re-engagement, AI lookalike expansion'].map(item => (
@@ -241,10 +233,6 @@ export function EvaluateAndInvest() {
   const suggestedModel = need?.suggestedSpendModel || null
   const m = useSpendMetrics()
   const [showOngoing, setShowOngoing] = useState(false)
-
-  function handleSelect(mid: SpendModel) {
-    setModel(mid)
-  }
 
   return (
     <section id="evaluate" className="py-20 md:py-28">
@@ -270,7 +258,7 @@ export function EvaluateAndInvest() {
             return (
               <Fade key={mid.id} delay={i * 0.05}>
                 <button
-                  onClick={() => handleSelect(mid.id)}
+                  onClick={() => setModel(mid.id)}
                   className={`w-full text-left p-6 rounded-xl border-2 transition-all duration-300 group relative ${
                     isSelected
                       ? 'bg-[#001a14] border-[#00ff9d]/60 shadow-[0_0_30px_rgba(0,255,157,0.1)]'
@@ -296,12 +284,8 @@ export function EvaluateAndInvest() {
 
         <AnimatePresence>
           {model && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-            >
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4, ease: 'easeOut' }}>
+              {/* Cohort slider */}
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 max-w-2xl mb-10">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -318,6 +302,7 @@ export function EvaluateAndInvest() {
                 <div className="flex justify-between mt-2 text-xs font-mono text-[#4b5563]"><span>500</span><span>10,000</span></div>
               </div>
 
+              {/* Investment + primary metric */}
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
                 <div className="lg:col-span-2 bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10">
                   <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-8">Your Commitment</p>
@@ -354,6 +339,10 @@ export function EvaluateAndInvest() {
                 </div>
               </div>
 
+              {/* Combined value -- the other 3 metrics from the same investment */}
+              <CombinedValue excludeModel={model} />
+
+              {/* Accountability */}
               <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10">
                 <p className="text-lg md:text-xl text-[#d1d5db] leading-9">
                   {'You are in for some product and '}<span className="text-white font-semibold">{fmt(m.startupFee)}</span>
