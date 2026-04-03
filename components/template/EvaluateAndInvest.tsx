@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BarChart3, Target, TrendingUp, Users, ChevronRight, Star, ChevronDown, ChevronUp } from 'lucide-react'
 import { useSpendModel, useSpendMetrics, type SpendModel } from '@/lib/spend-model-context'
@@ -40,11 +40,22 @@ function BenchmarkRow({ label, value, golfnValue, isSelf, sublabel }: { label: s
 
 function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'roas' | 'audience' }) {
   const m = useSpendMetrics()
-  const { aov, setAov, conversionRate, setConversionRate } = useSpendModel()
+  const { aov, setAov, conversionRate, setConversionRate, cohortSize } = useSpendModel()
   const { selectedNeed } = useBusinessNeed()
   const need = getNeedById(selectedNeed)
   const needBenchmarks = need?.benchmarks || []
   const needLabel = need?.benchmarkLabel || ''
+  const prevAov = useRef(aov)
+  const prevCohort = useRef(cohortSize)
+
+  // Auto-fill conversion rate to breakeven when AOV or cohort changes
+  useEffect(() => {
+    if (selectedModel === 'roas' && (prevAov.current !== aov || prevCohort.current !== cohortSize)) {
+      prevAov.current = aov
+      prevCohort.current = cohortSize
+      setConversionRate(m.breakevenRate)
+    }
+  }, [aov, cohortSize, selectedModel, m.breakevenRate, setConversionRate])
 
   // If a business need is selected, use its custom benchmarks
   if (needBenchmarks.length > 0 && (selectedModel === 'cpm' || selectedModel === 'cpa')) {
@@ -106,14 +117,21 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
   }
 
   if (selectedModel === 'roas') {
+    const isAtBreakeven = Math.abs(conversionRate - m.breakevenRate) < 0.05
+    const isAboveBreakeven = conversionRate > m.breakevenRate + 0.05
+
     return (
       <div>
         <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-2">Projected First-Year ROAS</p>
-        <p className="text-5xl font-mono font-bold text-[#00ff9d] mb-1">{m.projectedROAS}:1</p>
+        <div className="flex items-baseline gap-3 mb-1">
+          <p className="text-5xl font-mono font-bold text-[#00ff9d]">{m.projectedROAS}:1</p>
+          {isAtBreakeven && <span className="text-sm font-mono text-[#f59e0b] bg-[#f59e0b]/10 px-2 py-0.5 rounded-full">breakeven</span>}
+          {isAboveBreakeven && <span className="text-sm font-mono text-[#00ff9d] bg-[#00ff9d]/10 px-2 py-0.5 rounded-full">above breakeven</span>}
+        </div>
         <p className="text-sm text-[#6b7280] mb-6">{m.cohortSize.toLocaleString()} qualified golfers at {conversionRate}% conversion</p>
 
         {/* Editable AOV + Conversion Rate */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-2">Your Average Order Value</label>
             <div className="relative">
@@ -130,21 +148,39 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
             <p className="text-[11px] text-[#4b5563] mt-1">GolfN platform avg: $493</p>
           </div>
           <div>
-            <label className="block text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-2">Expected Conversion Rate</label>
+            <label className="block text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-2">Conversion Rate</label>
             <div className="relative">
               <input
                 type="number"
-                min={0.5}
+                min={0.1}
                 max={20}
-                step={0.5}
+                step={0.1}
                 value={conversionRate}
-                onChange={(e) => setConversionRate(Math.max(0.5, Math.min(20, Number(e.target.value) || 1)))}
+                onChange={(e) => setConversionRate(Math.max(0.1, Math.min(20, Number(e.target.value) || 0.1)))}
                 className="w-full bg-[#0f1217] border border-[#2a3347] rounded-lg pl-4 pr-8 py-3 text-lg font-mono font-bold text-[#00ff9d] focus:border-[#00ff9d]/60 focus:outline-none transition-colors"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b7280] font-mono">%</span>
             </div>
-            <p className="text-[11px] text-[#4b5563] mt-1">3% is conservative for qualified cohort</p>
+            <div className="flex items-center justify-between mt-1">
+              <p className="text-[11px] text-[#4b5563]">Breakeven: {m.breakevenRate}%</p>
+              {!isAtBreakeven && (
+                <button
+                  onClick={() => setConversionRate(m.breakevenRate)}
+                  className="text-[11px] text-[#00ff9d]/60 hover:text-[#00ff9d] transition-colors"
+                >Reset to breakeven</button>
+              )}
+            </div>
           </div>
+        </div>
+
+        {/* Breakeven callout */}
+        <div className={`rounded-lg p-4 mb-6 ${isAtBreakeven ? 'bg-[#f59e0b]/5 border border-[#f59e0b]/20' : 'bg-[#001a14]/40 border border-[#00ff9d]/10'}`}>
+          <p className={`text-sm ${isAtBreakeven ? 'text-[#f59e0b]' : 'text-[#9ca3af]'}`}>
+            {isAtBreakeven
+              ? `We only need ${m.breakevenRate}% of the cohort to convert at ${fmt(aov)} to break even on the ${fmt(m.totalInitial)} investment. That is ${Math.round(m.cohortSize * m.breakevenRate / 100)} customers. Adjust the rate above to see the upside.`
+              : `Breakeven floor: ${m.breakevenRate}% (${Math.round(m.cohortSize * m.breakevenRate / 100)} customers). You are modeling ${conversionRate}% which projects ${fmt(m.projectedRevenue)} in revenue.`
+            }
+          </p>
         </div>
 
         {/* Results */}
@@ -166,11 +202,11 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
         <div className="bg-[#0f1217] rounded-lg p-4">
           <div className="flex justify-between items-center text-sm">
             <span className="text-[#9ca3af]">Math</span>
-            <span className="text-[#6b7280] font-mono">{m.cohortSize.toLocaleString()} golfers x {conversionRate}% x {fmt(aov)} = {fmt(m.projectedRevenue)}</span>
+            <span className="text-[#6b7280] font-mono">{m.cohortSize.toLocaleString()} x {conversionRate}% x {fmt(aov)} = {fmt(m.projectedRevenue)}</span>
           </div>
         </div>
 
-        <p className="text-[11px] text-[#4b5563] mt-6 italic">Conservative. Does not include repeat purchases, referrals, cohort expansion, or compounding effects beyond year 1.</p>
+        <p className="text-[11px] text-[#4b5563] mt-6 italic">Does not include repeat purchases, referrals, cohort expansion, or compounding effects beyond year 1.</p>
       </div>
     )
   }
