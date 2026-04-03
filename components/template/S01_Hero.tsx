@@ -21,7 +21,6 @@ const pitchPartnerLogos = [
   { name: 'L.A.B. Golf', url: 'https://www.golfn.com/LAB.png' },
   { name: 'Cobra Puma Golf', url: 'https://www.golfn.com/cobra.webp' },
   { name: 'Bettinardi', url: 'https://www.golfn.com/bettinardi.webp' },
-  { name: 'Miura', url: 'https://cdn.sanity.io/images/e3wja34v/production/977627f4e17ad0e975e5fd93571bad245c1534b4-840x381.jpg' },
   { name: 'Finn', url: 'https://cdn.sanity.io/images/e3wja34v/production/e325118a1a6270a4e7887a895cbf469cd211d40b-131x55.svg' },
   { name: 'Hyperice', url: 'https://cdn.sanity.io/images/e3wja34v/production/36b4396feef4359c78c827dad89e3bc2c42929b2-3840x2160.png' },
 ]
