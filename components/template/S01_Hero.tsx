@@ -21,6 +21,9 @@ const pitchPartnerLogos = [
   { name: 'L.A.B. Golf', url: 'https://www.golfn.com/LAB.png' },
   { name: 'Cobra Puma Golf', url: 'https://www.golfn.com/cobra.webp' },
   { name: 'Bettinardi', url: 'https://www.golfn.com/bettinardi.webp' },
+  { name: 'Miura', url: 'https://cdn.sanity.io/images/e3wja34v/production/977627f4e17ad0e975e5fd93571bad245c1534b4-840x381.jpg' },
+  { name: 'Finn', url: 'https://cdn.sanity.io/images/e3wja34v/production/e325118a1a6270a4e7887a895cbf469cd211d40b-131x55.svg' },
+  { name: 'Hyperice', url: 'https://cdn.sanity.io/images/e3wja34v/production/36b4396feef4359c78c827dad89e3bc2c42929b2-3840x2160.png' },
 ]
 
 function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { brandName: string; brandLogoUrl?: string }[]; agencyLogoUrl?: string; agencyName?: string }) {
@@ -152,10 +155,11 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
             {isPitch && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
                 <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
-                <div className="flex items-center gap-8 md:gap-10">
+                <div className="flex items-center gap-6 md:gap-8 flex-wrap">
                   {pitchPartnerLogos.map((logo) => (
-                    <img key={logo.name} src={logo.url} alt={logo.name} className="h-7 md:h-9 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.6 }} />
+                    <img key={logo.name} src={logo.url} alt={logo.name} className="h-6 md:h-8 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.5 }} />
                   ))}
+                  <span className="text-sm font-mono text-[#4b5563]">& more</span>
                 </div>
               </motion.div>
             )}
