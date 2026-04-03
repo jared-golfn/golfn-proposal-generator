@@ -1,15 +1,41 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Trophy, ArrowRight, Rocket, Target } from 'lucide-react'
+import { Trophy, ArrowRight, Rocket, Target, Mail, Bell, Smartphone, Share2, PenLine, Flame } from 'lucide-react'
 import { useBusinessNeed } from '@/lib/business-need-context'
 import { getNeedById, awarenessNeed } from '@/lib/business-needs'
 import { Fade } from './Fade'
 
+const distributionChannels = [
+  { icon: Smartphone, label: 'In-App Messages', detail: '28,000+ monthly active users' },
+  { icon: Mail, label: 'Email Campaigns', detail: '100,000+ registered golfers' },
+  { icon: Bell, label: 'Push Notifications', detail: 'Opted-in users, real-time delivery' },
+  { icon: Flame, label: 'Daily Grind', detail: 'Daily check-in touchpoint' },
+  { icon: Share2, label: 'Social Media', detail: 'Instagram, X, TikTok -- growing daily' },
+  { icon: PenLine, label: 'Blog + SEO', detail: 'Content with backlinks to your site' },
+]
+
+function DistributionEngine() {
+  return (
+    <div className="border-t border-[#2a3347] bg-[#0f1217]/30 px-8 md:px-10 py-6">
+      <p className="text-xs font-mono text-[#00ff9d] uppercase tracking-[0.2em] mb-4">Distribution Engine</p>
+      <p className="text-sm text-[#6b7280] mb-5">Your campaign reaches the entire GolfN ecosystem simultaneously. Every channel fires on launch.</p>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        {distributionChannels.map((ch) => (
+          <div key={ch.label} className="bg-[#1a1f2e] rounded-lg px-3 py-3 border border-[#2a3347]/50">
+            <ch.icon className="w-4 h-4 text-[#00ff9d] mb-2" />
+            <p className="text-xs font-semibold text-white mb-0.5">{ch.label}</p>
+            <p className="text-[10px] text-[#6b7280] leading-tight">{ch.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export function NeedCampaignCard() {
   const { selectedNeed, downstreamObjective } = useBusinessNeed()
 
-  // If awareness is selected, show the awareness campaign with optional downstream framing
   if (selectedNeed === 'build-awareness') {
     const aw = awarenessNeed
     const downstream = getNeedById(downstreamObjective)
@@ -41,7 +67,7 @@ export function NeedCampaignCard() {
                   <div className="flex flex-wrap items-center gap-4">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217]">PRIZE POOL</span>
-                      <span className="text-xl font-mono font-bold text-[#00ff9d]">~$4,500</span>
+                      <span className="text-xl font-mono font-bold text-[#00ff9d]">Up to $5,000</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#2a3347] text-[#9ca3af]">STARTUP</span>
@@ -69,7 +95,9 @@ export function NeedCampaignCard() {
               </div>
             </div>
 
-            {/* Phase 2 teaser if downstream objective is selected */}
+            {/* Distribution engine */}
+            <DistributionEngine />
+
             {downstream && (
               <div className="border-t border-[#2a3347] bg-[#0f1217]/50 p-8 md:p-10">
                 <div className="flex items-center gap-3 mb-4">
@@ -91,7 +119,6 @@ export function NeedCampaignCard() {
     )
   }
 
-  // Specific need selected (not awareness)
   const need = getNeedById(selectedNeed)
 
   if (!need) {
@@ -134,7 +161,7 @@ export function NeedCampaignCard() {
                 <div className="flex flex-wrap items-center gap-4">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#00ff9d] text-[#0f1217]">PRIZE POOL</span>
-                    <span className="text-xl font-mono font-bold text-[#00ff9d]">~$4,500</span>
+                    <span className="text-xl font-mono font-bold text-[#00ff9d]">Up to $5,000</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded-full font-bold bg-[#2a3347] text-[#9ca3af]">STARTUP</span>
@@ -160,6 +187,9 @@ export function NeedCampaignCard() {
               </div>
             </div>
           </div>
+
+          {/* Distribution engine */}
+          <DistributionEngine />
         </div>
       </Fade>
     </div>
