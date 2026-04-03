@@ -61,7 +61,6 @@ function CombinedValue({ excludeModel }: { excludeModel: 'cpm' | 'cpa' | 'roas' 
 
   return (
     <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10 mb-8">
-      {/* L.A.B. tie-in */}
       <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl px-5 py-3 mb-8">
         <p className="text-sm text-[#d1d5db]">
           L.A.B. Golf turned this same {fmt(m.totalInitial)} into $44,692 revenue and their #1 channel in Indiana -- well above breakeven.
@@ -70,7 +69,6 @@ function CombinedValue({ excludeModel }: { excludeModel: 'cpm' | 'cpa' | 'roas' 
 
       <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">One investment. Four outcomes.</p>
 
-      {/* Visual equation: 4 cards with + signs between them */}
       <div className="flex flex-col lg:flex-row items-stretch gap-0 mb-8">
         {allMetrics.map((met, i) => {
           const isSelected = met.id === excludeModel
@@ -92,7 +90,6 @@ function CombinedValue({ excludeModel }: { excludeModel: 'cpm' | 'cpa' | 'roas' 
         })}
       </div>
 
-      {/* Punchline */}
       <div className="text-center">
         <p className="text-xl md:text-2xl font-bold text-white mb-3">
           All from one <span className="text-[#00ff9d]">{fmt(m.totalInitial)}</span> investment.
@@ -360,9 +357,15 @@ export function EvaluateAndInvest() {
                     </button>
                     <AnimatePresence>{showOngoing && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-                        <div className="mt-4 bg-[#0f1217]/50 rounded-lg p-4">
-                          <div className="flex justify-between items-center"><span className="text-sm text-[#9ca3af]">Per qualified user/month</span><span className="text-sm font-mono text-[#6b7280]">$5 (tiers to $1)</span></div>
-                          <p className="text-xs text-[#4b5563] mt-2">Only if you continue after the initial activation.</p>
+                        <div className="mt-4 space-y-3">
+                          <div className="bg-[#0f1217]/50 rounded-lg p-4">
+                            <div className="flex justify-between items-center"><span className="text-sm text-[#9ca3af]">Per qualified user/month</span><span className="text-sm font-mono text-[#6b7280]">$5 (tiers to $1)</span></div>
+                            <p className="text-xs text-[#4b5563] mt-2">Only if you continue after the initial activation.</p>
+                          </div>
+                          <div className="bg-[#0f1217]/50 rounded-lg p-4">
+                            <div className="flex justify-between items-center"><span className="text-sm text-[#9ca3af]">GolfN Marketplace channel</span><span className="text-sm font-mono text-[#6b7280]">Optional</span></div>
+                            <p className="text-xs text-[#4b5563] mt-2">Seamless in-app checkout for your cohort. Brands typically see 2-3x higher conversion because the purchase happens inside the same trusted experience where the golfer first engaged. You keep 70% -- we handle fulfillment.</p>
+                          </div>
                         </div>
                       </motion.div>
                     )}</AnimatePresence>
