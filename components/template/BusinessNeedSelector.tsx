@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, ArrowRight, ArrowDown, Rocket } from 'lucide-react'
 import { businessNeeds, awarenessNeed, getNeedById } from '@/lib/business-needs'
-import { useBusinessNeed, type BusinessNeedId } from '@/lib/business-need-context'
+import type { BusinessNeedId } from '@/lib/business-needs'
+import { useBusinessNeed } from '@/lib/business-need-context'
 import { Fade } from './Fade'
 
 export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }) {
@@ -20,10 +21,8 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
 
   function selectSpecific(id: BusinessNeedId) {
     if (selectedNeed === 'build-awareness') {
-      // They picked awareness first, now picking the downstream objective
       setDownstreamObjective(downstreamObjective === id ? null : id)
     } else {
-      // Direct selection of a specific need (skip awareness)
       setSelectedNeed(selectedNeed === id ? null : id)
       setDownstreamObjective(null)
     }
@@ -59,7 +58,7 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-3xl">{aw.icon}</span>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap">
                       <h3 className={`text-2xl md:text-3xl font-bold transition-colors ${isAwareness ? 'text-[#00ff9d]' : 'text-white'}`}>{aw.title}</h3>
                       <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#00ff9d]/15 text-[#00ff9d] border border-[#00ff9d]/30">
                         Most partners start here
@@ -128,7 +127,7 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
                     return (
                       <button
                         key={need.id}
-                        onClick={() => selectSpecific(need.id as BusinessNeedId)}
+                        onClick={() => selectSpecific(need.id)}
                         className={`text-left p-4 rounded-xl border transition-all duration-200 ${
                           isSelected
                             ? 'bg-[#001a14]/60 border-[#00ff9d]/40'
@@ -173,7 +172,7 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
                 return (
                   <Fade key={need.id} delay={0.1 + i * 0.04}>
                     <button
-                      onClick={() => selectSpecific(need.id as BusinessNeedId)}
+                      onClick={() => selectSpecific(need.id)}
                       className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-300 group ${
                         isSelected
                           ? 'bg-[#001a14] border-[#00ff9d]/50'
