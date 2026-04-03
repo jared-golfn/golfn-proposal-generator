@@ -5,6 +5,7 @@ import type { PartnerData } from '@/lib/template-types'
 import { images } from '@/lib/images'
 import { BrandSpendProvider } from '@/lib/brand-context'
 import { SpendModelProvider } from '@/lib/spend-model-context'
+import { BusinessNeedProvider } from '@/lib/business-need-context'
 import { S01_Hero } from './S01_Hero'
 import { S02_WhyBrands } from './S02_WhyBrands'
 import { S03_HowItWorks } from './S03_HowItWorks'
@@ -19,6 +20,7 @@ import { S10_DataDifference } from './S10_DataDifference'
 import { S11_FAQ } from './S11_FAQ'
 import { S12_FinalCTA } from './S12_FinalCTA'
 import { BusinessNeedSelector } from './BusinessNeedSelector'
+import { NeedCampaignCard } from './NeedCampaignCard'
 import { SpendModelSelector } from './SpendModelSelector'
 import { DynamicInvestment } from './DynamicInvestment'
 import { PitchChecklist } from './PitchChecklist'
@@ -53,112 +55,87 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
   const activeNav = isPitch ? pitchNavSections : navSections
   const isWalkthrough = !!partner.heroVideoUrl
 
-  // ═══════════════════════════════════════════════════════════
-  // PITCH MODE
-  // Flow: Hero → Business Need → Campaign → How It Works →
-  //       Case Studies → Spend Model → Investment →
-  //       Checklist → Impact → CTA
-  // ═══════════════════════════════════════════════════════════
   if (isPitch) {
     return (
       <BrandSpendProvider>
         <SpendModelProvider>
-          <main className="relative bg-[#0f1217]">
-            <SessionTracker slug={partner.slug} />
-            <div className="accent-line fixed top-0 left-0 right-0 z-50" />
+          <BusinessNeedProvider>
+            <main className="relative bg-[#0f1217]">
+              <SessionTracker slug={partner.slug} />
+              <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-            <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
-              {activeNav.map((s) => (
-                <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
-                  <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
-                  <img src={images.logoIcon} alt="" className="block w-6 h-6 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
-                </a>
-              ))}
-            </nav>
+              <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
+                {activeNav.map((s) => (
+                  <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
+                    <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
+                    <img src={images.logoIcon} alt="" className="block w-6 h-6 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
+                  </a>
+                ))}
+              </nav>
 
-            <div id="proposal-content">
-              {/* 1. Hero — who we are, platform stats, clean */}
-              <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
+              <div id="proposal-content">
+                <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
+                <SectionDivider />
 
-              <SectionDivider />
+                <BusinessNeedSelector
+                  onContinue={() => document.getElementById('getting-started')?.scrollIntoView({ behavior: 'smooth' })}
+                />
+                <SectionDivider />
 
-              {/* 2. Business Need — "What are you trying to solve?" */}
-              <BusinessNeedSelector
-                onContinue={() => document.getElementById('getting-started')?.scrollIntoView({ behavior: 'smooth' })}
-              />
-
-              <SectionDivider />
-
-              {/* 3. The Campaign — what we would build for you */}
-              <div id="getting-started" className="pt-12 md:pt-16">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
-                  <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">The Campaign</p>
-                  <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight">{"Here's what we'd"}<br /><span className="text-[#00ff9d]">build for you</span></h2>
+                <div id="getting-started" className="pt-12 md:pt-16">
+                  <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
+                    <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">The Campaign</p>
+                    <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight">{"Here's what we'd"}<br /><span className="text-[#00ff9d]">build for you</span></h2>
+                  </div>
+                  <NeedCampaignCard />
                 </div>
-                <S08_WaysToWork partner={partner} section="campaigns" />
+                <SectionDivider />
+
+                <S03_PitchHowItWorks partner={partner} />
+                <SectionDivider />
+
+                <CaseStudy />
+                <SectionDivider />
+
+                <div id="evaluate">
+                  <SpendModelSelector />
+                </div>
+                <SectionDivider />
+
+                <DynamicInvestment />
+                <SectionDivider />
+
+                <PitchChecklist partner={partner} />
+
+                {isWalkthrough && (
+                  <>
+                    <SectionDivider />
+                    <PersonalizedImpactCard />
+                  </>
+                )}
+                <SectionDivider />
+
+                <S12_FinalCTA partner={partner} />
+
+                <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
+                  <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
+                  <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
+                  <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
+                </footer>
               </div>
-
-              <SectionDivider />
-
-              {/* 4. How It Works — expanded walkthrough */}
-              <S03_PitchHowItWorks partner={partner} />
-
-              <SectionDivider />
-
-              {/* 5. Case Studies — proof it works */}
-              <CaseStudy />
-
-              <SectionDivider />
-
-              {/* 6. Spend Model Selector — how do they evaluate? */}
-              <div id="evaluate">
-                <SpendModelSelector />
-              </div>
-
-              <SectionDivider />
-
-              {/* 7. Investment — dynamic based on their selection */}
-              <DynamicInvestment />
-
-              <SectionDivider />
-
-              {/* 8. What we need — interactive checklist */}
-              <PitchChecklist partner={partner} />
-
-              {/* 9. Success framework — the closer */}
-              {isWalkthrough && (
-                <>
-                  <SectionDivider />
-                  <PersonalizedImpactCard />
-                </>
-              )}
-
-              <SectionDivider />
-
-              {/* 10. Final CTA */}
-              <S12_FinalCTA partner={partner} />
-
-              <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
-                <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-                <p className="text-[#4b5563] text-base">{'Confidential — Prepared for '}{partner.partnerName}{' by GolfN'}</p>
-                <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
-              </footer>
-            </div>
-          </main>
+            </main>
+          </BusinessNeedProvider>
         </SpendModelProvider>
       </BrandSpendProvider>
     )
   }
 
-  // ═══════════════════════════════════════════════════════════
   // NORMAL MODE (unchanged)
-  // ═══════════════════════════════════════════════════════════
   return (
     <BrandSpendProvider>
       <main className="relative bg-[#0f1217]">
         <SessionTracker slug={partner.slug} />
         <div className="accent-line fixed top-0 left-0 right-0 z-50" />
-
         <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-8 pointer-events-none">
           {activeNav.map((s) => (
             <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
@@ -167,7 +144,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             </a>
           ))}
         </nav>
-
         <div id="proposal-content">
           <div id="top"><S01_Hero partner={partner} /></div>
           <SectionDivider />
@@ -175,73 +151,34 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           <SectionDivider label="See the process" targetId="how-it-works" />
           <div id="how-it-works"><S03_HowItWorks partner={partner} /></div>
           <SectionDivider />
-
-          <CollapsibleSection number="01" label="Campaign" title="Launch a Premium Campaign">
-            <S04_LaunchCampaign partner={partner} />
-          </CollapsibleSection>
-
-          <CollapsibleSection number="02" label="Qualification" title="From Attention to Qualified Interest">
-            <S05_QualifiedInterest partner={partner} />
-          </CollapsibleSection>
-
-          <CollapsibleSection number="03" label="Activation" title="Post-Campaign Activation Paths">
-            <S06_PostCampaign partner={partner} />
-          </CollapsibleSection>
-
-          <CollapsibleSection number="04" label="Reporting" title={"What You'll See Each Month"}>
-            <S07_MonthlyReporting partner={partner} />
-          </CollapsibleSection>
-
+          <CollapsibleSection number="01" label="Campaign" title="Launch a Premium Campaign"><S04_LaunchCampaign partner={partner} /></CollapsibleSection>
+          <CollapsibleSection number="02" label="Qualification" title="From Attention to Qualified Interest"><S05_QualifiedInterest partner={partner} /></CollapsibleSection>
+          <CollapsibleSection number="03" label="Activation" title="Post-Campaign Activation Paths"><S06_PostCampaign partner={partner} /></CollapsibleSection>
+          <CollapsibleSection number="04" label="Reporting" title={"What You'll See Each Month"}><S07_MonthlyReporting partner={partner} /></CollapsibleSection>
           <SectionDivider />
           <CaseStudy />
           <SectionDivider />
-
           <div id="getting-started" className="pt-12 md:pt-16">
             <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
               <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">Getting Started</p>
               <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight">Everything you need<br /><span className="text-[#00ff9d]">to launch</span></h2>
             </div>
-
             <S08_WaysToWork partner={partner} section="campaigns" />
-
-            <CollapsibleSection label="Requirements" title="What We Need From You" subtitle="What GolfN handles vs. what the partner provides">
-              <S09_WhatWeNeed partner={partner} />
-            </CollapsibleSection>
+            <CollapsibleSection label="Requirements" title="What We Need From You" subtitle="What GolfN handles vs. what the partner provides"><S09_WhatWeNeed partner={partner} /></CollapsibleSection>
           </div>
-
           <div id="ways-to-work">
-            <CollapsibleSection label="Pricing" title="How the Program Unfolds" subtitle="Timeline, startup fee, add-ons, and what's included">
-              <S08_WaysToWork partner={partner} section="timeline" />
-            </CollapsibleSection>
-
-            <CollapsibleSection label="Optional" labelColor="#f59e0b" title="Post-Campaign Audience Nurturing & Expansion" subtitle="The initial campaign does more than drive awareness. It helps GolfN identify the golfer profiles most likely to engage with your brand, so we can continue nurturing that audience and adding newly qualified users into the activation flow over time.">
-              <S08_WaysToWork partner={partner} section="peruser" />
-            </CollapsibleSection>
+            <CollapsibleSection label="Pricing" title="How the Program Unfolds" subtitle="Timeline, startup fee, add-ons, and what is included"><S08_WaysToWork partner={partner} section="timeline" /></CollapsibleSection>
+            <CollapsibleSection label="Optional" labelColor="#f59e0b" title="Post-Campaign Audience Nurturing and Expansion" subtitle="The initial campaign does more than drive awareness. It helps GolfN identify the golfer profiles most likely to engage with your brand, so we can continue nurturing that audience over time."><S08_WaysToWork partner={partner} section="peruser" /></CollapsibleSection>
           </div>
-
           <S10_DataDifference partner={partner} />
-
-          {isWalkthrough && (
-            <>
-              <SectionDivider />
-              <PersonalizedImpactCard />
-            </>
-          )}
-
+          {isWalkthrough && (<><SectionDivider /><PersonalizedImpactCard /></>)}
           <SectionDivider />
-
-          <div id="faq-section">
-            <CollapsibleSection title="Frequently Asked Questions" subtitle="Common questions about GolfN partnerships">
-              <S11_FAQ partner={partner} />
-            </CollapsibleSection>
-          </div>
-
+          <div id="faq-section"><CollapsibleSection title="Frequently Asked Questions" subtitle="Common questions about GolfN partnerships"><S11_FAQ partner={partner} /></CollapsibleSection></div>
           <SectionDivider />
           <S12_FinalCTA partner={partner} />
-
           <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
             <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-            <p className="text-[#4b5563] text-base">{'Confidential — Prepared for '}{partner.partnerName}{' by GolfN'}</p>
+            <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
             <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
           </footer>
         </div>
