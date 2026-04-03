@@ -20,7 +20,7 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
   }
 
   function selectSpecific(id: BusinessNeedId) {
-    if (selectedNeed === 'build-awareness') {
+    if (isAwareness) {
       setDownstreamObjective(downstreamObjective === id ? null : id)
     } else {
       setSelectedNeed(selectedNeed === id ? null : id)
@@ -192,9 +192,9 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
               })}
             </div>
 
-            {/* Specific need detail */}
+            {/* Specific need detail -- already inside !isAwareness guard so no need to recheck */}
             <AnimatePresence mode="wait">
-              {activeNeed && selectedNeed !== 'build-awareness' && (
+              {activeNeed && (
                 <motion.div key={selectedNeed} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
                   <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                     <div className="lg:col-span-2 space-y-6">
