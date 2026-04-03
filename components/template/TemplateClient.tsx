@@ -18,6 +18,7 @@ import { S09_WhatWeNeed } from './S09_WhatWeNeed'
 import { S10_DataDifference } from './S10_DataDifference'
 import { S11_FAQ } from './S11_FAQ'
 import { S12_FinalCTA } from './S12_FinalCTA'
+import { BusinessNeedSelector } from './BusinessNeedSelector'
 import { SpendModelSelector } from './SpendModelSelector'
 import { DynamicInvestment } from './DynamicInvestment'
 import { PitchChecklist } from './PitchChecklist'
@@ -38,6 +39,7 @@ const navSections = [
 
 const pitchNavSections = [
   { id: 'top', label: 'Overview' },
+  { id: 'business-need', label: 'Your Need' },
   { id: 'getting-started', label: 'The Campaign' },
   { id: 'how-it-works', label: 'How It Works' },
   { id: 'evaluate', label: 'Evaluate' },
@@ -53,8 +55,9 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
   // ═══════════════════════════════════════════════════════════
   // PITCH MODE
-  // Flow: Hero → Campaign → How It Works → Case Studies →
-  //       Spend Model → Investment → Checklist → Impact → CTA
+  // Flow: Hero → Business Need → Campaign → How It Works →
+  //       Case Studies → Spend Model → Investment →
+  //       Checklist → Impact → CTA
   // ═══════════════════════════════════════════════════════════
   if (isPitch) {
     return (
@@ -64,7 +67,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             <SessionTracker slug={partner.slug} />
             <div className="accent-line fixed top-0 left-0 right-0 z-50" />
 
-            <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6 pointer-events-none">
+            <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
               {activeNav.map((s) => (
                 <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
                   <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
@@ -74,12 +77,19 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             </nav>
 
             <div id="proposal-content">
-              {/* 1. Hero — who we are, platform stats, NO brand spend input */}
+              {/* 1. Hero — who we are, platform stats, clean */}
               <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
 
               <SectionDivider />
 
-              {/* 2. The Campaign — what we would build for you */}
+              {/* 2. Business Need — "What are you trying to solve?" */}
+              <BusinessNeedSelector
+                onContinue={() => document.getElementById('getting-started')?.scrollIntoView({ behavior: 'smooth' })}
+              />
+
+              <SectionDivider />
+
+              {/* 3. The Campaign — what we would build for you */}
               <div id="getting-started" className="pt-12 md:pt-16">
                 <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
                   <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">The Campaign</p>
@@ -90,32 +100,32 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
               <SectionDivider />
 
-              {/* 3. How It Works — expanded walkthrough showing why this is impactful */}
+              {/* 4. How It Works — expanded walkthrough */}
               <S03_PitchHowItWorks partner={partner} />
 
               <SectionDivider />
 
-              {/* 4. Case Studies — proof it works */}
+              {/* 5. Case Studies — proof it works */}
               <CaseStudy />
 
               <SectionDivider />
 
-              {/* 5. Spend Model Selector — now that they see the value, how do they evaluate? */}
+              {/* 6. Spend Model Selector — how do they evaluate? */}
               <div id="evaluate">
                 <SpendModelSelector />
               </div>
 
               <SectionDivider />
 
-              {/* 6. Investment — dynamic based on their selection */}
+              {/* 7. Investment — dynamic based on their selection */}
               <DynamicInvestment />
 
               <SectionDivider />
 
-              {/* 7. What we need — interactive checklist */}
+              {/* 8. What we need — interactive checklist */}
               <PitchChecklist partner={partner} />
 
-              {/* 8. Success framework — the closer */}
+              {/* 9. Success framework — the closer */}
               {isWalkthrough && (
                 <>
                   <SectionDivider />
@@ -125,7 +135,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
 
               <SectionDivider />
 
-              {/* 9. Final CTA */}
+              {/* 10. Final CTA */}
               <S12_FinalCTA partner={partner} />
 
               <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
