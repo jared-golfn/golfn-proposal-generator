@@ -4,11 +4,17 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, ArrowRight } from 'lucide-react'
 import { businessNeeds, type BusinessNeed } from '@/lib/business-needs'
+import { useBusinessNeed } from '@/lib/business-need-context'
 import { Fade } from './Fade'
 
 export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }) {
-  const [selected, setSelected] = useState<string | null>(null)
-  const active = businessNeeds.find(n => n.id === selected)
+  const { selectedNeed, setSelectedNeed } = useBusinessNeed()
+  const active = businessNeeds.find(n => n.id === selectedNeed)
+
+  function handleSelect(id: string) {
+    const needId = id as any
+    setSelectedNeed(selectedNeed === needId ? null : needId)
+  }
 
   return (
     <section id="business-need" className="py-20 md:py-28">
@@ -19,18 +25,17 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
             What are you trying<br /><span className="text-[#00ff9d]">to solve?</span>
           </h2>
           <p className="text-lg text-[#9ca3af] max-w-2xl mb-12">
-            Every brand comes to GolfN with a different problem. Pick the one closest to yours and we will show you exactly how we solve it.
+            Every brand comes to GolfN with a different problem. Pick yours and we will show you exactly how we solve it.
           </p>
         </Fade>
 
-        {/* Need cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
           {businessNeeds.map((need, i) => {
-            const isSelected = selected === need.id
+            const isSelected = selectedNeed === need.id
             return (
               <Fade key={need.id} delay={i * 0.04}>
                 <button
-                  onClick={() => setSelected(isSelected ? null : need.id)}
+                  onClick={() => handleSelect(need.id)}
                   className={`w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 group ${
                     isSelected
                       ? 'bg-[#001a14] border-[#00ff9d]/50 shadow-[0_0_40px_rgba(0,255,157,0.08)]'
@@ -57,7 +62,6 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
           })}
         </div>
 
-        {/* Expanded detail */}
         <AnimatePresence mode="wait">
           {active && (
             <motion.div
@@ -68,7 +72,6 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                {/* Left: The problem + scenario */}
                 <div className="lg:col-span-2 space-y-6">
                   <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8">
                     <p className="text-sm font-mono text-[#6b7280] uppercase tracking-wider mb-3">The Problem</p>
@@ -80,14 +83,12 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
                   </div>
                 </div>
 
-                {/* Right: GolfN's solution */}
                 <div className="lg:col-span-3 space-y-6">
                   <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8">
                     <p className="text-sm font-mono text-[#00ff9d] uppercase tracking-wider mb-3">How GolfN Solves This</p>
                     <p className="text-lg text-[#d1d5db] leading-8 mb-6">{active.golfnPlay}</p>
-
                     <div className="space-y-3">
-                      <p className="text-sm font-semibold text-white">Specific capabilities we use:</p>
+                      <p className="text-sm font-semibold text-white">Specific capabilities:</p>
                       {active.capabilities.map(cap => (
                         <div key={cap} className="flex items-start gap-3">
                           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="mt-1.5 shrink-0">
