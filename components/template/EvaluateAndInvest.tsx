@@ -321,19 +321,41 @@ export function EvaluateAndInvest() {
         <AnimatePresence>
           {model && (
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4, ease: 'easeOut' }}>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 max-w-2xl mb-10">
-                <div className="flex items-center justify-between mb-4">
+              {/* Distribution reach + cohort slider */}
+              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-8 mb-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
-                    <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-1">Target Cohort Size</p>
-                    <p className="text-sm text-[#9ca3af]">How many qualified golfers do you want to reach?</p>
+                    <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280] mb-3">Campaign Reach</p>
+                    <p className="text-sm text-[#9ca3af] mb-4">Your campaign is distributed across the entire GolfN ecosystem simultaneously.</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                      {[
+                        ['28,000+', 'MAU in-app'],
+                        ['100,000+', 'email list'],
+                        ['Push', 'notifications'],
+                        ['Social', 'cross-post'],
+                        ['Blog + SEO', 'with backlinks'],
+                        ['Daily Grind', 'integration'],
+                      ].map(([val, label]) => (
+                        <div key={val} className="flex items-center gap-2 py-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0" />
+                          <span className="text-sm text-[#d1d5db]">{val} <span className="text-[#6b7280]">{label}</span></span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <p className="text-4xl font-mono font-bold text-[#00ff9d]">{cohortSize.toLocaleString()}</p>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-sm font-mono tracking-wider uppercase text-[#6b7280]">Target Qualified Cohort</p>
+                      <p className="text-4xl font-mono font-bold text-[#00ff9d]">{cohortSize.toLocaleString()}</p>
+                    </div>
+                    <p className="text-sm text-[#9ca3af] mb-4">Of the full ecosystem reach, this is how many golfers we filter into your permanent owned cohort based on engagement and behavioral match.</p>
+                    <input type="range" min={500} max={10000} step={250} value={cohortSize}
+                      onChange={(e) => setCohortSize(Number(e.target.value))}
+                      className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                      style={{ background: `linear-gradient(to right, #00ff9d 0%, #00ff9d ${((cohortSize - 500) / 9500) * 100}%, #2a3347 ${((cohortSize - 500) / 9500) * 100}%, #2a3347 100%)` }} />
+                    <div className="flex justify-between mt-2 text-xs font-mono text-[#4b5563]"><span>500</span><span>10,000</span></div>
+                  </div>
                 </div>
-                <input type="range" min={500} max={10000} step={250} value={cohortSize}
-                  onChange={(e) => setCohortSize(Number(e.target.value))}
-                  className="w-full h-2 rounded-full appearance-none cursor-pointer"
-                  style={{ background: `linear-gradient(to right, #00ff9d 0%, #00ff9d ${((cohortSize - 500) / 9500) * 100}%, #2a3347 ${((cohortSize - 500) / 9500) * 100}%, #2a3347 100%)` }} />
-                <div className="flex justify-between mt-2 text-xs font-mono text-[#4b5563]"><span>500</span><span>10,000</span></div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
