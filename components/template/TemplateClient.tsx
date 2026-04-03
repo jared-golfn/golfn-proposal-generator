@@ -21,8 +21,7 @@ import { S11_FAQ } from './S11_FAQ'
 import { S12_FinalCTA } from './S12_FinalCTA'
 import { BusinessNeedSelector } from './BusinessNeedSelector'
 import { NeedCampaignCard } from './NeedCampaignCard'
-import { SpendModelSelector } from './SpendModelSelector'
-import { DynamicInvestment } from './DynamicInvestment'
+import { EvaluateAndInvest } from './EvaluateAndInvest'
 import { PitchChecklist } from './PitchChecklist'
 import { CaseStudy } from './CaseStudy'
 import { SectionDivider } from './SectionDivider'
@@ -44,8 +43,7 @@ const pitchNavSections = [
   { id: 'business-need', label: 'Your Need' },
   { id: 'getting-started', label: 'The Campaign' },
   { id: 'how-it-works', label: 'How It Works' },
-  { id: 'evaluate', label: 'Evaluate' },
-  { id: 'ways-to-work', label: 'Investment' },
+  { id: 'evaluate', label: 'Investment' },
   { id: 'next-steps', label: 'Next Steps' },
 ]
 
@@ -97,22 +95,13 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
                 <CaseStudy />
                 <SectionDivider />
 
-                <div id="evaluate">
-                  <SpendModelSelector />
-                </div>
-                <SectionDivider />
-
-                <DynamicInvestment />
+                {/* Unified evaluate + invest section */}
+                <EvaluateAndInvest />
                 <SectionDivider />
 
                 <PitchChecklist partner={partner} />
 
-                {isWalkthrough && (
-                  <>
-                    <SectionDivider />
-                    <PersonalizedImpactCard />
-                  </>
-                )}
+                {isWalkthrough && (<><SectionDivider /><PersonalizedImpactCard /></>)}
                 <SectionDivider />
 
                 <S12_FinalCTA partner={partner} />
