@@ -17,6 +17,12 @@ const defaultKPIs: PlatformKPI[] = [
 
 const PITCH_SUBTITLE = '100,000+ verified golfers who actually buy premium gear. Build an owned audience, activate it, and turn it into revenue.'
 
+const pitchPartnerLogos = [
+  { name: 'L.A.B. Golf', url: 'https://www.golfn.com/LAB.png' },
+  { name: 'Cobra Puma Golf', url: 'https://www.golfn.com/cobra.webp' },
+  { name: 'Bettinardi', url: 'https://www.golfn.com/bettinardi.webp' },
+]
+
 function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { brandName: string; brandLogoUrl?: string }[]; agencyLogoUrl?: string; agencyName?: string }) {
   const validBrands = brands.filter(b => b.brandLogoUrl)
   const n = validBrands.length
@@ -113,7 +119,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
 
       <div className="relative max-w-7xl mx-auto w-full px-6 md:px-12 py-12 md:py-16" style={{ zIndex: 10 }}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex items-center justify-between mb-12 md:mb-20 gap-4">
-          <img src={images.logo} alt="GolfN" className="h-8 md:h-12 w-auto shrink-0" />
+          <img src={images.logo} alt="GolfN" className={`w-auto shrink-0 ${isPitch ? 'h-10 md:h-14' : 'h-8 md:h-12'}`} />
           {partner.agencyLogoUrl ? (
             <div className="flex items-center gap-2 md:gap-3 shrink-0">
               <span className="text-[#6b7280] text-sm md:text-base hidden sm:inline">Prepared for</span>
@@ -132,7 +138,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
         <div className={`grid grid-cols-1 ${hasVideo ? '' : 'lg:grid-cols-5'} gap-8 md:gap-10 items-center`}>
           <div className={hasVideo ? '' : 'lg:col-span-3'}>
             {headline ? (
-              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className={`font-extrabold leading-[0.95] tracking-tight mb-6 ${hasVideo ? 'text-4xl sm:text-5xl md:text-7xl' : 'text-3xl sm:text-4xl md:text-6xl'}`}>
+              <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className={`font-extrabold leading-[0.95] tracking-tight mb-6 ${isPitch ? 'text-5xl sm:text-6xl md:text-8xl lg:text-[5.5rem]' : hasVideo ? 'text-4xl sm:text-5xl md:text-7xl' : 'text-3xl sm:text-4xl md:text-6xl'}`}>
                 {headline}
               </motion.h1>
             ) : (
@@ -140,14 +146,17 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
                 Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
               </motion.h1>
             )}
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className={`text-base md:text-xl text-[#9ca3af] leading-7 md:leading-8 mb-6 ${hasVideo ? 'max-w-4xl' : 'max-w-3xl'}`}>{subtitle}</motion.p>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className={`leading-relaxed mb-8 ${isPitch ? 'text-lg md:text-2xl text-[#9ca3af] max-w-4xl' : 'text-base md:text-xl text-[#9ca3af] max-w-3xl'}`}>{subtitle}</motion.p>
 
-            {/* L.A.B. proof line -- pitch mode only */}
+            {/* Partner logos -- pitch mode only */}
             {isPitch && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
-                <p className="text-base md:text-lg text-[#00ff9d] font-mono">
-                  L.A.B. Golf: $44,692 revenue. #1 channel in Indiana. 90 days.
-                </p>
+                <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
+                <div className="flex items-center gap-8 md:gap-10">
+                  {pitchPartnerLogos.map((logo) => (
+                    <img key={logo.name} src={logo.url} alt={logo.name} className="h-7 md:h-9 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.6 }} />
+                  ))}
+                </div>
               </motion.div>
             )}
 
@@ -211,11 +220,11 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
         </div>
 
         {/* KPIs */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
-              <span className="text-xl md:text-2xl lg:text-3xl font-bold font-mono text-[#00ff9d]">{kpi.value}</span>
-              <span className="block text-sm md:text-base text-[#6b7280] mt-1">{kpi.label}</span>
+              <span className={`font-bold font-mono text-[#00ff9d] ${isPitch ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-xl md:text-2xl lg:text-3xl'}`}>{kpi.value}</span>
+              <span className={`block mt-1 ${isPitch ? 'text-base text-[#6b7280]' : 'text-sm md:text-base text-[#6b7280]'}`}>{kpi.label}</span>
               {kpi.subtitle && <span className="block text-xs text-[#4b5563] mt-0.5">{kpi.subtitle}</span>}
             </div>
           ))}
