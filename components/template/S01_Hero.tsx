@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Zap, Globe, ChevronDown, ChevronUp } from 'lucide-react'
+import { Zap, Globe, ChevronDown, ChevronUp, ArrowDown } from 'lucide-react'
 import type { PartnerData, PlatformKPI } from '@/lib/template-types'
 import { images } from '@/lib/images'
 import { BrandSpendInput } from './BrandSpendInput'
@@ -14,6 +14,8 @@ const defaultKPIs: PlatformKPI[] = [
   { label: 'Countries', value: '57' },
   { label: 'Avg MoM Growth', value: '~53%', subtitle: 'Power user cohort, 10 months' },
 ]
+
+const PITCH_SUBTITLE = '100,000+ verified golfers who actually buy premium gear. Build an owned audience, activate it, and turn it into revenue.'
 
 function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { brandName: string; brandLogoUrl?: string }[]; agencyLogoUrl?: string; agencyName?: string }) {
   const validBrands = brands.filter(b => b.brandLogoUrl)
@@ -79,7 +81,8 @@ function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { bra
 
 export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hideBrandInput?: boolean }) {
   const [showMarkets, setShowMarkets] = useState(false)
-  const subtitle = partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.'
+  const isPitch = !!hideBrandInput
+  const subtitle = isPitch ? PITCH_SUBTITLE : (partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.')
   const headline = partner.heroHeadline
   const heroVideo = partner.heroVideoUrl
   const markets = partner.marketReach
@@ -137,7 +140,18 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
                 Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
               </motion.h1>
             )}
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className={`text-base md:text-xl text-[#9ca3af] leading-7 md:leading-8 mb-8 ${hasVideo ? 'max-w-4xl' : 'max-w-3xl'}`}>{subtitle}</motion.p>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className={`text-base md:text-xl text-[#9ca3af] leading-7 md:leading-8 mb-6 ${hasVideo ? 'max-w-4xl' : 'max-w-3xl'}`}>{subtitle}</motion.p>
+
+            {/* L.A.B. proof line -- pitch mode only */}
+            {isPitch && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
+                <p className="text-base md:text-lg text-[#00ff9d] font-mono">
+                  L.A.B. Golf: $44,692 revenue. #1 channel in Indiana. 90 days.
+                </p>
+              </motion.div>
+            )}
+
+            {!isPitch && <div className="mb-8" />}
 
             {showPartnerLogo && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} className="mb-8">
@@ -172,7 +186,6 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
               </motion.div>
             )}
 
-            {/* Brand spend input -- only on walkthrough pages without hideBrandInput */}
             {showBrandInput && <BrandSpendInput />}
 
             {!hasVideo && (
@@ -241,6 +254,21 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
                 </div>
               </div>
             )}
+          </motion.div>
+        )}
+
+        {/* Scroll anchor -- pitch mode only */}
+        {isPitch && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="mt-12 flex justify-center">
+            <button
+              onClick={() => document.getElementById('business-need')?.scrollIntoView({ behavior: 'smooth' })}
+              className="flex flex-col items-center gap-2 text-[#4b5563] hover:text-[#00ff9d] transition-colors group"
+            >
+              <span className="text-sm font-mono uppercase tracking-wider">Start here</span>
+              <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}>
+                <ArrowDown className="w-5 h-5" />
+              </motion.div>
+            </button>
           </motion.div>
         )}
       </div>
