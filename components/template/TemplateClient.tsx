@@ -23,6 +23,7 @@ import { BusinessNeedSelector } from './BusinessNeedSelector'
 import { NeedCampaignCard } from './NeedCampaignCard'
 import { EvaluateAndInvest } from './EvaluateAndInvest'
 import { PitchChecklist } from './PitchChecklist'
+import { PitchFAQ } from './PitchFAQ'
 import { CaseStudy } from './CaseStudy'
 import { SectionDivider } from './SectionDivider'
 import { SessionTracker } from './SessionTracker'
@@ -95,11 +96,13 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
                 <CaseStudy />
                 <SectionDivider />
 
-                {/* Unified evaluate + invest section */}
                 <EvaluateAndInvest />
                 <SectionDivider />
 
                 <PitchChecklist partner={partner} />
+                <SectionDivider />
+
+                <PitchFAQ />
 
                 {isWalkthrough && (<><SectionDivider /><PersonalizedImpactCard /></>)}
                 <SectionDivider />

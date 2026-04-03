@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Play, TrendingUp, DollarSign, Package, Clock, ExternalLink } from 'lucide-react'
+import { Play, TrendingUp, DollarSign, Package, Clock, ExternalLink, Volume2, VolumeX } from 'lucide-react'
 import { Fade } from './Fade'
 
 const VIDEO_MP4 = 'https://cdn.sanity.io/files/e3wja34v/production/bf78e2998073f2b7ccdc798d8f68a5cb8d601ae1.mp4'
@@ -16,13 +16,13 @@ const metrics = [
 
 export function CaseStudy() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [hasStarted, setHasStarted] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
 
-  function handlePlay() {
+  function toggleMute() {
     const v = videoRef.current
     if (!v) return
-    v.play()
-    setHasStarted(true)
+    v.muted = !v.muted
+    setIsMuted(v.muted)
   }
 
   return (
@@ -36,8 +36,18 @@ export function CaseStudy() {
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">
             From brand film to<br /><span className="text-gradient">#1 sales channel in 90 days</span>
           </h2>
+
+          {/* Before/After one-liner */}
+          <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl px-6 py-4 mb-8 max-w-3xl">
+            <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
+              <span className="text-[#6b7280]">Before:</span> L.A.B. Golf had zero Indiana presence.
+              <br />
+              <span className="text-[#00ff9d] font-semibold">After:</span> GolfN was their #1 sales channel in the state. 90 days. Zero additional ad spend.
+            </p>
+          </div>
+
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-10">
-            GolfN produced a world-class brand film experience with L.A.B. Golf, launched a sweepstakes campaign, and activated the resulting cohort through commerce. The result: the #1 sales channel for L.A.B. Golf in Indiana from a standing start.
+            GolfN produced a world-class brand film, launched a sweepstakes campaign, and activated the resulting cohort through commerce. The result: $44,692 in attributed revenue and sustained $3,500+/month recurring.
           </p>
         </Fade>
 
@@ -48,34 +58,27 @@ export function CaseStudy() {
                 <video
                   ref={videoRef}
                   src={VIDEO_MP4}
-                  controls
+                  autoPlay
+                  muted
+                  loop
                   playsInline
                   preload="metadata"
+                  controls
                   controlsList="nodownload"
                   className="absolute inset-0 w-full h-full object-contain"
-                  onPlay={() => setHasStarted(true)}
                 />
-                {!hasStarted && (
-                  <div
-                    data-track="video-play"
-                    className="absolute inset-0 bg-black/40 hover:bg-black/30 transition-colors flex items-center justify-center cursor-pointer"
-                    style={{ pointerEvents: 'auto' }}
-                    onClick={handlePlay}
-                  >
-                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#00ff9d] flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-                      <Play className="w-8 h-8 md:w-10 md:h-10 text-[#0f1217] ml-1" fill="#0f1217" />
-                    </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-                      <p className="text-white font-bold text-lg md:text-xl">GolfN x L.A.B. Golf</p>
-                      <p className="text-[#9ca3af] text-sm md:text-base">Brand Film Experience &mdash; 60 second cut</p>
-                    </div>
-                  </div>
-                )}
+                {/* Mute/unmute overlay button */}
+                <button
+                  onClick={toggleMute}
+                  className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 flex items-center justify-center transition-colors"
+                >
+                  {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-[#00ff9d]" />}
+                </button>
               </div>
             </div>
 
             <div className="px-6 md:px-8 py-3 border-t border-[#2a3347] flex items-center justify-between">
-              <span className="text-sm text-[#6b7280]">60 second cut</span>
+              <span className="text-sm text-[#6b7280]">60 second cut -- {isMuted ? 'tap to unmute' : 'playing with sound'}</span>
               <a href={YOUTUBE_FULL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[#00ff9d] hover:underline transition-colors">
                 Watch the full version (5:31) <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -104,7 +107,7 @@ export function CaseStudy() {
                 </div>
                 <div>
                   <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Takeaway</h4>
-                  <p className="text-sm text-[#d1d5db] leading-6">The campaign ended. The commerce didn't. Sustained $3,500+/month in ongoing revenue through the cohort -- proving GolfN builds permanent commerce channels, not one-time spikes.</p>
+                  <p className="text-sm text-[#d1d5db] leading-6">The campaign ended. The commerce did not. Sustained $3,500+/month in ongoing revenue through the cohort -- proving GolfN builds permanent commerce channels, not one-time spikes.</p>
                 </div>
               </div>
             </div>

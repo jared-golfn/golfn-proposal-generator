@@ -8,11 +8,21 @@ import type { BusinessNeedId } from '@/lib/business-needs'
 import { useBusinessNeed } from '@/lib/business-need-context'
 import { Fade } from './Fade'
 
+// Outcome teasers -- one line of proof per need
+const outcomeTeasers: Record<string, string> = {
+  'build-awareness': 'Typical: 250k+ entries, 2,000+ high-intent golfers identified, AI lookalike expansion from day 30',
+  'fill-capacity': 'Typical: 2,600 targeted golfers within driving distance, verified check-ins and bookings',
+  'product-trial': 'Typical: Verified demo day attendance with full attribution from trial to purchase',
+  'educate-market': 'Typical: 2,000+ golfers provably learn your value prop before receiving any offer',
+  'precision-targeting': 'Typical: Zero wasted impressions -- only golfers matching your spend and equipment criteria',
+  'market-share': 'Typical: Targeted golfers using competitor products, educated on why to switch',
+  'social-growth': 'Typical: 5,000+ verified golfer followers, pay only on success',
+}
+
 export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }) {
   const { selectedNeed, setSelectedNeed, downstreamObjective, setDownstreamObjective } = useBusinessNeed()
   const isAwareness = selectedNeed === 'build-awareness'
   const activeNeed = getNeedById(selectedNeed)
-  const activeDownstream = getNeedById(downstreamObjective)
 
   function selectAwareness() {
     setSelectedNeed(isAwareness ? null : 'build-awareness')
@@ -65,7 +75,8 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
                       </span>
                     </div>
                   </div>
-                  <p className="text-lg text-[#9ca3af] leading-7 max-w-3xl">{aw.subtitle}</p>
+                  <p className="text-lg text-[#9ca3af] leading-7 max-w-3xl mb-2">{aw.subtitle}</p>
+                  <p className="text-sm text-[#00ff9d]/70 font-mono">{outcomeTeasers['build-awareness']}</p>
                 </div>
                 {isAwareness && (
                   <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}>
@@ -169,6 +180,7 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               {businessNeeds.map((need, i) => {
                 const isSelected = selectedNeed === need.id
+                const tease = outcomeTeasers[need.id]
                 return (
                   <Fade key={need.id} delay={0.1 + i * 0.04}>
                     <button
@@ -183,7 +195,8 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
                         <span className="text-xl shrink-0 mt-0.5">{need.icon}</span>
                         <div>
                           <p className={`text-base font-bold mb-0.5 ${isSelected ? 'text-[#00ff9d]' : 'text-white'}`}>{need.title}</p>
-                          <p className="text-xs text-[#9ca3af] leading-relaxed">{need.subtitle}</p>
+                          <p className="text-xs text-[#9ca3af] leading-relaxed mb-1">{need.subtitle}</p>
+                          {tease && <p className="text-[11px] text-[#00ff9d]/60 font-mono leading-snug">{tease}</p>}
                         </div>
                       </div>
                     </button>
@@ -192,7 +205,7 @@ export function BusinessNeedSelector({ onContinue }: { onContinue?: () => void }
               })}
             </div>
 
-            {/* Specific need detail -- already inside !isAwareness guard so no need to recheck */}
+            {/* Specific need detail */}
             <AnimatePresence mode="wait">
               {activeNeed && (
                 <motion.div key={selectedNeed} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Flag, Target, Users, Zap, TrendingUp, ArrowRight, ChevronRight } from 'lucide-react'
+import { Flag, Target, Users, Zap, TrendingUp, ArrowRight, ChevronRight, GitCompareArrows } from 'lucide-react'
 import type { PartnerData } from '@/lib/template-types'
 import { useBusinessNeed } from '@/lib/business-need-context'
 import { getNeedById, type HowItWorksOverride } from '@/lib/business-needs'
@@ -16,8 +16,17 @@ const defaultSteps = [
   { num: 5, title: 'Compound and Scale', short: 'The cohort grows. The data improves. Results compound.', detail: 'Monthly reporting shows audience composition, progression, conversion, and cohort growth. New matching users auto-enroll. Seasonal reactivation re-engages lapsed interest. Month 6 is significantly more efficient than month 1.', whyDifferent: 'Most marketing is a treadmill. Spend stops, results stop. GolfN builds an asset that compounds.', metric: '53%', metricLabel: 'avg MoM growth in power user cohort', Icon: TrendingUp },
 ]
 
+const comparisonRows = [
+  { dimension: 'Who sees it', traditional: 'Anyone who self-reported "golf interest"', golfn: 'Verified golfers with 57 behavioral data points' },
+  { dimension: 'Targeting', traditional: 'Demographics, zip codes, lookalikes', golfn: 'Equipment owned, spend/round, handicap, round frequency' },
+  { dimension: 'Attribution', traditional: 'Last-click guess, 7-day window', golfn: 'Full-funnel tracked from impression to purchase' },
+  { dimension: 'After campaign', traditional: 'Results stop when budget runs out', golfn: 'Permanent cohort that compounds via AI lookalike' },
+  { dimension: 'Audience', traditional: 'Rented -- pay again to reach them', golfn: 'Owned -- reactivate anytime at lower cost' },
+]
+
 export function S03_PitchHowItWorks({ partner }: { partner: PartnerData }) {
   const [activeStep, setActiveStep] = useState(1)
+  const [showComparison, setShowComparison] = useState(false)
   const { selectedNeed } = useBusinessNeed()
   const need = getNeedById(selectedNeed)
   const overrides = need?.howItWorksOverrides
@@ -44,10 +53,62 @@ export function S03_PitchHowItWorks({ partner }: { partner: PartnerData }) {
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">
             Five steps to a<br /><span className="text-[#00ff9d]">compounding audience</span>
           </h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-14">
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-10">
             {partner.howItWorksIntro || 'This is not a one-off campaign. It is a system that builds a qualified audience, activates it, and makes it more valuable every month.'}
           </p>
         </Fade>
+
+        {/* Traditional vs GolfN comparison toggle */}
+        <Fade delay={0.03}>
+          <button
+            onClick={() => setShowComparison(!showComparison)}
+            className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-300 mb-8 ${
+              showComparison
+                ? 'bg-[#00ff9d]/10 border border-[#00ff9d]/30 text-[#00ff9d]'
+                : 'bg-[#1a1f2e] border border-[#2a3347] text-[#9ca3af] hover:border-[#00ff9d]/30 hover:text-white'
+            }`}
+          >
+            <GitCompareArrows className="w-4 h-4" />
+            {showComparison ? 'Hide comparison' : 'How is this different from paid social?'}
+          </button>
+        </Fade>
+
+        <AnimatePresence>
+          {showComparison && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden mb-10"
+            >
+              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
+                <div className="grid grid-cols-3 bg-[#0f1217] border-b border-[#2a3347]">
+                  <div className="px-6 py-4" />
+                  <div className="px-6 py-4 text-center border-l border-[#2a3347]">
+                    <p className="text-sm font-mono uppercase tracking-wider text-[#6b7280]">Traditional Paid Social</p>
+                  </div>
+                  <div className="px-6 py-4 text-center border-l border-[#00ff9d]/20 bg-[#001a14]/30">
+                    <p className="text-sm font-mono uppercase tracking-wider text-[#00ff9d]">GolfN</p>
+                  </div>
+                </div>
+                {comparisonRows.map((row, i) => (
+                  <div key={row.dimension} className={`grid grid-cols-3 ${i < comparisonRows.length - 1 ? 'border-b border-[#2a3347]/50' : ''}`}>
+                    <div className="px-6 py-4">
+                      <p className="text-sm font-semibold text-white">{row.dimension}</p>
+                    </div>
+                    <div className="px-6 py-4 border-l border-[#2a3347]">
+                      <p className="text-sm text-[#6b7280]">{row.traditional}</p>
+                    </div>
+                    <div className="px-6 py-4 border-l border-[#00ff9d]/20 bg-[#001a14]/10">
+                      <p className="text-sm text-[#d1d5db]">{row.golfn}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="flex flex-wrap gap-2 mb-10">
           {steps.map((step) => (
