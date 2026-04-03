@@ -8,9 +8,9 @@ const VIDEO_MP4 = 'https://cdn.sanity.io/files/e3wja34v/production/bf78e2998073f
 const YOUTUBE_FULL = 'https://www.youtube.com/watch?v=e8YaanzP9oQ'
 
 const metrics = [
-  { label: 'Total Revenue', value: '$44,692', sub: '8 months', Icon: DollarSign },
+  { label: 'Total Revenue', value: '$44,692', sub: 'Aug 2025 -- Dec 2025', Icon: DollarSign },
   { label: 'Units Sold', value: '90', sub: '~$497 avg order', Icon: Package },
-  { label: 'Time to #1', value: '90 days', sub: '#1 sales channel in Indiana', Icon: Clock },
+  { label: 'Time to #1', value: '90 days', sub: '#1 channel in Indiana', Icon: Clock },
   { label: 'Monthly Recurring', value: '$3,500+', sub: 'Sustained post-campaign', Icon: TrendingUp },
 ]
 
@@ -34,20 +34,18 @@ export function CaseStudy() {
             <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">Case Study</p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-5">
-            From brand film to<br /><span className="text-gradient">#1 sales channel in 90 days</span>
+            GolfN became L.A.B. Golf{"'"}s<br /><span className="text-gradient">#1 Indiana channel in 90 days</span>
           </h2>
 
           {/* Before/After one-liner */}
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl px-6 py-4 mb-8 max-w-3xl">
             <p className="text-lg md:text-xl text-[#d1d5db] leading-8">
-              <span className="text-[#6b7280]">Before:</span> L.A.B. Golf had zero Indiana presence.
-              <br />
-              <span className="text-[#00ff9d] font-semibold">After:</span> GolfN was their #1 sales channel in the state. 90 days. Zero additional ad spend.
+              L.A.B. Golf already had Indiana sales channels. GolfN launched in August 2025 and <span className="text-[#00ff9d] font-semibold">outperformed every one of them through the end of the year</span>. No additional ad spend. No discount. Full price premium putters.
             </p>
           </div>
 
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-10">
-            GolfN produced a world-class brand film, launched a sweepstakes campaign, and activated the resulting cohort through commerce. The result: $44,692 in attributed revenue and sustained $3,500+/month recurring.
+            GolfN produced a brand film, launched a sweepstakes campaign, and activated the resulting cohort through commerce. From August through December 2025: $44,692 in attributed revenue, 90 units at ~$497 average order, and sustained $3,500+/month recurring after the campaign ended.
           </p>
         </Fade>
 
@@ -103,7 +101,7 @@ export function CaseStudy() {
                 </div>
                 <div>
                   <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Result</h4>
-                  <p className="text-sm text-[#d1d5db] leading-6">Zero to $20K in a single month. 90 premium putters moved at full price (~$497 avg). GolfN became the #1 sales channel for L.A.B. Golf in Indiana within 90 days of launch.</p>
+                  <p className="text-sm text-[#d1d5db] leading-6">$20K revenue month within 90 days of launch. 90 premium putters moved at full price (~$497 avg). GolfN outperformed every existing L.A.B. Golf sales channel in Indiana from August through December 2025.</p>
                 </div>
                 <div>
                   <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">The Takeaway</h4>
