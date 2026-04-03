@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { BarChart3, Target, TrendingUp, Users, ChevronRight, Star, ChevronDown, ChevronUp, Layers } from 'lucide-react'
+import { BarChart3, Target, TrendingUp, Users, ChevronRight, Star, ChevronDown, ChevronUp, Plus } from 'lucide-react'
 import { useSpendModel, useSpendMetrics, type SpendModel } from '@/lib/spend-model-context'
 import { useBusinessNeed } from '@/lib/business-need-context'
 import { getNeedById } from '@/lib/business-needs'
@@ -50,42 +50,56 @@ function CombinedValue({ excludeModel }: { excludeModel: 'cpm' | 'cpa' | 'roas' 
   const m = useSpendMetrics()
   const costPerOwned = m.totalInitial / m.cohortSize
   const customers = Math.round(m.cohortSize * (m.conversionRate / 100))
+  const endemicEquivalent = Math.round((m.estimatedImpressions / 1000) * 65)
 
-  const allMetrics: { id: string; icon: typeof BarChart3; label: string; value: string; sub: string }[] = [
-    { id: 'cpm', icon: BarChart3, label: 'Effective CPM', value: `$${m.effectiveCPM < 1 ? m.effectiveCPM.toFixed(2) : Math.round(m.effectiveCPM)}`, sub: `${m.estimatedImpressions.toLocaleString()} touchpoints to verified golfers` },
-    { id: 'cpa', icon: Target, label: 'Cost Per Qualified Lead', value: fmt(m.costPerQualifiedLead), sub: `${m.cohortSize.toLocaleString()} qualified golfers in your cohort` },
-    { id: 'roas', icon: TrendingUp, label: 'Projected ROAS', value: `${m.projectedROAS}:1`, sub: `${fmt(m.projectedRevenue)} projected from ${customers} customers` },
-    { id: 'audience', icon: Users, label: 'Cost Per Owned Golfer', value: fmt(costPerOwned), sub: `${m.cohortSize.toLocaleString()} golfers you can reactivate anytime` },
+  const allMetrics: { id: string; icon: typeof BarChart3; value: string; label: string; sub: string }[] = [
+    { id: 'cpm', icon: BarChart3, value: `$${m.effectiveCPM < 1 ? m.effectiveCPM.toFixed(2) : Math.round(m.effectiveCPM)}`, label: 'CPM', sub: `${m.estimatedImpressions.toLocaleString()} impressions` },
+    { id: 'cpa', icon: Target, value: fmt(m.costPerQualifiedLead), label: 'per lead', sub: `${m.cohortSize.toLocaleString()} qualified golfers` },
+    { id: 'roas', icon: TrendingUp, value: `${m.projectedROAS}:1`, label: 'ROAS', sub: `${fmt(m.projectedRevenue)} revenue` },
+    { id: 'audience', icon: Users, value: fmt(costPerOwned), label: 'per owned golfer', sub: `${m.cohortSize.toLocaleString()} yours to keep` },
   ]
-
-  const others = allMetrics.filter(met => met.id !== excludeModel)
 
   return (
     <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 md:p-10 mb-8">
       {/* L.A.B. tie-in */}
-      <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl px-5 py-3 mb-6">
+      <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl px-5 py-3 mb-8">
         <p className="text-sm text-[#d1d5db]">
           L.A.B. Golf turned this same {fmt(m.totalInitial)} into $44,692 revenue and their #1 channel in Indiana -- well above breakeven.
         </p>
       </div>
 
-      <div className="flex items-center gap-3 mb-2">
-        <Layers className="w-5 h-5 text-[#00ff9d]" />
-        <p className="text-lg font-bold text-white">That same {fmt(m.totalInitial)} also delivers</p>
-      </div>
-      <p className="text-sm text-[#6b7280] mb-6">On paid social, you optimize for one metric. On GolfN, you get all of them from the same investment.</p>
+      <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">One investment. Four outcomes.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {others.map((met) => (
-          <div key={met.id} className="bg-[#0f1217] rounded-xl p-5 border border-[#2a3347]/50">
-            <div className="flex items-center gap-2 mb-3">
-              <met.icon className="w-4 h-4 text-[#00ff9d]" />
-              <p className="text-xs font-mono text-[#6b7280] uppercase tracking-wider">{met.label}</p>
+      {/* Visual equation: 4 cards with + signs between them */}
+      <div className="flex flex-col lg:flex-row items-stretch gap-0 mb-8">
+        {allMetrics.map((met, i) => {
+          const isSelected = met.id === excludeModel
+          return (
+            <div key={met.id} className="flex flex-col lg:flex-row items-center flex-1">
+              {i > 0 && (
+                <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 shrink-0 my-1 lg:my-0">
+                  <Plus className="w-5 h-5 text-[#00ff9d]/40" />
+                </div>
+              )}
+              <div className={`w-full bg-[#0f1217] rounded-xl p-5 md:p-6 text-center flex-1 ${isSelected ? 'border-2 border-[#00ff9d]/40 shadow-[0_0_20px_rgba(0,255,157,0.06)]' : 'border border-[#2a3347]/50'}`}>
+                <met.icon className="w-5 h-5 text-[#00ff9d] mx-auto mb-2" />
+                <p className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d] mb-1">{met.value}</p>
+                <p className="text-sm font-semibold text-white mb-1">{met.label}</p>
+                <p className="text-xs text-[#6b7280]">{met.sub}</p>
+              </div>
             </div>
-            <p className="text-2xl font-mono font-bold text-[#00ff9d] mb-1">{met.value}</p>
-            <p className="text-xs text-[#9ca3af]">{met.sub}</p>
-          </div>
-        ))}
+          )
+        })}
+      </div>
+
+      {/* Punchline */}
+      <div className="text-center">
+        <p className="text-xl md:text-2xl font-bold text-white mb-3">
+          All from one <span className="text-[#00ff9d]">{fmt(m.totalInitial)}</span> investment.
+        </p>
+        <p className="text-base text-[#9ca3af] max-w-2xl mx-auto">
+          The impressions alone would cost <span className="text-white font-semibold">{fmt(endemicEquivalent)}</span> on Golf Digest -- without qualified leads, projected revenue, or an owned audience. On paid social, you pick one. On GolfN, they stack.
+        </p>
       </div>
     </div>
   )
@@ -191,31 +205,22 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
             <p className="text-[11px] text-[#4b5563] mt-1">Breakeven: {m.breakevenRate}%</p>
           </div>
         </div>
-
-        {/* Preset buttons */}
         <div className="flex flex-wrap gap-2 mb-6">
           {ratePresets.map((preset) => {
             const effectiveRate = preset.isBreakeven ? m.breakevenRate : preset.rate
             const isActive = Math.abs(conversionRate - effectiveRate) < 0.05
             return (
-              <button
-                key={preset.label}
-                onClick={() => setConversionRate(effectiveRate)}
+              <button key={preset.label} onClick={() => setConversionRate(effectiveRate)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
-                  isActive
-                    ? 'bg-[#00ff9d] text-[#0f1217] font-bold'
-                    : preset.highlighted
-                    ? 'bg-[#00ff9d]/15 text-[#00ff9d] border border-[#00ff9d]/30 hover:bg-[#00ff9d]/25'
+                  isActive ? 'bg-[#00ff9d] text-[#0f1217] font-bold'
+                    : preset.highlighted ? 'bg-[#00ff9d]/15 text-[#00ff9d] border border-[#00ff9d]/30 hover:bg-[#00ff9d]/25'
                     : 'bg-[#0f1217] text-[#6b7280] border border-[#2a3347] hover:border-[#00ff9d]/30 hover:text-[#9ca3af]'
-                }`}
-              >
+                }`}>
                 {preset.isBreakeven ? `${m.breakevenRate}%` : `${preset.rate}%`} <span className="text-[10px] opacity-70">{preset.label}</span>
               </button>
             )
           })}
         </div>
-
-        {/* Breakeven callout */}
         <div className={`rounded-lg p-4 mb-6 ${isAtBreakeven ? 'bg-[#f59e0b]/5 border border-[#f59e0b]/20' : 'bg-[#001a14]/40 border border-[#00ff9d]/10'}`}>
           <p className={`text-sm ${isAtBreakeven ? 'text-[#f59e0b]' : 'text-[#9ca3af]'}`}>
             {isAtBreakeven
@@ -224,36 +229,25 @@ function ModelBenchmarks({ selectedModel }: { selectedModel: 'cpm' | 'cpa' | 'ro
             }
           </p>
         </div>
-
-        {/* Results */}
         <div className="grid grid-cols-3 gap-3 mb-4">
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Invested</p>
-            <p className="text-xl font-mono font-bold text-white">{fmt(m.totalInitial)}</p>
-          </div>
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Invested</p><p className="text-xl font-mono font-bold text-white">{fmt(m.totalInitial)}</p></div>
           <div className={`bg-[#0f1217] rounded-xl p-4 text-center border ${isAboveBreakeven ? 'border-[#00ff9d]/40' : 'border-[#2a3347]/50'}`}>
             <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Projected Rev</p>
             <p className={`text-xl font-mono font-bold ${isAboveBreakeven ? 'text-[#00ff9d]' : isAtBreakeven ? 'text-[#f59e0b]' : 'text-white'}`}>{fmt(m.projectedRevenue)}</p>
           </div>
-          <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-            <p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Customers</p>
-            <p className="text-xl font-mono font-bold text-white">{Math.round(m.cohortSize * (conversionRate / 100))}</p>
-          </div>
+          <div className="bg-[#0f1217] rounded-xl p-4 text-center"><p className="text-xs font-mono text-[#4b5563] uppercase mb-1">Customers</p><p className="text-xl font-mono font-bold text-white">{Math.round(m.cohortSize * (conversionRate / 100))}</p></div>
         </div>
-
         <div className="bg-[#0f1217] rounded-lg p-4">
           <div className="flex justify-between items-center text-sm">
             <span className="text-[#9ca3af]">Math</span>
             <span className="text-[#6b7280] font-mono">{m.cohortSize.toLocaleString()} x {conversionRate}% x {fmt(aov)} = {fmt(m.projectedRevenue)}</span>
           </div>
         </div>
-
         <p className="text-[11px] text-[#4b5563] mt-6 italic">Year-1 breakeven only. Real GolfN campaigns see 2-4x+ from repeat purchases, referrals, and compounding (see L.A.B. case).</p>
       </div>
     )
   }
 
-  // audience
   const costPerOwned = m.totalInitial / m.cohortSize
   return (
     <div>
@@ -306,16 +300,12 @@ export function EvaluateAndInvest() {
             const isSuggested = suggestedModel === mid.id && !model
             return (
               <Fade key={mid.id} delay={i * 0.05}>
-                <button
-                  onClick={() => setModel(mid.id)}
+                <button onClick={() => setModel(mid.id)}
                   className={`w-full text-left p-6 rounded-xl border-2 transition-all duration-300 group relative ${
-                    isSelected
-                      ? 'bg-[#001a14] border-[#00ff9d]/60 shadow-[0_0_30px_rgba(0,255,157,0.1)]'
-                      : isSuggested
-                      ? 'bg-[#1a1f2e] border-[#00ff9d]/30'
+                    isSelected ? 'bg-[#001a14] border-[#00ff9d]/60 shadow-[0_0_30px_rgba(0,255,157,0.1)]'
+                      : isSuggested ? 'bg-[#1a1f2e] border-[#00ff9d]/30'
                       : 'bg-[#1a1f2e] border-[#2a3347] hover:border-[#00ff9d]/30'
-                  }`}
-                >
+                  }`}>
                   {isSuggested && (
                     <div className="absolute -top-2.5 left-4 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#00ff9d] text-[#0f1217]">
                       <Star className="w-3 h-3" /><span className="text-[10px] font-bold uppercase tracking-wider">Suggested</span>
@@ -345,8 +335,7 @@ export function EvaluateAndInvest() {
                 <input type="range" min={500} max={10000} step={250} value={cohortSize}
                   onChange={(e) => setCohortSize(Number(e.target.value))}
                   className="w-full h-2 rounded-full appearance-none cursor-pointer"
-                  style={{ background: `linear-gradient(to right, #00ff9d 0%, #00ff9d ${((cohortSize - 500) / 9500) * 100}%, #2a3347 ${((cohortSize - 500) / 9500) * 100}%, #2a3347 100%)` }}
-                />
+                  style={{ background: `linear-gradient(to right, #00ff9d 0%, #00ff9d ${((cohortSize - 500) / 9500) * 100}%, #2a3347 ${((cohortSize - 500) / 9500) * 100}%, #2a3347 100%)` }} />
                 <div className="flex justify-between mt-2 text-xs font-mono text-[#4b5563]"><span>500</span><span>10,000</span></div>
               </div>
 
@@ -379,7 +368,6 @@ export function EvaluateAndInvest() {
                     )}</AnimatePresence>
                   </div>
                 </div>
-
                 <div className="lg:col-span-3 bg-[#1a1f2e] border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10">
                   <p className="text-xs font-mono text-[#4b5563] uppercase tracking-wider mb-6">In Your Terms</p>
                   <ModelBenchmarks selectedModel={model} />
