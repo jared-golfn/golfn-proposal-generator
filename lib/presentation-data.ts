@@ -124,7 +124,6 @@ export const partners: Record<string, PartnerConfig> = {
   'template': {
     slug: 'template',
     partnerName: 'GolfN',
-    password: 'golfnpartners',
     primaryColor: '#17A455',
     secondaryColor: '#8DC54A',
     productCategory: 'Brand Partnerships',
