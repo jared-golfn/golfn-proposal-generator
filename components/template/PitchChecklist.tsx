@@ -18,7 +18,7 @@ const golfnHandles = [
 ]
 
 const defaultItems: ChecklistItem[] = [
-  { id: 'prizes', label: 'Prize inventory (~$4,500 product value)', detail: 'Product for the sweepstakes. Recommended 6 prize tiers.', required: true },
+  { id: 'prizes', label: 'Prize inventory (up to $5,000 product value)', detail: 'Product for the sweepstakes. The stronger the package, the more engagement from the GolfN audience. $5,000 is the maximum to run in all 50 states without additional registration requirements.', required: true },
   { id: 'startup', label: 'Startup fee ($2,500 one-time)', detail: 'Covers campaign build, creative, distribution, and 30 days management.', required: true },
   { id: 'assets', label: 'Brand assets (logos, product photos, guidelines)', detail: 'High-res product shots, brand guidelines, approved copy.', required: true },
   { id: 'contact', label: 'Decision-maker point of contact', detail: 'Someone who can approve creative and sign off on launches.', required: true },
