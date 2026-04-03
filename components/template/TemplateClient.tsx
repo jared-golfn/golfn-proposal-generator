@@ -74,8 +74,8 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             </nav>
 
             <div id="proposal-content">
-              {/* 1. Hero — who we are, platform stats */}
-              <div id="top"><S01_Hero partner={partner} /></div>
+              {/* 1. Hero — who we are, platform stats, NO brand spend input */}
+              <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
 
               <SectionDivider />
 
