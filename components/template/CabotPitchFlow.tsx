@@ -207,28 +207,57 @@ export function CabotPitchFlow() {
               </div>
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Cabot at Large</h3>
               <p className="text-base md:text-lg text-[#9ca3af] leading-8 mb-6 max-w-3xl">
-                Citrus Farms is the local play. Cabot\'s global properties -- Cape Breton, Saint Lucia, St Andrews, Revelstoke -- are a different golfer making a different decision. We can find that golfer too.
+                {"Citrus Farms is the local play. Cabot's global properties -- Cape Breton, Saint Lucia, St Andrews, Revelstoke -- are a different golfer making a different decision. We have that golfer too."}
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-                  <p className="text-2xl font-mono font-bold text-[#00ff9d]">5,000</p>
-                  <p className="text-xs text-[#6b7280]">UK users</p>
+
+              <div className="bg-[#0f1217] rounded-xl p-6 mb-6">
+                <div className="grid grid-cols-3 gap-6 mb-6">
+                  <div className="text-center">
+                    <p className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">107,000+</p>
+                    <p className="text-sm text-[#6b7280]">Registered golfers</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">57</p>
+                    <p className="text-sm text-[#6b7280]">Countries</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">28,000+</p>
+                    <p className="text-sm text-[#6b7280]">Monthly active</p>
+                  </div>
                 </div>
-                <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-                  <p className="text-2xl font-mono font-bold text-[#00ff9d]">496</p>
-                  <p className="text-xs text-[#6b7280]">Australia</p>
-                </div>
-                <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-                  <p className="text-2xl font-mono font-bold text-[#00ff9d]">295</p>
-                  <p className="text-xs text-[#6b7280]">Canada</p>
-                </div>
-                <div className="bg-[#0f1217] rounded-xl p-4 text-center">
-                  <p className="text-2xl font-mono font-bold text-[#00ff9d]">1,844</p>
-                  <p className="text-xs text-[#6b7280]">Private club members</p>
+                <div className="border-t border-[#2a3347] pt-5">
+                  <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Users near Cabot properties</p>
+                  <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                    <div className="text-center">
+                      <p className="text-xl font-mono font-bold text-white">5,000</p>
+                      <p className="text-xs text-[#6b7280]">United Kingdom</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-mono font-bold text-white">2,957</p>
+                      <p className="text-xs text-[#6b7280]">Australia</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-mono font-bold text-white">2,886</p>
+                      <p className="text-xs text-[#6b7280]">South Africa</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-mono font-bold text-white">1,341</p>
+                      <p className="text-xs text-[#6b7280]">Canada</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-mono font-bold text-white">1,186</p>
+                      <p className="text-xs text-[#6b7280]">New Zealand</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-mono font-bold text-[#00ff9d]">1,844</p>
+                      <p className="text-xs text-[#6b7280]">Private club members</p>
+                    </div>
+                  </div>
                 </div>
               </div>
+
               <p className="text-sm text-[#6b7280] leading-7 max-w-3xl">
-                We build a "Cabot Private Select" cohort -- private or resort home course, high engagement, multi-state or international round history. These users do not get a sweepstakes. They get an exclusive, invite-only experience. The kind of thing that feels like a concierge reached out, not an ad. Different conversation. Let\'s start with CCF.
+                {"We build a \"Cabot Private Select\" cohort -- private or resort home course, high engagement, multi-state or international round history. These users do not get a sweepstakes. They get an exclusive, invite-only experience. The kind of thing that feels like a concierge reached out, not an ad. Different conversation. Let's start with CCF."}
               </p>
             </div>
           </Fade>
