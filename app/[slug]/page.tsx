@@ -56,6 +56,7 @@ function toPartnerData(config: PartnerConfig): PartnerData {
     campaigns: config.campaigns,
     portfolioDiscount: config.portfolioDiscount,
     marketReach: config.marketReach || defaultMarketReach,
+    marketReachTitle: config.marketReachTitle,
     portfolioBrands: config.portfolioBrands?.map(b => ({
       brandName: b.name,
       brandLogoUrl: b.logoUrl,

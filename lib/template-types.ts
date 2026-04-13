@@ -70,6 +70,7 @@ export interface PartnerData {
   campaigns?: BrandCampaign[]
   portfolioDiscount?: PortfolioDiscount
   marketReach?: MarketData[]
+  marketReachTitle?: string
   defaultCohortSize?: number
 
   isPortfolio?: boolean
