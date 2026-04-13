@@ -43,13 +43,13 @@ export interface PartnerConfig {
   campaigns?: BrandCampaign[]
   portfolioDiscount?: { startupPct: number; perUserPct: number }
   marketReach?: MarketData[]
+  marketReachTitle?: string
   defaultCohortSize?: number
 }
 
 const MOTOCADDY_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/b0f6f787acc61119cc6e9796fd64b75979e5f75a-2741x635.png'
 const TIMELAPSE_VIDEO = 'https://cdn.sanity.io/files/e3wja34v/production/44254c3ed5b70a03c02f5b64556d3b247781f86e.mp4'
 
-// Example campaigns for the generic template/pitch page
 const templateCampaigns: BrandCampaign[] = [
   {
     brandName: 'Your Brand',
@@ -234,6 +234,13 @@ export const partners: Record<string, PartnerConfig> = {
     defaultPath: 'pilot',
     campaigns: cabotCampaigns,
     defaultCohortSize: 2000,
+    marketReachTitle: 'Florida Golfer Breakdown',
+    marketReach: [
+      { country: 'Orlando DMA', users: 592, flag: '\ud83c\udfcc\ufe0f' },
+      { country: 'Tampa-St. Pete', users: 479, flag: '\ud83c\udfcc\ufe0f' },
+      { country: 'Jacksonville', users: 283, flag: '\ud83c\udfcc\ufe0f' },
+      { country: 'Rest of Florida', users: 636, flag: '\ud83c\udfcc\ufe0f' },
+    ],
   },
 }
 

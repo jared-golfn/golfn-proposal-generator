@@ -17,7 +17,6 @@ const defaultKPIs: PlatformKPI[] = [
 
 const PITCH_SUBTITLE = '100,000+ verified golfers who actually buy premium gear. Build an owned audience, activate it, and turn it into revenue.'
 
-/* Per-logo heights (px) tuned so each logo has equal visual weight on screen. */
 const pitchPartnerLogos: { name: string; url: string; h: number }[] = [
   { name: 'L.A.B. Golf', url: 'https://www.golfn.com/LAB.png', h: 28 },
   { name: 'Cobra Puma Golf', url: 'https://www.golfn.com/cobra.webp', h: 28 },
@@ -97,9 +96,11 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
   const headline = partner.heroHeadline
   const heroVideo = partner.heroVideoUrl
   const markets = partner.marketReach
+  const marketTitle = partner.marketReachTitle || 'Market Reach by Country'
+  const isCustomMarkets = !!partner.marketReachTitle
   const namedTotal = markets ? markets.reduce((s, m) => s + m.users, 0) : 0
-  const othersCount = markets ? Math.max(0, 100000 - namedTotal) : 0
-  const grandTotal = markets ? namedTotal + othersCount : 0
+  const othersCount = isCustomMarkets ? 0 : (markets ? Math.max(0, 100000 - namedTotal) : 0)
+  const grandTotal = namedTotal + othersCount
 
   const showPartnerLogo = !partner.isPortfolio && partner.partnerLogoUrl && partner.campaigns && partner.campaigns.length > 0
   const hasVideo = !!heroVideo
@@ -153,7 +154,6 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
             )}
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className={`leading-relaxed mb-8 ${isPitch ? 'text-lg md:text-2xl text-[#9ca3af] max-w-4xl' : 'text-base md:text-xl text-[#9ca3af] max-w-3xl'}`}>{subtitle}</motion.p>
 
-            {/* Partner logos -- pitch mode only */}
             {isPitch && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
                 <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
@@ -225,7 +225,6 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
           )}
         </div>
 
-        {/* KPIs */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
           {defaultKPIs.map((kpi) => (
             <div key={kpi.label}>
@@ -236,13 +235,12 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
           ))}
         </motion.div>
 
-        {/* Market Reach expandable */}
         {markets && markets.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="mt-8">
             <button onClick={() => setShowMarkets(!showMarkets)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1a1f2e]/80 backdrop-blur-sm border border-[#2a3347] hover:border-[#00ff9d]/40 transition-all group">
               <Globe className="w-4 h-4 text-[#00ff9d]" />
-              <span className="text-sm md:text-base font-semibold text-white">Market Reach by Country</span>
-              <span className="text-xs font-mono text-[#6b7280] ml-1">As of Mar 11, 2026</span>
+              <span className="text-sm md:text-base font-semibold text-white">{marketTitle}</span>
+              <span className="text-xs font-mono text-[#6b7280] ml-1">{isCustomMarkets ? 'Apr 2026' : 'As of Mar 11, 2026'}</span>
               {showMarkets ? <ChevronUp className="w-4 h-4 text-[#6b7280] group-hover:text-[#00ff9d] transition-colors" /> : <ChevronDown className="w-4 h-4 text-[#6b7280] group-hover:text-[#00ff9d] transition-colors" />}
             </button>
             {showMarkets && (
@@ -256,23 +254,24 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
                       <span className="text-sm md:text-base font-mono font-bold text-[#00ff9d] w-16 text-right shrink-0">{m.users.toLocaleString()}</span>
                     </div>
                   ) })}
+                  {othersCount > 0 && (
                   <div className="px-5 py-3 flex items-center gap-4">
                     <span className="text-lg shrink-0">{'\ud83c\udf0d'}</span>
                     <span className="text-sm md:text-base text-[#9ca3af] font-medium w-32 md:w-40 shrink-0">Others (51 markets)</span>
                     <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(othersCount / Math.max(...markets.map(x => x.users))) * 100}%`, background: 'linear-gradient(90deg, rgba(0,255,157,0.3), rgba(23,164,85,0.3))' }} /></div>
                     <span className="text-sm md:text-base font-mono font-bold text-[#9ca3af] w-16 text-right shrink-0">{othersCount.toLocaleString()}</span>
                   </div>
+                  )}
                 </div>
                 <div className="px-5 py-3 bg-[#0f1217]/90 border-t border-[#2a3347] flex items-center justify-between">
-                  <span className="text-sm font-bold text-white">Total (57 countries)</span>
-                  <span className="text-lg md:text-xl font-mono font-bold text-[#00ff9d]">{grandTotal.toLocaleString()}+</span>
+                  <span className="text-sm font-bold text-white">{isCustomMarkets ? 'Total Active in Florida' : 'Total (57 countries)'}</span>
+                  <span className="text-lg md:text-xl font-mono font-bold text-[#00ff9d]">{grandTotal.toLocaleString()}{isCustomMarkets ? '' : '+'}</span>
                 </div>
               </div>
             )}
           </motion.div>
         )}
 
-        {/* Scroll anchor -- pitch mode only */}
         {isPitch && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="mt-12 flex justify-center">
             <button
