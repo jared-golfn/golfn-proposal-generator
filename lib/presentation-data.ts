@@ -220,15 +220,14 @@ export const partners: Record<string, PartnerConfig> = {
 
   'cabot': {
     slug: 'cabot',
-    partnerName: 'Cabot Citrus Farms',
+    partnerName: 'Cabot',
     password: 'cabot2026',
-    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/93c2258d1c80b7b2d3248c8b68598ee394dfe157-311x162.png',
     primaryColor: '#1B3D2F',
     secondaryColor: '#C9A96E',
     productCategory: 'Premium Golf Resort',
     productNames: ['Tee Times', 'Stay-and-Play Packages', 'Resort Experiences'],
-    heroHeadline: 'Put verified golfers in seats at Cabot Citrus Farms',
-    heroSubtitle: '107,000+ verified golfers. 1,990 active in Florida. 1,378 within driving distance of Lecanto. 34.2% average sweepstakes entry rate. Three phases to fill tee times.',
+    heroHeadline: 'Fill the tee sheet at Cabot Citrus Farms',
+    heroSubtitle: '1,990 active golfers in Florida. 1,378 within driving distance of Lecanto. 48.5% play private, semi-private, or resort courses. 34.2% sweepstakes entry rate. We have the golfers. You have the tee times.',
     howItWorksIntro: 'We run a Cabot Citrus Farms sweepstakes inside GolfN to build awareness and a qualified golfer cohort. Then we activate that cohort with targeted campaigns and geo-fenced push notifications to fill tee times.',
     pricingIntro: 'You provide the prize package. We provide the audience and execution. The geo-targeted campaign and push notifications run on a cost-per-engagement basis -- you pay when a user takes action, not when they see an impression.',
     keyMarkets: ['Florida', 'United States'],
