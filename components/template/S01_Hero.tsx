@@ -91,7 +91,9 @@ function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { bra
 export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hideBrandInput?: boolean }) {
   const [showMarkets, setShowMarkets] = useState(false)
   const isPitch = !!hideBrandInput
-  const subtitle = isPitch ? PITCH_SUBTITLE : (partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.')
+  const subtitle = isPitch
+    ? ((partner.slug !== 'template' && partner.heroSubtitle) ? partner.heroSubtitle : PITCH_SUBTITLE)
+    : (partner.heroSubtitle || 'GolfN helps brands create awareness, identify real user interest, build qualified audience cohorts, and continue activating those users through measurable follow-on campaigns.')
   const headline = partner.heroHeadline
   const heroVideo = partner.heroVideoUrl
   const markets = partner.marketReach

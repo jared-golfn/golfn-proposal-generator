@@ -120,6 +120,21 @@ const sportsImpactMarkets: MarketData[] = [
   { country: 'New Zealand', users: 1186, flag: '\ud83c\uddf3\ud83c\uddff' },
 ]
 
+const cabotCampaigns: BrandCampaign[] = [
+  {
+    brandName: 'Cabot Citrus Farms',
+    brandColor: '#1B3D2F',
+    title: 'Win a Stay-and-Play at Cabot Citrus Farms',
+    prizePool: 'Stay-and-Play Package',
+    description: 'A premium sweepstakes offering a stay-and-play package at Cabot Citrus Farms. This is a significantly more aspirational prize than equipment -- every golfer dreams of destination golf. 34.2% of users who see a sweepstakes enter it. The Miura Forged Wedge sweepstakes pulled a 53% entry rate. Every entrant gives us permission to market to them. That is the cohort.',
+    prizes: [
+      { place: 'Grand Prize', description: '2-night stay-and-play package at Cabot Citrus Farms', value: 'TBD' },
+      { place: 'Runner-Up', description: 'Cabot merchandise + round credit', value: 'TBD' },
+    ],
+    hideBrandCount: true,
+  },
+]
+
 export const partners: Record<string, PartnerConfig> = {
   'template': {
     slug: 'template',
@@ -202,6 +217,25 @@ export const partners: Record<string, PartnerConfig> = {
   'motocaddy': { slug: 'motocaddy', partnerName: 'MotoCaddy', password: 'motocaddy2026', logoUrl: MOTOCADDY_LOGO, primaryColor: '#0066CC', secondaryColor: '#3399FF', productCategory: 'Electric Golf Trolleys', productNames: ['M7 GPS', 'M5 GPS', 'S1 DHC', 'Cube Push Trolley'], agencyName: 'Sports Impact', agencyLogoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/70846939f70fe368db2cd0c03686d96aa31e5bab-769x186.png', keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'] },
 
   demo: { slug: 'demo', partnerName: 'Your Brand', password: 'golfnpartners', primaryColor: '#17A455', secondaryColor: '#8DC54A', productCategory: 'Golf Products', productNames: ['Product Line 1', 'Product Line 2', 'Product Line 3'] },
+
+  'cabot': {
+    slug: 'cabot',
+    partnerName: 'Cabot Citrus Farms',
+    password: 'cabot2026',
+    logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/93c2258d1c80b7b2d3248c8b68598ee394dfe157-311x162.png',
+    primaryColor: '#1B3D2F',
+    secondaryColor: '#C9A96E',
+    productCategory: 'Premium Golf Resort',
+    productNames: ['Tee Times', 'Stay-and-Play Packages', 'Resort Experiences'],
+    heroHeadline: 'Put verified golfers in seats at Cabot Citrus Farms',
+    heroSubtitle: '107,000+ verified golfers. 1,990 active in Florida. 1,378 within driving distance of Lecanto. 34.2% average sweepstakes entry rate. Three phases to fill tee times.',
+    howItWorksIntro: 'We run a Cabot Citrus Farms sweepstakes inside GolfN to build awareness and a qualified golfer cohort. Then we activate that cohort with targeted campaigns and geo-fenced push notifications to fill tee times.',
+    pricingIntro: 'You provide the prize package. We provide the audience and execution. The geo-targeted campaign and push notifications run on a cost-per-engagement basis -- you pay when a user takes action, not when they see an impression.',
+    keyMarkets: ['Florida', 'United States'],
+    defaultPath: 'pilot',
+    campaigns: cabotCampaigns,
+    defaultCohortSize: 2000,
+  },
 }
 
 export const platformStats = { registeredUsers: '100,000+', monthlyGrowth: '~6,000/mo', cac: 'Sub-$2', powerUsers: '7,315', powerUsersLabel: 'Mar 11, 2026', peakMAU: '28,060', engagedShare: '65.8%', under34: '56%', avgMonthlyLogins: '30+', adEligibleViews: '336/user/mo', countries: '57' }
