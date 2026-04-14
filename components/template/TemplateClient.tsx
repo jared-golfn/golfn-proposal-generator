@@ -60,11 +60,11 @@ const cabotNavSections = [
 export function TemplateClient({ partner }: { partner: PartnerData }) {
   const searchParams = useSearchParams()
   const isPitch = searchParams.has('pitch')
-  const isCabot = partner.slug === 'cabot' && isPitch
+  const isCabot = partner.slug === 'cabot'
   const activeNav = isCabot ? cabotNavSections : isPitch ? pitchNavSections : navSections
   const isWalkthrough = !!partner.heroVideoUrl
 
-  // CABOT PITCH MODE -- custom streamlined flow
+  // CABOT -- always shows custom streamlined flow
   if (isCabot) {
     return (
       <main className="relative bg-[#0f1217]">
