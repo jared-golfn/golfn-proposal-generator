@@ -210,19 +210,29 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
             )}
           </div>
 
-          {!hasVideo && (
-            <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 hidden md:flex justify-center">
-              <div className="relative">
-                <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: 'radial-gradient(circle, #00ff9d, #001a14, transparent)' }} />
-                <img src={images.cobraSweeps} alt="Campaign creative" className="relative w-48 md:w-60 lg:w-68 rounded-[24px] glow-green" style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }} />
-                <motion.img src={images.srixonAd1} alt="In-app campaign" className="absolute -left-10 md:-left-14 top-1/3 w-24 md:w-32 rounded-xl shadow-2xl border border-[#2a3347]" animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }} style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }} />
-                <motion.div className="absolute -right-4 md:-right-8 bottom-10 bg-[#1a1f2e] border border-[#2a3347] rounded-xl px-3 py-2 shadow-xl" animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 1 }}>
-                  <p className="text-[10px] font-mono text-[#6b7280] uppercase tracking-wider">Qualified Cohort</p>
-                  <p className="text-lg font-bold text-[#00ff9d]">2,847 golfers</p>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
+          {!hasVideo && (() => {
+            const cabotHeroImage = 'https://cdn.sanity.io/images/e3wja34v/production/9f686044994dedab4e7c850b1be03c19044da8ce-2064x2736.png'
+            const isCabot = partner.slug === 'cabot'
+            const displayImage = isCabot ? cabotHeroImage : images.cobraSweeps
+
+            return (
+              <motion.div initial={{ opacity: 0, y: 30, rotate: 1 }} animate={{ opacity: 1, y: 0, rotate: isCabot ? 0 : 2 }} transition={{ delay: 0.5, duration: 1 }} className="lg:col-span-2 hidden md:flex justify-center">
+                <div className="relative">
+                  <div className="absolute -inset-10 blur-[80px] opacity-[0.15] rounded-full" style={{ background: 'radial-gradient(circle, #00ff9d, #001a14, transparent)' }} />
+                  <img src={displayImage} alt="Campaign creative" className={`relative rounded-[24px] glow-green ${isCabot ? 'w-72 md:w-80 lg:w-[26rem]' : 'w-48 md:w-60 lg:w-68'}`} style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.7))' }} />
+                  {!isCabot && (
+                    <>
+                      <motion.img src={images.srixonAd1} alt="In-app campaign" className="absolute -left-10 md:-left-14 top-1/3 w-24 md:w-32 rounded-xl shadow-2xl border border-[#2a3347]" animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }} style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }} />
+                      <motion.div className="absolute -right-4 md:-right-8 bottom-10 bg-[#1a1f2e] border border-[#2a3347] rounded-xl px-3 py-2 shadow-xl" animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 1 }}>
+                        <p className="text-[10px] font-mono text-[#6b7280] uppercase tracking-wider">Qualified Cohort</p>
+                        <p className="text-lg font-bold text-[#00ff9d]">2,847 golfers</p>
+                      </motion.div>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            )
+          })()}
         </div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
