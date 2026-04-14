@@ -1,66 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Rocket, Target, Radio, Globe, ArrowRight } from 'lucide-react'
+import { Rocket, Target, Radio, Globe, ArrowRight, RefreshCw, Calendar, Zap } from 'lucide-react'
 import { Fade } from './Fade'
-
-const phases = [
-  {
-    number: 1,
-    icon: Rocket,
-    title: 'Sweepstakes',
-    label: 'Build the Cohort',
-    description: 'We run a Cabot Citrus Farms sweepstakes inside GolfN. Prize is a stay-and-play package at CCF. This does two things: it puts Cabot in front of our entire user base, and it builds a cohort of golfers who raised their hand and said "I am interested in Cabot."',
-    stats: [
-      { value: '107,000+', label: 'registered users see the campaign' },
-      { value: '34.2%', label: 'average sweepstakes entry rate' },
-      { value: '53%', label: 'entry rate on Miura wedge sweepstakes' },
-    ],
-    detail: 'A stay-and-play package is a significantly more aspirational prize than equipment. Every user who enters gives us permission to market to them. That is the cohort.',
-  },
-  {
-    number: 2,
-    icon: Target,
-    title: 'Targeted Campaign',
-    label: 'Activate the Cohort',
-    description: 'Once the sweepstakes closes, we activate two segments with personalized in-app messages. Not a banner ad. A targeted, branded Cabot message that matches your positioning.',
-    segments: [
-      {
-        name: 'Segment A: Florida Locals',
-        detail: 'Golfers who could drive to CCF on a weekend.',
-        stats: [
-          '592 in Orlando DMA',
-          '479 in Tampa-St. Pete',
-          '283 in Jacksonville',
-          '1,378 total within ~100 miles of Lecanto',
-        ],
-      },
-      {
-        name: 'Segment B: Sweepstakes Entrants',
-        detail: 'Anyone who entered the CCF sweepstakes but does not live in Florida. They expressed interest. We follow up with a direct offer.',
-      },
-    ],
-    detail: '48.5% of our Florida golfers play at private, semi-private, or resort courses. These are not budget golfers. They are your customers.',
-  },
-  {
-    number: 3,
-    icon: Radio,
-    title: 'Geo-Fenced Push Notifications',
-    label: 'Fill Last-Minute Tee Times',
-    description: 'Any GolfN user within 50 to 100 miles of Cabot Citrus Farms gets a real-time push notification when you have availability to fill.',
-    detail: 'Sunday morning, 6 open tee times? We push it to every GolfN user in range. This is not a campaign with a start and end date. It is infrastructure. Whenever a user enters the radius, whenever you have inventory, the two connect.',
-    stats: [
-      { value: '1,378', label: 'users in the corridor now' },
-      { value: '7%', label: 'growth in 3 days' },
-      { value: '500+', label: 'new users per day nationally' },
-    ],
-  },
-]
 
 export function CabotPitchFlow() {
   return (
     <>
-      {/* THREE PHASES */}
+      {/* THE PLAN */}
       <section id="the-plan" className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -69,87 +16,206 @@ export function CabotPitchFlow() {
               Three phases to fill<br /><span className="text-[#00ff9d]">tee times at CCF</span>
             </h2>
             <p className="text-lg text-[#9ca3af] max-w-2xl mb-12">
-              Each phase builds on the last. The sweepstakes creates the audience. The targeted campaign activates it. The push notifications make it permanent.
+              Each phase builds on the last. The sweepstakes creates the audience. The targeted campaign activates it. The geo-fenced push keeps them coming back.
             </p>
           </Fade>
 
-          <div className="space-y-8">
-            {phases.map((phase, i) => {
-              const Icon = phase.icon
-              return (
-                <Fade key={phase.number} delay={i * 0.1}>
-                  <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
-                    <div className="p-8 md:p-10">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-[#00ff9d]/10 flex items-center justify-center shrink-0">
-                          <Icon className="w-6 h-6 text-[#00ff9d]" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-3">
-                            <span className="text-xs font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Phase {phase.number}</span>
-                            <span className="text-xs font-mono text-[#4b5563] uppercase tracking-wider">{phase.label}</span>
-                          </div>
-                          <h3 className="text-2xl md:text-3xl font-bold text-white">{phase.title}</h3>
-                        </div>
-                      </div>
+          {/* PHASE 1: SWEEPSTAKES */}
+          <Fade>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
+              <div className="p-8 md:p-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-[#00ff9d]/10 flex items-center justify-center shrink-0">
+                    <Rocket className="w-6 h-6 text-[#00ff9d]" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Phase 1</span>
+                      <span className="text-xs font-mono text-[#4b5563] uppercase tracking-wider">Build the Cohort</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white">Sweepstakes</h3>
+                  </div>
+                </div>
 
-                      <p className="text-base md:text-lg text-[#d1d5db] leading-8 mb-6 max-w-3xl">{phase.description}</p>
+                <p className="text-base md:text-lg text-[#d1d5db] leading-8 mb-6 max-w-3xl">{"We run a Cabot Citrus Farms sweepstakes inside GolfN. Prize is a stay-and-play package at CCF. This does two things: it puts Cabot in front of our entire user base, and it builds a cohort of golfers who raised their hand and said \"I am interested in Cabot.\""}</p>
 
-                      {/* Phase 1 stats */}
-                      {phase.stats && !phase.segments && (
-                        <div className="grid grid-cols-3 gap-4 mb-6">
-                          {phase.stats.map((s) => (
-                            <div key={s.label} className="bg-[#0f1217] rounded-xl p-4">
-                              <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">{s.value}</p>
-                              <p className="text-sm text-[#6b7280]">{s.label}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="bg-[#0f1217] rounded-xl p-4">
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">107,000+</p>
+                    <p className="text-sm text-[#6b7280]">registered users see the campaign</p>
+                  </div>
+                  <div className="bg-[#0f1217] rounded-xl p-4">
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">34.2%</p>
+                    <p className="text-sm text-[#6b7280]">average sweepstakes entry rate</p>
+                  </div>
+                  <div className="bg-[#0f1217] rounded-xl p-4">
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">53%</p>
+                    <p className="text-sm text-[#6b7280]">entry rate on Miura wedge sweepstakes</p>
+                  </div>
+                </div>
 
-                      {/* Phase 2 segments */}
-                      {phase.segments && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                          {phase.segments.map((seg) => (
-                            <div key={seg.name} className="bg-[#0f1217] rounded-xl p-6">
-                              <p className="text-lg font-bold text-white mb-2">{seg.name}</p>
-                              <p className="text-sm text-[#9ca3af] mb-3">{seg.detail}</p>
-                              {seg.stats && (
-                                <div className="space-y-1.5">
-                                  {seg.stats.map((s) => (
-                                    <div key={s} className="flex items-center gap-2">
-                                      <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0" />
-                                      <span className="text-sm text-[#d1d5db]">{s}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                <p className="text-sm text-[#9ca3af] leading-7 max-w-3xl italic">A stay-and-play package is a significantly more aspirational prize than equipment. Every user who enters gives us permission to market to them. That is the cohort.</p>
+              </div>
+            </div>
+          </Fade>
 
-                      {/* Phase 3 stats */}
-                      {phase.stats && phase.segments === undefined && phase.number === 3 && (
-                        <div className="grid grid-cols-3 gap-4 mb-6">
-                          {phase.stats.map((s) => (
-                            <div key={s.label} className="bg-[#0f1217] rounded-xl p-4">
-                              <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">{s.value}</p>
-                              <p className="text-sm text-[#6b7280]">{s.label}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+          {/* PHASE 2: TARGETED CAMPAIGN */}
+          <Fade delay={0.1}>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
+              <div className="p-8 md:p-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-[#00ff9d]/10 flex items-center justify-center shrink-0">
+                    <Target className="w-6 h-6 text-[#00ff9d]" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Phase 2</span>
+                      <span className="text-xs font-mono text-[#4b5563] uppercase tracking-wider">Activate the Cohort</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white">Targeted Campaign</h3>
+                  </div>
+                </div>
 
-                      {phase.detail && (
-                        <p className="text-sm text-[#9ca3af] leading-7 max-w-3xl italic">{phase.detail}</p>
-                      )}
+                <p className="text-base md:text-lg text-[#d1d5db] leading-8 mb-6 max-w-3xl">Once the sweepstakes closes, we activate two segments with personalized in-app messages. Not a banner ad. A targeted, branded Cabot message that matches your positioning.</p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="bg-[#0f1217] rounded-xl p-6">
+                    <p className="text-lg font-bold text-white mb-2">Segment A: Florida Locals</p>
+                    <p className="text-sm text-[#9ca3af] mb-3">Golfers who could drive to CCF on a weekend.</p>
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0" /><span className="text-sm text-[#d1d5db]">592 in Orlando DMA</span></div>
+                      <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0" /><span className="text-sm text-[#d1d5db]">479 in Tampa-St. Pete</span></div>
+                      <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0" /><span className="text-sm text-[#d1d5db]">283 in Jacksonville</span></div>
+                      <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0" /><span className="text-sm text-[#d1d5db]">1,378 total within ~100 miles of Lecanto</span></div>
                     </div>
                   </div>
-                </Fade>
-              )
-            })}
-          </div>
+                  <div className="bg-[#0f1217] rounded-xl p-6">
+                    <p className="text-lg font-bold text-white mb-2">Segment B: Sweepstakes Entrants</p>
+                    <p className="text-sm text-[#9ca3af]">Anyone who entered the CCF sweepstakes but does not live in Florida. They expressed interest. We follow up with a direct offer.</p>
+                  </div>
+                </div>
+
+                <p className="text-sm text-[#9ca3af] leading-7 max-w-3xl italic">48.5% of our Florida golfers play at private, semi-private, or resort courses. These are not budget golfers. They are your customers.</p>
+              </div>
+            </div>
+          </Fade>
+
+          {/* PHASE 3: GEO-FENCED PUSH -- THREE TIER ROLLOUT */}
+          <Fade delay={0.2}>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
+              <div className="p-8 md:p-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-[#00ff9d]/10 flex items-center justify-center shrink-0">
+                    <Radio className="w-6 h-6 text-[#00ff9d]" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Phase 3</span>
+                      <span className="text-xs font-mono text-[#4b5563] uppercase tracking-wider">Keep Them Coming Back</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white">Geo-Fenced Push Notifications</h3>
+                  </div>
+                </div>
+
+                <p className="text-base md:text-lg text-[#d1d5db] leading-8 mb-4 max-w-3xl">Every qualified golfer within driving distance of Lecanto enters a persistent retargeting sequence until they book. You tell us your soft windows and approve the copy. We handle the rest.</p>
+
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  <div className="bg-[#0f1217] rounded-xl p-4">
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">1,378</p>
+                    <p className="text-sm text-[#6b7280]">users in the corridor now</p>
+                  </div>
+                  <div className="bg-[#0f1217] rounded-xl p-4">
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">500+</p>
+                    <p className="text-sm text-[#6b7280]">new users per day nationally</p>
+                  </div>
+                  <div className="bg-[#0f1217] rounded-xl p-4">
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">Always On</p>
+                    <p className="text-sm text-[#6b7280]">infrastructure, not a campaign</p>
+                  </div>
+                </div>
+
+                {/* TIER 1 */}
+                <div className="mb-8">
+                  <div className="flex items-center gap-3 mb-4">
+                    <RefreshCw className="w-5 h-5 text-[#00ff9d] shrink-0" />
+                    <h4 className="text-xl md:text-2xl font-bold text-white">Tier 1: Weekly Retargeting Drip</h4>
+                    <span className="text-xs font-mono text-[#00ff9d] bg-[#00ff9d]/10 px-2 py-1 rounded-md uppercase tracking-wider shrink-0">Launch with this</span>
+                  </div>
+                  <div className="bg-[#0f1217] rounded-xl p-6">
+                    <p className="text-base text-[#d1d5db] leading-8 mb-4">You tell us your consistently soft windows. We set up recurring geo-fenced pushes targeting every qualified user within 50-100 miles of Lecanto.</p>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#d1d5db] leading-7"><span className="text-white font-semibold">Every 7 days</span> -- each qualified user in range gets a push with rotating copy. They never see the same message twice in a row.</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#d1d5db] leading-7"><span className="text-white font-semibold">Click but no book?</span> -- interval shortens to 3 days. They showed intent. We follow up while it is warm.</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#d1d5db] leading-7"><span className="text-white font-semibold">Booked?</span> -- suppressed immediately. No more availability pushes for someone who already has a tee time.</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#d1d5db] leading-7"><span className="text-white font-semibold">60 days after booking</span> -- converted users re-enter the sequence for repeat rounds. Now proven customers, not cold leads.</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-[#6b7280] mt-4 italic">{"Example: \"Tee times available Monday through Wednesday at Cabot Citrus Farms. Book through GolfN.\" You approve the copy once. It runs until you change it."}</p>
+                  </div>
+                </div>
+
+                {/* TIER 2 */}
+                <div className="mb-8">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Calendar className="w-5 h-5 text-[#00ff9d] shrink-0" />
+                    <h4 className="text-xl md:text-2xl font-bold text-white">Tier 2: Seasonal Campaign Bursts</h4>
+                  </div>
+                  <div className="bg-[#0f1217] rounded-xl p-6">
+                    <p className="text-base text-[#d1d5db] leading-8 mb-4">You know your shoulder seasons and slow periods. We layer promotional campaigns on top of the Tier 1 drip during those windows.</p>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#d1d5db] leading-7"><span className="text-white font-semibold">Higher intensity</span> -- 2 pushes per week for 2-3 weeks with a promotional rate or package attached.</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#d1d5db] leading-7"><span className="text-white font-semibold">Wider audience</span> -- targets geo-fenced locals AND nationwide sweepstakes entrants who expressed interest but live outside Florida.</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#d1d5db] leading-7"><span className="text-white font-semibold">Planned or ad-hoc</span> -- schedule seasonal pushes in advance, or ping us when you see a rough stretch coming. We turn copy around in 24 hours.</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-[#6b7280] mt-4 italic">{"Example: \"Summer rates at Cabot Citrus Farms -- 18 holes starting at $X. Limited availability through GolfN.\""}</p>
+                  </div>
+                </div>
+
+                {/* TIER 3 */}
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <Zap className="w-5 h-5 text-[#00ff9d] shrink-0" />
+                    <h4 className="text-xl md:text-2xl font-bold text-white">Tier 3: Real-Time Inventory Integration</h4>
+                    <span className="text-xs font-mono text-[#4b5563] bg-[#1a1f2e] border border-[#2a3347] px-2 py-1 rounded-md uppercase tracking-wider shrink-0">Future State</span>
+                  </div>
+                  <div className="bg-[#0f1217] rounded-xl p-6">
+                    <p className="text-base text-[#d1d5db] leading-8 mb-4">If Tier 1 and Tier 2 deliver, we connect directly to your booking system and the pushes fire based on actual real-time availability.</p>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#4b5563] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#9ca3af] leading-7">User enters the geo-fence on a Saturday morning. CCF has 4 open afternoon slots. The push goes out automatically.</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#4b5563] shrink-0 mt-2.5" />
+                        <p className="text-sm text-[#9ca3af] leading-7">{"That's engineering work and it's not the Phase 1 conversation. But it is where this goes if the numbers are there."}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </Fade>
         </div>
       </section>
 
@@ -181,7 +247,7 @@ export function CabotPitchFlow() {
                 <p className="text-xs font-mono text-[#00ff9d] uppercase tracking-[0.2em] mb-4">Phase 3: Geo-Fenced Push</p>
                 <p className="text-4xl font-mono font-bold text-[#00ff9d] mb-2">Always On</p>
                 <p className="text-lg text-white font-medium mb-3">Infrastructure, not a campaign</p>
-                <p className="text-sm text-[#9ca3af] leading-7">Runs continuously. Whenever a user enters the radius and you have inventory, the two connect. Pay-per-engagement -- if it does not perform, it costs you nothing.</p>
+                <p className="text-sm text-[#9ca3af] leading-7">Runs continuously. Retargeting drip with frequency caps, creative rotation, and behavioral triggers. Pay-per-engagement -- if it does not perform, it costs you nothing.</p>
               </div>
             </div>
           </Fade>
