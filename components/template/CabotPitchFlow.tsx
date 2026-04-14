@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Rocket, Target, Radio, Globe, ArrowRight, RefreshCw, Calendar, Zap } from 'lucide-react'
+import { Rocket, Target, Radio, Globe, ArrowRight, RefreshCw, Calendar, Zap, MapPin } from 'lucide-react'
 import { Fade } from './Fade'
 
 export function CabotPitchFlow() {
@@ -132,6 +132,32 @@ export function CabotPitchFlow() {
                     <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">Always On</p>
                     <p className="text-sm text-[#6b7280]">infrastructure, not a campaign</p>
                   </div>
+                </div>
+
+                {/* GEO-FENCE EXPLAINER -- unmissable info box */}
+                <div className="border-2 border-[#00ff9d] rounded-2xl p-6 md:p-8 mb-8 bg-[#00ff9d]/5 relative">
+                  <div className="flex items-center gap-3 mb-4">
+                    <MapPin className="w-6 h-6 text-[#00ff9d] shrink-0" />
+                    <h4 className="text-lg md:text-xl font-bold text-white">How the Geo-Fence Works</h4>
+                  </div>
+                  <p className="text-base md:text-lg text-white font-medium leading-8 mb-4">
+                    {"Any GolfN user who enters a 50-100 mile radius of Lecanto automatically enters the push sequence. Not just Florida residents."}
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="bg-[#0f1217]/80 rounded-xl px-4 py-3">
+                      <p className="text-sm text-white font-semibold">New York golfer</p>
+                      <p className="text-xs text-[#9ca3af]">Visiting Orlando for a week. Opens the app. CCF is in front of them.</p>
+                    </div>
+                    <div className="bg-[#0f1217]/80 rounded-xl px-4 py-3">
+                      <p className="text-sm text-white font-semibold">Canadian snowbird</p>
+                      <p className="text-xs text-[#9ca3af]">Wintering in Tampa. Crosses the radius. Enters the sequence automatically.</p>
+                    </div>
+                    <div className="bg-[#0f1217]/80 rounded-xl px-4 py-3">
+                      <p className="text-sm text-white font-semibold">UK golfer on a Florida trip</p>
+                      <p className="text-xs text-[#9ca3af]">Lands in Orlando. Has the app. Gets a Cabot push before they unpack.</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-[#00ff9d] font-semibold mt-4">The geo-fence is the filter. The tiers below are what happens after they enter it.</p>
                 </div>
 
                 {/* TIER 1 */}
