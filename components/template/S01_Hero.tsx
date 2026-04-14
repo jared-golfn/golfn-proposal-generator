@@ -205,7 +205,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
 
             {!hasVideo && (
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-3 md:gap-4 mb-10">
-                <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-sm md:text-base font-medium hover:underline transition-colors text-[#00ff9d]"><Zap className="w-4 h-4" /> See How It Works</button>
+                <button onClick={() => document.getElementById(partner.slug === 'cabot' ? 'the-plan' : 'how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-sm md:text-base font-medium hover:underline transition-colors text-[#00ff9d]"><Zap className="w-4 h-4" /> See How It Works</button>
               </motion.div>
             )}
           </div>
@@ -285,7 +285,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
         {isPitch && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="mt-12 flex justify-center">
             <button
-              onClick={() => document.getElementById('business-need')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById(partner.slug === 'cabot' ? 'the-plan' : 'business-need')?.scrollIntoView({ behavior: 'smooth' })}
               className="flex flex-col items-center gap-2 text-[#4b5563] hover:text-[#00ff9d] transition-colors group"
             >
               <span className="text-sm font-mono uppercase tracking-wider">Start here</span>
