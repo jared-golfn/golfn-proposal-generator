@@ -66,8 +66,8 @@ function InteractiveMap() {
     if (filter === 'all') {
       const rg = L.layerGroup()
       userLocations.forEach((loc) => {
-        const numDots = Math.min(Math.max(Math.ceil(loc.users / 8), 3), 80)
-        const spread = loc.users > 200 ? 0.45 : loc.users > 50 ? 0.3 : 0.2
+        const numDots = Math.min(Math.max(Math.ceil(loc.users / 5), 5), 120)
+        const spread = loc.users > 200 ? 0.18 : loc.users > 50 ? 0.13 : 0.08
         for (let i = 0; i < numDots; i++) {
           const angle = Math.random() * Math.PI * 2
           const dist = Math.random() * spread
