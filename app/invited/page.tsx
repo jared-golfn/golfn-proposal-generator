@@ -1,13 +1,6 @@
-import dynamic from 'next/dynamic'
+'use client'
 
-const InvitedPitchPage = dynamic(() => import('@/components/invited/InvitedPitchPage'), {
-  ssr: false,
-  loading: () => (
-    <div className="min-h-screen bg-[#0f1217] flex items-center justify-center">
-      <div className="text-[#00ff9d] font-mono text-sm animate-pulse">Loading...</div>
-    </div>
-  ),
-})
+import InvitedPitchPage from '@/components/invited/InvitedPitchPage'
 
 export default function InvitedPage() {
   return <InvitedPitchPage />
