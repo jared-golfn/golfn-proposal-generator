@@ -158,7 +158,6 @@ export default function InvitedPitchPage() {
   const totalUsers = marketData.reduce((s, m) => s + m.users, 0)
   const totalClubs = new Set(marketData.map(m => m.abbr)).size
 
-  // Brand share percentages (of all classified bag entries)
   const brandShare = [
     { brand: 'TaylorMade', pct: 26 },
     { brand: 'Callaway', pct: 20, highlight: true },
@@ -170,7 +169,6 @@ export default function InvitedPitchPage() {
     { brand: 'Others', pct: 10 },
   ]
 
-  // What they're shopping for (% of marketplace-active users)
   const shopCategories = [
     { cat: 'Clubs & Equipment', pct: 64, icon: '\u26F3' },
     { cat: 'Golf Balls', pct: 16, icon: '\u26BE' },
@@ -180,7 +178,6 @@ export default function InvitedPitchPage() {
     { cat: 'Golf Carts', pct: 3, icon: '\uD83D\uDE97' },
   ]
 
-  // Top marketplace brands (from product_viewed)
   const mktBrands = ['Miura', 'Srixon', 'L.A.B. Golf', 'Cobra', 'Cleveland', 'Bettinardi', 'Puma', 'Jones', 'Stewart', 'Hyperice', 'Oakley', 'Holderness & Bourne']
 
   return (
@@ -190,7 +187,6 @@ export default function InvitedPitchPage() {
         <div className="absolute inset-0 opacity-[0.04]" style={{ background: 'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)' }} />
       </div>
 
-      {/* HERO */}
       <section className="relative pt-12 md:pt-20 pb-10 md:pb-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex items-center justify-between mb-12 md:mb-20 gap-4">
@@ -204,7 +200,7 @@ export default function InvitedPitchPage() {
             Your members are<br /><span className="text-[#00ff9d]">already using us.</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-lg md:text-2xl text-[#9ca3af] max-w-4xl leading-relaxed mb-8">
-            271 verified rounds at 49 Invited properties. 50,000+ rounds tracked across 5,200+ US courses — growing by 4,000+ per week. 1,278 users with Callaway in their bag. 59% under 35. We have the next generation of your members — and the data to prove it.
+            271 verified rounds at 49 Invited properties in 2026. 50,000+ rounds tracked across 5,200+ US courses — growing by 4,000+ per week. 59% under 35. We have the next generation of your members — and the data to prove it.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="mb-8">
             <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
@@ -221,7 +217,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* MAP */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -238,7 +233,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* WHO THEY ARE — redesigned with percentages */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -246,8 +240,6 @@ export default function InvitedPitchPage() {
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Premium golfers.<br /><span className="text-[#00ff9d]">Full picture.</span></h2>
             <p className="text-base text-[#9ca3af] max-w-2xl mb-8">Not just what clubs they carry — what they buy, where they play, and what brands they engage with inside the app.</p>
           </Fade>
-
-          {/* Demographics — ring charts */}
           <Fade delay={0.05}>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
               <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-8">User Demographics</p>
@@ -259,8 +251,6 @@ export default function InvitedPitchPage() {
               </div>
             </div>
           </Fade>
-
-          {/* Brand share — horizontal bars with percentages */}
           <Fade delay={0.1}>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
               <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">Brand share — what{'\u2019'}s in their bags</p>
@@ -269,10 +259,7 @@ export default function InvitedPitchPage() {
                   <div key={b.brand} className="flex items-center gap-3 md:gap-4">
                     <span className="text-sm text-white font-medium w-28 md:w-32 shrink-0">{b.brand}</span>
                     <div className="flex-1 h-3 rounded-full bg-[#0f1217] overflow-hidden">
-                      <div className="h-full rounded-full" style={{
-                        width: `${(b.pct / brandShare[0].pct) * 100}%`,
-                        background: b.highlight ? 'linear-gradient(90deg, #00ff9d, #17A455)' : 'linear-gradient(90deg, #60a5fa, #3b82f6)'
-                      }} />
+                      <div className="h-full rounded-full" style={{ width: `${(b.pct / brandShare[0].pct) * 100}%`, background: b.highlight ? 'linear-gradient(90deg, #00ff9d, #17A455)' : 'linear-gradient(90deg, #60a5fa, #3b82f6)' }} />
                     </div>
                     <span className={`text-sm font-mono font-bold w-10 text-right shrink-0 ${b.highlight ? 'text-[#00ff9d]' : 'text-white'}`}>{b.pct}%</span>
                   </div>
@@ -280,8 +267,6 @@ export default function InvitedPitchPage() {
               </div>
             </div>
           </Fade>
-
-          {/* Marketplace interest — category grid */}
           <Fade delay={0.15}>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
               <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">What they{'\u2019'}re shopping for in the GolfN marketplace</p>
@@ -301,15 +286,11 @@ export default function InvitedPitchPage() {
               </div>
             </div>
           </Fade>
-
-          {/* Marketplace brands they engage with */}
           <Fade delay={0.2}>
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
               <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Brands they engage with in the GolfN marketplace</p>
               <div className="flex flex-wrap gap-2">
-                {mktBrands.map((b) => (
-                  <span key={b} className="px-3 py-1.5 rounded-lg bg-[#1a1f2e] border border-[#2a3347] text-sm text-[#d1d5db] font-medium">{b}</span>
-                ))}
+                {mktBrands.map((b) => (<span key={b} className="px-3 py-1.5 rounded-lg bg-[#1a1f2e] border border-[#2a3347] text-sm text-[#d1d5db] font-medium">{b}</span>))}
               </div>
               <p className="mt-4 text-sm text-[#9ca3af]">Active golfers browsing, comparing, and redeeming rewards for premium products. Directly addressable through targeted campaigns, push notifications, and in-app placements.</p>
             </div>
@@ -317,7 +298,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* STATE BREAKDOWN */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -369,12 +349,11 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="relative py-16 md:py-24" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <Fade>
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-6">The overlap is not theoretical.</h2>
-            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">271 rounds at 49 of your clubs. 50,000+ rounds across 5,200+ courses. 1,278 Callaway users. And the numbers are growing — 4,000+ new rounds every week.</p>
+            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">271 rounds at 49 of your clubs in 2026. 50,000+ rounds across 5,200+ courses. And the numbers are growing — 4,000+ new rounds every week.</p>
             <p className="text-xl md:text-2xl text-[#d1d5db] font-medium mb-10">Happy to walk through the data on a call.</p>
             <a href="mailto:jared@golfn.com" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-lg hover:bg-[#00ff9d]/90 transition-colors">Get in Touch <ArrowRight className="w-5 h-5" /></a>
           </Fade>
