@@ -83,9 +83,10 @@ function InteractiveMap() {
       rg.addTo(map)
     }
 
-    const invIcon = L.icon({
-      iconUrl: INVITED_ICON,
-      iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -16],
+    const invIcon = L.divIcon({
+      html: `<div style="width:40px;height:40px;border-radius:50%;border:2.5px solid #00ff9d;background:#0f1217;display:flex;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(0,255,157,0.4)"><img src="${INVITED_ICON}" style="width:28px;height:28px;border-radius:50%" /></div>`,
+      iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -22],
+      className: '',
     })
 
     invitedClubs.forEach((club) => {
@@ -139,7 +140,7 @@ function InteractiveMap() {
       <div className="absolute bottom-6 left-4 z-[1000] bg-[#0f1217]/90 border border-[#2a3347] rounded-xl px-4 py-3 backdrop-blur-sm">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <img src={INVITED_ICON} alt="" className="w-5 h-5" />
+            <div className="w-5 h-5 rounded-full border-2 border-[#00ff9d] flex items-center justify-center" style={{boxShadow:'0 0 8px rgba(0,255,157,0.4)'}}><img src={INVITED_ICON} alt="" className="w-3.5 h-3.5 rounded-full" /></div>
             <span className="text-xs text-[#9ca3af]">Invited Clubs (113)</span>
           </div>
           {filter === 'all' && (
