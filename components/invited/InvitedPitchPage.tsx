@@ -65,7 +65,6 @@ function InteractiveMap() {
 
     if (filter === 'all') {
       const rg = L.layerGroup()
-      // Plot real GPS course positions — each dot is an actual golf course
       const maxRounds = Math.max(...coursePins.map(p => p.r))
       coursePins.forEach((pin) => {
         const intensity = Math.log(pin.r + 1) / Math.log(maxRounds + 1)
@@ -131,7 +130,7 @@ function InteractiveMap() {
         <button onClick={() => setFilter('all')}
           className={`px-4 py-2 rounded-lg text-xs font-mono uppercase tracking-wider transition-all ${
             filter === 'all' ? 'bg-[#00ff9d] text-[#0f1217] font-bold' : 'bg-[#1a1f2e]/90 text-[#9ca3af] border border-[#2a3347] hover:text-white'
-          }`}>All GolfN Courses</button>
+          }`}>Rounds Played</button>
         <button onClick={() => setFilter('invited-only')}
           className={`px-4 py-2 rounded-lg text-xs font-mono uppercase tracking-wider transition-all ${
             filter === 'invited-only' ? 'bg-[#00ff9d] text-[#0f1217] font-bold' : 'bg-[#1a1f2e]/90 text-[#9ca3af] border border-[#2a3347] hover:text-white'
@@ -146,7 +145,7 @@ function InteractiveMap() {
           {filter === 'all' && (
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#60a5fa] opacity-70" />
-              <span className="text-xs text-[#9ca3af]">GolfN Courses ({coursePins.length.toLocaleString()})</span>
+              <span className="text-xs text-[#9ca3af]">Courses with GolfN Rounds ({coursePins.length.toLocaleString()})</span>
             </div>
           )}
         </div>
@@ -199,7 +198,7 @@ export default function InvitedPitchPage() {
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
             className="text-lg md:text-2xl text-[#9ca3af] max-w-4xl leading-relaxed mb-8">
-            271 verified rounds at 49 Invited properties. 19,000+ rounds at 5,200+ US courses. 1,278 users with Callaway in their bag. 59% under 35. We have the next generation of your members — and the data to prove it.
+            271 verified rounds at 49 Invited properties. 50,000+ rounds tracked across 5,200+ US courses — growing by 4,000+ per week. 1,278 users with Callaway in their bag. 59% under 35. We have the next generation of your members — and the data to prove it.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
@@ -214,7 +213,7 @@ export default function InvitedPitchPage() {
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}
             className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
-            {[{value:'107,000+',label:'Registered Golfers'},{value:'59%',label:'Under 35'},{value:'75x',label:'Monthly App Opens'},{value:'57',label:'Countries'},{value:'500+',label:'New Users / Day'}].map((kpi) => (
+            {[{value:'107,000+',label:'Registered Golfers'},{value:'59%',label:'Under 35'},{value:'75x',label:'Monthly App Opens'},{value:'57',label:'Countries'},{value:'4,000+',label:'Rounds / Week'}].map((kpi) => (
               <div key={kpi.label}>
                 <span className="text-2xl md:text-3xl lg:text-4xl font-bold font-mono text-[#00ff9d]">{kpi.value}</span>
                 <span className="block mt-1 text-base text-[#6b7280]">{kpi.label}</span>
@@ -232,13 +231,13 @@ export default function InvitedPitchPage() {
               <p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Overlap</p>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Your clubs.<br /><span className="text-[#00ff9d]">Our golfers.</span></h2>
-            <p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">Each Invited icon marks one of your 113 properties. Every blue dot is a real golf course where GolfN users have played — {coursePins.length.toLocaleString()} courses, {coursePins.reduce((s,p)=>s+p.r,0).toLocaleString()} rounds. Click any Invited club to see the data.</p>
+            <p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">Each Invited icon marks one of your 113 properties. Every blue dot is a real course where GolfN users have played rounds — {coursePins.length.toLocaleString()} courses, 50,000+ rounds tracked. Click any Invited club to see the data.</p>
           </Fade>
           <Fade delay={0.1}><InteractiveMap /></Fade>
           <Fade delay={0.2}>
             <div className="mt-8 bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
               <p className="text-base md:text-lg text-[#d1d5db] leading-8">
-                Toggle to <span className="text-white font-semibold">&ldquo;Invited Clubs Only&rdquo;</span> and you see your footprint. Toggle back to <span className="text-white font-semibold">&ldquo;All GolfN Courses&rdquo;</span> and you see {coursePins.length.toLocaleString()} real golf courses where GolfN users are actively playing — courses around your properties that you have <span className="text-[#00ff9d] font-semibold">zero visibility into today</span>.
+                Toggle to <span className="text-white font-semibold">&ldquo;Invited Clubs Only&rdquo;</span> and you see your footprint. Toggle back to <span className="text-white font-semibold">&ldquo;Rounds Played&rdquo;</span> and you see {coursePins.length.toLocaleString()} real courses where GolfN users are actively playing — courses around your properties that you have <span className="text-[#00ff9d] font-semibold">zero visibility into today</span>.
               </p>
             </div>
           </Fade>
@@ -328,7 +327,7 @@ export default function InvitedPitchPage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <Fade>
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-6">The overlap is not theoretical.</h2>
-            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">271 rounds at 49 of your clubs. 19,000+ rounds at 5,200+ US courses. 1,278 Callaway users. And the numbers are growing — we added 6,200+ users last week alone.</p>
+            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">271 rounds at 49 of your clubs. 50,000+ rounds across 5,200+ courses. 1,278 Callaway users. And the numbers are growing — 4,000+ new rounds every week.</p>
             <p className="text-xl md:text-2xl text-[#d1d5db] font-medium mb-10">Happy to walk through the data on a call.</p>
             <a href="mailto:jared@golfn.com" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-lg hover:bg-[#00ff9d]/90 transition-colors">Get in Touch <ArrowRight className="w-5 h-5" /></a>
           </Fade>
