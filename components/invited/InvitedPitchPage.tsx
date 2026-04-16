@@ -28,6 +28,28 @@ function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: numb
   )
 }
 
+function PctRing({ pct, label, color = '#00ff9d', size = 120 }: { pct: number; label: string; color?: string; size?: number }) {
+  const r = (size - 12) / 2
+  const circ = 2 * Math.PI * r
+  const offset = circ - (pct / 100) * circ
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative" style={{ width: size, height: size }}>
+        <svg width={size} height={size} className="-rotate-90">
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#1a1f2e" strokeWidth="8" />
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth="8"
+            strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+            style={{ transition: 'stroke-dashoffset 1s ease-out' }} />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-2xl md:text-3xl font-mono font-bold text-white">{pct}%</span>
+        </div>
+      </div>
+      <span className="text-xs md:text-sm text-[#9ca3af] text-center max-w-[120px]">{label}</span>
+    </div>
+  )
+}
+
 function InteractiveMap() {
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstance = useRef<any>(null)
@@ -62,37 +84,30 @@ function InteractiveMap() {
     const L = window.L
     const map = mapInstance.current
     map.eachLayer((layer: any) => { if (!(layer instanceof L.TileLayer)) map.removeLayer(layer) })
-
     if (filter === 'all') {
       const rg = L.layerGroup()
       const maxRounds = Math.max(...coursePins.map(p => p.r))
       coursePins.forEach((pin) => {
         const intensity = Math.log(pin.r + 1) / Math.log(maxRounds + 1)
-        const radius = 1.8 + intensity * 3.5
-        const opacity = 0.35 + intensity * 0.5
         L.circleMarker([pin.la, pin.ln], {
-          radius, fillColor: '#60a5fa', fillOpacity: opacity,
+          radius: 1.8 + intensity * 3.5, fillColor: '#60a5fa', fillOpacity: 0.35 + intensity * 0.5,
           color: '#93c5fd', weight: pin.r >= 10 ? 0.5 : 0.2, opacity: 0.3 + intensity * 0.4,
         }).addTo(rg)
       })
       rg.addTo(map)
     }
-
     const invIcon = L.divIcon({
       html: `<div style="width:40px;height:40px;border-radius:50%;border:2.5px solid #00ff9d;background:#0f1217;display:flex;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(0,255,157,0.4)"><img src="${INVITED_ICON}" style="width:28px;height:28px;border-radius:50%" /></div>`,
       iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -22], className: '',
     })
-
     invitedClubs.forEach((club) => {
       const fullState = stateMap[club.s] || club.s
       const sr = stateRounds[fullState] || 0
       const marker = L.marker([club.la, club.ln], { icon: invIcon, zIndexOffset: 1000 })
       const rHtml = club.h
-        ? `<div style="margin-top:6px"><span style="color:#00ff9d;font-weight:700;font-family:monospace;font-size:16px">${club.r}</span><span style="color:#6b7280;margin-left:4px">GolfN rounds at this club</span></div><div style="margin-top:2px"><span style="color:#fff;font-weight:600;font-family:monospace">${club.u}</span><span style="color:#6b7280;margin-left:4px">unique GolfN users</span></div>`
-        : `<div style="margin-top:6px;color:#4b5563;font-style:italic">No GolfN rounds logged yet</div>`
-      marker.bindPopup(
-        `<div style="font-family:system-ui;font-size:13px;line-height:1.5;min-width:220px"><div style="font-weight:700;color:#00ff9d;font-size:14px;margin-bottom:2px">${club.n}</div><div style="color:#9ca3af">${club.c}, ${club.s}</div><div style="margin-top:8px;padding-top:8px;border-top:1px solid #2a3347"><div style="color:#6b7280;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Invited Club</div>${rHtml}</div><div style="margin-top:8px;padding-top:8px;border-top:1px solid #2a3347"><span style="color:#60a5fa;font-weight:700;font-family:monospace;font-size:16px">${sr.toLocaleString()}</span><span style="color:#6b7280;margin-left:4px">total GolfN rounds in ${fullState}</span></div><div style="margin-top:2px"><span style="color:#fff;font-weight:600;font-family:monospace">${club.su.toLocaleString()}</span><span style="color:#6b7280;margin-left:4px">active GolfN users in state</span></div></div>`, { className: 'invited-popup', closeButton: false }
-      )
+        ? `<div style="margin-top:6px"><span style="color:#00ff9d;font-weight:700;font-family:monospace;font-size:16px">${club.r}</span><span style="color:#6b7280;margin-left:4px">rounds</span></div><div style="margin-top:2px"><span style="color:#fff;font-weight:600;font-family:monospace">${club.u}</span><span style="color:#6b7280;margin-left:4px">unique users</span></div>`
+        : `<div style="margin-top:6px;color:#4b5563;font-style:italic">No rounds logged yet</div>`
+      marker.bindPopup(`<div style="font-family:system-ui;font-size:13px;line-height:1.5;min-width:220px"><div style="font-weight:700;color:#00ff9d;font-size:14px;margin-bottom:2px">${club.n}</div><div style="color:#9ca3af">${club.c}, ${club.s}</div><div style="margin-top:8px;padding-top:8px;border-top:1px solid #2a3347">${rHtml}</div><div style="margin-top:8px;padding-top:8px;border-top:1px solid #2a3347"><span style="color:#60a5fa;font-weight:700;font-family:monospace;font-size:16px">${sr.toLocaleString()}</span><span style="color:#6b7280;margin-left:4px">GolfN rounds in ${fullState}</span></div></div>`, { className: 'invited-popup', closeButton: false })
       marker.addTo(map)
     })
   }, [loaded, filter])
@@ -143,7 +158,30 @@ export default function InvitedPitchPage() {
   const totalUsers = marketData.reduce((s, m) => s + m.users, 0)
   const totalClubs = new Set(marketData.map(m => m.abbr)).size
 
-  const premiumPct = Math.round((homeCourseTypes.private + homeCourseTypes.semiPrivate + homeCourseTypes.resort) / (homeCourseTypes.public + homeCourseTypes.semiPrivate + homeCourseTypes.private + homeCourseTypes.resort + homeCourseTypes.military) * 100)
+  // Brand share percentages (of all classified bag entries)
+  const brandShare = [
+    { brand: 'TaylorMade', pct: 26 },
+    { brand: 'Callaway', pct: 20, highlight: true },
+    { brand: 'Titleist', pct: 15 },
+    { brand: 'Ping', pct: 9 },
+    { brand: 'Cobra', pct: 8 },
+    { brand: 'Cleveland', pct: 7 },
+    { brand: 'Mizuno', pct: 5 },
+    { brand: 'Others', pct: 10 },
+  ]
+
+  // What they're shopping for (% of marketplace-active users)
+  const shopCategories = [
+    { cat: 'Clubs & Equipment', pct: 64, icon: '\u26F3' },
+    { cat: 'Golf Balls', pct: 16, icon: '\u26BE' },
+    { cat: 'Bags & Accessories', pct: 8, icon: '\uD83C\uDFD2' },
+    { cat: 'Apparel, Shoes & Gloves', pct: 5, icon: '\uD83D\uDC5F' },
+    { cat: 'Training & Tech', pct: 4, icon: '\uD83D\uDCF1' },
+    { cat: 'Golf Carts', pct: 3, icon: '\uD83D\uDE97' },
+  ]
+
+  // Top marketplace brands (from product_viewed)
+  const mktBrands = ['Miura', 'Srixon', 'L.A.B. Golf', 'Cobra', 'Cleveland', 'Bettinardi', 'Puma', 'Jones', 'Stewart', 'Hyperice', 'Oakley', 'Holderness & Bourne']
 
   return (
     <div className="min-h-screen bg-[#0f1217] text-white">
@@ -152,6 +190,7 @@ export default function InvitedPitchPage() {
         <div className="absolute inset-0 opacity-[0.04]" style={{ background: 'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)' }} />
       </div>
 
+      {/* HERO */}
       <section className="relative pt-12 md:pt-20 pb-10 md:pb-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex items-center justify-between mb-12 md:mb-20 gap-4">
@@ -167,7 +206,7 @@ export default function InvitedPitchPage() {
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-lg md:text-2xl text-[#9ca3af] max-w-4xl leading-relaxed mb-8">
             271 verified rounds at 49 Invited properties. 50,000+ rounds tracked across 5,200+ US courses — growing by 4,000+ per week. 1,278 users with Callaway in their bag. 59% under 35. We have the next generation of your members — and the data to prove it.
           </motion.p>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="mb-8">
             <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
             <div className="flex items-center gap-6 md:gap-8 flex-wrap">
               {partnerLogos.map((logo) => (<img key={logo.name} src={logo.url} alt={logo.name} className="w-auto object-contain" style={{ filter: 'brightness(0) invert(1)', opacity: 0.5, height: logo.h }} />))}
@@ -182,12 +221,13 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
+      {/* MAP */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
             <div className="flex items-center gap-3 mb-3"><MapPin className="w-5 h-5 text-[#00ff9d]" /><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Overlap</p></div>
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Your clubs.<br /><span className="text-[#00ff9d]">Our golfers.</span></h2>
-            <p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">Each Invited icon marks one of your 113 properties. Every blue dot is a real course where GolfN users have played rounds — {coursePins.length.toLocaleString()} courses, 50,000+ rounds tracked. Click any Invited club to see the data.</p>
+            <p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">Each Invited icon marks one of your 113 properties. Every blue dot is a real course where GolfN users have played rounds — {coursePins.length.toLocaleString()} courses, 50,000+ rounds tracked.</p>
           </Fade>
           <Fade delay={0.1}><InteractiveMap /></Fade>
           <Fade delay={0.2}>
@@ -198,45 +238,86 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
+      {/* WHO THEY ARE — redesigned with percentages */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
-            <div className="flex items-center gap-3 mb-3"><ShoppingBag className="w-5 h-5 text-[#00ff9d]" /><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Who They Are</p></div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Premium equipment.<br /><span className="text-[#00ff9d]">Premium golfers.</span></h2>
-            <p className="text-base text-[#9ca3af] max-w-2xl mb-8">These are not casual golfers. They log their equipment, track their handicap, and play at private clubs.</p>
+            <div className="flex items-center gap-3 mb-3"><Users className="w-5 h-5 text-[#00ff9d]" /><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Who They Are</p></div>
+            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Premium golfers.<br /><span className="text-[#00ff9d]">Full picture.</span></h2>
+            <p className="text-base text-[#9ca3af] max-w-2xl mb-8">Not just what clubs they carry — what they buy, where they play, and what brands they engage with inside the app.</p>
           </Fade>
-          <Fade delay={0.1}>
+
+          {/* Demographics — ring charts */}
+          <Fade delay={0.05}>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
-              <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">Equipment brands in user bags (unique users, April 2026)</p>
-              <div className="space-y-3">
-                {equipmentBrands.slice(0, 8).map((b) => {
-                  const pct = (b.users / equipmentBrands[0].users) * 100
-                  return (<div key={b.brand} className="flex items-center gap-4"><span className="text-sm text-white font-medium w-32 md:w-40 shrink-0">{b.brand}</span><div className="flex-1 h-2.5 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{ width: `${pct}%`, background: b.brand === 'Callaway' ? 'linear-gradient(90deg, #00ff9d, #17A455)' : 'linear-gradient(90deg, #60a5fa, #3b82f6)' }} /></div><span className={`text-sm font-mono font-bold w-16 text-right shrink-0 ${b.brand === 'Callaway' ? 'text-[#00ff9d]' : 'text-white'}`}>{b.users.toLocaleString()}</span></div>)
-                })}
+              <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-8">User Demographics</p>
+              <div className="flex flex-wrap justify-around gap-8">
+                <PctRing pct={59} label="Under 35" color="#00ff9d" />
+                <PctRing pct={37} label="Premium course members" color="#00ff9d" />
+                <PctRing pct={97} label="Male" color="#60a5fa" />
+                <PctRing pct={20} label="Callaway in bag" color="#00ff9d" />
               </div>
             </div>
           </Fade>
+
+          {/* Brand share — horizontal bars with percentages */}
+          <Fade delay={0.1}>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
+              <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">Brand share — what{'\u2019'}s in their bags</p>
+              <div className="space-y-3">
+                {brandShare.map((b) => (
+                  <div key={b.brand} className="flex items-center gap-3 md:gap-4">
+                    <span className="text-sm text-white font-medium w-28 md:w-32 shrink-0">{b.brand}</span>
+                    <div className="flex-1 h-3 rounded-full bg-[#0f1217] overflow-hidden">
+                      <div className="h-full rounded-full" style={{
+                        width: `${(b.pct / brandShare[0].pct) * 100}%`,
+                        background: b.highlight ? 'linear-gradient(90deg, #00ff9d, #17A455)' : 'linear-gradient(90deg, #60a5fa, #3b82f6)'
+                      }} />
+                    </div>
+                    <span className={`text-sm font-mono font-bold w-10 text-right shrink-0 ${b.highlight ? 'text-[#00ff9d]' : 'text-white'}`}>{b.pct}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Fade>
+
+          {/* Marketplace interest — category grid */}
+          <Fade delay={0.15}>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
+              <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">What they{'\u2019'}re shopping for in the GolfN marketplace</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {shopCategories.map((c) => (
+                  <div key={c.cat} className="bg-[#0f1217] rounded-xl p-4 md:p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-2xl">{c.icon}</span>
+                      <span className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">{c.pct}%</span>
+                    </div>
+                    <p className="text-xs md:text-sm text-[#9ca3af]">{c.cat}</p>
+                    <div className="mt-2 h-1.5 rounded-full bg-[#1a1f2e] overflow-hidden">
+                      <div className="h-full rounded-full bg-[#60a5fa]" style={{ width: `${c.pct}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Fade>
+
+          {/* Marketplace brands they engage with */}
           <Fade delay={0.2}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
-                <p className="text-4xl md:text-5xl font-mono font-bold text-[#00ff9d] mb-2">1,278</p>
-                <p className="text-lg text-white font-medium mb-3">users with Callaway in their bag</p>
-                <p className="text-sm text-[#9ca3af] leading-7">Current-gen equipment: Paradym Ai Smoke, Elyte, Jaws Raw, Opus. These are serious golfers buying premium. Directly relevant to your Callaway relationship.</p>
+            <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
+              <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Brands they engage with in the GolfN marketplace</p>
+              <div className="flex flex-wrap gap-2">
+                {mktBrands.map((b) => (
+                  <span key={b} className="px-3 py-1.5 rounded-lg bg-[#1a1f2e] border border-[#2a3347] text-sm text-[#d1d5db] font-medium">{b}</span>
+                ))}
               </div>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8">
-                <p className="text-4xl md:text-5xl font-mono font-bold text-[#00ff9d] mb-2">{premiumPct}%</p>
-                <p className="text-lg text-white font-medium mb-3">play at premium courses</p>
-                <div className="space-y-2 mt-4">
-                  <div className="flex justify-between text-sm"><span className="text-[#9ca3af]">Private club members</span><span className="text-white font-mono">{homeCourseTypes.private.toLocaleString()}</span></div>
-                  <div className="flex justify-between text-sm"><span className="text-[#9ca3af]">Semi-private</span><span className="text-white font-mono">{homeCourseTypes.semiPrivate.toLocaleString()}</span></div>
-                  <div className="flex justify-between text-sm"><span className="text-[#9ca3af]">Resort</span><span className="text-white font-mono">{homeCourseTypes.resort.toLocaleString()}</span></div>
-                </div>
-              </div>
+              <p className="mt-4 text-sm text-[#9ca3af]">Active golfers browsing, comparing, and redeeming rewards for premium products. Directly addressable through targeted campaigns, push notifications, and in-app placements.</p>
             </div>
           </Fade>
         </div>
       </section>
 
+      {/* STATE BREAKDOWN */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -244,7 +325,6 @@ export default function InvitedPitchPage() {
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Everywhere you<br /><span className="text-[#00ff9d]">operate.</span></h2>
             <p className="text-base text-[#9ca3af] max-w-2xl mb-6">GolfN activity across every state where Invited has properties.</p>
           </Fade>
-
           <Fade delay={0.05}>
             <div className="grid grid-cols-3 gap-4 md:gap-6 mb-8">
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-5 md:p-6 text-center">
@@ -261,7 +341,6 @@ export default function InvitedPitchPage() {
               </div>
             </div>
           </Fade>
-
           <Fade delay={0.1}>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8">
               <div className="flex items-center justify-between mb-6">
@@ -276,15 +355,11 @@ export default function InvitedPitchPage() {
                       <div className="flex items-center gap-3 md:gap-4 mb-1.5">
                         <span className="text-xs font-mono text-[#4b5563] w-5 shrink-0">{i + 1}</span>
                         <span className="text-sm md:text-base text-white font-semibold w-28 md:w-36 shrink-0">{m.state}</span>
-                        <div className="flex-1 h-3 rounded-full bg-[#0f1217] overflow-hidden">
-                          <div className="h-full rounded-full transition-all duration-700" style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #60a5fa, #3b82f6)' }} />
-                        </div>
+                        <div className="flex-1 h-3 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #60a5fa, #3b82f6)' }} /></div>
                         <span className="text-sm md:text-base font-mono font-bold text-[#60a5fa] w-14 text-right shrink-0">{m.rounds.toLocaleString()}</span>
                         <span className="text-xs font-mono text-[#4b5563] w-16 text-right shrink-0 hidden sm:block">{m.clubs} club{m.clubs !== 1 ? 's' : ''}</span>
                       </div>
-                      <div className="flex items-center gap-3 md:gap-4 pl-8 md:pl-9">
-                        <span className="text-xs text-[#6b7280] w-28 md:w-36 shrink-0">{m.users.toLocaleString()} active users</span>
-                      </div>
+                      <div className="pl-8 md:pl-9"><span className="text-xs text-[#6b7280]">{m.users.toLocaleString()} active users</span></div>
                     </div>
                   )
                 })}
@@ -294,6 +369,7 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
+      {/* CTA */}
       <section className="relative py-16 md:py-24" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <Fade>
