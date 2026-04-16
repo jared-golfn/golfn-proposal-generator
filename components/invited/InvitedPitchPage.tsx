@@ -237,13 +237,12 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* STATE BREAKDOWN — ranked bar chart */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
             <div className="flex items-center gap-3 mb-3"><TrendingUp className="w-5 h-5 text-[#00ff9d]" /><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Your Markets</p></div>
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Everywhere you<br /><span className="text-[#00ff9d]">operate.</span></h2>
-            <p className="text-base text-[#9ca3af] max-w-2xl mb-6">GolfN activity in the last 12 months across every state where Invited has properties.</p>
+            <p className="text-base text-[#9ca3af] max-w-2xl mb-6">GolfN activity across every state where Invited has properties.</p>
           </Fade>
 
           <Fade delay={0.05}>
@@ -266,7 +265,7 @@ export default function InvitedPitchPage() {
           <Fade delay={0.1}>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8">
               <div className="flex items-center justify-between mb-6">
-                <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em]">Rounds by state (12 months)</p>
+                <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em]">Rounds by state (last 30 days)</p>
                 <p className="text-xs font-mono text-[#4b5563]">Invited clubs shown right</p>
               </div>
               <div className="space-y-4">
