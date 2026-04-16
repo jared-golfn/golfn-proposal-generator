@@ -28,15 +28,6 @@ function Fade({ children, delay = 0 }: { children: React.ReactNode; delay?: numb
   )
 }
 
-function StatCard({ value, label, accent = false }: { value: string; label: string; accent?: boolean }) {
-  return (
-    <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 text-center">
-      <p className={`text-3xl md:text-4xl font-mono font-bold mb-2 ${accent ? 'text-[#00ff9d]' : 'text-white'}`}>{value}</p>
-      <p className="text-sm text-[#6b7280]">{label}</p>
-    </div>
-  )
-}
-
 function InteractiveMap() {
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstance = useRef<any>(null)
@@ -75,14 +66,24 @@ function InteractiveMap() {
     if (filter === 'all') {
       const rg = L.layerGroup()
       userLocations.forEach((loc) => {
-        const jLa = (Math.random() - 0.5) * 0.15
-        const jLn = (Math.random() - 0.5) * 0.15
-        const rad = Math.min(Math.max(Math.sqrt(loc.users) * 0.6, 3), 18)
-        const circle = L.circleMarker([loc.la + jLa, loc.ln + jLn], {
-          radius: rad, fillColor: '#60a5fa', fillOpacity: 0.5,
-          color: '#93c5fd', weight: 0.5, opacity: 0.6,
+        const numDots = Math.min(Math.max(Math.ceil(loc.users / 8), 3), 80)
+        const spread = loc.users > 200 ? 0.45 : loc.users > 50 ? 0.3 : 0.2
+        for (let i = 0; i < numDots; i++) {
+          const angle = Math.random() * Math.PI * 2
+          const dist = Math.random() * spread
+          const jLa = Math.sin(angle) * dist
+          const jLn = Math.cos(angle) * dist * 1.3
+          L.circleMarker([loc.la + jLa, loc.ln + jLn], {
+            radius: 2 + Math.random() * 1.5,
+            fillColor: '#60a5fa', fillOpacity: 0.5 + Math.random() * 0.3,
+            color: '#93c5fd', weight: 0.3, opacity: 0.4,
+          }).addTo(rg)
+        }
+        const core = L.circleMarker([loc.la, loc.ln], {
+          radius: 0.1, fillColor: 'transparent', fillOpacity: 0,
+          color: 'transparent', weight: 0, opacity: 0,
         })
-        circle.bindPopup(
+        core.bindPopup(
           `<div style="font-family:system-ui;font-size:13px;line-height:1.5;min-width:180px">
             <div style="font-weight:700;color:#fff;margin-bottom:4px">${loc.c}, ${loc.s}</div>
             <div style="margin-top:8px;padding-top:8px;border-top:1px solid #2a3347">
@@ -91,7 +92,7 @@ function InteractiveMap() {
             </div>
           </div>`, { className: 'invited-popup', closeButton: false }
         )
-        rg.addLayer(circle)
+        rg.addLayer(core)
       })
       rg.addTo(map)
     }
@@ -188,13 +189,11 @@ export default function InvitedPitchPage() {
 
   return (
     <div className="min-h-screen bg-[#0f1217] text-white">
-      {/* Subtle background glow */}
       <div className="fixed inset-0 pointer-events-none" style={{zIndex:0}}>
         <div className="absolute inset-0 opacity-[0.07]" style={{ background: 'radial-gradient(ellipse 60% 50% at 15% 50%, #001a14, transparent)' }} />
         <div className="absolute inset-0 opacity-[0.04]" style={{ background: 'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)' }} />
       </div>
 
-      {/* HERO */}
       <section className="relative pt-12 md:pt-20 pb-10 md:pb-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
@@ -205,19 +204,16 @@ export default function InvitedPitchPage() {
               <img src={INVITED_LOGO} alt="Invited Clubs" className="h-8 md:h-12 w-auto object-contain" />
             </div>
           </motion.div>
-
           <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="text-5xl sm:text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-tight mb-6">
             Your members are<br /><span className="text-[#00ff9d]">already using us.</span>
           </motion.h1>
-
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
             className="text-lg md:text-2xl text-[#9ca3af] max-w-4xl leading-relaxed mb-8">
             245 verified rounds at 41 Invited properties. 27,000+ rounds in your markets. 1,278 users with Callaway in their bag. 59% under 35. We have the next generation of your members — and the data to prove it.
           </motion.p>
-
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
             <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
@@ -229,16 +225,9 @@ export default function InvitedPitchPage() {
               <span className="text-sm font-mono text-[#4b5563]">& more</span>
             </div>
           </motion.div>
-
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}
             className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-6 md:gap-8 lg:gap-12">
-            {[
-              { value: '107,000+', label: 'Registered Golfers' },
-              { value: '59%', label: 'Under 35' },
-              { value: '75x', label: 'Monthly App Opens' },
-              { value: '57', label: 'Countries' },
-              { value: '500+', label: 'New Users / Day' },
-            ].map((kpi) => (
+            {[{value:'107,000+',label:'Registered Golfers'},{value:'59%',label:'Under 35'},{value:'75x',label:'Monthly App Opens'},{value:'57',label:'Countries'},{value:'500+',label:'New Users / Day'}].map((kpi) => (
               <div key={kpi.label}>
                 <span className="text-2xl md:text-3xl lg:text-4xl font-bold font-mono text-[#00ff9d]">{kpi.value}</span>
                 <span className="block mt-1 text-base text-[#6b7280]">{kpi.label}</span>
@@ -248,7 +237,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* MAP */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -256,12 +244,8 @@ export default function InvitedPitchPage() {
               <MapPin className="w-5 h-5 text-[#00ff9d]" />
               <p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Overlap</p>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">
-              Your clubs.<br /><span className="text-[#00ff9d]">Our golfers.</span>
-            </h2>
-            <p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">
-              Each Invited icon marks one of your 113 properties. The blue dots are active GolfN users in 129 US cities. Click any marker to see the data.
-            </p>
+            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Your clubs.<br /><span className="text-[#00ff9d]">Our golfers.</span></h2>
+            <p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">Each Invited icon marks one of your 113 properties. The blue dots represent active GolfN users across the US. Click any Invited club to see the data.</p>
           </Fade>
           <Fade delay={0.1}><InteractiveMap /></Fade>
           <Fade delay={0.2}>
@@ -274,7 +258,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* WHO THEY ARE */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -282,50 +265,34 @@ export default function InvitedPitchPage() {
               <ShoppingBag className="w-5 h-5 text-[#00ff9d]" />
               <p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Who They Are</p>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">
-              Premium equipment.<br /><span className="text-[#00ff9d]">Premium golfers.</span>
-            </h2>
-            <p className="text-base text-[#9ca3af] max-w-2xl mb-8">
-              These are not casual golfers. They log their equipment, track their handicap, and play at private clubs. Here is what is in their bags.
-            </p>
+            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Premium equipment.<br /><span className="text-[#00ff9d]">Premium golfers.</span></h2>
+            <p className="text-base text-[#9ca3af] max-w-2xl mb-8">These are not casual golfers. They log their equipment, track their handicap, and play at private clubs.</p>
           </Fade>
-
-          {/* Equipment brands */}
           <Fade delay={0.1}>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
               <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">Equipment brands in user bags (unique users, April 2026)</p>
               <div className="space-y-3">
-                {equipmentBrands.slice(0, 8).map((b, i) => {
-                  const maxU = equipmentBrands[0].users
-                  const pct = (b.users / maxU) * 100
+                {equipmentBrands.slice(0, 8).map((b) => {
+                  const pct = (b.users / equipmentBrands[0].users) * 100
                   return (
                     <div key={b.brand} className="flex items-center gap-4">
                       <span className="text-sm text-white font-medium w-32 md:w-40 shrink-0">{b.brand}</span>
                       <div className="flex-1 h-2.5 rounded-full bg-[#0f1217] overflow-hidden">
-                        <div className="h-full rounded-full" style={{
-                          width: `${pct}%`,
-                          background: b.brand === 'Callaway' ? 'linear-gradient(90deg, #00ff9d, #17A455)' : 'linear-gradient(90deg, #60a5fa, #3b82f6)'
-                        }} />
+                        <div className="h-full rounded-full" style={{ width: `${pct}%`, background: b.brand === 'Callaway' ? 'linear-gradient(90deg, #00ff9d, #17A455)' : 'linear-gradient(90deg, #60a5fa, #3b82f6)' }} />
                       </div>
-                      <span className={`text-sm font-mono font-bold w-16 text-right shrink-0 ${b.brand === 'Callaway' ? 'text-[#00ff9d]' : 'text-white'}`}>
-                        {b.users.toLocaleString()}
-                      </span>
+                      <span className={`text-sm font-mono font-bold w-16 text-right shrink-0 ${b.brand === 'Callaway' ? 'text-[#00ff9d]' : 'text-white'}`}>{b.users.toLocaleString()}</span>
                     </div>
                   )
                 })}
               </div>
             </div>
           </Fade>
-
-          {/* Callaway callout + home course types */}
           <Fade delay={0.2}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
                 <p className="text-4xl md:text-5xl font-mono font-bold text-[#00ff9d] mb-2">1,278</p>
                 <p className="text-lg text-white font-medium mb-3">users with Callaway in their bag</p>
-                <p className="text-sm text-[#9ca3af] leading-7">
-                  Current-gen equipment: Paradym Ai Smoke, Elyte, Jaws Raw, Opus. These are serious golfers buying premium. Directly relevant to your Callaway relationship.
-                </p>
+                <p className="text-sm text-[#9ca3af] leading-7">Current-gen equipment: Paradym Ai Smoke, Elyte, Jaws Raw, Opus. These are serious golfers buying premium. Directly relevant to your Callaway relationship.</p>
               </div>
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8">
                 <p className="text-4xl md:text-5xl font-mono font-bold text-[#00ff9d] mb-2">{premiumPct}%</p>
@@ -341,7 +308,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* STATE BREAKDOWN */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -349,12 +315,8 @@ export default function InvitedPitchPage() {
               <TrendingUp className="w-5 h-5 text-[#00ff9d]" />
               <p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Numbers</p>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">
-              Activity in your<br /><span className="text-[#00ff9d]">top markets.</span>
-            </h2>
-            <p className="text-base text-[#9ca3af] max-w-2xl mb-8">
-              GolfN rounds played in the last 12 months in states where Invited operates — not just at your clubs, but at every course nearby.
-            </p>
+            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Activity in your<br /><span className="text-[#00ff9d]">top markets.</span></h2>
+            <p className="text-base text-[#9ca3af] max-w-2xl mb-8">GolfN rounds played in the last 12 months in states where Invited operates.</p>
           </Fade>
           <Fade delay={0.1}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -365,14 +327,8 @@ export default function InvitedPitchPage() {
                     <span className="text-xs font-mono text-[#4b5563] bg-[#0f1217] px-2 py-1 rounded-md">{s.clubs} clubs</span>
                   </div>
                   <div className="space-y-3">
-                    <div>
-                      <p className="text-3xl font-mono font-bold text-[#60a5fa]">{s.rounds.toLocaleString()}</p>
-                      <p className="text-xs text-[#6b7280]">total GolfN rounds in state</p>
-                    </div>
-                    <div>
-                      <p className="text-xl font-mono font-bold text-[#00ff9d]">{s.users.toLocaleString()}</p>
-                      <p className="text-xs text-[#6b7280]">active GolfN users (Apr 2026)</p>
-                    </div>
+                    <div><p className="text-3xl font-mono font-bold text-[#60a5fa]">{s.rounds.toLocaleString()}</p><p className="text-xs text-[#6b7280]">total GolfN rounds in state</p></div>
+                    <div><p className="text-xl font-mono font-bold text-[#00ff9d]">{s.users.toLocaleString()}</p><p className="text-xs text-[#6b7280]">active GolfN users (Apr 2026)</p></div>
                   </div>
                 </div>
               ))}
@@ -381,32 +337,20 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="relative py-16 md:py-24" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <Fade>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-6">
-              The overlap is not theoretical.
-            </h2>
-            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">
-              245 rounds. 41 clubs. 27,000+ rounds in your markets. 1,278 Callaway users. And the numbers are growing — we added 6,200+ users last week alone.
-            </p>
-            <p className="text-xl md:text-2xl text-[#d1d5db] font-medium mb-10">
-              Happy to walk through the data on a call.
-            </p>
-            <a href="mailto:jared@golfn.com"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-lg hover:bg-[#00ff9d]/90 transition-colors">
-              Get in Touch <ArrowRight className="w-5 h-5" />
-            </a>
+            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-6">The overlap is not theoretical.</h2>
+            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">245 rounds. 41 clubs. 27,000+ rounds in your markets. 1,278 Callaway users. And the numbers are growing — we added 6,200+ users last week alone.</p>
+            <p className="text-xl md:text-2xl text-[#d1d5db] font-medium mb-10">Happy to walk through the data on a call.</p>
+            <a href="mailto:jared@golfn.com" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-lg hover:bg-[#00ff9d]/90 transition-colors">Get in Touch <ArrowRight className="w-5 h-5" /></a>
           </Fade>
         </div>
       </section>
 
       <footer className="relative py-8 border-t border-[#2a3347]" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
-          <p className="text-xs text-[#4b5563]">
-            Prepared for Invited Clubs leadership &middot; April 2026 &middot; Data from GolfN platform analytics
-          </p>
+          <p className="text-xs text-[#4b5563]">Prepared for Invited Clubs leadership &middot; April 2026 &middot; Data from GolfN platform analytics</p>
         </div>
       </footer>
     </div>
