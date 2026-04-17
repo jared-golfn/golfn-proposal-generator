@@ -38,7 +38,7 @@ function PctRing({ pct, label, color = '#00ff9d', size = 120 }: { pct: number; l
 function AreaChart({ weekly, title, color, gradId }: { weekly: number[]; title: string; color: string; gradId: string }) {
   const cumulative: number[] = []; weekly.reduce((a, v) => { const c = a + v; cumulative.push(c); return c }, 0)
   const labels = ['Jan','','','','Feb','','','','Mar','','','','','Apr','','']
-  const max = Math.ceil(cumulative[cumulative.length - 1] / 5000) * 5000 // round up for headroom
+  const max = Math.ceil(cumulative[cumulative.length - 1] / 5000) * 5000
   const W = 800, H = 280, PL = 55, PR = 30, PT = 25, PB = 38
   const cw = W - PL - PR, ch = H - PT - PB
   const pts = cumulative.map((v, i) => ({ x: PL + (i / (cumulative.length - 1)) * cw, y: PT + ch - (v / max) * ch }))
@@ -48,7 +48,6 @@ function AreaChart({ weekly, title, color, gradId }: { weekly: number[]; title: 
   const yTicks: number[] = []; for (let t = 0; t <= max; t += tickStep) yTicks.push(t)
   const finalVal = cumulative[cumulative.length - 1]
   const finalLabel = finalVal >= 1000 ? (finalVal / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : finalVal.toString()
-
   return (
     <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-5 md:p-6">
       <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-1">{title}</p>
@@ -120,7 +119,6 @@ export default function InvitedPitchPage() {
     <div className="min-h-screen bg-[#0f1217] text-white">
       <div className="fixed inset-0 pointer-events-none" style={{zIndex:0}}><div className="absolute inset-0 opacity-[0.07]" style={{background:'radial-gradient(ellipse 60% 50% at 15% 50%, #001a14, transparent)'}}/><div className="absolute inset-0 opacity-[0.04]" style={{background:'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)'}}/></div>
 
-      {/* HERO */}
       <section className="relative pt-12 md:pt-20 pb-10 md:pb-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.1}} className="flex items-center justify-between mb-12 md:mb-20 gap-4">
@@ -141,7 +139,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* GROWTH — two charts side by side */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -160,13 +157,12 @@ export default function InvitedPitchPage() {
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">45.6K</p><p className="text-xs text-[#6b7280] mt-1">new users in 2026</p></div>
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">21.6K</p><p className="text-xs text-[#6b7280] mt-1">rounds in 2026</p></div>
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">6,301</p><p className="text-xs text-[#6b7280] mt-1">best week — users</p></div>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">3,557</p><p className="text-xs text-[#6b7280] mt-1">best week — rounds</p></div>
+              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">1,349</p><p className="text-xs text-[#6b7280] mt-1">Avg. Rounds / Week</p></div>
             </div>
           </Fade>
         </div>
       </section>
 
-      {/* MAP */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -179,7 +175,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* WHO THEY ARE */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -194,7 +189,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* STATE BREAKDOWN */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -207,7 +201,6 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="relative py-16 md:py-24" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <Fade>
