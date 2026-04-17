@@ -126,7 +126,7 @@ export default function InvitedPitchPage() {
             <div className="flex items-center gap-2 md:gap-3 shrink-0"><span className="text-[#6b7280] text-sm md:text-base hidden sm:inline">Prepared for</span><img src={INVITED_LOGO} alt="Invited Clubs" className="h-8 md:h-12 w-auto object-contain"/></div>
           </motion.div>
           <motion.h1 initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:0.2,duration:0.9,ease:[0.22,1,0.36,1]}} className="text-5xl sm:text-6xl md:text-8xl font-extrabold leading-[0.95] tracking-tight mb-6">Your members are<br/><span className="text-[#00ff9d]">already using us.</span></motion.h1>
-          <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.5,duration:0.7}} className="text-lg md:text-2xl text-[#9ca3af] max-w-4xl leading-relaxed mb-8">271 verified rounds at 49 Invited properties in 2026. 50,000+ rounds tracked across 5,200+ US courses — growing by 4,000+ per week. 59% under 35. We have the next generation of your members — and the data to prove it.</motion.p>
+          <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.5,duration:0.7}} className="text-lg md:text-2xl text-[#9ca3af] max-w-4xl leading-relaxed mb-8">271 verified rounds at 49 Invited properties in 2026. 50,000+ rounds tracked across 5,200+ US courses — growing by 4,000+ users per week. 59% under 35. We have the next generation of your members — and the data to prove it.</motion.p>
           <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{delay:0.7}} className="mb-8">
             <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-4">Current Partners</p>
             <div className="flex items-center gap-6 md:gap-8 flex-wrap">{partnerLogos.map(l=>(<img key={l.name} src={l.url} alt={l.name} className="w-auto object-contain" style={{filter:'brightness(0) invert(1)',opacity:0.5,height:l.h}}/>))}<span className="text-sm font-mono text-[#4b5563]">& more</span></div>
@@ -157,7 +157,7 @@ export default function InvitedPitchPage() {
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">45.6K</p><p className="text-xs text-[#6b7280] mt-1">new users in 2026</p></div>
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">21.6K</p><p className="text-xs text-[#6b7280] mt-1">rounds in 2026</p></div>
               <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">6,301</p><p className="text-xs text-[#6b7280] mt-1">best week — users</p></div>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">1,349</p><p className="text-xs text-[#6b7280] mt-1">Avg. Rounds / Week</p></div>
+              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">3,557</p><p className="text-xs text-[#6b7280] mt-1">Avg. Rounds / Week</p></div>
             </div>
           </Fade>
         </div>
@@ -205,7 +205,7 @@ export default function InvitedPitchPage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <Fade>
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-6">The overlap is not theoretical.</h2>
-            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">271 rounds at 49 of your clubs in 2026. 50,000+ rounds across 5,200+ courses. And the numbers are growing — 4,000+ new rounds every week.</p>
+            <p className="text-lg md:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-4 leading-8">271 rounds at 49 of your clubs in 2026. 50,000+ rounds across 5,200+ courses. And the numbers are growing — 4,000+ new users every week.</p>
             <p className="text-xl md:text-2xl text-[#d1d5db] font-medium mb-10">Happy to walk through the data on a call.</p>
             <a href="mailto:jared@golfn.com" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-lg hover:bg-[#00ff9d]/90 transition-colors">Get in Touch <ArrowRight className="w-5 h-5"/></a>
           </Fade>
