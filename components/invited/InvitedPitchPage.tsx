@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, MapPin, Users, Globe, TrendingUp, ShoppingBag, Rocket } from 'lucide-react'
+import { ArrowRight, MapPin, Users, Globe, TrendingUp, ShoppingBag, Rocket, Smartphone, Target, Gift, Eye, Zap, Flag } from 'lucide-react'
 import { invitedClubs, coursePins, userLocations, stateRounds, stateMap, equipmentBrands, homeCourseTypes } from '@/lib/invited-data'
 
 declare global { interface Window { L: any } }
@@ -10,6 +10,22 @@ declare global { interface Window { L: any } }
 const GOLFN_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/3bcfd9b87d10769072b59ff0fe7cbefe7d36286e-3594x860.png'
 const INVITED_LOGO = 'https://cdn.sanity.io/images/e3wja34v/production/979509db5eef4af2f790a5d1f5df0ffe11dc5599-2673x1399.jpg'
 const INVITED_ICON = 'https://cdn.sanity.io/images/e3wja34v/production/f7163ce097e461801f9e5da9c9f1f00e8aa57eec-512x512.png'
+
+// Verified app screenshots from lib/images.ts (Sanity CDN)
+const APP_SCREENS = {
+  offCourse: 'https://cdn.sanity.io/images/e3wja34v/production/9f201313469c4cc0362d686a174246ba51e688c5-750x1624.png',
+  dailyGrind: 'https://cdn.sanity.io/images/e3wja34v/production/b2bc4cf588faf556017e1fb0b83505c1c50ee602-1500x3248.png',
+  marketplace: 'https://cdn.sanity.io/images/e3wja34v/production/e604b64cd4ce527750267b9c795f44363ed9d816-2364x5120.png',
+  pointExchange: 'https://cdn.sanity.io/images/e3wja34v/production/50e76b526bb2c7ba2808fc22ec9c532cf9cabfc8-750x3802.png',
+}
+
+// Verified campaign creative examples from lib/images.ts
+const CAMPAIGN_EXAMPLES = {
+  cobraSweeps: 'https://cdn.sanity.io/images/e3wja34v/production/144c9c147afe0f7b4123c22bac1f3f33cdb6c581-2064x2736.png',
+  labPointsExchange: 'https://cdn.sanity.io/images/e3wja34v/production/7bf965f5c6ddd349ae2218d198771e824daf07c8-6034x2754.png',
+  emailIntentFollowUp: 'https://cdn.sanity.io/images/e3wja34v/production/51d6a3937f93961fe3d32bab6b0dc74e690d5abf-2400x9616.png',
+  inAppMsg1: 'https://cdn.sanity.io/images/e3wja34v/production/70e9eb2eb28c428a2c23b054fc08ccc547209a28-1500x2724.png',
+}
 
 const partnerLogos = [
   { name: 'L.A.B. Golf', url: 'https://www.golfn.com/LAB.png', h: 28 },
@@ -115,10 +131,25 @@ export default function InvitedPitchPage() {
   const shopCategories = [{cat:'Clubs & Equipment',pct:64,icon:'\u26F3'},{cat:'Golf Balls',pct:16,icon:'\u26BE'},{cat:'Bags & Accessories',pct:8,icon:'\uD83C\uDFD2'},{cat:'Apparel, Shoes & Gloves',pct:5,icon:'\uD83D\uDC5F'},{cat:'Training & Tech',pct:4,icon:'\uD83D\uDCF1'},{cat:'Golf Carts',pct:3,icon:'\uD83D\uDE97'}]
   const mktBrands = ['Miura','Srixon','L.A.B. Golf','Cobra','Cleveland','Bettinardi','Puma','Jones','Stewart','Hyperice','Oakley','Holderness & Bourne']
 
+  const platformFeatures = [
+    { title: 'GPS Round Tracking', desc: 'Full GPS round tracking with shot data, scoring, and performance analytics. Every round builds the user profile.', Icon: Flag },
+    { title: 'Rewards Marketplace', desc: 'Points earned from rounds and engagement are redeemable for premium gear from brand partners like Callaway, TaylorMade, Cobra, and more.', Icon: Gift },
+    { title: 'Campaigns & Sweepstakes', desc: 'Brand-sponsored sweepstakes, Learn & Earn education modules, and targeted offers drive deep engagement with partner products.', Icon: Target },
+    { title: 'Behavioral Intelligence', desc: 'Every interaction writes to the user profile — what they play, what they browse, what they buy. AI scoring segments users by intent and spend potential.', Icon: Eye },
+  ]
+
+  const partnershipOpps = [
+    { title: 'Closed-Loop Rewards', desc: 'Members earn GolfN points for activity at Invited clubs — rounds played, F&B spend, pro shop purchases. Points convert to credits within your ecosystem, driving repeat visits and on-site spending.', Icon: Gift },
+    { title: 'Member Acquisition Engine', desc: 'Incentivize club tours, practice rounds, and trial visits with bonus points. Pay-for-performance model — you only pay when a prospect actually shows up. Target by geography, age, and equipment profile.', Icon: Target },
+    { title: 'Out-of-Club Behavior Data', desc: 'See what your members do when they leave the property. Where they play, what they spend on, which brands they engage with. Data you currently have zero visibility into.', Icon: Eye },
+    { title: 'Filtered Marketplace', desc: 'GolfN can restrict visible offers and point redemptions to align with your existing brand partnerships — like your Callaway exclusivity. A tailored experience that reinforces your ecosystem.', Icon: Zap },
+  ]
+
   return (
     <div className="min-h-screen bg-[#0f1217] text-white">
       <div className="fixed inset-0 pointer-events-none" style={{zIndex:0}}><div className="absolute inset-0 opacity-[0.07]" style={{background:'radial-gradient(ellipse 60% 50% at 15% 50%, #001a14, transparent)'}}/><div className="absolute inset-0 opacity-[0.04]" style={{background:'radial-gradient(ellipse 40% 40% at 85% 30%, #00ff9d, transparent)'}}/></div>
 
+      {/* HERO */}
       <section className="relative pt-12 md:pt-20 pb-10 md:pb-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.1}} className="flex items-center justify-between mb-12 md:mb-20 gap-4">
@@ -139,6 +170,57 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
+      {/* WHAT IS GOLFN */}
+      <section className="relative py-10 md:py-16" style={{zIndex:1}}>
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <Fade>
+            <div className="flex items-center gap-3 mb-3"><Smartphone className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Platform</p></div>
+            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Credit card rewards<br/><span className="text-[#00ff9d]">for golf.</span></h2>
+            <p className="text-base md:text-lg text-[#9ca3af] max-w-3xl mb-10 leading-7">GolfN is a rewards app where golfers earn points and tickets by playing rounds, completing challenges, and engaging with the platform. Points are redeemable for premium gear from brand partners. It{'\u2019'}s why users open the app 75 times a month — not 4.</p>
+          </Fade>
+
+          {/* App screenshots */}
+          <Fade delay={0.05}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+              {[
+                { src: APP_SCREENS.offCourse, label: 'GPS Round Tracking' },
+                { src: APP_SCREENS.dailyGrind, label: 'Daily Grind' },
+                { src: APP_SCREENS.marketplace, label: 'Rewards Marketplace' },
+                { src: APP_SCREENS.pointExchange, label: 'Points Exchange' },
+              ].map(screen => (
+                <div key={screen.label} className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-3 md:p-4 overflow-hidden">
+                  <div className="rounded-xl overflow-hidden mb-3 bg-[#0f1217]">
+                    <img src={screen.src} alt={screen.label} className="w-full h-auto block" style={{ maxHeight: 320, objectFit: 'cover', objectPosition: 'top center' }} />
+                  </div>
+                  <p className="text-xs md:text-sm text-[#9ca3af] text-center font-medium">{screen.label}</p>
+                </div>
+              ))}
+            </div>
+          </Fade>
+
+          {/* Platform capabilities */}
+          <Fade delay={0.1}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+              {platformFeatures.map(f => (
+                <div key={f.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5 md:p-6 hover:border-[#00ff9d]/30 transition-colors">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5"><f.Icon className="w-5 h-5 text-[#00ff9d]" /></div>
+                    <div><h3 className="text-base md:text-lg font-bold text-white mb-1">{f.title}</h3><p className="text-sm text-[#9ca3af] leading-6">{f.desc}</p></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Fade>
+
+          <Fade delay={0.15}>
+            <div className="mt-6 bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
+              <p className="text-base md:text-lg text-[#d1d5db] leading-8">This is not another GPS app. GolfN is a <span className="text-[#00ff9d] font-semibold">rewards and engagement platform</span> that brands pay to access because the audience is verified, active, and spending. Revenue from brand partnerships and optional memberships ($25-$900/mo) hit <span className="text-white font-semibold">$100K/month</span> and growing.</p>
+            </div>
+          </Fade>
+        </div>
+      </section>
+
+      {/* GROWTH */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <Fade>
@@ -146,42 +228,29 @@ export default function InvitedPitchPage() {
             <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Hockey stick.<br/><span className="text-[#00ff9d]">Both sides.</span></h2>
             <p className="text-base text-[#9ca3af] max-w-2xl mb-8">Users and rounds are both accelerating. 45,000+ new golfers and 21,000+ rounds played in 2026 — with the curve steepening every week.</p>
           </Fade>
-          <Fade delay={0.1}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <AreaChart weekly={userWeekly} title="Cumulative new users — 2026" color="#00ff9d" gradId="ugrd" />
-              <AreaChart weekly={roundWeekly} title="Cumulative rounds played — 2026" color="#60a5fa" gradId="rgrd" />
-            </div>
-          </Fade>
-          <Fade delay={0.15}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-4 md:mt-6">
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">45.6K</p><p className="text-xs text-[#6b7280] mt-1">new users in 2026</p></div>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">21.6K</p><p className="text-xs text-[#6b7280] mt-1">rounds in 2026</p></div>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">6,301</p><p className="text-xs text-[#6b7280] mt-1">best week — users</p></div>
-              <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">3,557</p><p className="text-xs text-[#6b7280] mt-1">Avg. Rounds / Week</p></div>
-            </div>
-          </Fade>
+          <Fade delay={0.1}><div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"><AreaChart weekly={userWeekly} title="Cumulative new users — 2026" color="#00ff9d" gradId="ugrd" /><AreaChart weekly={roundWeekly} title="Cumulative rounds played — 2026" color="#60a5fa" gradId="rgrd" /></div></Fade>
+          <Fade delay={0.15}><div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-4 md:mt-6">
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">45.6K</p><p className="text-xs text-[#6b7280] mt-1">new users in 2026</p></div>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">21.6K</p><p className="text-xs text-[#6b7280] mt-1">rounds in 2026</p></div>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d]">6,301</p><p className="text-xs text-[#6b7280] mt-1">best week — users</p></div>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-4 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">3,557</p><p className="text-xs text-[#6b7280] mt-1">Avg. Rounds / Week</p></div>
+          </div></Fade>
         </div>
       </section>
 
+      {/* MAP */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <Fade>
-            <div className="flex items-center gap-3 mb-3"><MapPin className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Overlap</p></div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Your clubs.<br/><span className="text-[#00ff9d]">Our golfers.</span></h2>
-            <p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">Each Invited icon marks one of your 113 properties. Every blue dot is a real course where GolfN users have played rounds — {coursePins.length.toLocaleString()} courses, 50,000+ rounds tracked.</p>
-          </Fade>
+          <Fade><div className="flex items-center gap-3 mb-3"><MapPin className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Overlap</p></div><h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Your clubs.<br/><span className="text-[#00ff9d]">Our golfers.</span></h2><p className="text-base md:text-lg text-[#9ca3af] max-w-2xl mb-8 leading-7">Each Invited icon marks one of your 113 properties. Every blue dot is a real course where GolfN users have played rounds — {coursePins.length.toLocaleString()} courses, 50,000+ rounds tracked.</p></Fade>
           <Fade delay={0.1}><InteractiveMap /></Fade>
           <Fade delay={0.2}><div className="mt-8 bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8"><p className="text-base md:text-lg text-[#d1d5db] leading-8">Toggle to <span className="text-white font-semibold">&ldquo;Invited Clubs Only&rdquo;</span> and you see your footprint. Toggle back to <span className="text-white font-semibold">&ldquo;Rounds Played&rdquo;</span> and you see {coursePins.length.toLocaleString()} real courses where GolfN users are actively playing — courses around your properties that you have <span className="text-[#00ff9d] font-semibold">zero visibility into today</span>.</p></div></Fade>
         </div>
       </section>
 
+      {/* WHO THEY ARE */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <Fade>
-            <div className="flex items-center gap-3 mb-3"><Users className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Who They Are</p></div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Premium golfers.<br/><span className="text-[#00ff9d]">Full picture.</span></h2>
-            <p className="text-base text-[#9ca3af] max-w-2xl mb-8">Not just what clubs they carry — what they buy, where they play, and what brands they engage with inside the app.</p>
-          </Fade>
+          <Fade><div className="flex items-center gap-3 mb-3"><Users className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Who They Are</p></div><h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Premium golfers.<br/><span className="text-[#00ff9d]">Full picture.</span></h2><p className="text-base text-[#9ca3af] max-w-2xl mb-8">Not just what clubs they carry — what they buy, where they play, and what brands they engage with inside the app.</p></Fade>
           <Fade delay={0.05}><div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6"><p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-8">User Demographics</p><div className="flex flex-wrap justify-around gap-8"><PctRing pct={59} label="Under 35" color="#00ff9d"/><PctRing pct={37} label="Premium course members" color="#00ff9d"/><PctRing pct={97} label="Male" color="#60a5fa"/><PctRing pct={20} label="Callaway in bag" color="#00ff9d"/></div></div></Fade>
           <Fade delay={0.1}><div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6"><p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">Brand share — what{'\u2019'}s in their bags</p><div className="space-y-3">{brandShare.map(b=>(<div key={b.brand} className="flex items-center gap-3 md:gap-4"><span className="text-sm text-white font-medium w-28 md:w-32 shrink-0">{b.brand}</span><div className="flex-1 h-3 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{width:`${(b.pct/brandShare[0].pct)*100}%`,background:b.highlight?'linear-gradient(90deg, #00ff9d, #17A455)':'linear-gradient(90deg, #60a5fa, #3b82f6)'}}/></div><span className={`text-sm font-mono font-bold w-10 text-right shrink-0 ${b.highlight?'text-[#00ff9d]':'text-white'}`}>{b.pct}%</span></div>))}</div></div></Fade>
           <Fade delay={0.15}><div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6"><p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">What they{'\u2019'}re shopping for in the GolfN marketplace</p><div className="grid grid-cols-2 md:grid-cols-3 gap-4">{shopCategories.map(c=>(<div key={c.cat} className="bg-[#0f1217] rounded-xl p-4 md:p-5"><div className="flex items-center justify-between mb-3"><span className="text-2xl">{c.icon}</span><span className="text-2xl md:text-3xl font-mono font-bold text-[#60a5fa]">{c.pct}%</span></div><p className="text-xs md:text-sm text-[#9ca3af]">{c.cat}</p><div className="mt-2 h-1.5 rounded-full bg-[#1a1f2e] overflow-hidden"><div className="h-full rounded-full bg-[#60a5fa]" style={{width:`${c.pct}%`}}/></div></div>))}</div></div></Fade>
@@ -189,18 +258,66 @@ export default function InvitedPitchPage() {
         </div>
       </section>
 
+      {/* STATE BREAKDOWN */}
       <section className="relative py-10 md:py-16" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <Fade>
-            <div className="flex items-center gap-3 mb-3"><TrendingUp className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Your Markets</p></div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Everywhere you<br/><span className="text-[#00ff9d]">operate.</span></h2>
-            <p className="text-base text-[#9ca3af] max-w-2xl mb-6">GolfN activity across every state where Invited has properties.</p>
-          </Fade>
+          <Fade><div className="flex items-center gap-3 mb-3"><TrendingUp className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">Your Markets</p></div><h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">Everywhere you<br/><span className="text-[#00ff9d]">operate.</span></h2><p className="text-base text-[#9ca3af] max-w-2xl mb-6">GolfN activity across every state where Invited has properties.</p></Fade>
           <Fade delay={0.05}><div className="grid grid-cols-3 gap-4 md:gap-6 mb-8"><div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-5 md:p-6 text-center"><p className="text-3xl md:text-4xl font-mono font-bold text-[#00ff9d]">{totalRounds.toLocaleString()}</p><p className="text-xs md:text-sm text-[#6b7280] mt-1">rounds in these markets</p></div><div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-5 md:p-6 text-center"><p className="text-3xl md:text-4xl font-mono font-bold text-[#60a5fa]">{totalUsers.toLocaleString()}</p><p className="text-xs md:text-sm text-[#6b7280] mt-1">active users in these states</p></div><div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-5 md:p-6 text-center"><p className="text-3xl md:text-4xl font-mono font-bold text-white">{totalClubs}</p><p className="text-xs md:text-sm text-[#6b7280] mt-1">states with Invited clubs</p></div></div></Fade>
           <Fade delay={0.1}><div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8"><div className="flex items-center justify-between mb-6"><p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em]">Rounds by state (last 30 days)</p><p className="text-xs font-mono text-[#4b5563]">Invited clubs shown right</p></div><div className="space-y-4">{marketData.map((m,i)=>{const pct=(m.rounds/maxRounds)*100;return(<div key={m.state}><div className="flex items-center gap-3 md:gap-4 mb-1.5"><span className="text-xs font-mono text-[#4b5563] w-5 shrink-0">{i+1}</span><span className="text-sm md:text-base text-white font-semibold w-28 md:w-36 shrink-0">{m.state}</span><div className="flex-1 h-3 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{width:`${pct}%`,background:'linear-gradient(90deg, #60a5fa, #3b82f6)'}}/></div><span className="text-sm md:text-base font-mono font-bold text-[#60a5fa] w-14 text-right shrink-0">{m.rounds.toLocaleString()}</span><span className="text-xs font-mono text-[#4b5563] w-16 text-right shrink-0 hidden sm:block">{m.clubs} club{m.clubs!==1?'s':''}</span></div><div className="pl-8 md:pl-9"><span className="text-xs text-[#6b7280]">{m.users.toLocaleString()} active users</span></div></div>)})}</div></div></Fade>
         </div>
       </section>
 
+      {/* WHAT THIS LOOKS LIKE FOR INVITED */}
+      <section className="relative py-10 md:py-16" style={{zIndex:1}}>
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <Fade>
+            <div className="flex items-center gap-3 mb-3"><Zap className="w-5 h-5 text-[#00ff9d]"/><p className="text-sm font-mono text-[#00ff9d] uppercase tracking-[0.2em]">The Opportunity</p></div>
+            <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-3">What this looks like<br/><span className="text-[#00ff9d]">for Invited.</span></h2>
+            <p className="text-base md:text-lg text-[#9ca3af] max-w-3xl mb-10 leading-7">GolfN isn{'\u2019'}t a media buy. It{'\u2019'}s an engagement and data engine that plugs into your membership ecosystem. Here{'\u2019'}s what a partnership could look like.</p>
+          </Fade>
+
+          <Fade delay={0.05}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-8">
+              {partnershipOpps.map(opp => (
+                <div key={opp.title} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6 md:p-7 hover:border-[#00ff9d]/30 transition-colors">
+                  <div className="flex items-start gap-4">
+                    <div className="w-11 h-11 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0 mt-0.5"><opp.Icon className="w-5 h-5 text-[#00ff9d]" /></div>
+                    <div><h3 className="text-lg font-bold text-white mb-2">{opp.title}</h3><p className="text-sm md:text-base text-[#9ca3af] leading-7">{opp.desc}</p></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Fade>
+
+          <Fade delay={0.1}>
+            <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-6">
+              <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.2em] mb-6">How GolfN campaigns work with brand partners today</p>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-3">
+                {[
+                  { num: 1, title: 'Launch', desc: 'Sweepstakes or promotional campaign creates awareness and captures first wave of engagement.' },
+                  { num: 2, title: 'Capture Intent', desc: 'Every interaction writes to the user profile. Real behavioral signal, not guesswork.' },
+                  { num: 3, title: 'Build Cohort', desc: 'AI-powered modeling identifies who is responding and builds a qualified audience.' },
+                  { num: 4, title: 'Activate', desc: 'Follow-up offers, education, commerce, and progression experiences convert interest to action.' },
+                  { num: 5, title: 'Optimize', desc: 'Monthly reporting with audience intelligence. Scale what works.' },
+                ].map(step => (
+                  <div key={step.num} className="flex md:flex-col items-start md:items-center gap-3 md:gap-2 text-center">
+                    <div className="w-8 h-8 rounded-full bg-[#00ff9d] text-[#0f1217] flex items-center justify-center text-sm font-bold shrink-0">{step.num}</div>
+                    <div className="md:text-center"><h4 className="text-sm font-bold text-white">{step.title}</h4><p className="text-xs text-[#6b7280] leading-5 mt-1">{step.desc}</p></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Fade>
+
+          <Fade delay={0.15}>
+            <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
+              <p className="text-base md:text-lg text-[#d1d5db] leading-8">The model is <span className="text-[#00ff9d] font-semibold">pay-for-performance</span>. No upfront media commitment. If a campaign drives 10x points for attending a demo day at one of your clubs and nobody shows up, you don{'\u2019'}t pay. We{'\u2019'}re aligned on outcomes — not impressions.</p>
+            </div>
+          </Fade>
+        </div>
+      </section>
+
+      {/* CTA */}
       <section className="relative py-16 md:py-24" style={{zIndex:1}}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <Fade>
