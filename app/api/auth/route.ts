@@ -5,6 +5,11 @@ import { sub70Config } from '@/lib/sub-70-config'
 
 const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config }
 
+// Standalone pages with their own password (not in allPartners)
+const standaloneSlugs: Record<string, { password: string; partnerName: string }> = {
+  invited: { password: 'golfn2026', partnerName: 'Invited Clubs' },
+}
+
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN || ''
 const SLACK_CHANNEL_ID = 'C0AM2N65ZHT' // #partner-logins
 
@@ -42,18 +47,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing slug or password' }, { status: 400 })
     }
 
+    // Check allPartners first, then standalone slugs
     const config = allPartners[slug]
-    if (!config || !config.password) {
+    const standalone = standaloneSlugs[slug]
+
+    const expectedPassword = config?.password || standalone?.password
+    const partnerName = config?.partnerName || standalone?.partnerName
+
+    if (!expectedPassword) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 })
     }
 
-    if (password !== config.password) {
+    if (password !== expectedPassword) {
       console.log(JSON.stringify({ event: 'PARTNER_LOGIN_FAILED', email: email || 'not provided', slug, timestamp: new Date().toISOString(), ip: request.headers.get('x-forwarded-for') || 'unknown' }))
       return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
     }
 
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
-    console.log(JSON.stringify({ event: 'PARTNER_LOGIN_SUCCESS', email: email || 'not provided', slug, partnerName: config.partnerName, timestamp: new Date().toISOString(), ip }))
+    console.log(JSON.stringify({ event: 'PARTNER_LOGIN_SUCCESS', email: email || 'not provided', slug, partnerName, timestamp: new Date().toISOString(), ip }))
 
     // Post to Slack and get message timestamp for threading
     const slackTs = await postSlackLogin(email || 'not provided', slug, ip)
