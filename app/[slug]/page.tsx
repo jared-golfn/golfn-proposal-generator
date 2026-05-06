@@ -15,7 +15,7 @@ const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motoca
 // Updated May 6, 2026 — Amplitude all-time deduped + user property data
 // US combines "United States" + "United States of America" + untagged users
 const defaultMarketReach: MarketData[] = [
-  { country: 'United States', users: 70000, flag: '\ud83c\uddfa\ud83c\uddf8' },
+  { country: 'United States', users: 70431, flag: '\ud83c\uddfa\ud83c\uddf8' },
   { country: 'United Kingdom', users: 8654, flag: '\ud83c\uddec\ud83c\udde7' },
   { country: 'Australia', users: 2636, flag: '\ud83c\udde6\ud83c\uddfa' },
   { country: 'South Africa', users: 2464, flag: '\ud83c\uddff\ud83c\udde6' },
