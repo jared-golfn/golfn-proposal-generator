@@ -16,7 +16,7 @@ const weDo = [
 ]
 
 const proofPoints = [
-  { metric: '$769', label: 'Miura invested in product', context: '(3 forged wedges, wholesale cost)' },
+  { metric: '$769', label: 'Miura invested in prizes', context: '(3 forged wedges, wholesale cost)' },
   { metric: '$22K', label: 'Miura earned in wholesale revenue', context: '(45 units through GolfN)' },
   { metric: '2,764', label: 'First-party leads Miura received', context: '(verified golfers who raised their hand)' },
   { metric: '$10,856', label: 'Brand impression value delivered', context: '(271K impressions @ $40 CPM)' },
@@ -36,10 +36,8 @@ export function ProveIt() {
           </p>
         </Fade>
 
-        {/* Two column: You Bring / We Do */}
         <Fade delay={0.04}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-            {/* You Bring */}
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8">
               <p className="text-xs font-mono text-[#6b7280] uppercase tracking-[0.2em] mb-6">What You Bring</p>
               <div className="space-y-6">
@@ -60,7 +58,6 @@ export function ProveIt() {
               </div>
             </div>
 
-            {/* We Do */}
             <div className="bg-[#1a1f2e] border border-[#00ff9d]/20 rounded-2xl p-8">
               <p className="text-xs font-mono text-[#00ff9d] uppercase tracking-[0.2em] mb-6">What GolfN Does</p>
               <div className="space-y-6">
@@ -80,7 +77,6 @@ export function ProveIt() {
           </div>
         </Fade>
 
-        {/* How We Make Money */}
         <Fade delay={0.06}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-8 mb-10">
             <p className="text-xs font-mono text-[#6b7280] uppercase tracking-[0.2em] mb-4">How It Works Financially</p>
@@ -110,7 +106,6 @@ export function ProveIt() {
           </div>
         </Fade>
 
-        {/* Proof Points Recap */}
         <Fade delay={0.08}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-10">
             {proofPoints.map((p) => (
@@ -123,14 +118,13 @@ export function ProveIt() {
           </div>
         </Fade>
 
-        {/* Bottom Statement */}
         <Fade delay={0.1}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10">
             <p className="text-xl md:text-2xl font-bold text-white leading-relaxed mb-3">
               We're not asking you to bet on us. <span className="text-[#00ff9d]">We're asking you to let us prove it.</span>
             </p>
             <p className="text-base text-[#9ca3af] leading-7">
-              Miura donated three wedges and got back $22K in wholesale revenue, 2,764 leads, and a partnership trajectory that has them approaching premier dealer status. The only thing we need from you is product and a willingness to let us run.
+              Miura provided three wedges as prizes and got back $22K in wholesale revenue, 2,764 leads, and a partnership trajectory that has them approaching premier dealer status. The only thing we need from you is product and a willingness to let us run.
             </p>
           </div>
         </Fade>

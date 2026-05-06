@@ -20,7 +20,7 @@ const sweepsMetrics = [
   { value: '2,764', label: 'Unique Entrants', sub: 'Opted in during 22-day flight' },
   { value: '74%', label: 'Card-to-Entry Rate', sub: 'Highest in GolfN history' },
   { value: '43%', label: 'IAM Conversion', sub: '1,158 of 2,706 recipients' },
-  { value: '$0.28', label: 'Cost Per Lead', sub: 'From $769 wholesale donation' },
+  { value: '$0.28', label: 'Cost Per Lead', sub: 'From $769 in prizes' },
 ]
 
 const commerceMetrics = [
@@ -80,7 +80,7 @@ export function CaseStudy() {
             <span className="text-gradient">2,764 leads, 40 days</span>
           </h2>
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-4">
-            In March 2026, GolfN launched a Miura Forged Wedge Trio sweepstakes. Miura donated three wedges ($769 wholesale). GolfN handled everything else — creative, distribution, CRM, fulfillment. Here is exactly what happened.
+            In March 2026, GolfN launched a Miura Forged Wedge Trio sweepstakes. Miura provided the prizes — three forged wedges ($769 wholesale). GolfN handled everything else — creative, distribution, CRM, fulfillment. Here is exactly what happened.
           </p>
         </Fade>
 
@@ -284,7 +284,7 @@ export function CaseStudy() {
         <Fade delay={0.12}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10 text-center">
             <p className="text-2xl md:text-3xl font-bold text-white leading-relaxed mb-4">
-              Miura donated <span className="text-[#00ff9d]">$769 in product</span>. GolfN delivered <span className="text-[#00ff9d]">$22K wholesale revenue</span>,{' '}
+              Miura provided <span className="text-[#00ff9d]">$769 in prizes</span>. GolfN delivered <span className="text-[#00ff9d]">$22K wholesale revenue</span>,{' '}
               <span className="text-[#00ff9d]">2,764 first-party leads</span>, and <span className="text-[#00ff9d]">$10,856 in brand impressions</span>.
             </p>
             <p className="text-lg text-[#9ca3af] max-w-2xl mx-auto">
