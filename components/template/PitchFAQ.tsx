@@ -16,11 +16,11 @@ const faqs = [
   },
   {
     question: 'What if we want to run multiple campaigns per year?',
-    answer: 'Most partners start with one sweepstakes and expand from results. Multi-campaign partners get reduced per-campaign startup costs. Seasonal reactivation campaigns that re-engage existing cohorts are significantly cheaper than net-new acquisition. The longer you run, the better the targeting gets and the lower the effective cost per qualified user.',
+    answer: 'Most partners start with one sweepstakes and expand from results. Seasonal reactivation campaigns that re-engage existing cohorts are significantly more efficient than the initial build because the audience already exists. The longer you run, the better the targeting gets and the lower the effective cost per qualified user.',
   },
   {
     question: 'What happens if results are not there after 60 days?',
-    answer: 'We schedule a 60-day review where we walk through every metric together. If the numbers do not justify continuing, we will be the first to tell you. Your total risk exposure is the startup fee ($2,500) plus prize product (~$4,500 in inventory). There are no long-term contracts, no ongoing commitments, and no fees beyond what you agreed to upfront.',
+    answer: 'We schedule a 60-day review where we walk through every metric together. If the numbers do not justify continuing, we will be the first to tell you. Your only investment was the sweepstakes prize product. There are no long-term contracts, no ongoing commitments, and nothing to unwind.',
   },
   {
     question: 'How is this different from running a giveaway on Instagram?',
