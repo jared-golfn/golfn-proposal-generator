@@ -12,13 +12,15 @@ export const dynamic = 'force-dynamic'
 
 const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config }
 
+// Updated May 6, 2026 — Amplitude all-time deduped + user property data
+// US combines "United States" + "United States of America" + untagged users
 const defaultMarketReach: MarketData[] = [
-  { country: 'United States', users: 46416, flag: '\ud83c\uddfa\ud83c\uddf8' },
-  { country: 'Australia', users: 2957, flag: '\ud83c\udde6\ud83c\uddfa' },
-  { country: 'South Africa', users: 2886, flag: '\ud83c\uddff\ud83c\udde6' },
-  { country: 'United Kingdom', users: 2892, flag: '\ud83c\uddec\ud83c\udde7' },
-  { country: 'Canada', users: 1341, flag: '\ud83c\udde8\ud83c\udde6' },
-  { country: 'New Zealand', users: 1186, flag: '\ud83c\uddf3\ud83c\uddff' },
+  { country: 'United States', users: 70000, flag: '\ud83c\uddfa\ud83c\uddf8' },
+  { country: 'United Kingdom', users: 8654, flag: '\ud83c\uddec\ud83c\udde7' },
+  { country: 'Australia', users: 2636, flag: '\ud83c\udde6\ud83c\uddfa' },
+  { country: 'South Africa', users: 2464, flag: '\ud83c\uddff\ud83c\udde6' },
+  { country: 'Canada', users: 1223, flag: '\ud83c\udde8\ud83c\udde6' },
+  { country: 'New Zealand', users: 1114, flag: '\ud83c\uddf3\ud83c\uddff' },
 ]
 
 function toPartnerData(config: PartnerConfig): PartnerData {
