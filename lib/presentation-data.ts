@@ -1,5 +1,5 @@
 // GolfN Partnership Structure -- v9 FINAL content + v8.1 expanded copy
-// Platform stats updated Mar 11, 2026
+// Platform stats updated May 6, 2026
 // Sports Impact portfolio presentation from Mar 9, 2026 call
 
 import type { BrandCampaign, MarketData } from './template-types'
@@ -112,12 +112,12 @@ const sportsImpactCampaigns: BrandCampaign[] = [
 ]
 
 const sportsImpactMarkets: MarketData[] = [
-  { country: 'United States', users: 46416, flag: '\ud83c\uddfa\ud83c\uddf8' },
-  { country: 'Australia', users: 2957, flag: '\ud83c\udde6\ud83c\uddfa' },
-  { country: 'South Africa', users: 2886, flag: '\ud83c\uddff\ud83c\udde6' },
-  { country: 'United Kingdom', users: 2892, flag: '\ud83c\uddec\ud83c\udde7' },
-  { country: 'Canada', users: 1341, flag: '\ud83c\udde8\ud83c\udde6' },
-  { country: 'New Zealand', users: 1186, flag: '\ud83c\uddf3\ud83c\uddff' },
+  { country: 'United States', users: 70000, flag: '\ud83c\uddfa\ud83c\uddf8' },
+  { country: 'United Kingdom', users: 8654, flag: '\ud83c\uddec\ud83c\udde7' },
+  { country: 'Australia', users: 2636, flag: '\ud83c\udde6\ud83c\uddfa' },
+  { country: 'South Africa', users: 2464, flag: '\ud83c\uddff\ud83c\udde6' },
+  { country: 'Canada', users: 1223, flag: '\ud83c\udde8\ud83c\udde6' },
+  { country: 'New Zealand', users: 1114, flag: '\ud83c\uddf3\ud83c\uddff' },
 ]
 
 const cabotCampaigns: BrandCampaign[] = [
@@ -144,7 +144,7 @@ export const partners: Record<string, PartnerConfig> = {
     productCategory: 'Brand Partnerships',
     productNames: ['Sweepstakes', 'Commerce', 'Content'],
     heroHeadline: 'The golf brand activation platform',
-    heroSubtitle: '100,000+ verified golfers across 57 countries. Premium sweepstakes, behavioral targeting, and full-funnel activation.',
+    heroSubtitle: '125,000+ verified golfers across 130+ countries. Premium sweepstakes, behavioral targeting, and full-funnel activation.',
     heroVideoUrl: TIMELAPSE_VIDEO,
     howItWorksIntro: 'This is not a one-off campaign. It is a system that builds a qualified audience, activates it, and makes it more valuable every month.',
     pricingIntro: 'You provide the prize budget (recommended $5,000 for best cohort). GolfN charges a one-time startup fee, then bills monthly per qualified user added to your cohort. Here is how our pricing works.',
@@ -244,7 +244,7 @@ export const partners: Record<string, PartnerConfig> = {
   },
 }
 
-export const platformStats = { registeredUsers: '100,000+', monthlyGrowth: '~6,000/mo', cac: 'Sub-$2', powerUsers: '7,315', powerUsersLabel: 'Mar 11, 2026', peakMAU: '28,060', engagedShare: '65.8%', under34: '56%', avgMonthlyLogins: '30+', adEligibleViews: '336/user/mo', countries: '57' }
+export const platformStats = { registeredUsers: '125,000+', monthlyGrowth: '~6,000/mo', cac: 'Sub-$2', powerUsers: '7,315', powerUsersLabel: 'May 6, 2026', peakMAU: '35,502', engagedShare: '65.8%', under34: '56%', avgMonthlyLogins: '30+', adEligibleViews: '336/user/mo', countries: '130+' }
 
 export const commercialModel = { setup: { title: 'Program Setup', subtitle: 'One-Time Investment', description: 'A one-time investment covering the strategic, creative, and operational infrastructure required to launch a full-funnel golfer activation program.', tiers: [{ name: 'Focused Launch', range: '$7,500 - $12,500', description: 'Core audience build, initial Learn & Earn, single activation pathway' }, { name: 'Full Program', range: '$12,500 - $20,000', description: 'Multi-channel activation, Daily Grind integration, content production' }, { name: 'Enterprise', range: '$20,000 - $35,000+', description: 'Full eight-stage deployment, custom integrations, dedicated strategy' }], extensions: [{ name: 'Executive Brand Storytelling', price: '$2,500/video' }, { name: 'Campaign Content Production', price: '$1,000/piece' }, { name: 'Platform Distribution Extension', price: '$750/platform' }] }, management: { title: 'Managed Program Delivery', subtitle: 'Recurring Monthly', description: 'The setup fee builds the system. The monthly management fee runs and optimizes it.', functions: [{ name: 'Audience Intelligence & Lookalike Enrollment', description: 'Continuous refinement of the interest cohort and AI-driven lookalike model.' }, { name: 'Live Program Orchestration', description: 'Active management of Learn & Earn modules, exclusive offers and points-back incentives, Daily Grind check-in coordination.' }, { name: 'Creative Refresh & Optimization', description: 'Updating content, offers, and messaging based on performance data.' }, { name: 'Reporting & Strategic Management', description: 'Monthly performance reporting with audience composition, progression metrics, conversion data, and cohort growth.' }], tiers: [{ name: 'Growth', price: '$2,500/mo' }, { name: 'Scale', price: '$4,500/mo' }, { name: 'Enterprise', price: '$6,500/mo' }] }, media: { title: 'Impression Banks', subtitle: 'Billed as Served, No Expiration', description: 'The management fee funds ongoing program operation. Media and impression spend funds audience delivery volume.', tiers: [{ impressions: '50K', cost: '$3,500', cpm: '$70' }, { impressions: '100K', cost: '$7,000', cpm: '$70' }, { impressions: '250K', cost: '$15,750', cpm: '$63' }, { impressions: '500K+', cost: '$30,000+', cpm: '$60' }] }, performance: { title: 'Performance Economics', subtitle: 'Variable -- Attributed Commerce', description: 'This layer is realized only when GolfN drives qualifying downstream actions.', preferred: { name: 'Wholesale & Marketplace Participation', range: '20-40%', preferredRange: '30-40%', floor: '20%', description: 'The partner provides wholesale account access or wholesale-equivalent pricing.', whyNotAffiliate: 'Standard affiliate rates of 3-5% are not sufficient.' }, alternatives: [{ name: 'Revenue Share', range: '12-25%' }, { name: 'Fixed CPA', range: '$10-$75+' }, { name: 'Hybrid', range: 'Custom structure' }] } }
 
