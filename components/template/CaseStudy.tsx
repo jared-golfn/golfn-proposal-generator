@@ -270,8 +270,8 @@ export function CaseStudy() {
                     <p className="text-sm text-[#d1d5db] leading-6">Marketplace banner captured 271,393 impressions over 27 days — $10,856 in display ad value at $40 CPM. Peak: 398 product views the day after the sweepstakes closed.</p>
                   </div>
                   <div>
-                    <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">Partnership Trajectory</h4>
-                    <p className="text-sm text-[#d1d5db] leading-6">Miura moved to net 30 terms. Approaching $50K premier dealer threshold. Next campaign: CB302 iron set giveaway with full custom specs.</p>
+                    <h4 className="text-sm font-mono uppercase tracking-wider text-[#6b7280] mb-2">What Happened Next</h4>
+                    <p className="text-sm text-[#d1d5db] leading-6">Miura immediately committed to two additional promotional campaigns, starting with the CB-302 iron set. The partnership is expanding, not winding down.</p>
                   </div>
                 </div>
               </div>
