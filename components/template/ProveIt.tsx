@@ -42,10 +42,10 @@ const comparisonRows = [
     golfnGood: true,
   },
   {
-    label: 'Own the data',
-    traditional: 'No',
-    paidSocial: 'No',
-    golfn: 'Yes — first-party leads',
+    label: 'Audience after campaign ends',
+    traditional: 'One-and-done',
+    paidSocial: 'Rented \u2014 gone when spend stops',
+    golfn: 'Persistent cohort \u2014 activate anytime',
     traditionalGood: false,
     paidSocialGood: false,
     golfnGood: true,
@@ -54,7 +54,7 @@ const comparisonRows = [
     label: 'Compounding effect',
     traditional: 'One-off',
     paidSocial: 'None',
-    golfn: 'Yes — points + marketplace',
+    golfn: 'Yes \u2014 points + marketplace',
     traditionalGood: false,
     paidSocialGood: false,
     golfnGood: true,
@@ -63,7 +63,7 @@ const comparisonRows = [
     label: 'Wholesale revenue',
     traditional: 'No',
     paidSocial: 'Indirect',
-    golfn: 'Direct — you ship, we sell',
+    golfn: 'Direct \u2014 you ship, we sell',
     traditionalGood: false,
     paidSocialGood: null,
     golfnGood: true,
@@ -95,7 +95,7 @@ export function ProveIt() {
             We'll put our money<br /><span className="text-[#00ff9d]">where our mouth is</span>
           </h2>
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl mb-10 leading-8">
-            No startup fees. No retainers. No media buy minimums. You bring product. We bring the platform, the audience, and the execution. If it works — and the Miura numbers say it will — we scale together.
+            No startup fees. No retainers. No media buy minimums. You bring product. We bring the platform, the audience, and the execution. If it works \u2014 and the Miura numbers say it will \u2014 we scale together.
           </p>
         </Fade>
 
@@ -209,7 +209,7 @@ export function ProveIt() {
                   <div className="w-6 h-6 rounded-full bg-[#00ff9d]/10 flex items-center justify-center text-[#00ff9d] font-mono font-bold text-xs">3</div>
                   <p className="text-sm font-semibold text-white">Scale Together</p>
                 </div>
-                <p className="text-sm text-[#9ca3af] leading-6">Once the pilot proves out — like Miura approaching the $50K premier dealer tier in under 60 days — we discuss volume tiers, co-marketing, and deeper integration.</p>
+                <p className="text-sm text-[#9ca3af] leading-6">Once the pilot proves out \u2014 like Miura approaching the $50K premier dealer tier in under 60 days \u2014 we discuss volume tiers, co-marketing, and deeper integration.</p>
               </div>
             </div>
           </div>
