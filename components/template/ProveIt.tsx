@@ -209,7 +209,7 @@ export function ProveIt() {
                   <div className="w-6 h-6 rounded-full bg-[#00ff9d]/10 flex items-center justify-center text-[#00ff9d] font-mono font-bold text-xs">3</div>
                   <p className="text-sm font-semibold text-white">Scale Together</p>
                 </div>
-                <p className="text-sm text-[#9ca3af] leading-6">Once the pilot proves out \u2014 like Miura approaching the $50K premier dealer tier in under 60 days \u2014 we discuss volume tiers, co-marketing, and deeper integration.</p>
+                <p className="text-sm text-[#9ca3af] leading-6">Once the pilot proves out \u2014 like Miura committing to two more campaigns within weeks of launch \u2014 we discuss volume tiers, co-marketing, and deeper integration.</p>
               </div>
             </div>
           </div>
@@ -233,7 +233,7 @@ export function ProveIt() {
               We're not asking you to bet on us. <span className="text-[#00ff9d]">We're asking you to let us prove it.</span>
             </p>
             <p className="text-base text-[#9ca3af] leading-7">
-              Miura provided three wedges as prizes and got back $22K in wholesale revenue, 2,764 leads, and a partnership trajectory that has them approaching premier dealer status. The only thing we need from you is product and a willingness to let us run.
+              Miura provided three wedges as prizes and got back $22K in wholesale revenue, 2,764 leads, and immediately committed to two more campaigns. The only thing we need from you is product and a willingness to let us run.
             </p>
           </div>
         </Fade>
