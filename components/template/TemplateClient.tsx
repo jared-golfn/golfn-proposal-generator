@@ -31,6 +31,7 @@ import { SessionTracker } from './SessionTracker'
 import { CollapsibleSection } from './CollapsibleSection'
 import { PersonalizedImpactCard } from './PersonalizedImpactCard'
 import { ProveIt } from './ProveIt'
+import { StickyPitchCTA } from './StickyPitchCTA'
 import { Fade } from './Fade'
 
 const navSections = [
@@ -64,13 +65,11 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
   const activeNav = isCabot ? cabotNavSections : isPitch ? pitchNavSections : navSections
   const isWalkthrough = !!partner.heroVideoUrl
 
-  // CABOT -- always shows custom streamlined flow
   if (isCabot) {
     return (
       <main className="relative bg-[#0f1217]">
         <SessionTracker slug={partner.slug} />
         <div className="accent-line fixed top-0 left-0 right-0 z-50" />
-
         <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
           {activeNav.map((s) => (
             <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
@@ -79,7 +78,6 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
             </a>
           ))}
         </nav>
-
         <div id="proposal-content">
           <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
           <SectionDivider />
@@ -110,24 +108,42 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           ))}
         </nav>
 
+        {/* Sticky floating CTA */}
+        <StickyPitchCTA />
+
         <div id="proposal-content">
           {/* 1. HERO */}
           <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
           <SectionDivider />
 
-          {/* 2. PROOF — Miura case study, immediately */}
+          {/* 2. PROOF — Miura case study */}
           <CaseStudy />
+
+          {/* Mid-page CTA after proof */}
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 text-center">
+            <Fade>
+              <p className="text-lg text-[#9ca3af] mb-4">Convinced by the numbers?</p>
+              <a
+                href="mailto:jared@golfn.com?subject=Partnership%20Inquiry"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-base hover:bg-[#00e68a] transition-colors"
+              >
+                Book a 15-Minute Partnership Briefing
+              </a>
+              <p className="text-sm text-[#4b5563] mt-3">Or keep scrolling to see how it works and what the deal looks like.</p>
+            </Fade>
+          </div>
+
           <SectionDivider />
 
-          {/* 3. HOW IT WORKS — condensed */}
+          {/* 3. HOW IT WORKS */}
           <S03_PitchHowItWorks partner={partner} />
           <SectionDivider />
 
-          {/* 4. THE DEAL — "prove it" positioning, no startup fee */}
+          {/* 4. THE DEAL */}
           <ProveIt />
           <SectionDivider />
 
-          {/* 5. FAQ — lightweight */}
+          {/* 5. FAQ */}
           <PitchFAQ />
           <SectionDivider />
 

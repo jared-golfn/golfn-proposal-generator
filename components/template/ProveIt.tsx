@@ -1,6 +1,6 @@
 'use client'
 
-import { ShieldCheck, Package, Megaphone, BarChart3, Users, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { ShieldCheck, Package, Megaphone, BarChart3, Users, ArrowRight, CheckCircle2, XCircle, Check, X, Minus } from 'lucide-react'
 import { Fade } from './Fade'
 
 const youBring = [
@@ -21,6 +21,69 @@ const proofPoints = [
   { metric: '2,764', label: 'First-party leads Miura received', context: '(verified golfers who raised their hand)' },
   { metric: '$10,856', label: 'Brand impression value delivered', context: '(271K impressions @ $40 CPM)' },
 ]
+
+const comparisonRows = [
+  {
+    label: 'Upfront cost',
+    traditional: 'High fixed fee',
+    paidSocial: 'High media spend',
+    golfn: 'Product only',
+    traditionalGood: false,
+    paidSocialGood: false,
+    golfnGood: true,
+  },
+  {
+    label: 'Audience',
+    traditional: 'Broad / unverified',
+    paidSocial: 'Lookalikes',
+    golfn: 'Verified buyers',
+    traditionalGood: false,
+    paidSocialGood: null,
+    golfnGood: true,
+  },
+  {
+    label: 'Own the data',
+    traditional: 'No',
+    paidSocial: 'No',
+    golfn: 'Yes — first-party leads',
+    traditionalGood: false,
+    paidSocialGood: false,
+    golfnGood: true,
+  },
+  {
+    label: 'Compounding effect',
+    traditional: 'One-off',
+    paidSocial: 'None',
+    golfn: 'Yes — points + marketplace',
+    traditionalGood: false,
+    paidSocialGood: false,
+    golfnGood: true,
+  },
+  {
+    label: 'Wholesale revenue',
+    traditional: 'No',
+    paidSocial: 'Indirect',
+    golfn: 'Direct — you ship, we sell',
+    traditionalGood: false,
+    paidSocialGood: null,
+    golfnGood: true,
+  },
+  {
+    label: 'Attribution',
+    traditional: 'Vague',
+    paidSocial: 'Platform-dependent',
+    golfn: 'Full-funnel, Amplitude-powered',
+    traditionalGood: false,
+    paidSocialGood: null,
+    golfnGood: true,
+  },
+]
+
+function CellIcon({ good }: { good: boolean | null }) {
+  if (good === true) return <Check className="w-4 h-4 text-[#00ff9d] shrink-0" />
+  if (good === false) return <X className="w-4 h-4 text-[#ef4444] shrink-0" />
+  return <Minus className="w-4 h-4 text-[#6b7280] shrink-0" />
+}
 
 export function ProveIt() {
   return (
@@ -73,6 +136,52 @@ export function ProveIt() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </Fade>
+
+        {/* Comparison Table */}
+        <Fade delay={0.05}>
+          <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-10">
+            <div className="px-6 md:px-8 py-5 border-b border-[#2a3347]">
+              <p className="text-xs font-mono text-[#6b7280] uppercase tracking-[0.2em]">How GolfN Compares</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-[#2a3347]">
+                    <th className="py-4 px-6 text-left text-xs font-mono text-[#6b7280] uppercase tracking-wider w-[180px]"></th>
+                    <th className="py-4 px-5 text-left text-xs font-mono text-[#6b7280] uppercase tracking-wider">Traditional Sponsorship</th>
+                    <th className="py-4 px-5 text-left text-xs font-mono text-[#6b7280] uppercase tracking-wider">Paid Social Ads</th>
+                    <th className="py-4 px-5 text-left text-xs font-mono text-[#00ff9d] uppercase tracking-wider bg-[#001a14]/30">GolfN Activation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisonRows.map((row, i) => (
+                    <tr key={row.label} className={i < comparisonRows.length - 1 ? 'border-b border-[#2a3347]/40' : ''}>
+                      <td className="py-4 px-6 text-sm font-semibold text-white">{row.label}</td>
+                      <td className="py-4 px-5">
+                        <div className="flex items-center gap-2">
+                          <CellIcon good={row.traditionalGood} />
+                          <span className="text-sm text-[#9ca3af]">{row.traditional}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-5">
+                        <div className="flex items-center gap-2">
+                          <CellIcon good={row.paidSocialGood} />
+                          <span className="text-sm text-[#9ca3af]">{row.paidSocial}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-5 bg-[#001a14]/30">
+                        <div className="flex items-center gap-2">
+                          <CellIcon good={row.golfnGood} />
+                          <span className="text-sm text-white font-medium">{row.golfn}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </Fade>
