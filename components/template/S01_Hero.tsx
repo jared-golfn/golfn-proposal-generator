@@ -152,7 +152,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
                 Launch premium golf<br />campaigns that create<br /><span className="text-gradient">qualified demand</span>
               </motion.h1>
             )}
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className={`leading-relaxed mb-8 ${isPitch ? 'text-lg md:text-2xl text-[#9ca3af] max-w-4xl' : 'text-base md:text-xl text-[#9ca3af] max-w-3xl'}`}>{subtitle}</motion.p>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className={`leading-relaxed mb-8 ${isPitch ? 'text-xl md:text-[1.75rem] text-[#d1d5db] font-medium max-w-4xl leading-9' : 'text-base md:text-xl text-[#9ca3af] max-w-3xl'}`}>{subtitle}</motion.p>
 
             {isPitch && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.5 }} className="mb-8">
@@ -266,7 +266,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
                   ) })}
                   {othersCount > 0 && (
                   <div className="px-5 py-3 flex items-center gap-4">
-                    <span className="text-lg shrink-0">{'\ud83c\udf0d'}</span>
+                    <span className="text-lg shrink-0">\ud83c\udf0d</span>
                     <span className="text-sm md:text-base text-[#9ca3af] font-medium w-32 md:w-40 shrink-0">Others (124+ markets)</span>
                     <div className="flex-1 h-2 rounded-full bg-[#0f1217] overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(othersCount / Math.max(...markets.map(x => x.users))) * 100}%`, background: 'linear-gradient(90deg, rgba(0,255,157,0.3), rgba(23,164,85,0.3))' }} /></div>
                     <span className="text-sm md:text-base font-mono font-bold text-[#9ca3af] w-16 text-right shrink-0">{othersCount.toLocaleString()}</span>
