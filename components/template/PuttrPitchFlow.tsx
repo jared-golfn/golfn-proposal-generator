@@ -12,7 +12,7 @@ const MAILTO = 'mailto:jared@golfn.com,scott@golfn.com?subject=PUTTR%20x%20GolfN
    ============================================================ */
 
 const pylStats = [
-  { value: '205,000+', label: 'Monthly Page Views', sub: 'Press Your Luck alone' },
+  { value: '410,000+', label: 'PYL Views Over 2 Months', sub: '205K/mo, minimum campaign window' },
   { value: '30,000', label: 'Verified Golfers in PYL', sub: 'Growing 30% month-over-month' },
   { value: '7x', label: 'Avg Monthly Visits', sub: 'Per user, habitual engagement' },
   { value: '30%', label: 'MoM Growth', sub: 'Audience compounds every month' },
@@ -31,7 +31,7 @@ function TheCampaign() {
             Two phases. <span className="text-gradient">One closed ecosystem.</span>
           </h2>
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-8">
-            PUTTR enters Press Your Luck as a featured prize. 30,000 verified golfers play PYL every month, and that number is growing 30% month-over-month. The ones who want a PUTTR self-select by watching your video. Then we convert that intent into purchases.
+            PUTTR enters Press Your Luck as a featured prize. 30,000 verified golfers play PYL every month, and that number is growing 30% month-over-month. We set the hit rate to twice per month over a minimum two-month campaign window. The ones who want a PUTTR self-select by watching your video. Then we convert that intent into purchases.
           </p>
         </Fade>
 
@@ -66,7 +66,7 @@ function TheCampaign() {
                       <Gift className="w-4 h-4 text-[#00ff9d]" />
                       <h4 className="text-sm font-semibold text-white">The Prize</h4>
                     </div>
-                    <p className="text-sm text-[#d1d5db] leading-6">4 PUTTR Smart Putting Greens enter the Press Your Luck prize pool. Every golfer who plays PYL has a chance to win one. $2,796 retail value across all four units.</p>
+                    <p className="text-sm text-[#d1d5db] leading-6">4 PUTTR Smart Putting Greens enter the Press Your Luck prize pool. Hit rate: twice per month over a minimum two-month window. $2,796 retail value across all four units.</p>
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-3">
@@ -142,7 +142,7 @@ function TheCampaign() {
                   <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5">
                     <Eye className="w-5 h-5 text-[#00ff9d] mb-2" />
                     <p className="text-sm font-semibold text-white mb-1">Ongoing Impressions</p>
-                    <p className="text-xs text-[#9ca3af]">PUTTR stays in PYL after launch. 205K+ views per month, compounding every month.</p>
+                    <p className="text-xs text-[#9ca3af]">PUTTR stays in PYL for the full campaign window. 205K+ views per month, compounding.</p>
                   </div>
                 </div>
               </div>
@@ -157,7 +157,7 @@ function TheCampaign() {
               A $699 product is not an impulse buy. <span className="text-[#00ff9d]">Repeated exposure is what closes it.</span>
             </p>
             <p className="text-base text-[#9ca3af] leading-7">
-              PYL users come back 7 times a month. They see PUTTR every time. The 15-second unveiling creates awareness. The opt-in video creates intent. The commerce campaign closes the sale. This is not a one-off impression. It is a persistent, multi-touch funnel inside a closed ecosystem of verified golfers.
+              PYL users come back 7 times a month. Over two months, that is 14 touchpoints per user. They see PUTTR every time. The 15-second unveiling creates awareness. The opt-in video creates intent. The commerce campaign closes the sale. This is not a one-off impression. It is a persistent, multi-touch funnel inside a closed ecosystem of verified golfers.
             </p>
           </div>
         </Fade>
@@ -174,7 +174,7 @@ const cpmRows = [
   { channel: 'Golf media (Golf Digest, etc.)', cpm: '$30-50', audience: 'Readers, unverified', good: false as boolean | null },
   { channel: 'Meta / Instagram', cpm: '$15-25', audience: 'Probabilistic lookalikes', good: null },
   { channel: 'YouTube pre-roll', cpm: '$10-20', audience: 'Interest-based targeting', good: null },
-  { channel: 'GolfN full campaign (4 PUTTRs)', cpm: '$3.92', audience: 'Verified golfers, first-party, 7x/mo frequency', good: true },
+  { channel: 'GolfN full campaign (4 PUTTRs)', cpm: 'Under $2', audience: 'Verified golfers, first-party, 7x/mo frequency', good: true },
 ]
 
 function CpmIcon({ good }: { good: boolean | null }) {
@@ -196,7 +196,7 @@ function MediaValue() {
             Your media buy <span className="text-gradient">is the product itself</span>
           </h2>
           <p className="text-lg text-[#9ca3af] max-w-3xl leading-8 mb-8">
-            4 PUTTRs at wholesale is roughly $1,960. GolfN delivers 500,000+ total impressions across PYL, marketplace banners, IAMs, push, and email. That math does not exist anywhere else in golf.
+            4 PUTTRs at wholesale is roughly $1,960. Over a two-month campaign, GolfN delivers 1,000,000+ total impressions across PYL, marketplace banners, IAMs, push, and email. That math does not exist anywhere else in golf.
           </p>
         </Fade>
 
@@ -233,19 +233,19 @@ function MediaValue() {
         <Fade delay={0.06}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center">
-              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$9.80</p>
-              <p className="text-sm text-white font-semibold">CPM on PYL alone</p>
-              <p className="text-xs text-[#6b7280] mt-1">200K+ views / $1,960 wholesale</p>
-            </div>
-            <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center">
-              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$3.92</p>
-              <p className="text-sm text-white font-semibold">Full-Campaign CPM</p>
-              <p className="text-xs text-[#6b7280] mt-1">500K+ impressions across all channels</p>
+              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$4.78</p>
+              <p className="text-sm text-white font-semibold">CPM on PYL Alone</p>
+              <p className="text-xs text-[#6b7280] mt-1">410K+ views over 2 months / $1,960 wholesale</p>
             </div>
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 text-center">
+              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$1.96</p>
+              <p className="text-sm text-white font-semibold">Full-Campaign CPM</p>
+              <p className="text-xs text-[#6b7280] mt-1">1M+ impressions across all channels over 2 months</p>
+            </div>
+            <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center">
               <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">10 units?</p>
-              <p className="text-sm text-white font-semibold">CPM barely moves</p>
-              <p className="text-xs text-[#6b7280] mt-1">More prizes, same audience. Longer campaign, more social proof. Impressions are driven by users, not prizes.</p>
+              <p className="text-sm text-white font-semibold">Longer campaign, same CPM</p>
+              <p className="text-xs text-[#6b7280] mt-1">More prizes extends the window. More winners, more social proof. The audience keeps growing 30% MoM.</p>
             </div>
           </div>
         </Fade>
@@ -322,7 +322,7 @@ function MiuraProof() {
    ============================================================ */
 
 const puttrBrings = [
-  { icon: Gift, title: '4 PUTTRs for Press Your Luck', detail: '$699 retail each. These are the prizes that drive 30,000 verified golfer eyeballs to your product every month.' },
+  { icon: Gift, title: '4 PUTTRs for Press Your Luck', detail: '$699 retail each. Hit rate of twice per month over a two-month campaign window. These are the prizes that drive 30,000 verified golfer eyeballs to your product every month.' },
   { icon: Package, title: 'Marketplace inventory at wholesale', detail: 'PUTTR Smart Putting Greens available for purchase in the Points Exchange. We buy at wholesale, you ship direct.' },
 ]
 
@@ -436,10 +436,10 @@ function TheDeal() {
         <Fade delay={0.06}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10">
             <p className="text-xl md:text-2xl font-bold text-white leading-relaxed mb-3">
-              PUTTR invests <span className="text-[#00ff9d]">~$2,000 in product</span>. GolfN puts it in front of <span className="text-[#00ff9d]">30,000 golfers who come back 7 times a month</span>.
+              PUTTR invests <span className="text-[#00ff9d]">~$2,000 in product</span>. GolfN delivers <span className="text-[#00ff9d]">1,000,000+ impressions to verified golfers at under $2 CPM</span>.
             </p>
             <p className="text-base text-[#9ca3af] leading-7">
-              Imagine what 10 units would do. The CPM gets better. The campaign runs longer. More winners means more social proof. The impression volume is driven by audience size, not prize count.
+              Imagine what 10 units would do. The campaign runs longer. More winners means more social proof. And the audience keeps growing 30% every month.
             </p>
           </div>
         </Fade>
