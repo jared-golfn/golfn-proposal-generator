@@ -6,6 +6,7 @@ export const zeroRestrictionConfig: PartnerConfig = {
   slug: 'zerorestriction',
   partnerName: 'Zero Restriction',
   password: 'zr2026',
+  logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/da8a46e7bb0765aa24fc47643cdbc179cb89ad4b-356x142.png',
   primaryColor: '#00ff9d',
   secondaryColor: '#17A455',
   productCategory: 'Premium Golf Outerwear',

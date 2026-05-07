@@ -14,7 +14,7 @@ const APP_SCREENS = {
 }
 
 /* ============================================================
-   PLATFORM EDUCATION (from /invited)
+   PLATFORM EDUCATION
    ============================================================ */
 
 const platformFeatures = [
@@ -72,8 +72,8 @@ function ThreePhaseCampaign() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <Fade>
           <div className="flex items-center gap-3 mb-4"><Play className="w-5 h-5 text-[#00ff9d]" /><p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d]">The Campaign</p></div>
-          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[0.95] tracking-tight mb-5">Three phases. <span className="text-gradient">One rain-proof funnel.</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-12">We set up your wholesale account. We run a sweepstakes to create awareness. And then we do something no one else can: every time a GolfN user plays a round in the rain, we promote Zero Restriction the next time they open the app.</p>
+          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[0.95] tracking-tight mb-5">Awareness. Intent. <span className="text-gradient">Rain-triggered conversion.</span></h2>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-12">We set up your wholesale account so Zero Restriction is purchasable inside GolfN. We run a sweepstakes to create mass awareness across 125,000+ golfers and capture 4,000+ intent signals. Then we do something no one else can: every time one of those golfers plays in the rain, we promote Zero Restriction the moment they open the app.</p>
         </Fade>
 
         {/* Phase 1: Wholesale */}
@@ -85,11 +85,11 @@ function ThreePhaseCampaign() {
             </div>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
               <div className="px-6 md:px-8 py-6">
-                <p className="text-base text-[#d1d5db] leading-7 mb-6">Before we run any campaigns, we need Zero Restriction products available for purchase in the GolfN Points Exchange. This is the infrastructure that makes everything else work. Golfers see your products, learn about them through campaigns, and buy them with earned points or direct purchase.</p>
+                <p className="text-base text-[#d1d5db] leading-7 mb-6">Before we run any campaigns, we need Zero Restriction products available for purchase in the GolfN Points Exchange. This is the infrastructure that makes everything else work. When golfers see Zero Restriction in the sweepstakes, browse it in the marketplace, or get a rain-triggered IAM, they can buy immediately.</p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5"><Package className="w-5 h-5 text-[#00ff9d] mb-2" /><p className="text-sm font-semibold text-white mb-1">Product Catalog</p><p className="text-xs text-[#9ca3af]">Rain jackets, pants, and windproof layers listed with full product photography and descriptions.</p></div>
+                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5"><Package className="w-5 h-5 text-[#00ff9d] mb-2" /><p className="text-sm font-semibold text-white mb-1">Product Catalog</p><p className="text-xs text-[#9ca3af]">Rain jackets, pants, and layers listed with full product photography and descriptions in the marketplace.</p></div>
                   <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5"><ShoppingBag className="w-5 h-5 text-[#00ff9d] mb-2" /><p className="text-sm font-semibold text-white mb-1">Wholesale Pricing</p><p className="text-xs text-[#9ca3af]">We purchase at wholesale. You ship direct. GolfN handles customer service and order coordination.</p></div>
-                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5"><ShieldCheck className="w-5 h-5 text-[#00ff9d] mb-2" /><p className="text-sm font-semibold text-white mb-1">97% Order Accuracy</p><p className="text-xs text-[#9ca3af]">Proven fulfillment pipeline with Miura, L.A.B. Golf, Cobra, and other premium partners. Most orders ship within 2 weeks.</p></div>
+                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5"><ShieldCheck className="w-5 h-5 text-[#00ff9d] mb-2" /><p className="text-sm font-semibold text-white mb-1">97% Order Accuracy</p><p className="text-xs text-[#9ca3af]">Proven fulfillment with Miura, L.A.B. Golf, Cobra, and other premium partners. Most orders ship within 2 weeks.</p></div>
                 </div>
               </div>
             </div>
@@ -101,16 +101,19 @@ function ThreePhaseCampaign() {
           <div className="mb-10">
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#00ff9d]/10 text-[#00ff9d] font-mono font-bold text-sm">2</div>
-              <div><p className="text-lg font-bold text-white">Sweepstakes Campaign</p><p className="text-sm text-[#6b7280]">Zero Restriction enters Press Your Luck as a featured prize</p></div>
+              <div><p className="text-lg font-bold text-white">Sweepstakes Campaign</p><p className="text-sm text-[#6b7280]">Mass awareness across 125K+ golfers, 4,000+ raise their hand</p></div>
             </div>
             <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden">
               <div className="px-6 md:px-8 py-6">
-                <p className="text-base text-[#d1d5db] leading-7 mb-6">Zero Restriction rain gear enters the Press Your Luck prize pool. 30,000 verified golfers play PYL every month, growing 30% MoM. Every user sees a 15-second video introducing Zero Restriction. A longer opt-in video unlocks a second free spin. Everyone who watches is tagged as an intent cohort for follow-up campaigns.</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">30,000</p><p className="text-sm text-white font-semibold">Monthly PYL Users</p><p className="text-xs text-[#6b7280] mt-0.5">Verified golfers, first-party</p></div>
-                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">410K+</p><p className="text-sm text-white font-semibold">Views Over 2 Months</p><p className="text-xs text-[#6b7280] mt-0.5">Minimum campaign window</p></div>
-                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">12-15K</p><p className="text-sm text-white font-semibold">Intent Cohort</p><p className="text-xs text-[#6b7280] mt-0.5">Video watchers, self-selected</p></div>
-                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">7x</p><p className="text-sm text-white font-semibold">Monthly Return Visits</p><p className="text-xs text-[#6b7280] mt-0.5">Per user, habitual engagement</p></div>
+                <p className="text-base text-[#d1d5db] leading-7 mb-6">Zero Restriction provides premium rain gear as the sweepstakes prize. GolfN promotes it across the entire platform: in-app cards, push notifications, email, social feed, and marketplace banners. Every user in the ecosystem sees Zero Restriction. On average, over 4,000 verified golfers enter each sweepstakes, giving you direct, first-party proof of user intent.</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">125K+</p><p className="text-sm text-white font-semibold">Golfers Exposed</p><p className="text-xs text-[#6b7280] mt-0.5">Entire GolfN userbase sees ZR</p></div>
+                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">4,000+</p><p className="text-sm text-white font-semibold">Verified Entrants</p><p className="text-xs text-[#6b7280] mt-0.5">Avg. per sweepstakes, all opted-in</p></div>
+                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">43%</p><p className="text-sm text-white font-semibold">IAM Conversion</p><p className="text-xs text-[#6b7280] mt-0.5">Miura benchmark, in-app messages</p></div>
+                  <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-5 text-center"><p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] mb-1">74%</p><p className="text-sm text-white font-semibold">Card-to-Entry Rate</p><p className="text-xs text-[#6b7280] mt-0.5">Highest in GolfN history (Miura)</p></div>
+                </div>
+                <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5">
+                  <p className="text-sm text-[#d1d5db] leading-6"><span className="text-white font-semibold">Why the sweepstakes matters for Phase 3:</span> Every entrant is now tagged in GolfN. We know they are interested in rain gear. When they play a round and it rains, the follow-up IAM is not cold outreach. It is a warm, contextual message to someone who already raised their hand for your product.</p>
                 </div>
               </div>
             </div>
@@ -122,20 +125,20 @@ function ThreePhaseCampaign() {
           <div className="mb-10">
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#00ff9d]/10 text-[#00ff9d] font-mono font-bold text-sm">3</div>
-              <div><p className="text-lg font-bold text-white">Rain Round Targeting</p><p className="text-sm text-[#6b7280]">The campaign that runs itself, every time it rains</p></div>
+              <div><p className="text-lg font-bold text-white">Rain Round Targeting</p><p className="text-sm text-[#6b7280]">The conversion engine that runs itself, every time it rains</p></div>
             </div>
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl overflow-hidden">
               <div className="px-6 md:px-8 py-8">
                 <div className="flex items-center gap-3 mb-4"><CloudRain className="w-7 h-7 text-[#00ff9d]" /><p className="text-2xl md:text-3xl font-bold text-white">This is the part no one else can do.</p></div>
-                <p className="text-base md:text-lg text-[#d1d5db] leading-8 mb-8">GolfN uses a weather API to track real-time conditions during every round. Wind speed, temperature, precipitation. We use this data to calculate adjusted performance metrics like distance. But it also means we know <span className="text-[#00ff9d] font-semibold">exactly which golfers played in the rain</span>.</p>
+                <p className="text-base md:text-lg text-[#d1d5db] leading-8 mb-8">GolfN uses a weather API to track real-time conditions during every GPS-tracked round. Wind, temperature, precipitation. We use this data to calculate adjusted performance metrics. But it also means we know <span className="text-[#00ff9d] font-semibold">exactly which golfers played in the rain</span>. And thanks to the sweepstakes, we already know which of those golfers are interested in Zero Restriction.</p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center"><Droplets className="w-8 h-8 text-[#00ff9d] mx-auto mb-3" /><p className="text-lg font-bold text-white mb-1">Golfer Plays in Rain</p><p className="text-sm text-[#9ca3af]">Weather API detects precipitation during their tracked round. User is automatically tagged.</p></div>
-                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center"><Zap className="w-8 h-8 text-[#00ff9d] mx-auto mb-3" /><p className="text-lg font-bold text-white mb-1">Next App Open</p><p className="text-sm text-[#9ca3af]">Targeted in-app message promotes Zero Restriction rain gear. Contextual, timely, personal.</p></div>
-                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center"><ShoppingBag className="w-8 h-8 text-[#00ff9d] mx-auto mb-3" /><p className="text-lg font-bold text-white mb-1">Commerce Conversion</p><p className="text-sm text-[#9ca3af]">IAM links directly to Zero Restriction products in the Points Exchange. One tap to browse, one tap to buy.</p></div>
+                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center"><Droplets className="w-8 h-8 text-[#00ff9d] mx-auto mb-3" /><p className="text-lg font-bold text-white mb-1">Golfer Plays in Rain</p><p className="text-sm text-[#9ca3af]">Weather API detects precipitation during their round. User is automatically tagged as a rain-round golfer.</p></div>
+                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center"><Zap className="w-8 h-8 text-[#00ff9d] mx-auto mb-3" /><p className="text-lg font-bold text-white mb-1">Next App Open</p><p className="text-sm text-[#9ca3af]">Targeted IAM: "You just played 18 in the rain. Here is the best rain gear in golf." Contextual, timely, personal.</p></div>
+                  <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center"><ShoppingBag className="w-8 h-8 text-[#00ff9d] mx-auto mb-3" /><p className="text-lg font-bold text-white mb-1">One Tap to Buy</p><p className="text-sm text-[#9ca3af]">IAM links directly to Zero Restriction in the Points Exchange. The wholesale account from Phase 1 means the product is already there.</p></div>
                 </div>
                 <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-6">
-                  <p className="text-xl md:text-2xl font-bold text-white leading-relaxed mb-3">The cohort <span className="text-[#00ff9d]">rebuilds itself automatically</span>. Every time it rains anywhere in the world, new golfers enter the targeting pipeline.</p>
-                  <p className="text-base text-[#9ca3af] leading-7">This is not a one-time campaign. It is an evergreen, weather-triggered commerce engine. The message is perfectly contextual: you just got rained on, here is the best rain gear in golf. No other platform has this data or this capability.</p>
+                  <p className="text-xl md:text-2xl font-bold text-white leading-relaxed mb-3">The three phases compound. <span className="text-[#00ff9d]">Awareness creates intent. Rain creates context. The IAM closes the sale.</span></p>
+                  <p className="text-base text-[#9ca3af] leading-7">The rain cohort rebuilds itself automatically every time it rains, anywhere in the world. Sweepstakes entrants who get rained on are the warmest leads in golf. And unlike a one-time ad campaign, this engine runs as long as Zero Restriction is in the marketplace.</p>
                 </div>
               </div>
             </div>
@@ -184,6 +187,11 @@ function MiuraProof() {
             <p className="text-sm text-[#6b7280]">{"Anthony Newville, President \u2014 Miura Golf"}</p>
           </div>
         </Fade>
+        <Fade delay={0.08}>
+          <div className="mt-6 bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5">
+            <p className="text-sm text-[#d1d5db] leading-6"><span className="text-white font-semibold">The Zero Restriction advantage:</span> Miura ran the sweepstakes and marketplace. Zero Restriction gets that <em>plus</em> rain-triggered targeting. Every rainy round adds another warm lead to the pipeline. Miura generated $22K without weather targeting. Imagine what happens when every golfer who gets rained on sees your product the next time they open the app.</p>
+          </div>
+        </Fade>
       </div>
     </section>
   )
@@ -194,14 +202,14 @@ function MiuraProof() {
    ============================================================ */
 
 const zrBrings = [
-  { icon: Gift, title: 'Rain gear for Press Your Luck', detail: 'Premium Zero Restriction jackets or outerwear enter the prize pool. These prizes create awareness across 30,000+ monthly PYL users.' },
-  { icon: Package, title: 'Wholesale inventory for Points Exchange', detail: 'Zero Restriction products available for purchase through the marketplace. We buy at wholesale, you ship direct.' },
+  { icon: Gift, title: 'Rain gear for the sweepstakes', detail: 'Premium Zero Restriction outerwear as the prize. Creates awareness across 125,000+ golfers and captures 4,000+ intent signals.' },
+  { icon: Package, title: 'Wholesale inventory for Points Exchange', detail: 'Zero Restriction products available for purchase in the marketplace. We buy at wholesale, you ship direct. This is the commerce layer that the sweepstakes and rain targeting both drive to.' },
 ]
 
 const golfnDoes = [
-  { icon: CloudRain, title: 'Rain round targeting engine', detail: 'Weather API integration identifies golfers who played in rain. Automated IAM triggers on next login. The cohort rebuilds every time it rains.' },
-  { icon: Video, title: 'Video production + PYL integration', detail: '15-second unveiling video and longer education video, integrated into the PYL spin mechanic.' },
-  { icon: Megaphone, title: 'Full campaign execution', detail: 'IAMs, push sequences, marketplace banners, email flows, social feed. The entire CRM and marketing stack.' },
+  { icon: CloudRain, title: 'Rain round targeting engine', detail: 'Weather API identifies rain-round golfers. Automated IAMs trigger on next login. Cohort rebuilds every time it rains, compounding with sweepstakes entrants.' },
+  { icon: Megaphone, title: 'Full sweepstakes campaign', detail: 'In-app cards, push sequences, email, social feed, marketplace banners. Every user in the ecosystem sees Zero Restriction.' },
+  { icon: Users, title: 'Intent cohort + rain cohort layering', detail: 'Sweepstakes entrants are tagged. Rain-round golfers are tagged. When someone is in both cohorts, they get priority messaging. The system gets smarter over time.' },
   { icon: ShieldCheck, title: 'Fulfillment + operations', detail: 'Order processing, customer service, inventory coordination. 97% accuracy rate with current partners.' },
 ]
 
@@ -212,7 +220,7 @@ function TheDeal() {
         <Fade>
           <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-3">The Deal</p>
           <h2 className="text-3xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.05] tracking-tight mb-4">{"We'll put our money"}<br /><span className="text-[#00ff9d]">where our mouth is</span></h2>
-          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl mb-10 leading-8">No startup fees. No retainers. No media buy minimums. Zero Restriction provides product. GolfN provides the audience, the weather data, and the full execution stack.</p>
+          <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl mb-10 leading-8">No startup fees. No retainers. No media buy minimums. Zero Restriction provides product. GolfN provides 125,000 golfers, weather-triggered targeting, and the full execution stack.</p>
         </Fade>
         <Fade delay={0.04}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
@@ -230,7 +238,7 @@ function TheDeal() {
         <Fade delay={0.06}>
           <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10">
             <p className="text-xl md:text-2xl font-bold text-white leading-relaxed mb-3">Zero Restriction provides <span className="text-[#00ff9d]">product</span>. GolfN provides <span className="text-[#00ff9d]">125,000 golfers, real-time weather targeting, and a full commerce engine</span>.</p>
-            <p className="text-base text-[#9ca3af] leading-7">The sweepstakes creates the initial wave. The rain targeting keeps the pipeline full forever. And the wholesale account means every impression has a direct path to purchase.</p>
+            <p className="text-base text-[#9ca3af] leading-7">The sweepstakes creates the initial wave of awareness and intent. The rain targeting converts that intent every time the weather cooperates. And the wholesale account means every impression has a direct path to purchase.</p>
           </div>
         </Fade>
       </div>
@@ -243,10 +251,10 @@ function TheDeal() {
    ============================================================ */
 
 const faqs = [
-  { q: 'How does the rain targeting actually work?', a: 'GolfN integrates a weather API that tracks real-time conditions during every GPS-tracked round. When precipitation is detected during a round, the user is automatically tagged in our system. The next time they open the app, they see a targeted in-app message promoting Zero Restriction rain gear. This happens automatically, every time it rains, for every user.' },
-  { q: 'How many golfers get rained on?', a: 'It depends on the season and geography, but across 125,000+ users playing rounds globally, the rain cohort replenishes continuously. Spring and fall are peak seasons. The key insight is that this audience is always fresh and the context is always perfect: they just experienced the exact problem your product solves.' },
-  { q: 'Do we get category exclusivity?', a: 'Yes. GolfN will not run a competing rain gear or outerwear brand in PYL, the marketplace, or the rain targeting program simultaneously. Your campaign gets undivided attention.' },
-  { q: 'What happens after the initial campaign?', a: 'The rain targeting is evergreen. It runs automatically as long as Zero Restriction is in the marketplace. The sweepstakes intent cohort is also permanent and reactivatable for seasonal campaigns, new product launches, or flash promotions.' },
+  { q: 'How does the rain targeting actually work?', a: 'GolfN integrates a weather API that tracks real-time conditions during every GPS-tracked round. When precipitation is detected, the user is automatically tagged. The next time they open the app, they see a targeted in-app message promoting Zero Restriction rain gear. This happens automatically, every time it rains, for every user.' },
+  { q: 'How does the sweepstakes connect to the rain targeting?', a: 'The sweepstakes creates mass awareness and captures intent signals. Everyone who enters is tagged as interested in rain gear. When those same golfers later play in the rain, the follow-up IAM is not a cold message. It is a warm, contextual promotion to someone who already raised their hand. The two systems compound each other.' },
+  { q: 'Do we get category exclusivity?', a: 'Yes. GolfN will not run a competing rain gear or outerwear brand in the sweepstakes, marketplace, or rain targeting program simultaneously. Your campaign gets undivided attention.' },
+  { q: 'What happens after the sweepstakes ends?', a: 'The rain targeting is evergreen. It runs automatically as long as Zero Restriction is in the marketplace. The sweepstakes intent cohort is also permanent and reactivatable for seasonal campaigns, new product launches, or flash promotions. The system keeps working long after the initial campaign.' },
 ]
 
 function ZrFAQ() {
@@ -287,7 +295,7 @@ function ZrCTA() {
         <Fade>
           <p className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-4">Next Steps</p>
           <h2 className="text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight mb-6">{"Let's put Zero Restriction"}<br /><span className="text-[#00ff9d]">in front of every golfer who gets rained on</span></h2>
-          <p className="text-lg text-[#9ca3af] max-w-2xl mx-auto mb-8 leading-8">We handle everything. You provide the product. The rain targeting starts as soon as your wholesale account is live.</p>
+          <p className="text-lg text-[#9ca3af] max-w-2xl mx-auto mb-8 leading-8">We handle everything. You provide the product. The sweepstakes creates awareness, and the rain targeting converts it every time the weather cooperates.</p>
           <a href={MAILTO} className="inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-lg hover:bg-[#00e68a] transition-colors">{"Let's Get Started"} <ArrowRight className="w-5 h-5" /></a>
           <p className="text-sm text-[#4b5563] mt-4">jared@golfn.com | scott@golfn.com</p>
         </Fade>
