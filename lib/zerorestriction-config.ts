@@ -16,4 +16,5 @@ export const zeroRestrictionConfig: PartnerConfig = {
   heroVideoUrl: TIMELAPSE_VIDEO,
   keyMarkets: ['United States', 'United Kingdom', 'Australia', 'Canada'],
   defaultPath: 'pilot',
+  logoNoInvert: true,
 }
