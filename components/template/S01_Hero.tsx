@@ -25,6 +25,9 @@ const pitchPartnerLogos: { name: string; url: string; h: number }[] = [
   { name: 'Hyperice', url: 'https://cdn.sanity.io/images/e3wja34v/production/36b4396feef4359c78c827dad89e3bc2c42929b2-3840x2160.png', h: 140 },
 ]
 
+// Slugs where the partner logo should NOT be inverted (logos with light backgrounds)
+const NO_INVERT_SLUGS = new Set(['zerorestriction'])
+
 function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { brandName: string; brandLogoUrl?: string }[]; agencyLogoUrl?: string; agencyName?: string }) {
   const validBrands = brands.filter(b => b.brandLogoUrl)
   const n = validBrands.length
@@ -87,6 +90,26 @@ function PortfolioBracket({ brands, agencyLogoUrl, agencyName }: { brands: { bra
   )
 }
 
+function PartnerLogo({ slug, logoUrl, name }: { slug: string; logoUrl: string; name: string }) {
+  const noInvert = NO_INVERT_SLUGS.has(slug)
+  if (noInvert) {
+    return (
+      <div className="flex items-center gap-2 md:gap-3 shrink-0">
+        <span className="text-[#6b7280] text-sm md:text-base hidden sm:inline">Prepared for</span>
+        <div className="bg-white/95 rounded-lg px-3 py-1.5">
+          <img src={logoUrl} alt={name} className="h-7 md:h-10 w-auto object-contain" />
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className="flex items-center gap-2 md:gap-3 shrink-0">
+      <span className="text-[#6b7280] text-sm md:text-base hidden sm:inline">Prepared for</span>
+      <img src={logoUrl} alt={name} className="h-8 md:h-12 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+    </div>
+  )
+}
+
 export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hideBrandInput?: boolean }) {
   const [showMarkets, setShowMarkets] = useState(false)
   const isPitch = !!hideBrandInput
@@ -132,10 +155,7 @@ export function S01_Hero({ partner, hideBrandInput }: { partner: PartnerData; hi
               <img src={partner.agencyLogoUrl} alt={partner.agencyName || ''} className="h-6 md:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
             </div>
           ) : partner.partnerLogoUrl ? (
-            <div className="flex items-center gap-2 md:gap-3 shrink-0">
-              <span className="text-[#6b7280] text-sm md:text-base hidden sm:inline">Prepared for</span>
-              <img src={partner.partnerLogoUrl} alt={partner.partnerName} className="h-8 md:h-12 w-auto" style={{ filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
-            </div>
+            <PartnerLogo slug={partner.slug} logoUrl={partner.partnerLogoUrl} name={partner.partnerName} />
           ) : !hasVideo ? (
             <span className="text-[#6b7280] text-sm md:text-base">Prepared for <span className="text-white font-medium">{partner.partnerName}</span></span>
           ) : null}
