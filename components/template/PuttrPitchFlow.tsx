@@ -13,9 +13,9 @@ const MAILTO = 'mailto:jared@golfn.com,scott@golfn.com?subject=PUTTR%20x%20GolfN
 
 const pylStats = [
   { value: '205,000+', label: 'Monthly Page Views', sub: 'Press Your Luck alone' },
-  { value: '30,000', label: 'Unique Monthly Users', sub: 'Verified, first-party golfers' },
+  { value: '30,000', label: 'Verified Golfers in PYL', sub: 'Growing 30% month-over-month' },
   { value: '7x', label: 'Avg Monthly Visits', sub: 'Per user, habitual engagement' },
-  { value: '$3.91', label: 'Effective CPM', sub: 'Verified golfers, not lookalikes' },
+  { value: '30%', label: 'MoM Growth', sub: 'Audience compounds every month' },
 ]
 
 function TheCampaign() {
@@ -31,7 +31,7 @@ function TheCampaign() {
             Two phases. <span className="text-gradient">One closed ecosystem.</span>
           </h2>
           <p className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-8">
-            PUTTR enters Press Your Luck as a featured prize. Every active GolfN user sees it. The ones who want one self-select by watching your video. Then we convert that intent into purchases.
+            PUTTR enters Press Your Luck as a featured prize. 30,000 verified golfers play PYL every month, and that number is growing 30% month-over-month. The ones who want a PUTTR self-select by watching your video. Then we convert that intent into purchases.
           </p>
         </Fade>
 
@@ -167,14 +167,14 @@ function TheCampaign() {
 }
 
 /* ============================================================
-   SECTION 2: CPM COMPARISON — THE MEDIA VALUE PLAY
+   SECTION 2: CPM COMPARISON
    ============================================================ */
 
 const cpmRows = [
   { channel: 'Golf media (Golf Digest, etc.)', cpm: '$30-50', audience: 'Readers, unverified', good: false as boolean | null },
   { channel: 'Meta / Instagram', cpm: '$15-25', audience: 'Probabilistic lookalikes', good: null },
   { channel: 'YouTube pre-roll', cpm: '$10-20', audience: 'Interest-based targeting', good: null },
-  { channel: 'GolfN (4 PUTTRs)', cpm: '$3.91', audience: 'Verified golfers, first-party, 7x/mo frequency', good: true },
+  { channel: 'GolfN full campaign (4 PUTTRs)', cpm: '$3.92', audience: 'Verified golfers, first-party, 7x/mo frequency', good: true },
 ]
 
 function CpmIcon({ good }: { good: boolean | null }) {
@@ -233,19 +233,19 @@ function MediaValue() {
         <Fade delay={0.06}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center">
-              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$3.91</p>
+              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$9.80</p>
               <p className="text-sm text-white font-semibold">CPM on PYL alone</p>
               <p className="text-xs text-[#6b7280] mt-1">200K+ views / $1,960 wholesale</p>
             </div>
             <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-6 text-center">
-              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$3.91</p>
-              <p className="text-sm text-white font-semibold">Full-campaign CPM</p>
-              <p className="text-xs text-[#6b7280] mt-1">500K+ total impressions across all channels</p>
+              <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">$3.92</p>
+              <p className="text-sm text-white font-semibold">Full-Campaign CPM</p>
+              <p className="text-xs text-[#6b7280] mt-1">500K+ impressions across all channels</p>
             </div>
             <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl p-6 text-center">
               <p className="text-3xl font-mono font-bold text-[#00ff9d] mb-1">10 units?</p>
-              <p className="text-sm text-white font-semibold">CPM gets even better</p>
-              <p className="text-xs text-[#6b7280] mt-1">More prizes = longer campaign, more winners, more social proof. Impression volume stays the same.</p>
+              <p className="text-sm text-white font-semibold">CPM barely moves</p>
+              <p className="text-xs text-[#6b7280] mt-1">More prizes, same audience. Longer campaign, more social proof. Impressions are driven by users, not prizes.</p>
             </div>
           </div>
         </Fade>
@@ -255,7 +255,7 @@ function MediaValue() {
 }
 
 /* ============================================================
-   SECTION 3: MIURA PROOF (condensed, multiples-focused)
+   SECTION 3: MIURA PROOF
    ============================================================ */
 
 const miuraProofMetrics = [
@@ -278,8 +278,17 @@ function MiuraProof() {
             Miura Golf ran this playbook. <span className="text-gradient">Here is what happened.</span>
           </h2>
           <p className="text-lg text-[#9ca3af] max-w-3xl leading-8 mb-8">
-            Miura provided premium product as sweepstakes prizes. GolfN ran the full campaign. The results spoke for themselves, and Miura immediately committed to multiple additional campaigns.
+            Miura provided premium product as sweepstakes prizes. GolfN ran the full campaign and marketplace activation. In 40 days, Miura generated <span className="text-white font-semibold">$22,000 in wholesale revenue</span> and 2,764 qualified leads. They immediately committed to multiple additional campaigns.
           </p>
+        </Fade>
+
+        {/* Hero revenue callout */}
+        <Fade delay={0.03}>
+          <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 mb-8 text-center">
+            <p className="text-5xl md:text-6xl font-mono font-bold text-[#00ff9d] mb-2">$22,000</p>
+            <p className="text-lg text-white font-semibold">wholesale revenue in 40 days</p>
+            <p className="text-sm text-[#6b7280] mt-1">From a single sweepstakes campaign inside GolfN</p>
+          </div>
         </Fade>
 
         <Fade delay={0.04}>
@@ -300,7 +309,7 @@ function MiuraProof() {
               {"\"You guys are doing exactly what you figured you would do. The consumer base is latching on. "}
               <span className="text-[#00ff9d]">We never doubted for a second.</span>{"\""}
             </p>
-            <p className="text-sm text-[#6b7280]">Anthony Newville, VP Sales — Miura Golf</p>
+            <p className="text-sm text-[#6b7280]">Anthony Newville, VP Sales \u2014 Miura Golf</p>
           </div>
         </Fade>
       </div>
@@ -394,7 +403,6 @@ function TheDeal() {
           </div>
         </Fade>
 
-        {/* Comparison Table */}
         <Fade delay={0.05}>
           <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-10">
             <div className="px-6 md:px-8 py-5 border-b border-[#2a3347]">
