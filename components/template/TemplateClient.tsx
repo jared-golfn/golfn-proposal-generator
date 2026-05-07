@@ -27,6 +27,7 @@ import { PitchFAQ } from './PitchFAQ'
 import { CaseStudy } from './CaseStudy'
 import { CabotPitchFlow } from './CabotPitchFlow'
 import { PuttrPitchFlow } from './PuttrPitchFlow'
+import { ZeroRestrictionPitchFlow } from './ZeroRestrictionPitchFlow'
 import { SectionDivider } from './SectionDivider'
 import { SessionTracker } from './SessionTracker'
 import { CollapsibleSection } from './CollapsibleSection'
@@ -67,12 +68,44 @@ const puttrNavSections = [
   { id: 'next-steps', label: 'Next Steps' },
 ]
 
+const zrNavSections = [
+  { id: 'top', label: 'Overview' },
+  { id: 'the-campaign', label: 'The Campaign' },
+  { id: 'the-proof', label: 'Proof' },
+  { id: 'the-deal', label: 'The Deal' },
+  { id: 'next-steps', label: 'Next Steps' },
+]
+
+function NavDots({ sections }: { sections: { id: string; label: string }[] }) {
+  return (
+    <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
+      {sections.map((s) => (
+        <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
+          <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
+          <img src={images.logoIcon} alt="" className="block w-6 h-6 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
+        </a>
+      ))}
+    </nav>
+  )
+}
+
+function PageFooter({ partnerName }: { partnerName: string }) {
+  return (
+    <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
+      <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
+      <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partnerName}{' by GolfN'}</p>
+      <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
+    </footer>
+  )
+}
+
 export function TemplateClient({ partner }: { partner: PartnerData }) {
   const searchParams = useSearchParams()
   const isPitch = searchParams.has('pitch')
   const isCabot = partner.slug === 'cabot'
   const isPuttr = partner.slug === 'puttr'
-  const activeNav = isPuttr ? puttrNavSections : isCabot ? cabotNavSections : isPitch ? pitchNavSections : navSections
+  const isZR = partner.slug === 'zerorestriction'
+  const activeNav = isZR ? zrNavSections : isPuttr ? puttrNavSections : isCabot ? cabotNavSections : isPitch ? pitchNavSections : navSections
   const isWalkthrough = !!partner.heroVideoUrl
 
   // CABOT
@@ -81,71 +114,60 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
       <main className="relative bg-[#0f1217]">
         <SessionTracker slug={partner.slug} />
         <div className="accent-line fixed top-0 left-0 right-0 z-50" />
-        <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
-          {activeNav.map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
-              <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
-              <img src={images.logoIcon} alt="" className="block w-6 h-6 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
-            </a>
-          ))}
-        </nav>
+        <NavDots sections={activeNav} />
         <div id="proposal-content">
           <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
           <SectionDivider />
           <CabotPitchFlow />
-          <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
-            <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-            <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
-            <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
-          </footer>
+          <PageFooter partnerName={partner.partnerName} />
         </div>
       </main>
     )
   }
 
-  /* ═══ PUTTR — Custom PYL-led pitch ═══ */
+  // PUTTR
   if (isPuttr) {
     return (
       <main className="relative bg-[#0f1217]">
         <SessionTracker slug={partner.slug} />
         <div className="accent-line fixed top-0 left-0 right-0 z-50" />
-        <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
-          {activeNav.map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
-              <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
-              <img src={images.logoIcon} alt="" className="block w-6 h-6 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
-            </a>
-          ))}
-        </nav>
+        <NavDots sections={activeNav} />
         <StickyPitchCTA />
         <div id="proposal-content">
           <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
           <SectionDivider />
           <PuttrPitchFlow />
-          <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
-            <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-            <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
-            <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
-          </footer>
+          <PageFooter partnerName={partner.partnerName} />
         </div>
       </main>
     )
   }
 
-  /* ═══ PITCH MODE — Streamlined, Miura case-study-led ═══ */
+  // ZERO RESTRICTION
+  if (isZR) {
+    return (
+      <main className="relative bg-[#0f1217]">
+        <SessionTracker slug={partner.slug} />
+        <div className="accent-line fixed top-0 left-0 right-0 z-50" />
+        <NavDots sections={activeNav} />
+        <StickyPitchCTA />
+        <div id="proposal-content">
+          <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
+          <SectionDivider />
+          <ZeroRestrictionPitchFlow />
+          <PageFooter partnerName={partner.partnerName} />
+        </div>
+      </main>
+    )
+  }
+
+  // PITCH MODE
   if (isPitch) {
     return (
       <main className="relative bg-[#0f1217]">
         <SessionTracker slug={partner.slug} />
         <div className="accent-line fixed top-0 left-0 right-0 z-50" />
-        <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-5 pointer-events-none">
-          {activeNav.map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="pointer-events-auto group flex items-center gap-5 justify-end">
-              <span className="text-lg font-semibold text-[#4b5563] opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap">{s.label}</span>
-              <img src={images.logoIcon} alt="" className="block w-6 h-6 rounded-md opacity-30 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110" style={{ filter: 'brightness(0) invert(1)' }} />
-            </a>
-          ))}
-        </nav>
+        <NavDots sections={activeNav} />
         <StickyPitchCTA />
         <div id="proposal-content">
           <div id="top"><S01_Hero partner={partner} hideBrandInput /></div>
@@ -166,17 +188,13 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           <PitchFAQ />
           <SectionDivider />
           <S12_FinalCTA partner={partner} />
-          <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
-            <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-            <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
-            <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
-          </footer>
+          <PageFooter partnerName={partner.partnerName} />
         </div>
       </main>
     )
   }
 
-  // NORMAL MODE (unchanged)
+  // NORMAL MODE
   return (
     <BrandSpendProvider>
       <main className="relative bg-[#0f1217]">
@@ -222,11 +240,7 @@ export function TemplateClient({ partner }: { partner: PartnerData }) {
           <div id="faq-section"><CollapsibleSection title="Frequently Asked Questions" subtitle="Common questions about GolfN partnerships"><S11_FAQ partner={partner} /></CollapsibleSection></div>
           <SectionDivider />
           <S12_FinalCTA partner={partner} />
-          <footer className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14 text-center border-t border-[#2a3347]/50">
-            <img src={images.logo} alt="GolfN" className="h-8 md:h-10 w-auto mx-auto mb-4 opacity-30" />
-            <p className="text-[#4b5563] text-base">{'Confidential -- Prepared for '}{partner.partnerName}{' by GolfN'}</p>
-            <p className="text-[#2a3347] text-sm mt-2 font-mono">partners.golfn.com</p>
-          </footer>
+          <PageFooter partnerName={partner.partnerName} />
         </div>
       </main>
     </BrandSpendProvider>
