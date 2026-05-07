@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { partners, type PartnerConfig } from '@/lib/presentation-data'
 import { wilsonMotocaddyConfig } from '@/lib/wilson-motocaddy-config'
 import { sub70Config } from '@/lib/sub-70-config'
+import { puttrConfig } from '@/lib/puttr-config'
 
-const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config }
+const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config, 'puttr': puttrConfig }
 
 // Standalone pages with their own password (not in allPartners)
 const standaloneSlugs: Record<string, { password: string; partnerName: string }> = {
