@@ -2,6 +2,7 @@ import { cookies } from 'next/headers'
 import { partners, type PartnerConfig } from '@/lib/presentation-data'
 import { wilsonMotocaddyConfig } from '@/lib/wilson-motocaddy-config'
 import { sub70Config } from '@/lib/sub-70-config'
+import { puttrConfig } from '@/lib/puttr-config'
 import { TemplateClient } from '@/components/template/TemplateClient'
 import { PasswordGate } from '@/components/template/PasswordGate'
 import type { PartnerData, MarketData } from '@/lib/template-types'
@@ -10,7 +11,7 @@ import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
-const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config }
+const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motocaddy': wilsonMotocaddyConfig, 'sub-70': sub70Config, 'puttr': puttrConfig }
 
 // Updated May 6, 2026 — Amplitude all-time deduped + user property data
 // US combines "United States" + "United States of America" + untagged users
