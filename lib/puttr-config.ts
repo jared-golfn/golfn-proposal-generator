@@ -6,6 +6,7 @@ export const puttrConfig: PartnerConfig = {
   slug: 'puttr',
   partnerName: 'PUTTR',
   password: 'puttr2026',
+  logoUrl: 'https://cdn.sanity.io/images/e3wja34v/production/1b8f87b6c7fe3aba709069ba4610172b6561bdfa-280x80.heif',
   primaryColor: '#00ff9d',
   secondaryColor: '#17A455',
   productCategory: 'Smart Putting System',
