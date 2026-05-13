@@ -3,11 +3,11 @@
 import { motion } from 'framer-motion'
 
 const proofs = [
-  { value: '$375k+', label: 'moved for partners', sub: 'Including $237k+ in just the last 4 months' },
-  { value: '$31k', label: 'in 40 days from one sweepstakes', sub: 'From $769 in donated prize value' },
-  { value: '75x', label: 'monthly logins per user', sub: 'Other golf apps see 3 to 5x' },
-  { value: '100%', label: 'verified golfers', sub: 'GPS-confirmed rounds. First party.' },
-  { value: '89%', label: 'retention after first use', sub: '62% still active at 6 months' },
+  { value: '$375k+', label: 'partner-attributed value moved', sub: '$237k+ of that in the last 4 months. Marketplace, wholesale, campaign revenue.' },
+  { value: '$31k', label: 'net retail from one sweepstakes', sub: '45 units sold. $769 in donated prize value.' },
+  { value: '75 logins', label: 'per user per month', sub: '~2.5x per day. 15x more frequent than typical golf apps (3 to 5x).' },
+  { value: '100%', label: 'verified golfer audience', sub: 'Campaign reach limited to users with GPS-confirmed rounds.' },
+  { value: '89%', label: 'return rate after first use', sub: '62% still active at 6 months.' },
 ]
 
 export function ProofBar() {
