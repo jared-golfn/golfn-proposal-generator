@@ -101,7 +101,9 @@ function PageFooter({ partnerName }: { partnerName: string }) {
 
 export function TemplateClient({ partner }: { partner: PartnerData }) {
   const searchParams = useSearchParams()
-  const isPitch = searchParams.has('pitch')
+  // The `template` slug now ALWAYS shows the pitch flow (formerly /template?pitch).
+  // Other partner pages still opt in via the ?pitch query param.
+  const isPitch = searchParams.has('pitch') || partner.slug === 'template'
   const isCabot = partner.slug === 'cabot'
   const isPuttr = partner.slug === 'puttr'
   const isZR = partner.slug === 'zerorestriction'
