@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { X, Check } from 'lucide-react'
-import { stats } from '@/lib/canonical-stats'
 
 export function WhyBroken() {
   return (
@@ -31,11 +30,11 @@ export function WhyBroken() {
               <div className="w-10 h-10 rounded-lg bg-[#2a3347] flex items-center justify-center">
                 <X className="w-5 h-5 text-[#6b7280]" />
               </div>
-              <h3 className="text-2xl font-bold text-white">Meta</h3>
+              <h3 className="text-2xl font-bold text-white">Meta and other social</h3>
             </div>
-            <p className="text-6xl font-mono font-bold text-[#6b7280] mb-2">{stats.golferRealRateMeta}</p>
-            <p className="text-sm text-[#9ca3af] mb-6">real golfers, on a good day</p>
-            <p className="text-sm text-[#9ca3af] leading-6">Inferred from interests, panels, and lookalikes. The other 40% is waste, and you pay for it anyway.</p>
+            <p className="text-6xl font-mono font-bold text-[#6b7280] mb-2">~30%</p>
+            <p className="text-sm text-[#9ca3af] mb-6">wasted on inferred audiences</p>
+            <p className="text-sm text-[#9ca3af] leading-6">Modeled audiences. Lookalikes. Interest panels. Buying golf reach there means paying for golf-adjacent people, not the golfers you want.</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.6 }} className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-2xl p-8">
@@ -45,9 +44,9 @@ export function WhyBroken() {
               </div>
               <h3 className="text-2xl font-bold text-white">GolfN</h3>
             </div>
-            <p className="text-6xl font-mono font-bold text-[#00ff9d] mb-2">{stats.golferRealRateGolfN}</p>
-            <p className="text-sm text-[#9ca3af] mb-6">verified golfers, every time</p>
-            <p className="text-sm text-[#d1d5db] leading-6">GPS confirmed rounds. First party data. When you buy reach here, every impression goes to a golfer who actually plays.</p>
+            <p className="text-6xl font-mono font-bold text-[#00ff9d] mb-2">100%</p>
+            <p className="text-sm text-[#9ca3af] mb-6">verified golfer audience</p>
+            <p className="text-sm text-[#d1d5db] leading-6">GPS confirmed rounds. First party data. Campaign reach is limited to users with verified golf activity inside the app.</p>
           </motion.div>
         </div>
 
