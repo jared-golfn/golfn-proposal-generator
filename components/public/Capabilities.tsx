@@ -96,6 +96,12 @@ const tiles: Tile[] = [
   },
 ]
 
+const buckets = [
+  { label: 'Acquire', body: 'verified golfer attention' },
+  { label: 'Convert', body: 'attention into action' },
+  { label: 'Learn', body: 'who your golf customer actually is' },
+]
+
 export function Capabilities() {
   const [openId, setOpenId] = useState<string | null>(null)
 
@@ -103,10 +109,25 @@ export function Capabilities() {
     <section className="py-24 md:py-32 bg-[#0a0d12]" id="capabilities">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-4">What You Can Do Here</motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.05] tracking-tight mb-4 max-w-4xl">
+        <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.05] tracking-tight mb-6 max-w-4xl">
           There&rsquo;s almost nothing we<br />can&rsquo;t do <span className="text-gradient">in here.</span>
         </motion.h2>
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="text-base md:text-lg text-[#9ca3af] mb-12 max-w-2xl">Six capability tiles. Click any one to see what it unlocks.</motion.p>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-base md:text-lg text-[#9ca3af] mb-10 max-w-3xl leading-8">
+          Three things you can do here. Click any tile to see how.
+        </motion.p>
+
+        {/* 3-bucket frame */}
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
+          {buckets.map((b, i) => (
+            <div key={b.label} className="bg-[#001a14]/40 border border-[#00ff9d]/20 rounded-xl px-5 py-4">
+              <div className="flex items-baseline gap-2">
+                <span className="text-xs font-mono text-[#00ff9d] tracking-[0.15em] uppercase">0{i + 1}</span>
+                <span className="text-lg font-bold text-white">{b.label}</span>
+              </div>
+              <p className="text-sm text-[#d1d5db] leading-6 mt-1">{b.body}</p>
+            </div>
+          ))}
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {tiles.map((t, i) => {
