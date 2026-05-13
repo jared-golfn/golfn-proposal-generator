@@ -39,6 +39,21 @@ function HeroGrid({ metrics }: { metrics: { label: string; value: string; sub: s
   )
 }
 
+// Panel section header. Section name left, big duration/count callout right.
+function PanelHeader({ name, metricNum, metricUnit }: { name: string; metricNum?: string; metricUnit?: string }) {
+  return (
+    <div className="flex items-end justify-between gap-4 mb-5 pb-3 border-b border-[#2a3347]/40">
+      <p className="text-xs md:text-sm font-mono text-[#6b7280] uppercase tracking-[0.18em] pb-1">{name}</p>
+      {metricNum && (
+        <div className="flex items-baseline gap-2 shrink-0">
+          <p className="text-3xl md:text-4xl lg:text-5xl font-mono font-bold text-[#00ff9d] leading-none tabular-nums">{metricNum}</p>
+          <p className="text-xs md:text-sm font-mono text-[#9ca3af] uppercase tracking-[0.18em] pb-0.5">{metricUnit}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function ForgedIronPanel() {
   const cs = forgedIronCaseStudy
   return (
@@ -60,11 +75,11 @@ function ForgedIronPanel() {
 
       <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
         <div className="px-6 md:px-8 py-6">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Sweepstakes Campaign &middot; 22 days</p>
+          <PanelHeader name="Sweepstakes Campaign" metricNum="22" metricUnit="Days" />
           <MetricGrid metrics={cs.sweeps} />
         </div>
         <div className="px-6 md:px-8 py-6 border-t border-[#2a3347]">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Conversion Funnel</p>
+          <PanelHeader name="Conversion Funnel" />
           <div className="flex items-center gap-3 flex-wrap">
             <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl px-5 py-4 text-center flex-1 min-w-[180px]"><p className="text-xs text-[#6b7280] mb-1">Card Views</p><p className="text-2xl font-mono font-bold text-white">{cs.funnel.cardViews}</p></div>
             <ArrowRight className="w-5 h-5 text-[#00ff9d] shrink-0" />
@@ -75,7 +90,7 @@ function ForgedIronPanel() {
 
       <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
         <div className="px-6 md:px-8 py-6">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Points Exchange Commerce &middot; 49 days</p>
+          <PanelHeader name="Points Exchange Commerce" metricNum="49" metricUnit="Days" />
           <MetricGrid metrics={cs.commerce} />
         </div>
       </div>
@@ -101,11 +116,11 @@ function MajorOEMPanel() {
 
       <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
         <div className="px-6 md:px-8 py-6">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Sweepstakes Portfolio</p>
+          <PanelHeader name="Sweepstakes Portfolio" metricNum="4" metricUnit="Campaigns" />
           <MetricGrid metrics={cs.sweeps} />
         </div>
         <div className="px-6 md:px-8 py-6 border-t border-[#2a3347]">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Campaign by Campaign</p>
+          <PanelHeader name="Campaign by Campaign" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {cs.campaigns.map((c) => (
               <div key={c.name} className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl p-5">
@@ -121,7 +136,7 @@ function MajorOEMPanel() {
 
       <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
         <div className="px-6 md:px-8 py-6">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Marketplace Commerce</p>
+          <PanelHeader name="Marketplace Commerce" metricNum="6" metricUnit="Months" />
           <MetricGrid metrics={cs.commerce} />
         </div>
       </div>
@@ -147,11 +162,11 @@ function RecoveryBrandPanel() {
 
       <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
         <div className="px-6 md:px-8 py-6">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Sweepstakes Portfolio &middot; Two flights</p>
+          <PanelHeader name="Sweepstakes Portfolio" metricNum="2" metricUnit="Flights" />
           <MetricGrid metrics={cs.sweeps} />
         </div>
         <div className="px-6 md:px-8 py-6 border-t border-[#2a3347] bg-[#0f1217]">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Iteration Lift &middot; Sweep 1 to Sweep 2</p>
+          <PanelHeader name="Iteration Lift — Sweep 1 to Sweep 2" />
           <div className="flex items-center gap-3 flex-wrap">
             <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl px-5 py-4 text-center flex-1 min-w-[160px]"><p className="text-xs text-[#6b7280] mb-1">{cs.iterationLift.sweep1Days}</p><p className="text-2xl font-mono font-bold text-white">{cs.iterationLift.sweep1}</p><p className="text-xs text-[#6b7280]">entrants per day</p></div>
             <ArrowRight className="w-5 h-5 text-[#00ff9d] shrink-0" />
@@ -164,7 +179,7 @@ function RecoveryBrandPanel() {
 
       <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
         <div className="px-6 md:px-8 py-6">
-          <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Marketplace Discovery and Commerce</p>
+          <PanelHeader name="Marketplace Discovery and Commerce" />
           <p className="text-sm text-[#d1d5db] leading-7 mb-5">The sweepstakes wasn&rsquo;t a one-shot impression event. It was a discovery mechanism. Daily product views averaged 1.1 per day before the sweep, 11.2 per day during, and <strong className="text-white">20.5 per day after</strong>. Six weeks post-sweep, daily views are still nearly 2x higher than during the sweep itself.</p>
           <MetricGrid metrics={cs.commerce} />
         </div>
