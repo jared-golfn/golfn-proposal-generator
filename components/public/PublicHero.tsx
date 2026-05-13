@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Calendar } from 'lucide-react'
+import { ArrowRight, Calendar, ShieldCheck } from 'lucide-react'
 import { images } from '@/lib/images'
 import { stats } from '@/lib/canonical-stats'
 
@@ -32,18 +32,26 @@ export function PublicHero() {
 
         {/* Subhead */}
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-xl md:text-2xl text-[#9ca3af] mb-12 max-w-3xl leading-9">
-          {stats.monthlyActiveUsers} verified golfers. {stats.monthlyLoginsPerUser} monthly logins. {stats.partnerSalesYearOne} moved for partners in under a year.
+          {stats.monthlyActiveUsers} verified golfers. {stats.monthlyLoginsPerUser} monthly logins. {stats.partnerSalesYearOne} moved for partners in under a year, with {stats.partnerSalesFourMonths} of that in just the last 4 months.
         </motion.p>
 
         {/* CTAs */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-4 mb-16">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap items-center gap-4 mb-6">
           <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00ff9d] text-[#0f1217] font-bold text-base hover:bg-[#00e68a] transition-colors">
             Book 20 minutes with Jared
             <ArrowRight className="w-4 h-4" />
           </a>
           <button onClick={() => document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-2 px-6 py-4 text-base font-semibold text-[#00ff9d] hover:underline">
-            See what we can do
+            See your first campaign path
           </button>
+        </motion.div>
+
+        {/* Verified definition */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85, duration: 0.6 }} className="flex items-start gap-3 max-w-3xl mt-4 mb-16">
+          <ShieldCheck className="w-5 h-5 text-[#00ff9d] mt-0.5 shrink-0" />
+          <p className="text-sm md:text-base text-[#9ca3af] leading-7">
+            <span className="text-white font-semibold">Verified means</span> every user has completed a GPS-confirmed round inside the app. Not inferred. Not panel. Real golfers.
+          </p>
         </motion.div>
       </div>
     </section>
