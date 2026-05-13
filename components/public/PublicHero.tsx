@@ -32,7 +32,7 @@ export function PublicHero() {
 
         {/* Subhead */}
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="text-xl md:text-2xl text-[#9ca3af] mb-12 max-w-3xl leading-9">
-          {stats.monthlyActiveUsers} verified golfers. {stats.monthlyLoginsPerUser} monthly logins. {stats.partnerSalesYearOne} moved for partners in under a year, with {stats.partnerSalesFourMonths} of that in just the last 4 months.
+          {stats.monthlyActiveUsers} verified golfers logging in 75 times a month, roughly 2.5 times a day. 15x more frequent than typical golf apps. {stats.partnerSalesYearOne} moved for partners in under a year, with {stats.partnerSalesFourMonths} of that in the last 4 months.
         </motion.p>
 
         {/* CTAs */}
