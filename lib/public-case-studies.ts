@@ -13,7 +13,7 @@ export interface CaseStudyTab {
 }
 
 export const publicCaseStudyTabs: CaseStudyTab[] = [
-  { id: 'forged-iron', brand: 'Premium Iron Brand', tagline: '$22k wholesale, 2,764 leads, 40 days' },
+  { id: 'forged-iron', brand: 'Premium Iron Brand', tagline: '$22k wholesale, 2,764 leads, 45 units sold' },
   { id: 'major-oem', brand: 'Major Equipment OEM', tagline: '$57k retail, 102 units, 6 months' },
   { id: 'recovery-brand', brand: 'Recovery and Wellness Brand', tagline: '$21k retail, $0 discounts, $0 returns' },
 ]
@@ -23,15 +23,15 @@ export const forgedIronCaseStudy = {
   category: 'A premium Japanese forged iron brand',
   hero: [
     { label: 'Wholesale Revenue', value: '~$22k', sub: '45 units through GolfN' },
-    { label: 'Qualified Leads', value: '2,764', sub: 'Verified golfers. $0.28 CPL.' },
-    { label: 'Brand Impressions', value: '271k+', sub: '$10,856 equiv. at $40 CPM' },
+    { label: 'Qualified Leads', value: '2,764', sub: 'Verified golfers. $0.28 prize-cost CPL.' },
+    { label: 'Brand Impressions', value: '271k+', sub: '$10,856 media value at $40 CPM' },
     { label: 'Order Accuracy', value: '97%', sub: 'Most shipped within 2 weeks' },
   ],
   sweeps: [
     { value: '2,764', label: 'Unique Entrants', sub: 'Opted in during 22 day flight' },
     { value: '74%', label: 'Card to Entry Rate', sub: 'Highest in GolfN history' },
     { value: '43%', label: 'IAM Conversion', sub: '1,158 of 2,706 recipients' },
-    { value: '$0.28', label: 'Cost Per Lead', sub: 'From $769 in prizes' },
+    { value: '$0.28', label: 'Prize-Cost CPL', sub: 'Based on $769 wholesale prize cost' },
   ],
   commerce: [
     { value: '$31,780', label: 'Net Retail Revenue', sub: '~$22k wholesale to the brand' },
@@ -39,7 +39,7 @@ export const forgedIronCaseStudy = {
     { value: '10,951', label: 'Product Views', sub: '4,424 unique browsers' },
     { value: '271,393', label: 'Marketplace Impressions', sub: '27 day banner flight' },
   ],
-  funnel: { cardViews: '3,732', entered: '2,764', industryAvg: '2 to 5%' },
+  funnel: { cardViews: '3,732', entered: '2,764' },
   audience: [
     { value: '79%', label: 'Active in last 30 days' },
     { value: '67%', label: 'Handicap 10 to 24' },
@@ -50,7 +50,7 @@ export const forgedIronCaseStudy = {
     text: 'You guys are doing exactly what you figured you would do. The consumer base is latching on. We never doubted for a second.',
     attribution: 'CEO of one of our equipment partners',
   },
-  closingLine: 'They provided $769 in prizes. We delivered $22k wholesale revenue, 2,764 first party leads, and $10,856 in brand impressions.',
+  closingLine: 'They provided $769 in prizes. We delivered $22k wholesale revenue, 2,764 first party leads, and $10,856 in equivalent media value.',
 }
 
 // Major OEM case study (anonymizes Cobra)
@@ -96,7 +96,7 @@ export const recoveryBrandCaseStudy = {
     { label: 'Retail Revenue', value: '$21,188', sub: '52 units. $407 AOV.' },
     { label: 'Qualified Leads', value: '2,141', sub: 'Cumulative across 2 sweeps' },
     { label: 'Equivalent Media Value', value: '$27.5k', sub: '655k impressions at $42 CPM' },
-    { label: 'Returns', value: '$0', sub: 'Zero returns across all 52 units' },
+    { label: 'Returns', value: '$0', sub: 'Zero returns recorded in the measured window' },
   ],
   sweeps: [
     { value: '2,141', label: 'Unique Entrants', sub: 'Across Recovery Bundle and Recovery Trio' },
@@ -107,7 +107,7 @@ export const recoveryBrandCaseStudy = {
   commerce: [
     { value: '$21,188', label: 'Retail Revenue', sub: 'Net $20,563. Taxes $625.' },
     { value: '52', label: 'Units Sold', sub: 'Across 8 distinct SKUs' },
-    { value: '$0', label: 'Discounts and Returns', sub: 'Zero refund risk. Premium pricing held.' },
+    { value: '$0', label: 'Discounts and Returns', sub: 'Premium pricing held in the measured window' },
     { value: '18x', label: 'Post Sweep View Lift', sub: '1.1/day pre, 20.5/day post (6+ wks sustained)' },
   ],
   iterationLift: { sweep1: '22.6', sweep2: '69.7', delta: '+209%', sweep1Days: '30 days', sweep2Days: '21 days' },
@@ -117,5 +117,5 @@ export const recoveryBrandCaseStudy = {
     { value: '24%', label: 'Semi private course players' },
     { value: '64', label: 'UK and England entrants' },
   ],
-  closingLine: '$21k retail. $0 discounts. $0 returns. A marketplace audience still browsing six weeks later.',
+  closingLine: '$21k retail. $0 discounts. $0 returns in the measured window. A marketplace audience still browsing six weeks later.',
 }
