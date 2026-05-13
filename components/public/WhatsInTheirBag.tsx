@@ -10,12 +10,13 @@ interface CourseType {
 }
 
 // Course types — public and uncategorized municipal combined per Jared.
+// More distinct color palette so each wedge is clearly differentiated.
 const courseTypes: CourseType[] = [
   { name: 'Public',       share: 67.7, color: '#00ff9d', sub: 'Daily-fee, municipal, and uncategorized public access' },
-  { name: 'Semi-Private', share: 15.1, color: '#00b87a', sub: 'Public access with member tiers' },
-  { name: 'Private',      share: 12.7, color: '#008055', sub: 'Country clubs and member-only courses' },
-  { name: 'Resort',       share: 3.9,  color: '#d4b95a', sub: 'Destination and resort courses' },
-  { name: 'Military',     share: 0.7,  color: '#6b7280', sub: 'Military base courses' },
+  { name: 'Semi-Private', share: 15.1, color: '#4ade80', sub: 'Public access with member tiers' },
+  { name: 'Private',      share: 12.7, color: '#06b6d4', sub: 'Country clubs and member-only courses' },
+  { name: 'Resort',       share: 3.9,  color: '#fbbf24', sub: 'Destination and resort courses' },
+  { name: 'Military',     share: 0.7,  color: '#94a3b8', sub: 'Military base courses' },
 ]
 
 interface BrandStat {
@@ -120,13 +121,36 @@ const gear: Category[] = [
 ]
 
 // ---- DONUT ----
+// Each wedge is rendered as its own <path> with an arc command. No
+// strokeDasharray gymnastics, no rotation transforms — just clean geometry.
 function DonutChart({ data, size = 280 }: { data: CourseType[]; size?: number }) {
   const strokeWidth = Math.round(size / 5.5)
   const radius = (size - strokeWidth) / 2
   const center = size / 2
-  const circumference = 2 * Math.PI * radius
 
-  let cumulative = 0
+  // angle measured in degrees; 0° = top of circle (12 o'clock), increases clockwise
+  function polarToCartesian(angle: number) {
+    const rad = ((angle - 90) * Math.PI) / 180
+    return {
+      x: center + radius * Math.cos(rad),
+      y: center + radius * Math.sin(rad),
+    }
+  }
+
+  function arcPath(startAngle: number, endAngle: number) {
+    const start = polarToCartesian(startAngle)
+    const end = polarToCartesian(endAngle)
+    const largeArcFlag = endAngle - startAngle > 180 ? 1 : 0
+    return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`
+  }
+
+  let cumulativeAngle = 0
+  const wedges = data.map((segment) => {
+    const startAngle = cumulativeAngle
+    const endAngle = cumulativeAngle + (segment.share / 100) * 360
+    cumulativeAngle = endAngle
+    return { ...segment, startAngle, endAngle }
+  })
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block max-w-full h-auto">
@@ -141,30 +165,20 @@ function DonutChart({ data, size = 280 }: { data: CourseType[]; size?: number })
       />
 
       {/* Wedges */}
-      {data.map((segment, i) => {
-        const dashLength = (segment.share / 100) * circumference
-        const dashOffset = -(cumulative / 100) * circumference
-        cumulative += segment.share
-
-        return (
-          <motion.circle
-            key={segment.name}
-            cx={center}
-            cy={center}
-            r={radius}
-            fill="none"
-            stroke={segment.color}
-            strokeWidth={strokeWidth}
-            strokeDasharray={`${dashLength} ${circumference}`}
-            initial={{ strokeDashoffset: circumference + dashOffset }}
-            whileInView={{ strokeDashoffset: dashOffset }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 + i * 0.12, duration: 0.7, ease: 'easeOut' }}
-            transform={`rotate(-90 ${center} ${center})`}
-            style={{ transformOrigin: `${center}px ${center}px` }}
-          />
-        )
-      })}
+      {wedges.map((w, i) => (
+        <motion.path
+          key={w.name}
+          d={arcPath(w.startAngle, w.endAngle)}
+          fill="none"
+          stroke={w.color}
+          strokeWidth={strokeWidth}
+          strokeLinecap="butt"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 + i * 0.12, duration: 0.5, ease: 'easeOut' }}
+        />
+      ))}
 
       {/* Center label */}
       <text
@@ -282,7 +296,7 @@ export function WhatsInTheirBag() {
                     <p className="text-base md:text-lg font-bold text-white leading-tight">{c.name}</p>
                     <p className="text-xs text-[#6b7280] leading-tight mt-0.5">{c.sub}</p>
                   </div>
-                  <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] tabular-nums shrink-0">{c.share}%</p>
+                  <p className="text-2xl md:text-3xl font-mono font-bold tabular-nums shrink-0" style={{ color: c.color }}>{c.share}%</p>
                 </motion.div>
               ))}
             </div>
