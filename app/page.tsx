@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { PublicHero } from '@/components/public/PublicHero'
 import { ProofBar } from '@/components/public/ProofBar'
-import { WhoYoureReaching } from '@/components/public/WhoYoureReaching'
+import { WhatsInTheirBag } from '@/components/public/WhatsInTheirBag'
 import { WhyBroken } from '@/components/public/WhyBroken'
 import { PublicCaseStudies } from '@/components/public/PublicCaseStudies'
 import { Capabilities } from '@/components/public/Capabilities'
@@ -23,7 +23,7 @@ export default function Home() {
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
       <PublicHero />
       <ProofBar />
-      <WhoYoureReaching />
+      <WhatsInTheirBag />
       <WhyBroken />
       <PublicCaseStudies />
       <Capabilities />
