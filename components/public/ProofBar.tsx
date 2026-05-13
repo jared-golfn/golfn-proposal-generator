@@ -3,11 +3,11 @@
 import { motion } from 'framer-motion'
 
 const proofs = [
-  { value: '$237k+', label: 'moved for partners in 4 months' },
-  { value: '$31k', label: 'in sales in 40 days from one sweepstakes' },
-  { value: '75x', label: 'monthly logins (incumbents 3 to 5)' },
-  { value: '100%', label: 'verified golfers' },
-  { value: '89%', label: 'retention after first use' },
+  { value: '$375k+', label: 'moved for partners', sub: 'Including $237k+ in just the last 4 months' },
+  { value: '$31k', label: 'in 40 days from one sweepstakes', sub: 'From $769 in donated prize value' },
+  { value: '75x', label: 'monthly logins per user', sub: 'Other golf apps see 3 to 5x' },
+  { value: '100%', label: 'verified golfers', sub: 'GPS-confirmed rounds. First party.' },
+  { value: '89%', label: 'retention after first use', sub: '62% still active at 6 months' },
 ]
 
 export function ProofBar() {
@@ -25,7 +25,8 @@ export function ProofBar() {
               className="text-center md:text-left"
             >
               <p className="text-3xl md:text-4xl lg:text-5xl font-mono font-bold text-[#00ff9d] leading-none mb-2">{p.value}</p>
-              <p className="text-xs md:text-sm text-[#9ca3af] leading-snug">{p.label}</p>
+              <p className="text-xs md:text-sm text-white font-semibold leading-snug mb-1">{p.label}</p>
+              <p className="text-xs text-[#6b7280] leading-snug">{p.sub}</p>
             </motion.div>
           ))}
         </div>
