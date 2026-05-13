@@ -2,97 +2,319 @@
 
 import { motion } from 'framer-motion'
 
+interface CourseType {
+  name: string
+  share: number
+  color: string
+  sub: string
+}
+
+// Course types — public and uncategorized municipal combined per Jared.
+const courseTypes: CourseType[] = [
+  { name: 'Public',       share: 67.7, color: '#00ff9d', sub: 'Daily-fee, municipal, and uncategorized public access' },
+  { name: 'Semi-Private', share: 15.1, color: '#00b87a', sub: 'Public access with member tiers' },
+  { name: 'Private',      share: 12.7, color: '#008055', sub: 'Country clubs and member-only courses' },
+  { name: 'Resort',       share: 3.9,  color: '#d4b95a', sub: 'Destination and resort courses' },
+  { name: 'Military',     share: 0.7,  color: '#6b7280', sub: 'Military base courses' },
+]
+
 interface BrandStat {
   brand: string
-  share: string
+  share: number
 }
 
 interface Category {
   name: string
-  top1: BrandStat
-  top2: BrandStat
+  brands: BrandStat[]
 }
 
+// Top 5 brands per category. Verified Amplitude pull May 13, 2026.
 const clubs: Category[] = [
-  { name: 'Driver',  top1: { brand: 'TaylorMade', share: '32.8%' }, top2: { brand: 'Callaway',       share: '24.1%' } },
-  { name: 'Fairway', top1: { brand: 'TaylorMade', share: '32.2%' }, top2: { brand: 'Callaway',       share: '25.0%' } },
-  { name: 'Hybrid',  top1: { brand: 'TaylorMade', share: '26.9%' }, top2: { brand: 'Callaway',       share: '23.2%' } },
-  { name: 'Iron',    top1: { brand: 'Callaway',   share: '31.8%' }, top2: { brand: 'Mizuno',         share: '15.9%' } },
-  { name: 'Wedge',   top1: { brand: 'Callaway',   share: '24.9%' }, top2: { brand: 'Cleveland',      share: '22.1%' } },
-  { name: 'Putter',  top1: { brand: 'Odyssey',    share: '17.7%' }, top2: { brand: 'Scotty Cameron', share: '17.1%' } },
+  { name: 'Driver',  brands: [
+    { brand: 'TaylorMade', share: 32.8 },
+    { brand: 'Callaway',   share: 24.1 },
+    { brand: 'Ping',       share: 11.5 },
+    { brand: 'Cobra',      share: 10.4 },
+    { brand: 'Titleist',   share: 9.6 },
+  ]},
+  { name: 'Fairway', brands: [
+    { brand: 'TaylorMade', share: 32.2 },
+    { brand: 'Callaway',   share: 25.0 },
+    { brand: 'Cobra',      share: 12.5 },
+    { brand: 'Ping',       share: 7.7 },
+    { brand: 'Titleist',   share: 7.2 },
+  ]},
+  { name: 'Hybrid', brands: [
+    { brand: 'TaylorMade', share: 26.9 },
+    { brand: 'Callaway',   share: 23.2 },
+    { brand: 'Ping',       share: 13.6 },
+    { brand: 'Cobra',      share: 11.3 },
+    { brand: 'Titleist',   share: 7.9 },
+  ]},
+  { name: 'Iron', brands: [
+    { brand: 'Callaway',     share: 31.8 },
+    { brand: 'Mizuno',       share: 15.9 },
+    { brand: 'Cobra',        share: 8.7 },
+    { brand: 'Takomo',       share: 8.5 },
+    { brand: 'Wilson Staff', share: 7.2 },
+  ]},
+  { name: 'Wedge', brands: [
+    { brand: 'Callaway',    share: 24.9 },
+    { brand: 'Cleveland',   share: 22.1 },
+    { brand: 'TaylorMade',  share: 17.2 },
+    { brand: 'Mizuno',      share: 6.3 },
+    { brand: 'Cobra',       share: 5.1 },
+  ]},
+  { name: 'Putter', brands: [
+    { brand: 'Odyssey',        share: 17.7 },
+    { brand: 'Scotty Cameron', share: 17.1 },
+    { brand: 'Bettinardi',     share: 12.7 },
+    { brand: 'L.A.B. Golf',    share: 8.2 },
+    { brand: 'Cleveland',      share: 8.1 },
+  ]},
 ]
 
 const gear: Category[] = [
-  { name: 'Ball',        top1: { brand: 'Titleist',  share: '28.7%' }, top2: { brand: 'Callaway',   share: '25.6%' } },
-  { name: 'Glove',       top1: { brand: 'Callaway',  share: '29.1%' }, top2: { brand: 'FootJoy',    share: '21.6%' } },
-  { name: 'Shoes',       top1: { brand: 'FootJoy',   share: '21.4%' }, top2: { brand: 'Adidas',     share: '20.3%' } },
-  { name: 'Apparel',     top1: { brand: 'Callaway',  share: '18.9%' }, top2: { brand: 'Nike',       share: '14.0%' } },
-  { name: 'Bag',         top1: { brand: 'Callaway',  share: '22.7%' }, top2: { brand: 'TaylorMade', share: '16.6%' } },
-  { name: 'Rangefinder', top1: { brand: 'Bushnell',  share: '29.6%' }, top2: { brand: 'Callaway',   share: '17.9%' } },
+  { name: 'Ball', brands: [
+    { brand: 'Titleist',   share: 28.7 },
+    { brand: 'Callaway',   share: 25.6 },
+    { brand: 'TaylorMade', share: 18.8 },
+    { brand: 'Srixon',     share: 7.8 },
+    { brand: 'Vice',       share: 5.1 },
+  ]},
+  { name: 'Glove', brands: [
+    { brand: 'Callaway',   share: 29.1 },
+    { brand: 'FootJoy',    share: 21.6 },
+    { brand: 'TaylorMade', share: 12.1 },
+    { brand: 'Titleist',   share: 11.0 },
+    { brand: 'Kirkland',   share: 5.5 },
+  ]},
+  { name: 'Shoes', brands: [
+    { brand: 'FootJoy',  share: 21.4 },
+    { brand: 'Adidas',   share: 20.3 },
+    { brand: 'Nike',     share: 18.7 },
+    { brand: 'Callaway', share: 8.3 },
+    { brand: 'Puma',     share: 6.5 },
+  ]},
+  { name: 'Apparel', brands: [
+    { brand: 'Callaway',     share: 18.9 },
+    { brand: 'Nike',         share: 14.0 },
+    { brand: 'Adidas',       share: 11.0 },
+    { brand: 'Under Armour', share: 7.4 },
+    { brand: 'Peter Millar', share: 5.7 },
+  ]},
+  { name: 'Bag', brands: [
+    { brand: 'Callaway',     share: 22.7 },
+    { brand: 'TaylorMade',   share: 16.6 },
+    { brand: 'Titleist',     share: 12.1 },
+    { brand: 'Ping',         share: 7.1 },
+    { brand: 'Sun Mountain', share: 6.4 },
+  ]},
+  { name: 'Rangefinder', brands: [
+    { brand: 'Bushnell',  share: 29.6 },
+    { brand: 'Callaway',  share: 17.9 },
+    { brand: 'Blue Tees', share: 12.7 },
+    { brand: 'Garmin',    share: 10.0 },
+    { brand: 'Arccos',    share: 6.0 },
+  ]},
 ]
 
-function CategoryCard({ category, index }: { category: Category; index: number }) {
+// ---- DONUT ----
+function DonutChart({ data, size = 280 }: { data: CourseType[]; size?: number }) {
+  const strokeWidth = Math.round(size / 5.5)
+  const radius = (size - strokeWidth) / 2
+  const center = size / 2
+  const circumference = 2 * Math.PI * radius
+
+  let cumulative = 0
+
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block max-w-full h-auto">
+      {/* Background track */}
+      <circle
+        cx={center}
+        cy={center}
+        r={radius}
+        fill="none"
+        stroke="#1a1f2e"
+        strokeWidth={strokeWidth}
+      />
+
+      {/* Wedges */}
+      {data.map((segment, i) => {
+        const dashLength = (segment.share / 100) * circumference
+        const dashOffset = -(cumulative / 100) * circumference
+        cumulative += segment.share
+
+        return (
+          <motion.circle
+            key={segment.name}
+            cx={center}
+            cy={center}
+            r={radius}
+            fill="none"
+            stroke={segment.color}
+            strokeWidth={strokeWidth}
+            strokeDasharray={`${dashLength} ${circumference}`}
+            initial={{ strokeDashoffset: circumference + dashOffset }}
+            whileInView={{ strokeDashoffset: dashOffset }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 + i * 0.12, duration: 0.7, ease: 'easeOut' }}
+            transform={`rotate(-90 ${center} ${center})`}
+            style={{ transformOrigin: `${center}px ${center}px` }}
+          />
+        )
+      })}
+
+      {/* Center label */}
+      <text
+        x={center}
+        y={center - 6}
+        textAnchor="middle"
+        fill="#00ff9d"
+        fontSize={size * 0.13}
+        fontWeight="bold"
+        fontFamily="ui-monospace, monospace"
+      >
+        100%
+      </text>
+      <text
+        x={center}
+        y={center + 22}
+        textAnchor="middle"
+        fill="#6b7280"
+        fontSize={size * 0.045}
+        letterSpacing="0.15em"
+        fontFamily="ui-monospace, monospace"
+      >
+        GPS-VERIFIED
+      </text>
+    </svg>
+  )
+}
+
+// ---- EQUIPMENT ROW ----
+function EquipmentRow({ category, index }: { category: Category; index: number }) {
+  const topFive = category.brands.reduce((sum, b) => sum + b.share, 0)
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.04, duration: 0.4 }}
-      className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5 hover:border-[#2a3347] transition-colors"
+      transition={{ delay: index * 0.05, duration: 0.4 }}
+      className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5"
     >
-      <p className="text-xs font-mono text-[#6b7280] uppercase tracking-[0.18em] mb-4">{category.name}</p>
-      <div className="space-y-2.5">
-        <div>
-          <p className="text-base md:text-lg font-bold text-white leading-tight">{category.top1.brand}</p>
-          <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] leading-none mt-1">{category.top1.share}</p>
-        </div>
-        <div className="pt-2 border-t border-[#2a3347]/60">
-          <p className="text-sm text-[#9ca3af] leading-tight">{category.top2.brand}</p>
-          <p className="text-base font-mono font-semibold text-[#6b7280] leading-none mt-1">{category.top2.share}</p>
-        </div>
+      {/* Header */}
+      <div className="flex items-baseline justify-between mb-3 gap-3">
+        <p className="text-xs md:text-sm font-mono text-white uppercase tracking-[0.18em] font-bold">{category.name}</p>
+        <p className="text-[10px] md:text-xs font-mono text-[#6b7280] shrink-0">Top 5 = {topFive.toFixed(0)}%</p>
+      </div>
+
+      {/* Stacked bar */}
+      <div className="flex h-2.5 rounded-full overflow-hidden bg-[#0a0d12] mb-4">
+        {category.brands.map((b, i) => (
+          <motion.div
+            key={b.brand}
+            initial={{ width: 0 }}
+            whileInView={{ width: `${b.share}%` }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 + index * 0.04 + i * 0.05, duration: 0.7, ease: 'easeOut' }}
+            className="h-full"
+            style={{
+              backgroundColor: '#00ff9d',
+              opacity: 1 - i * 0.18,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Brand readout */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-3 gap-y-2">
+        {category.brands.map((b, i) => (
+          <div key={b.brand}>
+            <p className={`text-xs leading-tight truncate ${i === 0 ? 'text-white font-semibold' : 'text-[#9ca3af]'}`}>{b.brand}</p>
+            <p className="text-sm font-mono leading-none mt-0.5" style={{ color: i === 0 ? '#00ff9d' : '#6b7280' }}>{b.share}%</p>
+          </div>
+        ))}
       </div>
     </motion.div>
   )
 }
 
+// ---- SECTION ----
 export function WhatsInTheirBag() {
   return (
     <section className="py-24 md:py-32" id="who-youre-reaching">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-4">Audience Intelligence</motion.p>
         <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.05] tracking-tight mb-4 max-w-4xl">
-          We know <span className="text-gradient">what&rsquo;s in their bag.</span>
+          We know <span className="text-gradient">where they play.</span><br />And <span className="text-gradient">what&rsquo;s in their bag.</span>
         </motion.h2>
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-base md:text-lg text-[#9ca3af] mb-10 max-w-3xl leading-7">
-          Every active GolfN user builds a full equipment profile in the app. By club, by ball, by glove, by shoe, by apparel, by bag, by rangefinder. Real brand share inside our user base. Not inferred. Not panel.
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-base md:text-lg text-[#9ca3af] mb-12 max-w-3xl leading-7">
+          Every GolfN user logs verified rounds and self-reports their full equipment profile in the app. First-party data on the courses they play and the brands they carry. Not inferred. Not panel.
         </motion.p>
 
-        {/* Hook quote box */}
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-2xl px-7 py-6 mb-14 max-w-3xl">
+        {/* WHERE THEY PLAY — Hero Donut */}
+        <div className="bg-[#0a0d12] border border-[#2a3347]/70 rounded-3xl p-6 md:p-10 mb-14">
+          <p className="text-xs md:text-sm font-mono text-[#6b7280] uppercase tracking-[0.2em] mb-2">Where They Play</p>
+          <p className="text-xl md:text-2xl font-bold text-white mb-8 leading-snug">Verified rounds by course type.</p>
+
+          <div className="grid lg:grid-cols-5 gap-8 md:gap-10 items-center">
+            {/* Donut */}
+            <div className="lg:col-span-2 flex justify-center">
+              <DonutChart data={courseTypes} size={300} />
+            </div>
+
+            {/* Legend */}
+            <div className="lg:col-span-3 space-y-1">
+              {courseTypes.map((c, i) => (
+                <motion.div
+                  key={c.name}
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
+                  className="flex items-center gap-4 py-3 border-b border-[#2a3347]/40 last:border-0"
+                >
+                  <div className="w-3.5 h-3.5 rounded-sm shrink-0" style={{ backgroundColor: c.color }} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-base md:text-lg font-bold text-white leading-tight">{c.name}</p>
+                    <p className="text-xs text-[#6b7280] leading-tight mt-0.5">{c.sub}</p>
+                  </div>
+                  <p className="text-2xl md:text-3xl font-mono font-bold text-[#00ff9d] tabular-nums shrink-0">{c.share}%</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.9 }} className="text-sm md:text-base text-[#9ca3af] mt-8 max-w-3xl leading-7">
+            <span className="text-white font-semibold">Public and municipal courses dominate.</span> Two out of three verified rounds happen at daily-fee public access courses. The exact audience Meta charges premium CPMs to guess at.
+          </motion.p>
+        </div>
+
+        {/* HOOK */}
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="bg-[#001a14]/60 border border-[#00ff9d]/30 rounded-2xl px-7 py-6 mb-10 max-w-3xl">
           <p className="text-lg md:text-xl font-bold text-white leading-relaxed">
             One brand appears in the top two of every single category we track.
           </p>
           <p className="text-sm text-[#9ca3af] mt-2 leading-6">We&rsquo;ll tell you which one on the call. And show you exactly where your brand sits.</p>
         </motion.div>
 
-        {/* What they swing */}
+        {/* WHAT THEY SWING */}
         <p className="text-xs md:text-sm font-mono text-[#6b7280] uppercase tracking-[0.2em] mb-5">What They Swing</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-14">
-          {clubs.map((c, i) => (
-            <CategoryCard key={c.name} category={c} index={i} />
-          ))}
+        <div className="grid md:grid-cols-2 gap-3 mb-12">
+          {clubs.map((c, i) => <EquipmentRow key={c.name} category={c} index={i} />)}
         </div>
 
-        {/* What they wear and carry */}
+        {/* WHAT THEY WEAR AND CARRY */}
         <p className="text-xs md:text-sm font-mono text-[#6b7280] uppercase tracking-[0.2em] mb-5">What They Wear and Carry</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {gear.map((c, i) => (
-            <CategoryCard key={c.name} category={c} index={i} />
-          ))}
+        <div className="grid md:grid-cols-2 gap-3">
+          {gear.map((c, i) => <EquipmentRow key={c.name} category={c} index={i} />)}
         </div>
 
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="text-xs md:text-sm text-[#6b7280] mt-10 max-w-4xl leading-6">
-          Self-reported equipment profiles inside the GolfN app, verified against active play. Brand share reflects our user base, not endorsements or paid partnerships. The kind of first-party audience intelligence Meta, Google, and Golf Digest don&rsquo;t have because they don&rsquo;t ask the question.
+          Course types pulled from GPS-confirmed rounds against our internal course database. Equipment profiles self-reported inside the GolfN app, verified against active play. Brand share reflects our user base only, not endorsements or paid partnerships. The kind of first-party audience intelligence Meta, Google, and Golf Digest don&rsquo;t have because they don&rsquo;t ask the question.
         </motion.p>
       </div>
     </section>
