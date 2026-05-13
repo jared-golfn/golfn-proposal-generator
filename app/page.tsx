@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { PublicHero } from '@/components/public/PublicHero'
 import { ProofBar } from '@/components/public/ProofBar'
+import { WhoYoureReaching } from '@/components/public/WhoYoureReaching'
 import { WhyBroken } from '@/components/public/WhyBroken'
 import { PublicCaseStudies } from '@/components/public/PublicCaseStudies'
 import { Capabilities } from '@/components/public/Capabilities'
@@ -13,7 +14,7 @@ import { images } from '@/lib/images'
 
 export const metadata: Metadata = {
   title: 'GolfN for Partners',
-  description: 'We didn\u2019t build a golf app. We built the marketing and data stack for golf. 100,000+ verified golfers. 75x monthly logins. $375k+ moved for partners in under a year.',
+  description: 'We didn\u2019t build a golf app. We built the marketing and data stack for golf. 100,000+ verified golfers logging in 75 times a month. $375k+ moved for partners in under a year.',
 }
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <div className="accent-line fixed top-0 left-0 right-0 z-50" />
       <PublicHero />
       <ProofBar />
+      <WhoYoureReaching />
       <WhyBroken />
       <PublicCaseStudies />
       <Capabilities />
