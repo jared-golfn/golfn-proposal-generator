@@ -44,7 +44,7 @@ function ForgedIronPanel() {
   return (
     <>
       <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight mb-5">
-        <span className="text-gradient">$22k wholesale,</span><br />2,764 leads, 40 days
+        <span className="text-gradient">$22k wholesale,</span><br />2,764 leads, 45 units sold
       </h3>
       <p className="text-base md:text-lg text-[#9ca3af] max-w-3xl leading-7 mb-8">
         {cs.category}. They provided the prize. Three forged wedges at $769 wholesale. We handled creative, distribution, CRM, fulfillment. Here is what happened.
@@ -66,11 +66,9 @@ function ForgedIronPanel() {
         <div className="px-6 md:px-8 py-6 border-t border-[#2a3347]">
           <p className="text-xs font-mono text-[#4b5563] uppercase tracking-[0.15em] mb-4">Conversion Funnel</p>
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl px-5 py-4 text-center flex-1 min-w-[140px]"><p className="text-xs text-[#6b7280] mb-1">Card Views</p><p className="text-2xl font-mono font-bold text-white">{cs.funnel.cardViews}</p></div>
+            <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl px-5 py-4 text-center flex-1 min-w-[180px]"><p className="text-xs text-[#6b7280] mb-1">Card Views</p><p className="text-2xl font-mono font-bold text-white">{cs.funnel.cardViews}</p></div>
             <ArrowRight className="w-5 h-5 text-[#00ff9d] shrink-0" />
-            <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl px-5 py-4 text-center flex-1 min-w-[140px]"><p className="text-xs text-[#00ff9d] mb-1">74% entered</p><p className="text-2xl font-mono font-bold text-[#00ff9d]">{cs.funnel.entered}</p></div>
-            <ArrowRight className="w-5 h-5 text-[#00ff9d] shrink-0" />
-            <div className="bg-[#0f1217] border border-[#2a3347]/60 rounded-xl px-5 py-4 text-center flex-1 min-w-[140px]"><p className="text-xs text-[#6b7280] mb-1">Industry Avg.</p><p className="text-2xl font-mono font-bold text-[#4b5563]">{cs.funnel.industryAvg}</p></div>
+            <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-xl px-5 py-4 text-center flex-1 min-w-[180px]"><p className="text-xs text-[#00ff9d] mb-1">74% entered</p><p className="text-2xl font-mono font-bold text-[#00ff9d]">{cs.funnel.entered}</p></div>
           </div>
         </div>
       </div>
