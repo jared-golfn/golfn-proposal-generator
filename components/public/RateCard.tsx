@@ -42,7 +42,7 @@ export function RateCard() {
           Pricing, <span className="text-gradient">plain.</span>
         </motion.h2>
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="text-base md:text-lg text-[#9ca3af] mb-12 max-w-3xl">
-          Golf media sells reach around golf content. We sell reach to verified golfers. CPM packages start at $40 for campaigns tied to first-party golf behavior. Less inferred targeting. Cleaner attribution. More certainty per impression.
+          Golf Digest digital sells at roughly $50 CPM. We sell verified golfer impressions starting at $40 CPM. Less inferred audience waste. Cleaner attribution. More certainty per dollar.
         </motion.p>
 
         {/* Block A: CPM Media */}
