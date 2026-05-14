@@ -51,10 +51,10 @@ export function MiuraResults() {
             Miura Golf · An 8AM Portfolio Company
           </p>
 
-          {/* MIURA LOGO — actual brand mark from miuragolf.com.
+          {/* MIURA LOGO — actual brand mark from our Sanity CDN.
               Sized to stay within the source PNG's native resolution so it
-              renders crisp (no upscaling blur). Gold rules above and below
-              frame the logo as a refined accent. */}
+              renders crisp. Gold rules above and below frame the logo as a
+              refined accent. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -70,7 +70,7 @@ export function MiuraResults() {
               src={images.miuraLogo}
               alt="Miura Golf"
               className="h-20 md:h-24 lg:h-28 w-auto"
-              style={{ filter: 'brightness(0) invert(1)' }}
+              style={{ filter: 'invert(1)' }}
             />
 
             {/* Gold rule below */}
