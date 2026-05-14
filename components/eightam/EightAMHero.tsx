@@ -86,7 +86,7 @@ export function EightAMHero() {
                     src={item.logoUrl}
                     alt={item.logoAlt || item.label}
                     className="h-5 md:h-6 w-auto"
-                    style={{ filter: 'brightness(0) invert(1)' }}
+                    style={{ filter: 'invert(1)' }}
                   />
                   {/* Hidden text for screen readers — keeps the pill accessible
                       since the logo image alone doesn't convey "Miura section". */}
