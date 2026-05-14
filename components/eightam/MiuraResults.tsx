@@ -30,6 +30,10 @@ const commerceMetrics: MetricCard[] = [
   { value: '$22k', label: 'Net retail revenue', sub: 'From 45 units sold' },
 ]
 
+// Miura's actual brand logo — the same image Miura uses on miuragolf.com.
+// Hosted on Miura's own Shopify CDN.
+const MIURA_LOGO_URL = 'https://miuragolf.com/cdn/shop/files/logo_6846bc44-9306-4e21-ad19-6c56b1e219a9.png?v=1671196808'
+
 export function MiuraResults() {
   return (
     <section
@@ -50,30 +54,28 @@ export function MiuraResults() {
             Miura Golf · An 8AM Portfolio Company
           </p>
 
-          {/* MIURA WORDMARK LOGO TREATMENT
-              Large CSS-based wordmark. When a real logo PNG/SVG is available,
-              swap this <div> block for a Next.js <Image> at the same scale. */}
+          {/* MIURA LOGO — actual brand mark from miuragolf.com, displayed large
+              with refined gold rules above and below as a brand-respectful frame */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.9, ease: 'easeOut' }}
-            className="my-10 md:my-16 relative"
+            className="my-10 md:my-16 flex flex-col items-center"
           >
             {/* Gold rule above */}
-            <div className="w-24 md:w-32 h-px bg-[#c5a572] mx-auto mb-6 md:mb-8" />
+            <div className="w-24 md:w-32 h-px bg-[#c5a572] mb-8 md:mb-10" />
 
-            <h2 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-bold tracking-[-0.03em] leading-none text-white">
-              MIURA
-            </h2>
-
-            {/* GOLF subtitle in gold */}
-            <p className="mt-4 md:mt-6 text-sm md:text-lg tracking-[0.5em] uppercase text-[#c5a572] font-medium">
-              Golf
-            </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={MIURA_LOGO_URL}
+              alt="Miura Golf"
+              className="h-32 md:h-48 lg:h-56 xl:h-64 w-auto"
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
 
             {/* Gold rule below */}
-            <div className="w-24 md:w-32 h-px bg-[#c5a572] mx-auto mt-6 md:mt-8" />
+            <div className="w-24 md:w-32 h-px bg-[#c5a572] mt-8 md:mt-10" />
           </motion.div>
 
           <motion.h3
@@ -119,8 +121,9 @@ export function MiuraResults() {
         </div>
 
         {/* ANTHONY NEWVILLE QUOTE
-            PLACEHOLDER quote — replace with the actual quote from Anthony before
-            sending to 8AM. The visual block is locked, just swap the <p> text. */}
+            Real quote from Anthony Newville's May 5, 2026 partnership review
+            with GolfN. Same quote already in use on the internal /template
+            pitch deck (components/template/CaseStudy.tsx → MiuraPanel). */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -130,13 +133,13 @@ export function MiuraResults() {
         >
           <Quote className="w-8 h-8 md:w-10 md:h-10 text-[#c5a572] mb-5" strokeWidth={1.5} />
           <p className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.25] tracking-tight text-white mb-6">
-            We&rsquo;ve spent decades building irons for golfers who understand the difference. GolfN is the first marketing channel that actually finds those golfers — verified, engaged, ready to know us.
+            &ldquo;You guys are doing exactly what you figured you would do. The consumer base is latching on. <span className="text-[#00ff9d]">We never doubted for a second.</span>&rdquo;
           </p>
           <div className="flex items-center gap-4">
             <div className="w-12 h-px bg-[#c5a572]" />
             <div>
               <p className="text-base md:text-lg text-white font-semibold">Anthony Newville</p>
-              <p className="text-sm text-[#9ca3af]">Chief Executive Officer · Miura Golf</p>
+              <p className="text-sm text-[#9ca3af]">President &mdash; Miura Golf &middot; May 5, 2026 Partnership Review</p>
             </div>
           </div>
         </motion.div>
@@ -229,8 +232,7 @@ export function MiuraResults() {
           </div>
         </div>
 
-        {/* CLOSING PULLQUOTE — gold left border to punctuate the section
-            and tie it back to the Miura brand */}
+        {/* CLOSING PULLQUOTE — gold left-border, brand-respectful */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
