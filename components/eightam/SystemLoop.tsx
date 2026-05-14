@@ -198,7 +198,7 @@ export function SystemLoop() {
 
         {/* Mobile loop indicator */}
         <p className="md:hidden text-center text-[10px] font-mono text-[#6b7280] tracking-[0.18em] mt-4 mb-2">
-          &uarr; LOOPS BACK \u00b7 EACH PASS SHARPENS THE NEXT
+          &uarr; LOOPS BACK &middot; EACH PASS SHARPENS THE NEXT
         </p>
 
         {/* Detail Panel */}
