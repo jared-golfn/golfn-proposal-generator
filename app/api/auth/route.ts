@@ -9,6 +9,7 @@ const allPartners: Record<string, PartnerConfig> = { ...partners, 'wilson-motoca
 
 const standaloneSlugs: Record<string, { password: string; partnerName: string }> = {
   invited: { password: 'golfn2026', partnerName: 'Invited Clubs' },
+  '8am': { password: '8am2026!', partnerName: '8AM Golf' },
 }
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN || ''
