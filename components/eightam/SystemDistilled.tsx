@@ -295,8 +295,7 @@ export function SystemDistilled() {
             </p>
             <div className="border-l-2 border-[#00ff9d] pl-6 max-w-3xl relative z-10">
               <p className="text-base md:text-lg text-white font-semibold leading-relaxed">
-                <span className="text-[#00ff9d] font-mono text-xs tracking-wide uppercase mr-2">The nugget —</span>
-                golfers pay other apps. GolfN pays them.
+                Golfers pay other apps. GolfN pays them.
               </p>
             </div>
           </div>
@@ -370,7 +369,6 @@ export function SystemDistilled() {
               </p>
               <div className="border-l-2 border-[#00ff9d] pl-4 relative z-10">
                 <p className="text-sm md:text-base text-white font-medium leading-relaxed">
-                  <span className="text-[#00ff9d] font-mono text-xs tracking-wide uppercase mr-2">The nugget —</span>
                   {n.nugget}
                 </p>
               </div>
