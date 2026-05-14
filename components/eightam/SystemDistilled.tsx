@@ -259,20 +259,23 @@ function LoopDiagramMobile() {
 
 export function SystemDistilled() {
   return (
-    <section className="py-16 md:py-24" id="system">
+    <section className="py-16 md:py-24 scroll-mt-8" id="system">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-        {/* CATEGORY THESIS — massive display headline */}
+        {/* SECTION OPENER — replaces the previous Category Thesis block.
+            Category thesis now lives in the hero. This is a smaller
+            section-level header to match the eyebrow + headline pattern
+            of The Precedent and In Practice. */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-20 md:mb-28 max-w-5xl"
+          transition={{ duration: 0.7 }}
+          className="mb-12 md:mb-16 max-w-4xl"
         >
-          <p className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-[#6b7280] mb-6">The Category</p>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight">
-            GolfN is the <span className="text-gradient">first rewards-native</span> golf platform.
+          <p className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-4">The System</p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight">
+            How GolfN <span className="text-gradient">actually works.</span>
           </h2>
         </motion.div>
 
