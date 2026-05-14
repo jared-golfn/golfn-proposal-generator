@@ -263,7 +263,7 @@ export function PhaseTwoInPractice() {
         >
           <p className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-[#6b7280] mb-4">The Category</p>
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight max-w-5xl mb-6">
-            Awareness AND point of sale. <span className="text-gradient">Same app.</span>
+            Awareness AND point of sale. <span className="text-gradient">Same platform.</span>
           </h3>
           <p className="text-base md:text-lg text-[#9ca3af] max-w-3xl leading-7">
             Every other golf ad ends at &ldquo;go buy it somewhere else.&rdquo; GolfN starts at awareness and ends at the receipt — same login, same audience, same checkout.
@@ -289,7 +289,7 @@ export function PhaseTwoInPractice() {
             <div aria-hidden className="absolute -top-4 -right-4 text-9xl font-bold font-mono text-[#00ff9d]/[0.05] leading-none select-none pointer-events-none">★</div>
             <p className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-4 relative z-10">GolfN</p>
             <p className="text-2xl md:text-3xl font-bold text-white leading-tight tracking-tight mb-4 relative z-10">Owns Both</p>
-            <p className="text-sm md:text-base text-[#d1d5db] leading-7 mb-5 relative z-10">Awareness AND purchase in one app. Same login. Same audience. Same data. End-to-end attribution because the journey is end-to-end.</p>
+            <p className="text-sm md:text-base text-[#d1d5db] leading-7 mb-5 relative z-10">Awareness AND purchase in one platform. Same login. Same audience. Same data. End-to-end attribution because the journey is end-to-end.</p>
             <p className="text-sm font-mono text-[#00ff9d] relative z-10">✓ Full stack</p>
           </motion.div>
         </div>
@@ -300,7 +300,7 @@ export function PhaseTwoInPractice() {
             There is no other golf platform doing this.
           </p>
           <p className="text-lg md:text-xl text-[#d1d5db] leading-relaxed">
-            Awareness to receipt, same app, same login, same audience. <span className="text-white font-semibold">Google meets Amazon, built only for golf.</span>
+            Awareness to receipt, same platform, same login, same audience. <span className="text-white font-semibold">Google meets Amazon, built only for golf.</span>
           </p>
         </motion.div>
 
