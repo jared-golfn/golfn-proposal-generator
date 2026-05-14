@@ -73,9 +73,9 @@ export const images = {
   galvinGreenLogo: 'https://cdn.sanity.io/images/e3wja34v/production/6bbe863fced77a5f36904db460f7ed06a3a0e782-230x46.webp',
   wilsonLogo: 'https://cdn.sanity.io/images/e3wja34v/production/dea5a3da06394dc9f1d779c94d3d75e847ba623f-807x200.svg',
   motocaddyLogo: 'https://cdn.sanity.io/images/e3wja34v/production/073b40e51baf4d2834e956318fd683966a711dd2-476x102.webp',
-  // Miura logo — sourced from miuragolf.com (their own Shopify CDN). Used on
+  // Miura logo — horizontal wordmark from our Sanity CDN (820x261). Used on
   // the /8am partner page (MiuraResults section + hero nav pill).
-  miuraLogo: 'https://miuragolf.com/cdn/shop/files/logo_6846bc44-9306-4e21-ad19-6c56b1e219a9.png?v=1671196808',
+  miuraLogo: 'https://cdn.sanity.io/images/e3wja34v/production/ca9efb777e95894f64286cef2ad9c6b36f6dd052-820x261.jpg',
 } as const
 
 // Organized asset groups for the tabbed gallery in the design brief
