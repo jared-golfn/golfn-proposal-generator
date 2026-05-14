@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
 import { images } from '@/lib/images'
+import { DailyEntrantsChart } from './DailyEntrantsChart'
+import { DailyProductViewsChart } from './DailyProductViewsChart'
 
 interface MetricCard {
   value: string
@@ -184,6 +186,12 @@ export function MiuraResults() {
               </motion.div>
             ))}
           </div>
+
+          {/* DAILY ENTRANTS CHART — temporal proof of how the 2,764 leads
+              actually accumulated across the 22-day flight. Shows organic
+              baseline, IAM launch spike (Mar 10), and final-day push burst
+              (Mar 25, 448 entrants). */}
+          <DailyEntrantsChart />
         </div>
 
         {/* ACT 2 — MARKETPLACE (49 DAYS) */}
@@ -228,6 +236,12 @@ export function MiuraResults() {
               </motion.div>
             ))}
           </div>
+
+          {/* DAILY PRODUCT VIEWS CHART — proves the marketplace engagement
+              wasn't a one-week burst. Shows Mar 26 peak (398 views, day
+              after sweep closed) and the sustained 200–380 views/day tail
+              through April with zero additional paid media. */}
+          <DailyProductViewsChart />
         </div>
 
         {/* CLOSING PULLQUOTE — bookend to the section opener.
