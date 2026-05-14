@@ -51,11 +51,9 @@ export function MiuraResults() {
             Miura Golf · An 8AM Portfolio Company
           </p>
 
-          {/* MIURA LOGO — M + wordmark PNG from miuragolf.com (transparent
-              PNG, so the brightness(0) invert(1) filter chain works cleanly:
-              transparent areas stay transparent, dark logo content becomes
-              white). Gold rules above and below frame the logo as a refined
-              accent. */}
+          {/* MIURA LOGO — sized at h-14/16/20 to stay well within the source
+              PNG's native resolution so it renders crisp at all breakpoints.
+              Gold rules above and below frame the logo as a refined accent. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -64,18 +62,18 @@ export function MiuraResults() {
             className="my-10 md:my-14 flex flex-col items-center"
           >
             {/* Gold rule above */}
-            <div className="w-20 md:w-24 h-px bg-[#c5a572] mb-6 md:mb-8" />
+            <div className="w-16 md:w-20 h-px bg-[#c5a572] mb-6 md:mb-8" />
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={images.miuraLogo}
               alt="Miura Golf"
-              className="h-20 md:h-24 lg:h-28 w-auto"
+              className="h-14 md:h-16 lg:h-20 w-auto"
               style={{ filter: 'brightness(0) invert(1)' }}
             />
 
             {/* Gold rule below */}
-            <div className="w-20 md:w-24 h-px bg-[#c5a572] mt-6 md:mt-8" />
+            <div className="w-16 md:w-20 h-px bg-[#c5a572] mt-6 md:mt-8" />
           </motion.div>
 
           <motion.h3
@@ -232,7 +230,9 @@ export function MiuraResults() {
           </div>
         </div>
 
-        {/* CLOSING PULLQUOTE — gold left-border, brand-respectful */}
+        {/* CLOSING PULLQUOTE — bookend to the section opener.
+            Opener: "What the system did for Miura."
+            Closer: "That's what the system does."  (universal claim) */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -241,10 +241,10 @@ export function MiuraResults() {
           className="border-l-4 border-[#c5a572] pl-6 md:pl-10 max-w-4xl"
         >
           <p className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-white mb-5">
-            This is the system, running on Miura.
+            That&rsquo;s what the system does.
           </p>
           <p className="text-lg md:text-xl text-[#d1d5db] leading-relaxed">
-            One of 8AM&rsquo;s portfolio companies. <span className="text-white font-semibold">$22k in wholesale revenue. 2,764 verified golf leads. 71 days end to end.</span> No paid media. No external attribution. Just the loop, closing on a real brand.
+            One of 8AM&rsquo;s portfolio companies. <span className="text-white font-semibold">$22k in wholesale revenue. 2,764 verified golf leads. 71 days end to end.</span> No paid media. No external attribution.
           </p>
         </motion.div>
 
