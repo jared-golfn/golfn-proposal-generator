@@ -1,12 +1,23 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { images } from '@/lib/images'
 
-const navItems = [
+interface NavItem {
+  label: string
+  href: string
+  /** When present, the pill renders this logo image instead of the text label.
+   *  Used for partner-branded sections (e.g. the Miura case study) so we
+   *  honor the partner's actual brand mark in the navigation. */
+  logoUrl?: string
+  logoAlt?: string
+}
+
+const navItems: NavItem[] = [
   { label: 'The System', href: '#system' },
   { label: 'The Precedent', href: '#precedent' },
   { label: 'In Practice', href: '#in-practice' },
-  { label: 'Miura', href: '#miura' },
+  { label: 'Miura', href: '#miura', logoUrl: images.miuraLogo, logoAlt: 'Miura Golf' },
 ]
 
 function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
@@ -47,7 +58,9 @@ export function EightAMHero() {
           A short walk through what GolfN actually is, why it works, and what makes it defensible — punctuated by one real campaign. Read in five minutes.
         </motion.p>
 
-        {/* Section nav pills — smooth-scroll to anchors below */}
+        {/* Section nav pills — smooth-scroll to anchors below.
+            Branded pills (e.g. Miura) render the partner logo in place of the
+            text label so the partner's brand is honored in the nav. */}
         <motion.nav
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,7 +78,24 @@ export function EightAMHero() {
               <span className="text-[10px] md:text-xs font-mono text-[#6b7280] group-hover:text-[#00ff9d] tracking-[0.18em] transition-colors">
                 0{i + 1}
               </span>
-              <span>{item.label}</span>
+
+              {item.logoUrl ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.logoUrl}
+                    alt={item.logoAlt || item.label}
+                    className="h-5 md:h-6 w-auto"
+                    style={{ filter: 'brightness(0) invert(1)' }}
+                  />
+                  {/* Hidden text for screen readers — keeps the pill accessible
+                      since the logo image alone doesn't convey "Miura section". */}
+                  <span className="sr-only">{item.label}</span>
+                </>
+              ) : (
+                <span>{item.label}</span>
+              )}
+
               <svg
                 className="w-3.5 h-3.5 text-[#6b7280] group-hover:text-[#00ff9d] transition-colors"
                 viewBox="0 0 14 14"
