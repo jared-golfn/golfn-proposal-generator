@@ -51,11 +51,11 @@ export function MiuraResults() {
             Miura Golf · An 8AM Portfolio Company
           </p>
 
-          {/* MIURA LOGO — actual brand mark from our Sanity CDN.
-              filter: invert(1) flips the JPG's black-on-white to white-on-black.
-              mix-blend-mode: screen makes the inverted-black background drop
-              out against the section bg, so we see only white logo glyphs on
-              the section's actual color — no visible black rectangle. */}
+          {/* MIURA LOGO — M + wordmark PNG from miuragolf.com (transparent
+              PNG, so the brightness(0) invert(1) filter chain works cleanly:
+              transparent areas stay transparent, dark logo content becomes
+              white). Gold rules above and below frame the logo as a refined
+              accent. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -71,7 +71,7 @@ export function MiuraResults() {
               src={images.miuraLogo}
               alt="Miura Golf"
               className="h-20 md:h-24 lg:h-28 w-auto"
-              style={{ filter: 'invert(1)', mixBlendMode: 'screen' }}
+              style={{ filter: 'brightness(0) invert(1)' }}
             />
 
             {/* Gold rule below */}
