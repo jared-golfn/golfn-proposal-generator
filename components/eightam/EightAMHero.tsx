@@ -6,6 +6,7 @@ const navItems = [
   { label: 'The System', href: '#system' },
   { label: 'The Precedent', href: '#precedent' },
   { label: 'In Practice', href: '#in-practice' },
+  { label: 'Miura', href: '#miura' },
 ]
 
 function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
@@ -43,7 +44,7 @@ export function EightAMHero() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-10 md:mb-12"
         >
-          A short walk through what GolfN actually is, why it works, and what makes it defensible. Three sections. Read in three minutes.
+          A short walk through what GolfN actually is, why it works, and what makes it defensible — punctuated by one real campaign. Read in five minutes.
         </motion.p>
 
         {/* Section nav pills — smooth-scroll to anchors below */}
