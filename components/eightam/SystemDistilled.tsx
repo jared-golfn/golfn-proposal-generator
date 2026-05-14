@@ -34,30 +34,38 @@ const loopNuggets: LoopNugget[] = [
   },
   {
     number: '05',
+    title: 'Convert',
+    headline: 'Awareness AND purchase, same login.',
+    body: "Buy a wedge from the marketplace. Redeem points for gear. Spend tickets to enter a sweep. Spin Press Your Luck. Every value-bearing user action happens inside GolfN — not on a redirect to someone else's site.",
+    nugget: 'Discovery and transaction live under the same login.',
+  },
+  {
+    number: '06',
     title: 'Measure',
-    headline: 'Every interaction makes the system smarter.',
-    body: "Click an iron, we know. Enter a wedge sweep but skip the driver one, we know. Buy a recovery unit two weeks after the campaign closed, we know. The data isn't a deliverable at the end — it's the feedstock for the next campaign.",
+    headline: 'Every interaction makes the loop smarter.',
+    body: 'Click an iron, we know. Enter a wedge sweep but skip the driver one, we know. Buy a recovery unit two weeks after the campaign closed, we know. Every action across the loop becomes feedstock for the next one — sharper than the last.',
     nugget: 'The loop closes and starts over sharper every time.',
   },
 ]
 
-// SVG loop diagram for desktop — 4 nodes with arrows and curved loop-back
+// SVG loop diagram for desktop — 5 nodes with arrows and curved loop-back
 function LoopDiagramDesktop() {
   const nodes = [
-    { num: '02', title: 'Verify', x: 130 },
-    { num: '03', title: 'Engage', x: 380 },
-    { num: '04', title: 'Activate', x: 630 },
-    { num: '05', title: 'Measure', x: 880 },
+    { num: '02', title: 'Verify', x: 100 },
+    { num: '03', title: 'Engage', x: 300 },
+    { num: '04', title: 'Activate', x: 500 },
+    { num: '05', title: 'Convert', x: 700 },
+    { num: '06', title: 'Measure', x: 900 },
   ]
   const nodeY = 50
-  const nodeWidth = 180
+  const nodeWidth = 150
   const nodeHeight = 100
   const midY = nodeY + nodeHeight / 2 // 100
 
   return (
     <svg viewBox="0 0 1000 290" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      {/* Connecting arrows between adjacent nodes */}
-      {[0, 1, 2].map((i) => {
+      {/* Connecting arrows between adjacent nodes (4 arrows for 5 nodes) */}
+      {[0, 1, 2, 3].map((i) => {
         const fromX = nodes[i].x + nodeWidth / 2
         const toX = nodes[i + 1].x - nodeWidth / 2
         return (
@@ -66,25 +74,25 @@ function LoopDiagramDesktop() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 + i * 0.15, duration: 0.4 }}
+            transition={{ delay: 0.4 + i * 0.12, duration: 0.4 }}
           >
             <line
-              x1={fromX + 6}
+              x1={fromX + 4}
               y1={midY}
-              x2={toX - 14}
+              x2={toX - 12}
               y2={midY}
               stroke="#00ff9d"
               strokeWidth="2"
             />
             <polygon
-              points={`${toX - 14},${midY - 6} ${toX - 2},${midY} ${toX - 14},${midY + 6}`}
+              points={`${toX - 12},${midY - 5} ${toX - 2},${midY} ${toX - 12},${midY + 5}`}
               fill="#00ff9d"
             />
           </motion.g>
         )
       })}
 
-      {/* Loop-back curve: from bottom of node 4, down, across, up to bottom of node 1 */}
+      {/* Loop-back curve: from bottom of last node (Measure, x=900), down, across, up to bottom of first node (Verify, x=100) */}
       <motion.g
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -92,8 +100,8 @@ function LoopDiagramDesktop() {
         transition={{ delay: 1.0, duration: 0.8 }}
       >
         <path
-          d={`M ${nodes[3].x} ${nodeY + nodeHeight}
-              C ${nodes[3].x} 220, ${nodes[3].x - 60} 240, ${nodes[3].x - 100} 240
+          d={`M ${nodes[4].x} ${nodeY + nodeHeight}
+              C ${nodes[4].x} 220, ${nodes[4].x - 60} 240, ${nodes[4].x - 100} 240
               L ${nodes[0].x + 100} 240
               C ${nodes[0].x + 60} 240, ${nodes[0].x} 220, ${nodes[0].x} ${nodeY + nodeHeight + 8}`}
           stroke="#00ff9d"
@@ -102,7 +110,7 @@ function LoopDiagramDesktop() {
           fill="none"
           strokeLinecap="round"
         />
-        {/* Arrowhead at end pointing up into node 1 */}
+        {/* Arrowhead at end pointing up into Verify */}
         <polygon
           points={`${nodes[0].x - 6},${nodeY + nodeHeight + 6} ${nodes[0].x},${nodeY + nodeHeight - 6} ${nodes[0].x + 6},${nodeY + nodeHeight + 6}`}
           fill="#00ff9d"
@@ -130,7 +138,7 @@ function LoopDiagramDesktop() {
           initial={{ opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.15 + i * 0.12, duration: 0.4, ease: 'easeOut' }}
+          transition={{ delay: 0.15 + i * 0.1, duration: 0.4, ease: 'easeOut' }}
           style={{ transformOrigin: `${n.x}px ${nodeY + nodeHeight / 2}px` }}
         >
           <rect
@@ -160,7 +168,7 @@ function LoopDiagramDesktop() {
             y={nodeY + 72}
             textAnchor="middle"
             fill="white"
-            fontSize="24"
+            fontSize="22"
             fontWeight="800"
             letterSpacing="-0.5"
           >
@@ -172,13 +180,14 @@ function LoopDiagramDesktop() {
   )
 }
 
-// Mobile version — vertical stack of small nodes with down arrows
+// Mobile version — vertical stack of 5 small nodes with down arrows
 function LoopDiagramMobile() {
   const nodes = [
     { num: '02', title: 'Verify' },
     { num: '03', title: 'Engage' },
     { num: '04', title: 'Activate' },
-    { num: '05', title: 'Measure' },
+    { num: '05', title: 'Convert' },
+    { num: '06', title: 'Measure' },
   ]
   return (
     <div className="flex flex-col items-center gap-2 relative pr-12">
@@ -217,7 +226,7 @@ function LoopDiagramMobile() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.8, duration: 0.5 }}
+        transition={{ delay: 0.9, duration: 0.5 }}
         className="absolute right-0 top-6 bottom-6 w-8 border-t-2 border-r-2 border-b-2 border-[#00ff9d]/55 rounded-r-2xl"
         aria-hidden
       />
@@ -225,7 +234,7 @@ function LoopDiagramMobile() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.95 }}
+        transition={{ delay: 1.05 }}
         width="12"
         height="14"
         viewBox="0 0 12 14"
@@ -239,7 +248,7 @@ function LoopDiagramMobile() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 1.05 }}
+        transition={{ delay: 1.15 }}
         className="text-[10px] font-mono tracking-[0.18em] uppercase text-[#6b7280] mt-4"
       >
         ↻ The loop closes
@@ -339,9 +348,9 @@ export function SystemDistilled() {
           <LoopDiagramMobile />
         </div>
 
-        {/* 4 LOOP NUGGETS — detail cards for each stage */}
+        {/* 5 LOOP NUGGETS — detail cards for each stage */}
         <p className="text-xs md:text-sm font-mono tracking-[0.18em] uppercase text-[#6b7280] mb-6 text-center md:text-left">Each stage, up close</p>
-        <div className="grid md:grid-cols-2 gap-4 mb-20 md:mb-28">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-20 md:mb-28">
           {loopNuggets.map((n, i) => (
             <motion.div
               key={n.number}
