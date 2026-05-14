@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
+import { images } from '@/lib/images'
 
 interface MetricCard {
   value: string
@@ -30,10 +31,6 @@ const commerceMetrics: MetricCard[] = [
   { value: '$22k', label: 'Net retail revenue', sub: 'From 45 units sold' },
 ]
 
-// Miura's actual brand logo — the same image Miura uses on miuragolf.com.
-// Hosted on Miura's own Shopify CDN.
-const MIURA_LOGO_URL = 'https://miuragolf.com/cdn/shop/files/logo_6846bc44-9306-4e21-ad19-6c56b1e219a9.png?v=1671196808'
-
 export function MiuraResults() {
   return (
     <section
@@ -42,7 +39,7 @@ export function MiuraResults() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-        {/* OPENING — eyebrow + huge MIURA logo + headline */}
+        {/* OPENING — eyebrow + Miura logo + headline */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,28 +51,30 @@ export function MiuraResults() {
             Miura Golf · An 8AM Portfolio Company
           </p>
 
-          {/* MIURA LOGO — actual brand mark from miuragolf.com, displayed large
-              with refined gold rules above and below as a brand-respectful frame */}
+          {/* MIURA LOGO — actual brand mark from miuragolf.com.
+              Sized to stay within the source PNG's native resolution so it
+              renders crisp (no upscaling blur). Gold rules above and below
+              frame the logo as a refined accent. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.9, ease: 'easeOut' }}
-            className="my-10 md:my-16 flex flex-col items-center"
+            className="my-10 md:my-14 flex flex-col items-center"
           >
             {/* Gold rule above */}
-            <div className="w-24 md:w-32 h-px bg-[#c5a572] mb-8 md:mb-10" />
+            <div className="w-20 md:w-24 h-px bg-[#c5a572] mb-6 md:mb-8" />
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={MIURA_LOGO_URL}
+              src={images.miuraLogo}
               alt="Miura Golf"
-              className="h-32 md:h-48 lg:h-56 xl:h-64 w-auto"
+              className="h-20 md:h-24 lg:h-28 w-auto"
               style={{ filter: 'brightness(0) invert(1)' }}
             />
 
             {/* Gold rule below */}
-            <div className="w-24 md:w-32 h-px bg-[#c5a572] mt-8 md:mt-10" />
+            <div className="w-20 md:w-24 h-px bg-[#c5a572] mt-6 md:mt-8" />
           </motion.div>
 
           <motion.h3
