@@ -17,6 +17,29 @@ import { images } from '@/lib/images'
 export const metadata: Metadata = {
   title: 'GolfN for Partners',
   description: 'We didn\u2019t build a golf app. We built Google, Meta, and Amazon for golf. 100,000+ verified golfers. $375k+ moved for partners in under a year.',
+  openGraph: {
+    title: 'GolfN for Partners',
+    description: 'We didn\u2019t build a golf app. We built Google, Meta, and Amazon for golf. 100,000+ verified golfers. $375k+ moved for partners in under a year.',
+    url: 'https://partners.golfn.com',
+    siteName: 'GolfN',
+    images: [
+      {
+        url: 'https://www.golfn.com/opengraph-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'GolfN \u2014 Google, Meta, and Amazon for golf',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GolfN for Partners',
+    description: 'We didn\u2019t build a golf app. We built Google, Meta, and Amazon for golf. 100,000+ verified golfers. $375k+ moved for partners in under a year.',
+    images: ['https://www.golfn.com/opengraph-image.jpg'],
+    creator: '@golfnapp',
+  },
 }
 
 export default function Home() {
