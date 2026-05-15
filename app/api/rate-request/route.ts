@@ -8,13 +8,18 @@ import { NextResponse } from 'next/server'
  *
  *   1. Validate the payload shape and required fields.
  *   2. Log the submission to Vercel logs (always, so nothing is ever lost).
- *   3. If SLACK_LEADS_WEBHOOK is set in the project env, forward a compact
- *      summary to that webhook so leads land in #leads in real time.
+ *   3. If SLACK_BOT_TOKEN is set in the project env, post a compact summary
+ *      to the Jared Reporting Channel via chat.postMessage. Same bot-token
+ *      pattern used by /api/auth and /api/session-end — no separate
+ *      Incoming Webhook needed.
  *
  * The route never fails the submission when the optional Slack delivery
  * fails — the user always sees a success state as long as the payload
  * was valid and the log line was written.
  */
+
+const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN || ''
+const SLACK_CHANNEL_ID = 'C0AJK9S4HST' // #jared-reporting-channel
 
 interface RateRequestPayload {
   name: string
@@ -43,18 +48,20 @@ function isValidPayload(input: unknown): input is RateRequestPayload {
   return true
 }
 
-async function forwardToSlack(payload: RateRequestPayload) {
-  const webhook = process.env.SLACK_LEADS_WEBHOOK
-  if (!webhook) return
+async function postToSlack(payload: RateRequestPayload) {
+  if (!SLACK_BOT_TOKEN) {
+    console.warn('[rate-request] SLACK_BOT_TOKEN not set; skipping Slack post')
+    return
+  }
 
   const surfaceLine = payload.surfaces && payload.surfaces.length > 0
     ? `*Interested in:* ${payload.surfaces.join(', ')}`
     : '*Interested in:* (not specified)'
 
-  const blocks = [
+  const blocks: Array<Record<string, unknown>> = [
     {
       type: 'header',
-      text: { type: 'plain_text', text: 'New rate-card request' },
+      text: { type: 'plain_text', text: '\uD83D\uDCE8 New rate-card request' },
     },
     {
       type: 'section',
@@ -62,7 +69,7 @@ async function forwardToSlack(payload: RateRequestPayload) {
         { type: 'mrkdwn', text: `*Name*\n${payload.name}` },
         { type: 'mrkdwn', text: `*Company*\n${payload.company}` },
         { type: 'mrkdwn', text: `*Email*\n${payload.email}` },
-        { type: 'mrkdwn', text: `*Phone*\n${payload.phone || '—'}` },
+        { type: 'mrkdwn', text: `*Phone*\n${payload.phone || '\u2014'}` },
       ],
     },
     {
@@ -85,15 +92,29 @@ async function forwardToSlack(payload: RateRequestPayload) {
     })
   }
 
+  // Fallback plain-text summary used for notifications and clients that don't render blocks.
+  const fallbackText = `New rate-card request from ${payload.name} at ${payload.company} (${payload.email})`
+
   try {
-    await fetch(webhook, {
+    const res = await fetch('https://slack.com/api/chat.postMessage', {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ blocks, text: `New rate-card request from ${payload.name} at ${payload.company}` }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${SLACK_BOT_TOKEN}`,
+      },
+      body: JSON.stringify({
+        channel: SLACK_CHANNEL_ID,
+        text: fallbackText,
+        blocks,
+      }),
     })
+    const data = await res.json().catch(() => ({})) as { ok?: boolean; error?: string }
+    if (!data.ok) {
+      console.warn('[rate-request] slack post returned not-ok', data.error || 'unknown')
+    }
   } catch (err) {
     // Swallow — the submission already succeeded from the user's perspective.
-    console.warn('[rate-request] slack forward failed', err)
+    console.warn('[rate-request] slack post failed', err)
   }
 }
 
@@ -121,14 +142,14 @@ export async function POST(req: Request) {
     notes: body.notes?.trim() || undefined,
   }
 
-  // Always log so the lead never goes missing, even without Slack hooked up.
+  // Always log so the lead never goes missing, even if Slack is unreachable.
   console.log('[rate-request] received', JSON.stringify({
     ...payload,
     receivedAt: new Date().toISOString(),
   }))
 
-  // Fire-and-forget Slack notification.
-  await forwardToSlack(payload)
+  // Fire-and-forget Slack notification to #jared-reporting-channel.
+  await postToSlack(payload)
 
   return NextResponse.json({ ok: true })
 }
