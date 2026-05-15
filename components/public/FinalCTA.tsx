@@ -77,20 +77,10 @@ export function FinalCTA() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-sm text-[#6b7280] mt-8"
-        >
-          Or email <a href="mailto:jared@golfn.com" className="text-[#9ca3af] hover:text-white underline underline-offset-2">jared@golfn.com</a> directly.
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-xs text-[#4b5563] mt-4"
+          className="text-xs text-[#4b5563] mt-12"
         >
-          jared@golfn.com &middot; calendly.com/golfn
+          calendly.com/golfn
         </motion.p>
       </div>
     </section>
