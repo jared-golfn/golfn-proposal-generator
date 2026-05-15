@@ -136,13 +136,13 @@ export function CaptureFormModal() {
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
         setStatus('error')
-        setErrorMsg(data?.error || 'Something went wrong. Please email jared@golfn.com directly.')
+        setErrorMsg(data?.error || 'Something went wrong. Please try again, or grab a slot on the calendar.')
         return
       }
       setStatus('success')
     } catch (err) {
       setStatus('error')
-      setErrorMsg('Network error. Please email jared@golfn.com directly.')
+      setErrorMsg('Network error. Please try again, or grab a slot on the calendar.')
       console.warn('rate-request submit failed', err)
     }
   }
@@ -306,10 +306,7 @@ export function CaptureFormModal() {
                   <p className="mt-4 text-sm text-[#fb7185]">{errorMsg}</p>
                 )}
 
-                <div className="mt-7 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <p className="text-xs text-[#6b7280]">
-                    Or email <a href="mailto:jared@golfn.com" className="text-[#9ca3af] hover:text-white underline underline-offset-2">jared@golfn.com</a> directly.
-                  </p>
+                <div className="mt-7 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3">
                   <button
                     type="submit"
                     disabled={!canSubmit}
