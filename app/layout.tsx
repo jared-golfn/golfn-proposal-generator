@@ -17,6 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 const LOGO_ICON = 'https://cdn.sanity.io/images/e3wja34v/production/4093e34c1af9c32f46bb63fc2ceed885e1fd8855-1036x998.png'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://partners.golfn.com'),
   title: 'GolfN \u2014 Brand Partnerships',
   description: 'Premium golf-specific demand generation, audience qualification, and post-campaign activation system.',
   icons: {
@@ -24,6 +25,15 @@ export const metadata: Metadata = {
       { url: LOGO_ICON, type: 'image/png' },
     ],
     apple: LOGO_ICON,
+  },
+  // The partners.golfn.com subdomain is for direct sales / outbound traffic only.
+  // The public-facing SEO page lives at www.golfn.com/partnership; this
+  // subdomain stays out of the search index so the two don't cannibalize each
+  // other for partnership-related queries. 'follow' is kept so any external
+  // links here (Calendly, etc.) still get their normal signal.
+  robots: {
+    index: false,
+    follow: true,
   },
 }
 
