@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Play, ArrowRight, Eye, Target, Award, DollarSign, Users, Zap } from 'lucide-react'
 import { publicCaseStudyTabs, forgedIronCaseStudy, majorOEMCaseStudy, recoveryBrandCaseStudy, type CaseStudyId } from '@/lib/public-case-studies'
+import { StrippedEntrantsChart } from './StrippedEntrantsChart'
+import { StrippedViewsChart } from './StrippedViewsChart'
 
 function MetricGrid({ metrics, cols = 4 }: { metrics: { value: string; label: string; sub: string }[]; cols?: number }) {
   const gridCols = cols === 4 ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'
@@ -88,14 +90,20 @@ function ForgedIronPanel() {
         </div>
       </div>
 
-      <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8">
+      {/* Stripped daily-entrants chart — no mechanism callouts. */}
+      <StrippedEntrantsChart />
+
+      <div className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl overflow-hidden mb-8 mt-8">
         <div className="px-6 md:px-8 py-6">
           <PanelHeader name="Points Exchange Commerce" metricNum="49" metricUnit="Days" />
           <MetricGrid metrics={cs.commerce} />
         </div>
       </div>
 
-      <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10 text-center">
+      {/* Stripped post-sweep marketplace-views chart — no trigger callouts. */}
+      <StrippedViewsChart />
+
+      <div className="bg-[#001a14]/60 border border-[#00ff9d]/20 rounded-2xl p-8 md:p-10 text-center mt-8">
         <p className="text-xl md:text-2xl font-bold text-white leading-relaxed">{cs.closingLine}</p>
       </div>
     </>

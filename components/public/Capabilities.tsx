@@ -1,180 +1,163 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Target, Megaphone, Crosshair, Heart, ShoppingBag, BarChart3 } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Target, Zap, ShoppingBag, Repeat, ArrowDown } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
-interface Tile {
+interface Bucket {
   id: string
-  Icon: typeof Target
-  title: string
+  Icon: LucideIcon
+  num: string
+  name: string
   hook: string
+  surfaces: string[]
   proof: string
-  details: string[]
 }
 
-const tiles: Tile[] = [
+const buckets: Bucket[] = [
   {
-    id: 'performance',
+    id: 'capture',
     Icon: Target,
-    title: 'Performance',
-    hook: 'Pay only when a verified golfer shows up.',
-    proof: 'A 50 course resort group fills dead tee times for $5k per month.',
-    details: [
-      'Per-verified check-in for golf courses. GPS confirms the user actually played. No way to fake it.',
-      'Per-verified check-in for demo days, fitting events, and brand activations. Geo push in the surrounding radius with escalating point incentives.',
-      'Off-course check-in at simulators, TopGolf, ranges, and indoor venues that are GolfN partners.',
-      'Tee time booking attribution that bypasses third-party platforms like Golf Now.',
+    num: '01',
+    name: 'Capture',
+    hook: 'Verified golfer attention, on day one.',
+    surfaces: [
+      'Sweepstakes (brand provides prize — first one is on us)',
+      'Per-verified check-in for demo days, fitting events, and brand activations',
+      'Lead capture inside the app, opt-in by audience profile',
+      'Custom audience match against your existing customer list',
     ],
+    proof: '2,764 verified golfer leads from a single 22-day sweep. $0.28 CPL.',
   },
   {
-    id: 'awareness',
-    Icon: Megaphone,
-    title: 'Awareness',
-    hook: 'Verified golfer reach starting at $40 CPM.',
-    proof: 'A premium iron brand: $769 in prizes generated 2,764 verified leads and $31k in retail in 40 days.',
-    details: [
-      'Sweepstakes. Brand provides product. We give it away to our users. Hundreds of thousands of verified-golfer impressions and a warm audience for retargeting.',
-      'Press Your Luck monthly sponsorship. The spin wheel reaches 50,000 users per month. Brand product as a prize slot. Video-for-spin integration.',
-      'In-feed pinned video. Brand creative or UGC pinned to the top of the social feed.',
-      'Co-branded lifestyle campaigns. We write creative for you using audience knowledge no other platform has.',
-      'Blog and SEO backlink package included with every campaign.',
-    ],
-  },
-  {
-    id: 'smart-targeting',
-    Icon: Crosshair,
-    title: 'Smart Targeting',
+    id: 'activate',
+    Icon: Zap,
+    num: '02',
+    name: 'Activate',
     hook: 'Reach golfers in the moment that matters.',
-    proof: 'Trigger ads on weather, UV, handicap progression, or club in bag.',
-    details: [
-      'Weather triggered. Reach golfers who were just caught in rain during a real round.',
-      'UV index triggered. Reach users who played on a high UV day in the hours after their round.',
-      'Handicap progression triggered. Reach users whose handicap is improving or stalling at thresholds where new gear matters.',
-      'Club in bag triggered. Reach users currently using a competitor product.',
-      'Geo and behavior triggered. Reach golfers within range of an event or a fitting location.',
+    surfaces: [
+      'Weather-aware campaigns (caught in rain, played in heat, UV index)',
+      'Handicap-progression triggers (improving, stalling, threshold moments)',
+      'Club-in-bag triggers (reach users currently using a competitor)',
+      'Press Your Luck monthly sponsorship (50k+ spinners per month)',
     ],
+    proof: 'The trigger does the targeting work. Less inferred audience waste.',
   },
   {
-    id: 'loyalty',
-    Icon: Heart,
-    title: 'Loyalty',
-    hook: 'Move a Titleist loyalist to Srixon. Through points, not discounting.',
-    proof: 'MAP pricing always maintained. Points never undercut cash price.',
-    details: [
-      'Points multipliers tied to a specific brand or SKU.',
-      'Intro offers for first-time brand buyers in the app.',
-      'Wishlist intelligence. We see what golfers are saving for. You see who is close to converting.',
-      'Promo codes routed through the points layer so the buying experience never breaks MAP.',
-    ],
-  },
-  {
-    id: 'marketplace',
+    id: 'convert',
     Icon: ShoppingBag,
-    title: 'Marketplace',
-    hook: 'Amazon DSP for golf. MAP protected. $493 average order.',
-    proof: '$375k+ moved for partners in under a year. 35%+ month over month growth.',
-    details: [
-      'Category page takeover. Own the Wedges, Putters, or Recovery page header for a month.',
-      'Featured marketplace banner. Concurrent with sweepstakes flights for maximum lift.',
-      'Direct sell-through with no inventory risk. Brand fulfills and drop ships.',
-      'Wholesale margin model. We do well when you do well.',
+    num: '03',
+    name: 'Convert',
+    hook: 'Attention into action, MAP protected.',
+    surfaces: [
+      'Marketplace category takeover (Wedges, Putters, Recovery)',
+      'Featured marketplace banner concurrent with sweepstakes flights',
+      'In-feed pinned video at the top of the social activity feed',
+      'Loyalty points multipliers — move a Titleist loyalist to Srixon without discounting',
+      'Direct sell-through with no inventory risk; you fulfill, we route',
     ],
+    proof: '$375k+ moved for partners in under a year. $493 average order value.',
   },
   {
-    id: 'data',
-    Icon: BarChart3,
-    title: 'Data and Intelligence',
-    hook: 'Cohorts. Lookalikes. Audience match upload.',
-    proof: 'A global recovery brand saw 18x product view lift in the marketplace post sweepstakes.',
-    details: [
-      'Bring your customer list. We will show you who is already playing on GolfN. Privacy safe matching.',
-      'Macro audience cohorts shared with partners. Equipment profile. Course preferences. Play frequency. Walk versus ride. Weather conditions during rounds.',
-      'Geo search of active GolfN users around any set of locations. Sales leave-behind for course operators.',
-      'Monthly intelligence reports for partnership-tier brands. Quarterly deep dives included.',
+    id: 'sustain',
+    Icon: Repeat,
+    num: '04',
+    name: 'Sustain',
+    hook: 'Make the audience keep producing.',
+    surfaces: [
+      'Always-on placement on annual partnership',
+      'Monthly audience intelligence reports',
+      'Macro cohort sharing (equipment, course type, frequency, weather)',
+      'Quarterly deep-dive reports for partnership-tier brands',
+      'First access to new inventory and beta capabilities',
     ],
+    proof: '18x marketplace product-view lift sustained post-sweep, with zero added spend.',
   },
-]
-
-const buckets = [
-  { label: 'Acquire', body: 'verified golfer attention' },
-  { label: 'Convert', body: 'attention into action' },
-  { label: 'Learn', body: 'who your golf customer actually is' },
 ]
 
 export function Capabilities() {
-  const [openId, setOpenId] = useState<string | null>(null)
-
   return (
     <section className="py-24 md:py-32 bg-[#0a0d12]" id="capabilities">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-4">What You Can Do Here</motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.05] tracking-tight mb-6 max-w-4xl">
-          There&rsquo;s almost nothing we<br />can&rsquo;t do <span className="text-gradient">in here.</span>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-base md:text-lg font-mono tracking-[0.2em] uppercase text-[#c5a572] mb-4"
+        >
+          What You Can Do Here
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.05] tracking-tight mb-6 max-w-4xl"
+        >
+          Four ways to work with us. <span className="text-gradient">Mix and match.</span>
         </motion.h2>
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-base md:text-lg text-[#9ca3af] mb-10 max-w-3xl leading-8">
-          Three things you can do here. Click any tile to see how.
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-base md:text-lg text-[#9ca3af] mb-12 max-w-3xl leading-7"
+        >
+          Most partners run two or three of these together for a single moment, then pick one to keep always-on. The surfaces below are the menu. Pricing is bespoke — see the rate card.
         </motion.p>
 
-        {/* 3-bucket frame */}
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           {buckets.map((b, i) => (
-            <div key={b.label} className="bg-[#001a14]/40 border border-[#00ff9d]/20 rounded-xl px-5 py-4">
-              <div className="flex items-baseline gap-2">
-                <span className="text-xs font-mono text-[#00ff9d] tracking-[0.15em] uppercase">0{i + 1}</span>
-                <span className="text-lg font-bold text-white">{b.label}</span>
+            <motion.div
+              key={b.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.55 }}
+              className="bg-[#1a1f2e] border border-[#2a3347] rounded-2xl p-7 md:p-8 card-lift"
+            >
+              <div className="flex items-start gap-4 mb-5">
+                <div className="w-11 h-11 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0">
+                  <b.Icon className="w-5 h-5 text-[#00ff9d]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-mono text-[#c5a572] tracking-[0.18em] uppercase mb-1">{b.num}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">{b.name}</h3>
+                </div>
               </div>
-              <p className="text-sm text-[#d1d5db] leading-6 mt-1">{b.body}</p>
-            </div>
-          ))}
-        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tiles.map((t, i) => {
-            const isOpen = openId === t.id
-            return (
-              <motion.div
-                key={t.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06, duration: 0.5 }}
-                className={`bg-[#1a1f2e] border rounded-2xl overflow-hidden transition-colors ${isOpen ? 'border-[#00ff9d]/40' : 'border-[#2a3347] hover:border-[#2a3347]'}`}
-              >
-                <button
-                  onClick={() => setOpenId(isOpen ? null : t.id)}
-                  className="w-full px-6 py-6 text-left group"
-                >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-[#00ff9d]/10 flex items-center justify-center shrink-0">
-                      <t.Icon className="w-5 h-5 text-[#00ff9d]" />
-                    </div>
-                    <ChevronDown className={`w-5 h-5 text-[#6b7280] transition-transform shrink-0 ${isOpen ? 'rotate-180 text-[#00ff9d]' : 'group-hover:text-[#00ff9d]'}`} />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{t.title}</h3>
-                  <p className="text-sm text-[#d1d5db] leading-6 mb-3">{t.hook}</p>
-                  <p className="text-xs text-[#00ff9d] font-mono leading-5">{t.proof}</p>
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: 'easeOut' }} className="overflow-hidden">
-                      <div className="px-6 pb-6 pt-2 border-t border-[#2a3347]/60 bg-[#0f1217]/60">
-                        <ul className="space-y-3 mt-4">
-                          {t.details.map((d, idx) => (
-                            <li key={idx} className="flex items-start gap-3 text-sm text-[#d1d5db] leading-6">
-                              <span className="text-[#00ff9d] mt-0.5">{'>'}</span>
-                              <span>{d}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            )
-          })}
+              <p className="text-base md:text-lg text-[#d1d5db] leading-7 mb-5">{b.hook}</p>
+
+              <ul className="space-y-2.5 mb-5">
+                {b.surfaces.map((s) => (
+                  <li key={s} className="flex items-start gap-2.5">
+                    <span className="text-[#00ff9d] mt-1 shrink-0 leading-none">{'>'}</span>
+                    <span className="text-sm text-[#d1d5db] leading-6">{s}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="text-xs text-[#00ff9d] font-mono leading-5 pt-4 border-t border-[#2a3347]/60">{b.proof}</p>
+            </motion.div>
+          ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="mt-12 flex justify-center"
+        >
+          <button
+            type="button"
+            onClick={() => document.getElementById('rate-card')?.scrollIntoView({ behavior: 'smooth' })}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#2a3347] text-[#9ca3af] hover:text-white hover:border-[#00ff9d]/40 transition-colors text-sm font-semibold"
+          >
+            See the rate card
+            <ArrowDown className="w-4 h-4" />
+          </button>
+        </motion.div>
       </div>
     </section>
   )

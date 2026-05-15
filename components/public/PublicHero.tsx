@@ -24,10 +24,20 @@ export function PublicHero() {
           </a>
         </motion.div>
 
+        {/* Eyebrow */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.6 }}
+          className="text-sm md:text-base font-mono tracking-[0.2em] uppercase text-[#c5a572] mb-5"
+        >
+          For brand partners and advertisers
+        </motion.p>
+
         {/* Headline */}
-        <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[0.95] tracking-tight mb-8 max-w-5xl">
+        <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[0.95] tracking-tight mb-8 max-w-5xl">
           We didn&rsquo;t build a golf app.<br />
-          <span className="text-gradient">We built the marketing<br />and data stack for golf.</span>
+          <span className="text-gradient">We built Google, Meta,<br />and Amazon for golf.</span>
         </motion.h1>
 
         {/* Subhead */}
@@ -48,7 +58,7 @@ export function PublicHero() {
 
         {/* Verified definition */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85, duration: 0.6 }} className="flex items-start gap-3 max-w-3xl mt-4 mb-16">
-          <ShieldCheck className="w-5 h-5 text-[#00ff9d] mt-0.5 shrink-0" />
+          <ShieldCheck className="w-5 h-5 text-[#c5a572] mt-0.5 shrink-0" />
           <p className="text-sm md:text-base text-[#9ca3af] leading-7">
             <span className="text-white font-semibold">Verified means</span> every user has completed a GPS-confirmed round inside the app. Not inferred. Not panel. Real golfers.
           </p>
