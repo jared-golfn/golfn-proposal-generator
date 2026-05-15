@@ -37,7 +37,7 @@ export function PublicHero() {
         {/* Headline */}
         <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[0.95] tracking-tight mb-8 max-w-5xl">
           We didn&rsquo;t build a golf app.<br />
-          <span className="text-gradient">We built the marketing<br />and data stack for golf.</span>
+          <span className="text-gradient">We built Google, Meta,<br />and Amazon for golf.</span>
         </motion.h1>
 
         {/* Subhead */}
