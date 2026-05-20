@@ -21,7 +21,7 @@ export function FeatureEffect() {
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="flex items-end justify-between gap-4 mb-8 md:mb-10 pb-4 border-b border-[#2a3347]/40">
           <div>
             <p className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-2">Part 2B &middot; The Feature Effect</p>
-            <h3 className="text-2xl md:text-4xl font-bold tracking-tight">Proven product discovery.</h3>
+            <h3 className="text-2xl md:text-4xl font-bold tracking-tight">Verified golfers seek out Srixon products.</h3>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <TrendingUp className="w-6 h-6 md:w-8 md:h-8 text-[#00ff9d]" />
@@ -30,8 +30,7 @@ export function FeatureEffect() {
         </motion.div>
 
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg text-[#9ca3af] leading-8 max-w-4xl mb-12">
-          When GolfN features Srixon in a sweepstakes, users don&rsquo;t just enter &mdash; <span className="text-white font-semibold">they go find the products</span>. During the Spring Collection sweepstakes window, daily Srixon/Cleveland product views jumped from a baseline of{' '}
-          <span className="text-white font-semibold">85 views/day to 312 views/day</span> &mdash; a <span className="text-[#00ff9d] font-bold">3.7&times; increase</span> in product discovery. On peak days, views hit <span className="text-white font-semibold">444/day &mdash; a 5.3&times; multiplier</span>.
+          When GolfN features Srixon in a sweepstakes, verified golfers don&rsquo;t just enter &mdash; <span className="text-white font-semibold">they go find the products</span>. During the Spring Collection window, daily product views jumped from <span className="text-white font-semibold">85 to 312 views/day</span> &mdash; a <span className="text-[#00ff9d] font-bold">3.7&times; increase</span>. These aren&rsquo;t anonymous pageviews from paid traffic. These are verified, round-playing golfers actively browsing Srixon product pages inside the app.
         </motion.p>
 
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-gradient-to-br from-[#0a0d12] to-[#0f1a14] border border-[#2a3347] rounded-3xl p-8 md:p-12 mb-12">
@@ -68,7 +67,7 @@ export function FeatureEffect() {
               <span className="text-lg font-bold text-white ml-2">3.7&times;</span>
             </div>
           </div>
-          <p className="text-xs text-[#6b7280] text-center mt-8">Peak days (Apr 12&ndash;14) hit <span className="text-white font-semibold">5.3&times; baseline</span> &mdash; 444 combined product views/day.</p>
+          <p className="text-xs text-[#6b7280] text-center mt-8">Peak days (Apr 12&ndash;14) hit <span className="text-white font-semibold">5.3&times; baseline</span> &mdash; 444 verified-golfer product views per day.</p>
         </motion.div>
 
         <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-3">Daily Product View Averages: Before &rarr; During &rarr; After</p>
@@ -99,9 +98,9 @@ export function FeatureEffect() {
         <p className="text-xs text-[#6b7280] mb-10">Baseline = avg daily combined Srixon + Cleveland product_viewed events before sweepstakes activity (Mar 10&ndash;31). Source: Amplitude.</p>
 
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-[#00ff9d]/5 border-2 border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
-          <p className="text-lg md:text-xl font-bold text-white mb-3">The bottom line: featuring works.</p>
+          <p className="text-lg md:text-xl font-bold text-white mb-3">The bottom line: featuring drives verified product discovery.</p>
           <p className="text-sm md:text-base text-[#d1d5db] leading-7">
-            Every time GolfN runs a Srixon sweepstakes, product discovery jumps <span className="text-white font-semibold">3&ndash;5&times; above baseline</span>. These aren&rsquo;t passive impressions &mdash; these are golfers actively seeking out Srixon product pages, reading specs, comparing models. The effect persists after the sweepstakes ends (post-sweep average stayed at 3.8&times; baseline), meaning featuring creates sustained product awareness, not just a momentary spike. More features = more discovery = more conversions.
+            Every time GolfN runs a Srixon sweepstakes, product discovery jumps <span className="text-white font-semibold">3&ndash;5&times; above baseline</span>. These aren&rsquo;t passive ad impressions &mdash; these are verified golfers actively seeking out Srixon product pages, reading specs, and comparing models. The effect persists after the sweepstakes ends (post-sweep average stayed at 3.8&times; baseline), meaning featuring creates sustained product awareness with a first-party audience you can&rsquo;t reach this way anywhere else.
           </p>
         </motion.div>
       </div>
