@@ -38,7 +38,7 @@ export function MarketplaceSales() {
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="flex items-end justify-between gap-4 mb-8 md:mb-10 pb-4 border-b border-[#2a3347]/40">
           <div>
             <p className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-[#00ff9d] mb-2">Part 3 &middot; Points Exchange &amp; Marketplace</p>
-            <h3 className="text-2xl md:text-4xl font-bold tracking-tight">Real purchasing behavior.</h3>
+            <h3 className="text-2xl md:text-4xl font-bold tracking-tight">Verified golfers converting to buyers.</h3>
           </div>
           <div className="flex items-baseline gap-2 shrink-0">
             <p className="text-3xl md:text-5xl font-mono font-bold text-[#00ff9d] leading-none tabular-nums">$67K</p>
@@ -47,7 +47,7 @@ export function MarketplaceSales() {
         </motion.div>
 
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg text-[#9ca3af] leading-8 max-w-4xl mb-10">
-          GolfN users converted across the entire Srixon and Cleveland product portfolio &mdash; premium iron sets, golf balls, wedges, hybrids, drivers and fairway woods. Sales spread across both high-ticket equipment and repeat-purchase consumables.
+          GolfN&rsquo;s verified golfers converted across the entire Srixon and Cleveland product portfolio &mdash; premium iron sets, golf balls, wedges, hybrids, drivers and fairway woods. Every buyer is a real golfer with tracked round activity and a verified identity. Sales spread across both high-ticket equipment and repeat-purchase consumables, with full first-party attribution from awareness through transaction.
         </motion.p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12">
@@ -114,9 +114,9 @@ export function MarketplaceSales() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-[#00ff9d]/5 border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8">
-          <p className="text-base md:text-lg font-bold text-white mb-3">Consumable repeat-purchase signal</p>
+          <p className="text-base md:text-lg font-bold text-white mb-3">Consumable repeat-purchase signal from verified golfers</p>
           <p className="text-sm md:text-base text-[#d1d5db] leading-7">
-            Srixon golf balls showed strong unit volume across premium lines &mdash; <span className="text-white font-semibold">69 Z-STAR DIAMOND</span>, <span className="text-white font-semibold">56 Z-Star</span>, <span className="text-white font-semibold">40 Z-STAR XV</span>, <span className="text-white font-semibold">13 Q-STAR TOUR</span>, and <span className="text-white font-semibold">11 Q-Star</span> units. Combined with Cleveland&rsquo;s <span className="text-white font-semibold">20-unit RTZ wedge Tour Rack cluster</span> and consistent 2&ndash;5 unit wedge sales across multiple RTZ/CBZ variants, this demonstrates a healthy mix of high-ticket conversion and repeat consumable purchasing.
+            Srixon golf balls showed strong unit volume across premium lines &mdash; <span className="text-white font-semibold">69 Z-STAR DIAMOND</span>, <span className="text-white font-semibold">56 Z-Star</span>, <span className="text-white font-semibold">40 Z-STAR XV</span>, <span className="text-white font-semibold">13 Q-STAR TOUR</span>, and <span className="text-white font-semibold">11 Q-Star</span> units. Combined with Cleveland&rsquo;s <span className="text-white font-semibold">20-unit RTZ wedge Tour Rack cluster</span>, this demonstrates a healthy mix of high-ticket conversion and repeat consumable purchasing from golfers whose round activity, handicap, and equipment preferences GolfN already knows. That&rsquo;s the kind of closed-loop purchase intelligence no other golf platform can deliver.
           </p>
         </motion.div>
       </div>
