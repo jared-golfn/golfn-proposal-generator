@@ -29,6 +29,7 @@ const mediaValueData: MediaValueRow[] = [
 
 const BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/88beb4ffa07416eb9de4a47206d24bf3b5ddeb7c-1428x528.png'
 const IAM_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/d1264bf8be99731bbc9bb4b5f755917c32f61ce0-375x653.png'
+const SOCIAL_PROOF_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/6a35f7d20eb2463847b28a562012952f53caa3e0-1080x1920.png'
 
 export function MultiChannelReach() {
   return (
@@ -76,25 +77,34 @@ export function MultiChannelReach() {
           </div>
         </motion.div>
 
-        {/* Channel creative examples — tight layout, no dead space */}
+        {/* Channel creative examples */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-          <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-4">Example Creative &mdash; In-App Placements</p>
-          <div className="flex flex-col md:flex-row gap-4 items-start">
-            {/* Banner — wide/short, gets full width on left */}
-            <div className="flex-1 min-w-0">
-              <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={BANNER_IMG} alt="Srixon/Cleveland marketplace banner" className="w-full block" />
-              </div>
-              <p className="text-xs text-[#6b7280] mt-2">Marketplace banner &mdash; 66,416 impressions during header-image launch period</p>
+          <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-4">Example Creative &mdash; In-App Placements &amp; Social Proof</p>
+
+          {/* Banner — full width on top */}
+          <div className="mb-4">
+            <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={BANNER_IMG} alt="Srixon/Cleveland marketplace banner" className="w-full block" />
             </div>
-            {/* IAM — tall/narrow, constrained width */}
-            <div className="w-44 md:w-48 shrink-0">
+            <p className="text-xs text-[#6b7280] mt-2">Marketplace banner &mdash; 66,416 impressions during header-image launch period</p>
+          </div>
+
+          {/* IAM + Social proof — two portrait images side by side */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
               <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={IAM_IMG} alt="Srixon in-app message" className="w-full block" />
               </div>
-              <p className="text-xs text-[#6b7280] mt-2">Braze IAM &mdash; sweepstakes + product discovery driver</p>
+              <p className="text-xs text-[#6b7280] mt-2">Braze in-app message &mdash; sweepstakes + product discovery driver</p>
+            </div>
+            <div>
+              <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={SOCIAL_PROOF_IMG} alt="Golfer sharing Srixon gear received through GolfN" className="w-full block" />
+              </div>
+              <p className="text-xs text-[#6b7280] mt-2">Social proof &mdash; verified golfer sharing Srixon gear earned through GolfN</p>
             </div>
           </div>
         </motion.div>
