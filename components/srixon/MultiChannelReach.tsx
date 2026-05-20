@@ -29,7 +29,7 @@ const mediaValueData: MediaValueRow[] = [
 
 const MARKETPLACE_BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/2cb93b50e429f5bbb55fdb9f3e21345f56c5f5f7-4500x2040.png'
 const AD_BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/88beb4ffa07416eb9de4a47206d24bf3b5ddeb7c-1428x528.png'
-const IAM_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/d1264bf8be99731bbc9bb4b5f755917c32f61ce0-375x653.png'
+const IAM_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/041badc53ac8308e468bd6cea44b0fb6ac94d67f-1500x2612.png'
 const SOCIAL_PROOF_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/6a35f7d20eb2463847b28a562012952f53caa3e0-1080x1920.png'
 
 export function MultiChannelReach() {
