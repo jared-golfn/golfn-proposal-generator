@@ -27,7 +27,7 @@ const mediaValueData: MediaValueRow[] = [
   { channel: 'Combined media value', volume: '', rate: '', value: '$42,238', isTotal: true },
 ]
 
-const BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/f57c01bfc0291b0e8e6c5c55e36c6122900af6f6-357x132.png'
+const BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/88beb4ffa07416eb9de4a47206d24bf3b5ddeb7c-1428x528.png'
 const IAM_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/d1264bf8be99731bbc9bb4b5f755917c32f61ce0-375x653.png'
 
 export function MultiChannelReach() {
