@@ -28,7 +28,7 @@ export function AudienceProfile() {
         </motion.div>
 
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg text-[#9ca3af] leading-8 max-w-4xl mb-12">
-          Every Hyperice activation on GolfN produces a first-party, retargetable audience of verified golfers. These aren&rsquo;t rented impressions &mdash; they&rsquo;re owned cohorts that can be re-engaged via Braze push, email, or in-app messages, and used as seed audiences for paid Meta retargeting. The more activations you run, the larger and more segmented these audiences become.
+          Every Hyperice activation on GolfN produces a first-party, retargetable audience of verified golfers. These aren&rsquo;t rented impressions &mdash; they&rsquo;re owned cohorts that can be re-engaged through push notifications, email, in-app messages, or paid social retargeting. The more activations you run, the larger and more segmented these audiences become.
         </motion.p>
 
         {/* Cohort cards — large, prominent */}
@@ -49,7 +49,7 @@ export function AudienceProfile() {
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-gradient-to-br from-[#0a1628] to-[#0f2a1e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-8">
           <p className="text-xs font-mono uppercase tracking-wider text-[#00ff9d] mb-4">How These Cohorts Activate</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {['Braze Push Notifications', 'In-App Messages', 'Email Campaigns', 'Meta Lookalike Seeds'].map((channel) => (
+            {['Push Notifications', 'In-App Messages', 'Email Campaigns', 'Paid Social Retargeting'].map((channel) => (
               <div key={channel} className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-4 text-center">
                 <p className="text-sm text-white font-semibold">{channel}</p>
               </div>
