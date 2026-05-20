@@ -76,21 +76,25 @@ export function MultiChannelReach() {
           </div>
         </motion.div>
 
-        {/* Channel creative examples */}
+        {/* Channel creative examples — tight layout, no dead space */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-4">Example Creative &mdash; In-App Placements</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-[#1a1f2e]/60 border border-[#2a3347] rounded-2xl p-5 md:p-6">
-              <p className="text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-3">Marketplace Banner</p>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={BANNER_IMG} alt="Srixon/Cleveland marketplace banner" className="w-full rounded-lg border border-[#2a3347]" />
-              <p className="text-xs text-[#6b7280] mt-3">Points Exchange header placement &mdash; 66,416 impressions during image-only launch period</p>
+          <div className="flex flex-col md:flex-row gap-4 items-start">
+            {/* Banner — wide/short, gets full width on left */}
+            <div className="flex-1 min-w-0">
+              <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={BANNER_IMG} alt="Srixon/Cleveland marketplace banner" className="w-full block" />
+              </div>
+              <p className="text-xs text-[#6b7280] mt-2">Marketplace banner &mdash; 66,416 impressions during header-image launch period</p>
             </div>
-            <div className="bg-[#1a1f2e]/60 border border-[#2a3347] rounded-2xl p-5 md:p-6 flex flex-col items-center">
-              <p className="text-xs font-mono text-[#6b7280] uppercase tracking-wider mb-3 self-start">In-App Message</p>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={IAM_IMG} alt="Srixon in-app message" className="max-h-[360px] w-auto rounded-xl border border-[#2a3347] shadow-lg shadow-black/30" />
-              <p className="text-xs text-[#6b7280] mt-3 self-start">Braze IAM targeting active golfers &mdash; sweepstakes + product discovery driver</p>
+            {/* IAM — tall/narrow, constrained width */}
+            <div className="w-44 md:w-48 shrink-0">
+              <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={IAM_IMG} alt="Srixon in-app message" className="w-full block" />
+              </div>
+              <p className="text-xs text-[#6b7280] mt-2">Braze IAM &mdash; sweepstakes + product discovery driver</p>
             </div>
           </div>
         </motion.div>
