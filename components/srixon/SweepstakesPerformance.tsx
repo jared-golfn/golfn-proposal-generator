@@ -14,13 +14,19 @@ const topMetrics: MetricCard[] = [
 interface SweepRow { name: string; status: string; entries: string; entrants: string; ratio: string; period: string; isTotal?: boolean }
 
 const sweepData: SweepRow[] = [
-  { name: 'Srixon Dozen Golf Balls', status: 'Drawn', entries: '81,385', entrants: '1,515', ratio: '53.7', period: 'Mar 24 – Apr 7' },
-  { name: 'Srixon Spring Collection', status: 'Drawn', entries: '500,269', entrants: '3,856', ratio: '129.7', period: 'Apr 6 – Apr 14' },
-  { name: 'Srixon Dozen Golf Balls', status: 'Drawn', entries: '104,912', entrants: '2,152', ratio: '48.8', period: 'Apr 7 – Apr 21' },
-  { name: 'Srixon Dozen Golf Balls', status: 'Drawn', entries: '101,884', entrants: '1,560', ratio: '65.3', period: 'Apr 26 – May 10' },
+  { name: 'Srixon Dozen Golf Balls', status: 'Drawn', entries: '81,385', entrants: '1,515', ratio: '53.7', period: 'Mar 24 \u2013 Apr 7' },
+  { name: 'Srixon Spring Collection', status: 'Drawn', entries: '500,269', entrants: '3,856', ratio: '129.7', period: 'Apr 6 \u2013 Apr 14' },
+  { name: 'Srixon Dozen Golf Balls', status: 'Drawn', entries: '104,912', entrants: '2,152', ratio: '48.8', period: 'Apr 7 \u2013 Apr 21' },
+  { name: 'Srixon Dozen Golf Balls', status: 'Drawn', entries: '101,884', entrants: '1,560', ratio: '65.3', period: 'Apr 26 \u2013 May 10' },
   { name: 'Srixon Dozen Golf Balls', status: 'Live', entries: '64,030', entrants: '964', ratio: '66.4', period: 'May 2026' },
-  { name: 'Srixon ZXi7 Blackout Collection', status: 'Live', entries: '756,002', entrants: '4,464', ratio: '169.4', period: 'Apr 29 – May 27' },
+  { name: 'Srixon ZXi7 Blackout Collection', status: 'Live', entries: '756,002', entrants: '4,464', ratio: '169.4', period: 'Apr 29 \u2013 May 27' },
   { name: 'Total (6 campaigns)', status: '', entries: '1,608,482', entrants: '14,511', ratio: '110.8', period: '', isTotal: true },
+]
+
+const sweepCreatives = [
+  { src: 'https://cdn.sanity.io/images/e3wja34v/production/a06839ebd596dd33cd7edb322316ea60d972053b-516x684.png', label: 'Golf Ball Giveaway', entries: '352K entries across 4 runs' },
+  { src: 'https://cdn.sanity.io/images/e3wja34v/production/670b3c4e6eaf21802907c634703effa0c3efdb66-1548x2052.png', label: 'Spring Collection', entries: '500,269 entries' },
+  { src: 'https://cdn.sanity.io/images/e3wja34v/production/055742d454df4f85913f04bffac2e74c25ec5f12-1548x2052.png', label: 'ZXi7 Blackout Collection', entries: '756,002 entries' },
 ]
 
 export function SweepstakesPerformance() {
@@ -43,6 +49,25 @@ export function SweepstakesPerformance() {
           <span className="text-white font-semibold">1,608,482 total entries</span> from{' '}
           <span className="text-white font-semibold">14,511 unique entrants</span>. The premium equipment sweepstakes drove the highest volume.
         </motion.p>
+
+        {/* Campaign creative gallery */}
+        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+          <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-4">Campaign Creative</p>
+          <div className="grid grid-cols-3 gap-3 md:gap-5">
+            {sweepCreatives.map((card) => (
+              <div key={card.label} className="group bg-[#1a1f2e]/60 border border-[#2a3347] rounded-2xl overflow-hidden hover:border-[#00ff9d]/30 transition-colors">
+                <div className="aspect-[3/4] overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={card.src} alt={card.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
+                </div>
+                <div className="p-3 md:p-4">
+                  <p className="text-xs md:text-sm text-white font-semibold leading-tight">{card.label}</p>
+                  <p className="text-xs text-[#6b7280] mt-0.5">{card.entries}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12">
           {topMetrics.map((m, i) => (
