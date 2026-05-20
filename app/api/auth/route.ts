@@ -11,6 +11,7 @@ const standaloneSlugs: Record<string, { password: string; partnerName: string }>
   invited: { password: 'golfn2026', partnerName: 'Invited Clubs' },
   '8am': { password: '8am2026!', partnerName: '8AM Golf' },
   'srixon': { password: 'srixon2026', partnerName: 'Srixon / Cleveland Golf' },
+  'hyperice': { password: 'hyperice2026', partnerName: 'Hyperice' },
 }
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN || ''
