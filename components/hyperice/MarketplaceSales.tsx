@@ -32,17 +32,7 @@ const skuData: SkuRow[] = [
   { sku: 'Total', units: '52', net: '$20,563', taxes: '$626', total: '$21,188', isTotal: true },
 ]
 
-interface PointsProduct { name: string; points: number }
-const pointsData: PointsProduct[] = [
-  { name: 'Venom 2 Back', points: 2485560 },
-  { name: 'Normatec Elite Hips', points: 1749080 },
-  { name: 'Hypervolt 3', points: 388800 },
-  { name: 'Hypersphere Go', points: 322640 },
-  { name: 'Hypervolt Go 2', points: 119679 },
-]
-
 export function MarketplaceSales() {
-  const maxPoints = pointsData[0].points
   return (
     <section className="py-20 md:py-32 border-t border-[#2a3347]/40 scroll-mt-8" id="marketplace">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -62,7 +52,6 @@ export function MarketplaceSales() {
           <span className="text-white font-semibold">$0 in discounts and $0 in returns</span>.
         </motion.p>
 
-        {/* Top metric cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12">
           {topMetrics.map((m, i) => (
             <motion.div key={m.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.4 }} className="bg-[#1a1f2e] border border-[#2a3347] rounded-xl p-5 text-center">
@@ -72,7 +61,6 @@ export function MarketplaceSales() {
           ))}
         </div>
 
-        {/* Financial summary bar */}
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-gradient-to-br from-[#0a1628] to-[#0f2a1e] border border-[#2a3347] rounded-2xl p-6 md:p-8 mb-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center">
             <div><p className="text-2xl md:text-3xl font-bold font-mono text-[#00ff9d] tabular-nums">$20,563</p><p className="text-xs text-white/50 uppercase tracking-wider font-semibold mt-1">Net Sales</p></div>
@@ -82,7 +70,6 @@ export function MarketplaceSales() {
           </div>
         </motion.div>
 
-        {/* Category breakdown */}
         <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-3">Sales by Product Family</p>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-12">
           {categories.map((c, i) => (
@@ -95,7 +82,6 @@ export function MarketplaceSales() {
           ))}
         </div>
 
-        {/* SKU table */}
         <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-3">All Hyperice SKUs Sold</p>
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-[#2a3347] overflow-hidden mb-6">
           <div className="overflow-x-auto">
@@ -121,22 +107,7 @@ export function MarketplaceSales() {
             </table>
           </div>
         </motion.div>
-        <p className="text-xs text-[#6b7280] mb-12">Top 3 SKUs (Normatec 3, Normatec Elite Hips, Venom 2 Back) = 33 of 52 units (63.5%) and $17,227 of revenue (81.3%). Source: Shopify Sales by Product.</p>
-
-        {/* Points redeemed chart */}
-        <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-3">Points Redeemed by Product (Mar 23 &ndash; May 12, 2026)</p>
-        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="space-y-3 mb-6">
-          {pointsData.map((p) => (
-            <div key={p.name} className="flex items-center gap-3">
-              <span className="text-xs text-[#d1d5db] w-44 md:w-52 shrink-0 font-medium truncate">Hyperice | {p.name}</span>
-              <div className="flex-1 h-5 bg-[#1a1f2e] rounded-md overflow-hidden">
-                <div className="h-full bg-[#00ff9d] rounded-md" style={{ width: `${Math.round((p.points / maxPoints) * 100)}%` }} />
-              </div>
-              <span className="text-xs font-mono text-[#6b7280] w-20 text-right tabular-nums shrink-0">{p.points.toLocaleString()}</span>
-            </div>
-          ))}
-        </motion.div>
-        <p className="text-xs text-[#6b7280]">Source: Amplitude purchase events, product_name contains &ldquo;Hyperice&rdquo;, payment.points_amount summed.</p>
+        <p className="text-xs text-[#6b7280]">Top 3 SKUs (Normatec 3, Normatec Elite Hips, Venom 2 Back) = 33 of 52 units (63.5%) and $17,227 of revenue (81.3%). Source: Shopify Sales by Product.</p>
       </div>
     </section>
   )
