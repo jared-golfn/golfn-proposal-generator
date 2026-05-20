@@ -1,12 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { Shield } from 'lucide-react'
 
 interface MetricCard { value: string; label: string; sub?: string }
 
 const heroMetrics: MetricCard[] = [
   { value: '$66,979', label: 'Total marketplace sales', sub: '372 net items \u00b7 Srixon $47.9K + Cleveland $19.0K' },
-  { value: '1.61M', label: 'Sweepstakes entries', sub: '6 campaigns \u00b7 14,511 unique entrants' },
+  { value: '1.61M', label: 'Sweepstakes entries', sub: '6 campaigns \u00b7 14,511 verified golfers' },
   { value: '$42,238', label: 'Media value delivered', sub: '2.85M impressions at conservative floor rates' },
   { value: '2.85M', label: 'Total brand impressions', sub: 'Paid, in-app &amp; organic channels' },
 ]
@@ -31,14 +32,25 @@ export function ExecutiveSummary() {
           <p className="text-sm text-[#6b7280] mt-4">First brand on the GolfN Points Exchange &mdash; delivering awareness, engagement &amp; conversion from day one.</p>
         </motion.div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg text-[#9ca3af] leading-8 max-w-4xl mb-12">
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-base md:text-lg text-[#9ca3af] leading-8 max-w-4xl mb-8">
           Srixon and Cleveland were GolfN&rsquo;s inaugural Points Exchange Marketplace partners, launching August&nbsp;1,&nbsp;2025. Over the partnership period, the combined brand family generated{' '}
           <span className="text-white font-semibold">$66,979 in total marketplace sales</span> across 372 net items sold,{' '}
-          <span className="text-white font-semibold">1,608,482 sweepstakes entries</span> from 14,511 unique entrants across six campaigns, an estimated{' '}
+          <span className="text-white font-semibold">1,608,482 sweepstakes entries</span> from <span className="text-white font-semibold">14,511 verified golfers</span> across six campaigns, an estimated{' '}
           <span className="text-white font-semibold">20,130 in-app product views</span>, and{' '}
           <span className="text-white font-semibold">2.85M brand impressions</span> representing{' '}
           <span className="text-white font-semibold">$42,238 in conservative media value</span> &mdash; all funded by GolfN and delivered directly to the Srixon/Cleveland brand.
         </motion.p>
+
+        {/* 1st-party verified data callout */}
+        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-gradient-to-br from-[#001a14] to-[#002a1f] border border-[#00ff9d]/20 rounded-2xl p-6 md:p-8 mb-12">
+          <div className="flex items-start gap-3 mb-3">
+            <Shield className="w-5 h-5 text-[#00ff9d] mt-0.5 shrink-0" />
+            <p className="text-base md:text-lg font-bold text-white">Every number on this page is first-party verified data.</p>
+          </div>
+          <p className="text-sm md:text-base text-[#d1d5db] leading-7 pl-8">
+            GolfN users aren&rsquo;t inferred golfers from Meta interest targeting or modeled audiences. They&rsquo;re real people who log GPS-confirmed rounds, carry a verified handicap, and play on real courses. When 14,511 of them enter a Srixon sweepstakes, that&rsquo;s 14,511 confirmed golfers who actively chose to engage with the brand &mdash; not a lookalike audience, not a panel estimate.
+          </p>
+        </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {heroMetrics.map((m, i) => (
