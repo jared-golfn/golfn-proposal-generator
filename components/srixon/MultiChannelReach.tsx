@@ -27,7 +27,8 @@ const mediaValueData: MediaValueRow[] = [
   { channel: 'Combined media value', volume: '', rate: '', value: '$42,238', isTotal: true },
 ]
 
-const BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/88beb4ffa07416eb9de4a47206d24bf3b5ddeb7c-1428x528.png'
+const MARKETPLACE_BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/2cb93b50e429f5bbb55fdb9f3e21345f56c5f5f7-4500x2040.png'
+const AD_BANNER_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/88beb4ffa07416eb9de4a47206d24bf3b5ddeb7c-1428x528.png'
 const IAM_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/d1264bf8be99731bbc9bb4b5f755917c32f61ce0-375x653.png'
 const SOCIAL_PROOF_IMG = 'https://cdn.sanity.io/images/e3wja34v/production/6a35f7d20eb2463847b28a562012952f53caa3e0-1080x1920.png'
 
@@ -81,13 +82,22 @@ export function MultiChannelReach() {
         <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono uppercase tracking-wider text-[#9ca3af] mb-4">Example Creative &mdash; In-App Placements &amp; Social Proof</p>
 
-          {/* Banner — full width on top */}
+          {/* Marketplace banner — the actual banner used in the app */}
           <div className="mb-4">
             <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={BANNER_IMG} alt="Srixon/Cleveland marketplace banner" className="w-full block" />
+              <img src={MARKETPLACE_BANNER_IMG} alt="Srixon/Cleveland Points Exchange marketplace banner" className="w-full block" />
             </div>
-            <p className="text-xs text-[#6b7280] mt-2">Marketplace banner &mdash; 66,416 impressions during header-image launch period</p>
+            <p className="text-xs text-[#6b7280] mt-2">Points Exchange marketplace banner &mdash; 66,416 impressions during header-image launch period</p>
+          </div>
+
+          {/* Ad banner creative */}
+          <div className="mb-4">
+            <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={AD_BANNER_IMG} alt="Srixon/Cleveland banner ad creative" className="w-full block" />
+            </div>
+            <p className="text-xs text-[#6b7280] mt-2">Banner ad creative &mdash; used across paid and organic social channels</p>
           </div>
 
           {/* IAM + Social proof — two portrait images side by side */}
