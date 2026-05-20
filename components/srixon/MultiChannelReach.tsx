@@ -91,9 +91,9 @@ export function MultiChannelReach() {
             <p className="text-xs text-[#6b7280] mt-2">Points Exchange marketplace banner &mdash; 66,416 impressions during header-image launch period</p>
           </div>
 
-          {/* In-app banner ad — shown across screens within the GolfN app, 50% width */}
-          <div className="mb-4 max-w-[50%]">
-            <div className="rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
+          {/* In-app banner ad — centered at 50% width */}
+          <div className="mb-4 flex flex-col items-center">
+            <div className="w-full max-w-[50%] rounded-xl border border-[#2a3347] overflow-hidden bg-[#1a1f2e]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={AD_BANNER_IMG} alt="Srixon/Cleveland in-app banner ad" className="w-full block" />
             </div>
