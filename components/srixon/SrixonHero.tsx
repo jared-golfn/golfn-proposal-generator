@@ -48,13 +48,13 @@ export function SrixonHero() {
             Partnership Performance{' '}<span className="text-gradient">&mdash; Aug 2025 to May 2026</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 0.6 }} className="text-lg md:text-xl text-[#9ca3af] max-w-3xl leading-8 mb-6">
-            Sweepstakes, multi-channel reach, and Points Exchange marketplace sales across the full Srixon &amp; Cleveland Golf portfolio.
+            Sweepstakes, multi-channel reach, and Points Exchange marketplace sales &mdash; all powered by first-party verified golfer data across the full Srixon &amp; Cleveland Golf portfolio.
           </motion.p>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }} className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-[#6b7280] mb-10 md:mb-14">
             <div><span className="text-[#9ca3af] font-semibold">Partner:</span> Srixon / Cleveland Golf (SRI Sports)</div>
             <div><span className="text-[#9ca3af] font-semibold">Platform:</span> GolfN Mobile App</div>
             <div><span className="text-[#9ca3af] font-semibold">Period:</span> Aug 2025 &ndash; May 2026</div>
-            <div><span className="text-[#9ca3af] font-semibold">Prepared by:</span> GolfN Growth Team</div>
+            <div><span className="text-[#9ca3af] font-semibold">Audience:</span> 100% verified golfers</div>
           </motion.div>
           <motion.nav initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.5 }} className="flex flex-wrap gap-3" aria-label="Page sections">
             {navItems.map((item, i) => (
