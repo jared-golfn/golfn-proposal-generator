@@ -11,8 +11,8 @@ import { PasswordGate } from '@/components/template/PasswordGate'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Srixon | Cleveland × GolfN — Brand Campaign Report',
-  description: 'Partnership Performance — Sweepstakes, Multi-Channel Reach & Points Exchange Sales. Aug 2025 – May 2026.',
+  title: 'Srixon | Cleveland \u00d7 GolfN \u2014 Brand Campaign Report',
+  description: 'Partnership Performance \u2014 Sweepstakes, Multi-Channel Reach & Points Exchange Sales. Aug 2025 \u2013 May 2026.',
 }
 
 export default async function SrixonPage() {
@@ -20,7 +20,16 @@ export default async function SrixonPage() {
   const authCookie = cookieStore.get('golfn-auth-srixon')
 
   if (!authCookie?.value) {
-    return <PasswordGate slug="srixon" partnerName="Srixon / Cleveland Golf" />
+    return (
+      <PasswordGate
+        slug="srixon"
+        partnerName="Srixon / Cleveland Golf"
+        badgeLabel="Partnership Review"
+        title="Campaign Performance Report"
+        buttonLabel="View Report"
+        footerText="Confidential. Reach out to Jared for access."
+      />
+    )
   }
 
   return (
