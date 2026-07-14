@@ -79,8 +79,8 @@ export function IncentiveLab({
       <div className="px-4 md:px-6 pb-4">
         <LabStage mode={mode} intensity={intensity} scope={scope} />
         <p className="mt-2 text-[11px] font-mono text-[#4b5563]">
-          Drag the dials — golfers light up, raise hands, and move toward your pin. Map is schematic, not
-          production GPS.
+          Real basemap · metro pins · drag incentive/radius — gray = out of play, green = responding.
+          Population is illustrative.
         </p>
       </div>
 
